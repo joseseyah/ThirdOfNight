@@ -39,12 +39,21 @@ struct ContentView: View {
                             .foregroundColor(.white)
                             .padding(.top, 20)
                             .padding(.trailing, 20) // Move the text to the right side
+                        
+                        
                     }
                     
                     Text(viewModel.islamicDate)
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .foregroundColor(Color(red: 0/255, green: 121/255, blue: 153/255)) // Different color for Islamic date
+                        .padding(.leading, 20)
+                        
+                    
+                    Text("\(viewModel.currentPlacemark?.administrativeArea ?? ""), \(viewModel.currentPlacemark?.country ?? "")")
+                        .font(.subheadline)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color(red: 0/255, green: 121/255, blue: 153/255))
                         .padding(.leading, 20)
                         .padding(.bottom, 20)
 
@@ -98,6 +107,7 @@ struct ContentView: View {
                 }
             }
             .onAppear {
+                viewModel.requestPermission()
                 calculateFastingProgress()
                 calculateMidnightTime()
                 calculateLastThirdOfNight()

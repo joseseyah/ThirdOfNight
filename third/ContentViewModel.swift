@@ -4,16 +4,17 @@ class ContentViewModel: ObservableObject {
     @Published var islamicDate: String = "1 Ramadan 1445AH"
     @Published var fajrTime: String = "4.12"
     @Published var maghribTime: String = "18.41"
-    
+    @Published var fajrTimeNextDay: String = "4.09" // Fajr time for the next day
+
     init() {
         fetchPrayerTimes()
     }
-    
+
     func fetchPrayerTimes() {
         let city = "London"
         let country = "United Kingdom"
         let method = 2 // Islamic Society of North America
-        
+
         guard let url = URL(string: "https://api.aladhan.com/v1/calendarByCity?city=\(city)&country=\(country)&method=\(method)") else {
             return
         }
@@ -27,13 +28,13 @@ class ContentViewModel: ObservableObject {
             do {
                 let decoder = JSONDecoder()
                 let calendarResponse = try decoder.decode(CalendarResponse.self, from: data)
-                
+
                 // Extract Islamic date, Fajr time, and Maghrib time from the response
                 guard let firstData = calendarResponse.data.first else {
                     print("Error: Unable to extract data from response")
                     return
                 }
-                
+
                 if let islamicDate = firstData.date.hijri?.date,
                    let fajrTime = firstData.timings.fajr,
                    let maghribTime = firstData.timings.maghrib {
@@ -41,6 +42,9 @@ class ContentViewModel: ObservableObject {
                         self.islamicDate = islamicDate
                         self.fajrTime = fajrTime
                         self.maghribTime = maghribTime
+
+                        // Calculate Fajr time for the next day
+                        self.calculateFajrTimeNextDay()
                     }
                 } else {
                     print("Error: Prayer timings not found in response")
@@ -51,6 +55,16 @@ class ContentViewModel: ObservableObject {
         }
 
         task.resume()
+    }
+
+    func calculateFajrTimeNextDay() {
+        guard let fajrTimeDouble = Double(fajrTime) else {
+            return
+        }
+        // Assuming Fajr time is before sunrise and after Maghrib
+        // Add a fixed duration to calculate Fajr time for the next day
+        let fajrTimeNextDayDouble = fajrTimeDouble + 12 // Assuming Fajr is 12 hours before Maghrib
+        self.fajrTimeNextDay = String(format: "%.2f", fajrTimeNextDayDouble)
     }
 }
 

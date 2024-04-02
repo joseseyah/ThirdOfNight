@@ -23,10 +23,10 @@ struct MidnightTimeView: View {
             
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)
-                .frame(height: 50)
+                .frame(height: 70) // Adjusted height for bigger font
                 .overlay(
                     Text(midnightTime)
-                        .font(.subheadline)
+                        .font(.system(size: 24, weight: .bold, design: .default)) // Bigger, bold font
                         .foregroundColor(.black)
                 )
                 .padding(.horizontal, 20)
@@ -43,6 +43,7 @@ struct MidnightTimeView: View {
         }
     }
 }
+
 
 
 

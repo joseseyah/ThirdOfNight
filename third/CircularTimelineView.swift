@@ -1,12 +1,3 @@
-//
-//  CircularTimelineView.swift
-//  third
-//
-//  Created by Joseph Hayes on 01/04/2024.
-//
-
-import Foundation
-
 import SwiftUI
 
 struct CircularTimelineView: View {
@@ -21,7 +12,7 @@ struct CircularTimelineView: View {
             Spacer().frame(height: 10) // Add gap between MidnightTimeView and CircularTimelineView
             HStack {
                 // Text "Night Cycle" at top left corner
-                Text("Night Cyce")
+                Text("Night Cycle")
                     .font(.caption)
                     .fontWeight(.bold) // Bold text
                     .foregroundColor(.black)
@@ -60,20 +51,28 @@ struct CircularTimelineView: View {
                         .stroke(Color.gray, lineWidth: 1)
                         .frame(width: 120, height: 120) // Adjusted orbit size
 
-                    // Timings markers
+                    // Timings markers with labels
                     ForEach(0..<timings.count) { index in
                         let angle = -Double(index) / Double(timings.count) * 2 * .pi // Adjusted angle
-                        let x = 60 * cos(angle)
-                        let y = 60 * sin(angle)
+                        let markerX = 60 * cos(angle)
+                        let markerY = 60 * sin(angle)
+                        let labelX = 85 * cos(angle) // Adjusted label position
+                        let labelY = 85 * sin(angle) // Adjusted label position
                         let timing = timings[index]
+                        
+                        // Marker on the orbit line
                         Circle()
-                            .fill(Color.orange)
+                            .fill(Color.yellow)
                             .frame(width: 10, height: 10)
-                            .offset(x: CGFloat(x), y: CGFloat(y))
-                            .overlay(
-                                Text(timing)
-                                    .foregroundColor(.white)
-                            )
+                            .offset(x: CGFloat(markerX), y: CGFloat(markerY))
+                        
+                        // Label with arrow pointing outside the orbit
+                        VStack {
+                            Text(timing)
+                                .font(.caption)
+                                .foregroundColor(.black)
+                        }
+                        .offset(x: CGFloat(labelX), y: CGFloat(labelY))
                     }
 
                     // Tracker
@@ -134,7 +133,4 @@ struct CircularTimelineView_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
-
-
-
 

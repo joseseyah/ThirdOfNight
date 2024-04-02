@@ -2,12 +2,15 @@ import SwiftUI
 import CoreLocation
 
 class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
-    @Published var islamicDate: String = "1 Ramadan 1445AH"
-    @Published var fajrTime: String = "4.12"
-    @Published var maghribTime: String = "18.41"
-    @Published var fajrTimeNextDay: String = "4.09" // Fajr time for the next day
-    
-    //for location purpose
+    @Published var islamicDate: String = ""
+    @Published var fajrTime: String = ""
+    @Published var maghribTime: String = ""
+    @Published var sunriseTime: String = "" // Added sunrise time
+    @Published var sunsetTime: String = "" // Added sunset time
+    @Published var fajrTimeNextDay: String = "" // Fajr time for the next day
+    @Published var midnightTimeView: String = "" // Middle of the night time
+
+    // For location purpose
     private let locationManager: CLLocationManager
     @Published var authorizationStatus: CLAuthorizationStatus
     @Published var lastSeenLocation: CLLocation?
@@ -16,14 +19,14 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     override init() {
         locationManager = CLLocationManager()
         authorizationStatus = locationManager.authorizationStatus
-        
+
         super.init()
-        
+
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
     }
-    
+
     func requestPermission() {
         locationManager.requestWhenInUseAuthorization()
     }
@@ -31,7 +34,7 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         authorizationStatus = manager.authorizationStatus
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         lastSeenLocation = locations.first
         fetchCountryAndCity(for: locations.first)
@@ -42,28 +45,30 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
             self.currentPlacemark = placemarks?.first
-            
+
             self.fetchPrayerTimes()
         }
     }
 
-    
     func getCurrentDateAndMonth() -> (year: Int, month: Int) {
         let currentDate = Date()
         let calendar = Calendar.current
-        
+
         // Extract day and month components from the current date
         let year = calendar.component(.year, from: currentDate)
         let month = calendar.component(.month, from: currentDate)
-        
+
         return (year: year, month: month)
     }
 
+    func extractTime(from timeString: String) -> String {
+        return timeString.components(separatedBy: " ")[0] // Extracting only the time portion
+    }
 
     func fetchPrayerTimes() {
-        //please get current year and current month
+        // Please get current year and current month
         let currentDateAndMonth = getCurrentDateAndMonth()
-        
+
         let city = self.currentPlacemark?.administrativeArea ?? ""
         let country = self.currentPlacemark?.country ?? ""
         let method = 2 // Islamic Society of North America
@@ -82,7 +87,7 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                 let decoder = JSONDecoder()
                 let calendarResponse = try decoder.decode(CalendarResponse.self, from: data)
 
-                // Extract Islamic date, Fajr time, and Maghrib time from the response
+                // Extract Islamic date, Fajr time, Maghrib time, Sunrise time, Sunset time, and Midnight time from the response
                 guard let firstData = calendarResponse.data.first else {
                     print("Error: Unable to extract data from response")
                     return
@@ -90,14 +95,17 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
                 if let islamicDate = firstData.date.hijri,
                    let fajrTime = firstData.timings.fajr,
-                   let maghribTime = firstData.timings.maghrib {
+                   let maghribTime = firstData.timings.maghrib,
+                   let sunriseTime = firstData.timings.sunrise,
+                   let sunsetTime = firstData.timings.sunset,
+                   let midnightTime = firstData.timings.midnight {
                     DispatchQueue.main.async {
                         self.islamicDate = "\(islamicDate.getDisplayIslamicDate())"
-                        self.fajrTime = fajrTime
-                        self.maghribTime = maghribTime
-
-                        // Calculate Fajr time for the next day
-                        self.calculateFajrTimeNextDay()
+                        self.fajrTime = self.extractTime(from: fajrTime)
+                        self.maghribTime = self.extractTime(from: maghribTime)
+                        self.sunriseTime = self.extractTime(from: sunriseTime)
+                        self.sunsetTime = self.extractTime(from: sunsetTime)
+                        self.midnightTimeView = self.extractTime(from: midnightTime)
                     }
                 } else {
                     print("Error: Prayer timings not found in response")
@@ -108,16 +116,6 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
 
         task.resume()
-    }
-
-    func calculateFajrTimeNextDay() {
-        guard let fajrTimeDouble = Double(fajrTime) else {
-            return
-        }
-        // Assuming Fajr time is before sunrise and after Maghrib
-        // Add a fixed duration to calculate Fajr time for the next day
-        let fajrTimeNextDayDouble = fajrTimeDouble + 12 // Assuming Fajr is 12 hours before Maghrib
-        self.fajrTimeNextDay = String(format: "%.2f", fajrTimeNextDayDouble)
     }
 }
 
@@ -133,11 +131,16 @@ struct PrayerTimeData: Codable {
 struct PrayerTimings: Codable {
     let fajr: String?
     let maghrib: String?
-    // Add other prayer timings as needed
-    
+    let sunrise: String? // Added sunrise property
+    let sunset: String? // Added sunset property
+    let midnight: String? // Added midnight property
+
     private enum CodingKeys: String, CodingKey {
         case fajr = "Fajr"
         case maghrib = "Maghrib"
+        case sunrise = "Sunrise" // Map to the appropriate key in API response
+        case sunset = "Sunset" // Map to the appropriate key in API response
+        case midnight = "Midnight" // Map to the appropriate key in API response
     }
 }
 
@@ -152,7 +155,7 @@ struct HijriDate: Codable {
     let month: HijriMonth?
     let year: String?
     let designation: Designation?
-    
+
     func getDisplayIslamicDate() -> String {
         return "\(day ?? "") \(month?.en ?? "") \(year ?? "") \(designation?.abbreviated ?? "")"
     }
@@ -166,3 +169,4 @@ struct HijriMonth: Codable {
     let number: Int?
     let en: String?
 }
+

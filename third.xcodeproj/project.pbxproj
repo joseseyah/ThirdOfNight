@@ -23,6 +23,7 @@
 		6D4361822BBA19FF007AE49C /* MignightTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361812BBA19FF007AE49C /* MignightTimeView.swift */; };
 		6D4361842BBA2567007AE49C /* LastThirdOfNightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361832BBA2567007AE49C /* LastThirdOfNightView.swift */; };
 		6D4361862BBA5A7C007AE49C /* CircularTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361852BBA5A7C007AE49C /* CircularTimelineView.swift */; };
+		6D4361C02BBB8066007AE49C /* EatingProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361BF2BBB8066007AE49C /* EatingProgressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		6D4361812BBA19FF007AE49C /* MignightTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MignightTimeView.swift; sourceTree = "<group>"; };
 		6D4361832BBA2567007AE49C /* LastThirdOfNightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastThirdOfNightView.swift; sourceTree = "<group>"; };
 		6D4361852BBA5A7C007AE49C /* CircularTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTimelineView.swift; sourceTree = "<group>"; };
+		6D4361BF2BBB8066007AE49C /* EatingProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EatingProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				6D4361832BBA2567007AE49C /* LastThirdOfNightView.swift */,
 				6D4361852BBA5A7C007AE49C /* CircularTimelineView.swift */,
 				6D43614F2BB63D32007AE49C /* Item.swift */,
+				6D4361BF2BBB8066007AE49C /* EatingProgressView.swift */,
 				6D43617D2BB643BA007AE49C /* ProgressBar.swift */,
 				6D4361512BB63D36007AE49C /* Assets.xcassets */,
 				6D4361532BB63D36007AE49C /* Preview Content */,
@@ -296,6 +299,7 @@
 				6D4361842BBA2567007AE49C /* LastThirdOfNightView.swift in Sources */,
 				6D43617E2BB643BA007AE49C /* ProgressBar.swift in Sources */,
 				6D4361862BBA5A7C007AE49C /* CircularTimelineView.swift in Sources */,
+				6D4361C02BBB8066007AE49C /* EatingProgressView.swift in Sources */,
 				6D43617C2BB63F04007AE49C /* ContentViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

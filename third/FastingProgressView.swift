@@ -50,3 +50,4 @@ struct FastingProgressView: View {
         return progress == 1.0 ? white : blue
     }
 }
+

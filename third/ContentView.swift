@@ -17,8 +17,8 @@ struct ContentView: View {
             LinearGradient(gradient: Gradient(colors: [Color(red: 204/255, green: 229/255, blue: 255/255), Color(red: 153/255, green: 204/255, blue: 255/255)]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
             
-            VStack(alignment: .leading) {
-                HStack {
+            VStack(spacing: 0) {
+                VStack(alignment: .leading) {
                     Text("Night Supplication")
                         .font(.title)
                         .fontWeight(.bold)
@@ -26,78 +26,69 @@ struct ContentView: View {
                         .padding(.top, 20)
                         .padding(.leading, 20)
                     
-                    Spacer()
-                    
-                    Text(stageText)
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundColor(.white)
-                        .padding(.top, 20)
-                        .padding(.trailing, 20)
-                }
-                
-                Text(viewModel.islamicDate)
-                    .font(.subheadline)
-                    .fontWeight(.bold)
-                    .foregroundColor(Color(red: 0/255, green: 121/255, blue: 153/255))
-                    .padding(.leading, 20)
-                
-                Text("\(viewModel.currentPlacemark?.administrativeArea ?? ""), \(viewModel.currentPlacemark?.country ?? "")")
-                    .font(.subheadline)
-                    .fontWeight(.bold)
-                    .foregroundColor(Color(red: 0/255, green: 121/255, blue: 153/255))
-                    .padding(.leading, 20)
-                    .padding(.bottom, 20)
-
-                HStack {
-                    PrayerTimeView(title: "Fajr", time: viewModel.fajrTime)
-                    PrayerTimeView(title: "Maghrib", time: viewModel.maghribTime)
-                }
-                .padding(.horizontal)
-
-                if isFastingInProgress {
-                    if let totalDuration = viewModel.calculateTotalFastingDuration() {
-                        FastingProgressView(progress: fastingProgress, remainingTime: remainingTimeUntilIftar(), totalDuration: totalDuration)
-                            .padding(.horizontal, 20)
-                    }
-                } else {
-                    EatingProgressView(progress: eatingProgress(), remainingTime: remainingTimeUntilFajr())
-                        .padding(.horizontal, 20)
-                }
-
-                MidnightTimeView(midnightTime: viewModel.midnightTimeView)
-                    .padding(.horizontal, 20)
-
-                CircularTimelineView(timings: ["Sunset", "Midnight", "Last Third", "Fajr", "Sunrise"])
-                    .padding(.horizontal, 20)
-
-                Spacer()
-
-                VStack(alignment: .leading, spacing: 20) {
-                    Text("Surah Al-Mulk Translation:")
-                        .font(.headline)
-                        .foregroundColor(.white)
+                    Text(viewModel.islamicDate)
+                        .font(.subheadline)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color(red: 0/255, green: 121/255, blue: 153/255))
                         .padding(.leading, 20)
-                        .onTapGesture {
+                    
+                    Text("\(viewModel.currentPlacemark?.administrativeArea ?? ""), \(viewModel.currentPlacemark?.country ?? "")")
+                        .font(.subheadline)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color(red: 0/255, green: 121/255, blue: 153/255))
+                        .padding(.leading, 20)
+                        .padding(.bottom, 20)
+                }
+                .frame(maxWidth: .infinity)
+                .background(Color.clear)
+                
+                ScrollView {
+                    VStack(spacing: 20) {
+                        HStack {
+                            PrayerTimeView(title: "Fajr", time: viewModel.fajrTime)
+                            PrayerTimeView(title: "Maghrib", time: viewModel.maghribTime)
+                        }
+                        .padding(.horizontal)
+                        
+                        if isFastingInProgress {
+                            if let totalDuration = viewModel.calculateTotalFastingDuration() {
+                                FastingProgressView(progress: fastingProgress, remainingTime: remainingTimeUntilIftar(), totalDuration: totalDuration)
+                                    .padding(.horizontal, 20)
+                            }
+                        } else {
+                            EatingProgressView(progress: eatingProgress(), remainingTime: remainingTimeUntilFajr())
+                                .padding(.horizontal, 20)
+                        }
+                        
+                        MidnightTimeView(midnightTime: viewModel.midnightTimeView)
+                            .padding(.horizontal, 20)
+                        
+                        CircularTimelineView(timings: ["Sunset", "Midnight", "Last Third", "Fajr", "Sunrise"])
+                            .padding(.horizontal, 20)
+                        
+                        Button(action: {
                             withAnimation {
                                 isSurahMulkExpanded.toggle()
                             }
+                        }) {
+                            Text("Surah Al-Mulk Translation:")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding(.leading, 20)
                         }
-                    
-                    if isSurahMulkExpanded {
-                        ScrollView {
-                            Text("""
-                            Surah Mulk Text
-                            """)
-                        }
-                        .foregroundColor(.black)
-                        .padding()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .padding(.horizontal, 20)
                     }
                 }
-                .padding(.bottom, 20)
+                
+                if isSurahMulkExpanded {
+                    SurahMulkPageView(isExpanded: $isSurahMulkExpanded)
+                        .transition(.move(edge: .top))
+                        .zIndex(1)
+                }
+            }
+        }
+        .onTapGesture {
+            withAnimation {
+                isSurahMulkExpanded = false
             }
         }
         .onAppear {
@@ -126,20 +117,20 @@ struct ContentView: View {
     }
     
     func remainingTimeUntilIftar() -> String {
-            guard let maghribTime = convertTimeStringToDecimal(viewModel.maghribTime) else {
-                return "Error"
-            }
-            
-            let currentTime = Date()
-            let maghribDate = Calendar.current.date(bySettingHour: Int(maghribTime), minute: Int((maghribTime - floor(maghribTime)) * 60), second: 0, of: currentTime)!
-            
-            let remainingTimeInterval = maghribDate.timeIntervalSince(currentTime)
-            
-            let remainingHours = Int(remainingTimeInterval) / 3600
-            let remainingMinutes = (Int(remainingTimeInterval) % 3600) / 60
-            
-            return String(format: "%02d:%02d", remainingHours, remainingMinutes)
+        guard let maghribTime = convertTimeStringToDecimal(viewModel.maghribTime) else {
+            return "Error"
         }
+        
+        let currentTime = Date()
+        let maghribDate = Calendar.current.date(bySettingHour: Int(maghribTime), minute: Int((maghribTime - floor(maghribTime)) * 60), second: 0, of: currentTime)!
+        
+        let remainingTimeInterval = maghribDate.timeIntervalSince(currentTime)
+        
+        let remainingHours = Int(remainingTimeInterval) / 3600
+        let remainingMinutes = (Int(remainingTimeInterval) % 3600) / 60
+        
+        return String(format: "%02d:%02d", remainingHours, remainingMinutes)
+    }
     
     func calculateMidnightTime() {
         guard let maghribTime = convertTimeStringToDecimal(viewModel.maghribTime),
@@ -235,19 +226,6 @@ struct ContentView: View {
         
         return String(format: "%02d:%02d", remainingHours, remainingMinutes)
     }
-    
-    private var stageText: String {
-        let currentTimeDecimal = convertTimeStringToDecimal(currentTime) ?? 0.0
-        let timings = ["Sunset", "Midnight", "Last Third", "Fajr", "Sunrise"]
-        for i in 0..<timings.count {
-            if let time = convertTimeStringToDecimal(timings[i]) {
-                if currentTimeDecimal < time {
-                    return timings[i]
-                }
-            }
-        }
-        return ""
-    }
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -255,3 +233,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+

@@ -17,7 +17,7 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color(red: 204/255, green: 229/255, blue: 255/255), Color(red: 153/255, green: 204/255, blue: 255/255)]), startPoint: .top, endPoint: .bottom)
+            LinearGradient(gradient: Gradient(colors: [Color(red: 0/255, green: 40/255, blue: 70/255), Color(red: 0/255, green: 30/255, blue: 50/255)]), startPoint: .top, endPoint: .bottom) // Darker background
                 .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 0) {
@@ -42,13 +42,13 @@ struct ContentView: View {
                         Text(viewModel.islamicDate)
                             .font(.subheadline)
                             .fontWeight(.bold)
-                            .foregroundColor(Color(red: 0/255, green: 121/255, blue: 153/255))
+                            .foregroundColor(Color(red: 150/255, green: 180/255, blue: 210/255)) // Adjusted text color
                             .padding(.leading, 20)
                         
                         Text("\(viewModel.currentPlacemark?.administrativeArea ?? ""), \(viewModel.currentPlacemark?.country ?? "")")
                             .font(.subheadline)
                             .fontWeight(.bold)
-                            .foregroundColor(Color(red: 0/255, green: 121/255, blue: 153/255))
+                            .foregroundColor(Color(red: 150/255, green: 180/255, blue: 210/255)) // Adjusted text color
                             .padding(.leading, 20)
                             .padding(.bottom, 20)
                     }
@@ -94,32 +94,32 @@ struct ContentView: View {
                 }
             }
         }
-        .sheet(isPresented: $isSettingsViewPresented) {
-            // Present SettingsView as a sheet
-            SettingView()
-        }
-        .sheet(isPresented: $isSurahMulkExpanded) {
-            SurahMulkPageView(isExpanded: $isSurahMulkExpanded)
-        }
-
-        .onTapGesture {
-            withAnimation {
-                isSurahMulkExpanded = false
+            .sheet(isPresented: $isSettingsViewPresented) {
+                // Present SettingsView as a sheet
+                SettingView()
             }
+            .sheet(isPresented: $isSurahMulkExpanded) {
+                SurahMulkPageView(isExpanded: $isSurahMulkExpanded)
+            }
+
+            .onTapGesture {
+                withAnimation {
+                    isSurahMulkExpanded = false
+                }
+            }
+            .onAppear {
+                viewModel.requestPermission()
+                calculateFastingProgress()
+                calculateMidnightTime()
+                calculateLastThirdOfNight()
+                updateCurrentTimeMarkerIndex()
+            }
+            .onReceive(Timer.publish(every: 60, on: .main, in: .common).autoconnect()) { _ in
+                updateProgressView()
+            }
+            .navigationTitle("")
+            .navigationBarHidden(true)
         }
-        .onAppear {
-            viewModel.requestPermission()
-            calculateFastingProgress()
-            calculateMidnightTime()
-            calculateLastThirdOfNight()
-            updateCurrentTimeMarkerIndex()
-        }
-        .onReceive(Timer.publish(every: 60, on: .main, in: .common).autoconnect()) { _ in
-            updateProgressView()
-        }
-        .navigationTitle("")
-        .navigationBarHidden(true)
-    }
     
     func calculateFastingProgress() {
         guard let fajrTime = Double(viewModel.fajrTime), let maghribTime = Double(viewModel.maghribTime) else {

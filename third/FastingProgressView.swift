@@ -11,6 +11,7 @@ import SwiftUI
 struct FastingProgressView: View {
     let progress: Double
     let remainingTime: String // Time remaining until Iftar
+    let totalDuration: TimeInterval // Total fasting duration
 
     var body: some View {
         VStack(spacing: 5) {
@@ -29,7 +30,7 @@ struct FastingProgressView: View {
             // Progress bar with custom styling
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 5)
-                    .fill(progressColor()) // Fill color based on remaining time
+                    .fill(progressColor(progress)) // Fill color based on progress
                     .frame(height: 10)
                 RoundedRectangle(cornerRadius: 5)
                     .fill(Color.white)
@@ -42,35 +43,10 @@ struct FastingProgressView: View {
         .padding(.bottom, 20)
     }
 
-    // Function to calculate progress bar color based on remaining time
-    private func progressColor() -> Color {
-        // Split remaining time string to get hours and minutes
-        let components = remainingTime.split(separator: ":")
-        guard components.count == 2,
-              let remainingHours = Int(components[0]),
-              let remainingMinutes = Int(components[1]) else {
-            return .blue // Default color
-        }
-        
-        // Calculate remaining time in minutes
-        let totalRemainingMinutes = remainingHours * 60 + remainingMinutes
-        
-        // Total fasting duration (in minutes)
-        let totalFastingMinutes = 12 * 60 // Assuming fasting duration from Fajr to Maghrib is 12 hours
-        
-        // Calculate progress (from 0 to 1)
-        let progress = 1 - (Double(totalRemainingMinutes) / Double(totalFastingMinutes))
-        
-        // Interpolate color between blue and white based on progress
-        let red = 0.0 + (1.0 - progress) * 1.0
-        let green = 0.0 + (1.0 - progress) * 1.0
-        let blue = 1.0 - progress
-        return Color(red: red, green: green, blue: blue)
+    // Function to calculate progress bar color based on progress
+    private func progressColor(_ progress: Double) -> Color {
+        let blue = Color(red: 0/255, green: 121/255, blue: 153/255)
+        let white = Color.white
+        return progress == 1.0 ? white : blue
     }
-
 }
-
-
-
-
-

@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  third
-//
-//  Created by Joseph Hayes on 29/03/2024.
-//
-// ContentView.swift
 import SwiftUI
 
 struct ContentView: View {
@@ -17,6 +10,7 @@ struct ContentView: View {
     @State private var currentTime: String = "02.00"
     @State private var currentMarkerIndex: Int = 0
     @State private var isFastingInProgress: Bool = true
+    @State private var totalFastingDuration: TimeInterval?
 
     var body: some View {
         ZStack {
@@ -61,8 +55,10 @@ struct ContentView: View {
                 .padding(.horizontal)
 
                 if isFastingInProgress {
-                    FastingProgressView(progress: fastingProgress, remainingTime: remainingTimeUntilIftar())
-                        .padding(.horizontal, 20)
+                    if let totalDuration = viewModel.calculateTotalFastingDuration() {
+                        FastingProgressView(progress: fastingProgress, remainingTime: remainingTimeUntilIftar(), totalDuration: totalDuration)
+                            .padding(.horizontal, 20)
+                    }
                 } else {
                     EatingProgressView(progress: eatingProgress(), remainingTime: remainingTimeUntilFajr())
                         .padding(.horizontal, 20)
@@ -71,7 +67,7 @@ struct ContentView: View {
                 MidnightTimeView(midnightTime: viewModel.midnightTimeView)
                     .padding(.horizontal, 20)
 
-                CircularTimelineView(timings: ["Sunset", "Midnight", "Last Third", "Fajr", "Sunrise"], trackerTime: currentTime)
+                CircularTimelineView(timings: ["Sunset", "Midnight", "Last Third", "Fajr", "Sunrise"])
                     .padding(.horizontal, 20)
 
                 Spacer()

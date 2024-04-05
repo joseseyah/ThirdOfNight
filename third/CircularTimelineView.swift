@@ -2,10 +2,11 @@ import SwiftUI
 
 struct CircularTimelineView: View {
     let timings: [String]
-    let trackerTime: String
     @State private var stageText = "" // State variable to track the stage text
     @State private var rotationAngle: Double = 0 // State variable to track rotation angle
     @State private var trackerAngle: Double = 0 // State variable to track tracker angle
+    @State private var timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect() // Timer to update trackerTime
+    @State private var trackerTime: String = ""
 
     var body: some View {
         VStack {
@@ -89,6 +90,10 @@ struct CircularTimelineView: View {
         .onAppear {
             updateStageText()
             rotateEarth() // Start rotating the Earth on appear
+            updateTrackerTime() // Update trackerTime initially
+        }
+        .onReceive(timer) { _ in
+            updateTrackerTime() // Update trackerTime periodically
         }
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
             updateStageText()
@@ -98,16 +103,14 @@ struct CircularTimelineView: View {
     private func updateStageText() {
         guard let currentTime = Double(trackerTime) else { return }
 
-        if currentTime >= 0 && currentTime < 2.0 {
-            stageText = "Isha Ended"
-        } else if currentTime >= 2.0 && currentTime < 3.0 {
-            stageText = "Last Third of Night"
-        } else if currentTime >= 3.0 && currentTime < 5.0 {
-            stageText = "Tahajjud Prayer"
-        } else if currentTime >= 5.0 && currentTime < 6.0 {
+        if currentTime >= 0 && currentTime < 5.0 {
             stageText = "Fajr Prayer"
+        } else if currentTime >= 5.0 && currentTime < 18.0 {
+            stageText = "Complete the fast"
+        } else if currentTime >= 18.0 && currentTime < 24.0 {
+            stageText = "Break Fast and pray"
         } else {
-            stageText = "Sunrise"
+            stageText = "Isha has ended"
         }
     }
     
@@ -115,10 +118,15 @@ struct CircularTimelineView: View {
         withAnimation(Animation.linear(duration: 10).repeatForever()) {
             rotationAngle += 360 // Rotate Earth by 360 degrees
         }
-        updateTrackerAngle()
     }
 
-    private func updateTrackerAngle() {
+    private func updateTrackerTime() {
+        // Get current time and convert it to string
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "H"
+        trackerTime = dateFormatter.string(from: Date())
+        
+        // Calculate tracker angle based on current time
         guard let currentTime = Double(trackerTime) else { return }
         let totalTimings = Double(timings.count)
         let angle = (currentTime.truncatingRemainder(dividingBy: totalTimings) / totalTimings) * 2 * .pi // Adjusted angle
@@ -128,7 +136,7 @@ struct CircularTimelineView: View {
 
 struct CircularTimelineView_Previews: PreviewProvider {
     static var previews: some View {
-        CircularTimelineView(timings: ["Sunset", "Midnight", "Last Third", "Fajr", "Sunrise"], trackerTime: "1")
+        CircularTimelineView(timings: ["Sunset", "Midnight", "Last Third", "Fajr", "Sunrise"])
             .padding()
             .previewLayout(.sizeThatFits)
     }

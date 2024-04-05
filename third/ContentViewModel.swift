@@ -1,16 +1,15 @@
 import SwiftUI
 import CoreLocation
+import UserNotifications
 
 class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var islamicDate: String = ""
     @Published var fajrTime: String = ""
     @Published var maghribTime: String = ""
-    @Published var sunriseTime: String = "" // Added sunrise time
-    @Published var sunsetTime: String = "" // Added sunset time
     @Published var fajrTimeNextDay: String = "" // Fajr time for the next day
     @Published var midnightTimeView: String = "" // Middle of the night time
-
-    // For location purpose
+    
+    //for location purpose
     private let locationManager: CLLocationManager
     @Published var authorizationStatus: CLAuthorizationStatus
     @Published var lastSeenLocation: CLLocation?
@@ -19,14 +18,14 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     override init() {
         locationManager = CLLocationManager()
         authorizationStatus = locationManager.authorizationStatus
-
+        
         super.init()
-
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
     }
-
+    
     func requestPermission() {
         locationManager.requestWhenInUseAuthorization()
     }
@@ -34,7 +33,7 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         authorizationStatus = manager.authorizationStatus
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         lastSeenLocation = locations.first
         fetchCountryAndCity(for: locations.first)
@@ -45,7 +44,7 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
             self.currentPlacemark = placemarks?.first
-
+            
             self.fetchPrayerTimes()
         }
     }
@@ -53,22 +52,30 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     func getCurrentDateAndMonth() -> (year: Int, month: Int) {
         let currentDate = Date()
         let calendar = Calendar.current
-
+        
         // Extract day and month components from the current date
         let year = calendar.component(.year, from: currentDate)
         let month = calendar.component(.month, from: currentDate)
-
+        
         return (year: year, month: month)
     }
-
+    
     func extractTime(from timeString: String) -> String {
         return timeString.components(separatedBy: " ")[0] // Extracting only the time portion
     }
+    
+    func calculateTotalFastingDuration() -> TimeInterval? {
+            guard let fajrTime = convertTimeStringToDecimal(fajrTime), let maghribTime = convertTimeStringToDecimal(maghribTime) else {
+                return nil
+            }
+            return maghribTime - fajrTime
+    }
+
 
     func fetchPrayerTimes() {
-        // Please get current year and current month
+        //please get current year and current month
         let currentDateAndMonth = getCurrentDateAndMonth()
-
+        
         let city = self.currentPlacemark?.administrativeArea ?? ""
         let country = self.currentPlacemark?.country ?? ""
         let method = 2 // Islamic Society of North America
@@ -87,7 +94,7 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                 let decoder = JSONDecoder()
                 let calendarResponse = try decoder.decode(CalendarResponse.self, from: data)
 
-                // Extract Islamic date, Fajr time, Maghrib time, Sunrise time, Sunset time, and Midnight time from the response
+                // Extract Islamic date, Fajr time, Maghrib time, and Midnight time from the response
                 guard let firstData = calendarResponse.data.first else {
                     print("Error: Unable to extract data from response")
                     return
@@ -96,16 +103,15 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                 if let islamicDate = firstData.date.hijri,
                    let fajrTime = firstData.timings.fajr,
                    let maghribTime = firstData.timings.maghrib,
-                   let sunriseTime = firstData.timings.sunrise,
-                   let sunsetTime = firstData.timings.sunset,
                    let midnightTime = firstData.timings.midnight {
                     DispatchQueue.main.async {
                         self.islamicDate = "\(islamicDate.getDisplayIslamicDate())"
                         self.fajrTime = self.extractTime(from: fajrTime)
                         self.maghribTime = self.extractTime(from: maghribTime)
-                        self.sunriseTime = self.extractTime(from: sunriseTime)
-                        self.sunsetTime = self.extractTime(from: sunsetTime)
                         self.midnightTimeView = self.extractTime(from: midnightTime)
+
+                        // Schedule a notification 10 minutes before midnight
+                        self.scheduleMidnightNotification(midnightTime: midnightTime)
                     }
                 } else {
                     print("Error: Prayer timings not found in response")
@@ -116,6 +122,42 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
 
         task.resume()
+    }
+    
+    func convertTimeStringToDecimal(_ timeString: String) -> Double? {
+            let components = timeString.components(separatedBy: ":")
+            guard components.count == 2,
+                  let hours = Double(components[0]),
+                  let minutes = Double(components[1])
+            else {
+                return nil
+            }
+            return hours + (minutes / 60)
+    }
+
+    func scheduleMidnightNotification(midnightTime: String) {
+        guard let midnightTimeDecimal = convertTimeStringToDecimal(midnightTime) else { return }
+        
+        let content = UNMutableNotificationContent()
+        content.title = "Midnight Reminder"
+        content.body = "Midnight is approaching. Make sure you have completed Isha."
+
+        // Calculate notification trigger time (10 minutes before midnight)
+        let notificationTime = midnightTimeDecimal - (10.0 / 60.0) * 24.0
+        var dateComponents = Calendar.current.dateComponents([.hour, .minute], from: Date())
+        dateComponents.hour = Int(notificationTime)
+        dateComponents.minute = Int((notificationTime - Double(Int(notificationTime))) * 60)
+
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        let request = UNNotificationRequest(identifier: "MidnightReminder", content: content, trigger: trigger)
+
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error scheduling notification: \(error.localizedDescription)")
+            } else {
+                print("Notification scheduled successfully")
+            }
+        }
     }
 }
 
@@ -131,15 +173,11 @@ struct PrayerTimeData: Codable {
 struct PrayerTimings: Codable {
     let fajr: String?
     let maghrib: String?
-    let sunrise: String? // Added sunrise property
-    let sunset: String? // Added sunset property
-    let midnight: String? // Added midnight property
-
+    let midnight: String? // Add midnight property
+    
     private enum CodingKeys: String, CodingKey {
         case fajr = "Fajr"
         case maghrib = "Maghrib"
-        case sunrise = "Sunrise" // Map to the appropriate key in API response
-        case sunset = "Sunset" // Map to the appropriate key in API response
         case midnight = "Midnight" // Map to the appropriate key in API response
     }
 }
@@ -155,7 +193,7 @@ struct HijriDate: Codable {
     let month: HijriMonth?
     let year: String?
     let designation: Designation?
-
+    
     func getDisplayIslamicDate() -> String {
         return "\(day ?? "") \(month?.en ?? "") \(year ?? "") \(designation?.abbreviated ?? "")"
     }

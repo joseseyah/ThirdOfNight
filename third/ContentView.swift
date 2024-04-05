@@ -98,10 +98,10 @@ struct ContentView: View {
             // Present SettingsView as a sheet
             SettingView()
         }
-        .sheet(isPresented: $isSurahMulkSheetPresented) {
-            // Present SurahMulkPageView as a sheet
+        .sheet(isPresented: $isSurahMulkExpanded) {
             SurahMulkPageView(isExpanded: $isSurahMulkExpanded)
         }
+
         .onTapGesture {
             withAnimation {
                 isSurahMulkExpanded = false

@@ -58,25 +58,40 @@ struct thirdApp: App {
         let content = UNMutableNotificationContent()
         content.title = "Time to Break Your Fast"
         content.body = "It's almost Maghrib time. Make Dua and break your fast on time."
-
-        let maghribTimeString = ContentViewModel().maghribTime // Get Maghrib time string from ContentViewModel
+        
+        // Retrieve Maghrib time from ContentViewModel
+        let maghribTimeString = ContentViewModel().maghribTime
+        
+        // Define a date formatter to parse the string representation of time
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
-        guard let maghribTime = dateFormatter.date(from: maghribTimeString) else {
-            print("Error: Unable to convert Maghrib time string to Date")
-            return
-        }
-
-        let notificationTime = maghribTime.addingTimeInterval(-10 * 60) // 10 minutes before Maghrib
-        let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error = error {
-                print("Error scheduling notification:", error)
+        
+        // Attempt to parse the Maghrib time string into a Date object
+        if let maghribTime = dateFormatter.date(from: maghribTimeString) {
+            // Calculate the notification time (10 minutes before Maghrib)
+            let notificationTime = Calendar.current.date(byAdding: .minute, value: -10, to: maghribTime)!
+            
+            // Extract hour and minute components from the notification time
+            let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
+            
+            // Create a trigger for the notification
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+            
+            // Create a notification request
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            
+            // Add the notification request
+            UNUserNotificationCenter.current().add(request) { error in
+                if let error = error {
+                    print("Error scheduling Maghrib notification:", error)
+                } else {
+                    print("Maghrib notification scheduled successfully")
+                }
             }
+        } else {
+            // Handle the case where parsing the Maghrib time string fails
+            print("Error: Unable to parse Maghrib time string '\(maghribTimeString)'")
         }
     }
+
 }

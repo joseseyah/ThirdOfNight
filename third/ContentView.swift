@@ -12,32 +12,46 @@ struct ContentView: View {
     @State private var isFastingInProgress: Bool = true
     @State private var totalFastingDuration: TimeInterval?
 
+    @State private var isSettingsViewPresented = false // Added state for presenting SettingsView
+    @State private var isSurahMulkSheetPresented = false // Added state for presenting SurahMulkPageView as a sheet
+
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color(red: 204/255, green: 229/255, blue: 255/255), Color(red: 153/255, green: 204/255, blue: 255/255)]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 0) {
-                VStack(alignment: .leading) {
-                    Text("Night Supplication")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(.top, 20)
-                        .padding(.leading, 20)
-                    
-                    Text(viewModel.islamicDate)
-                        .font(.subheadline)
-                        .fontWeight(.bold)
-                        .foregroundColor(Color(red: 0/255, green: 121/255, blue: 153/255))
-                        .padding(.leading, 20)
-                    
-                    Text("\(viewModel.currentPlacemark?.administrativeArea ?? ""), \(viewModel.currentPlacemark?.country ?? "")")
-                        .font(.subheadline)
-                        .fontWeight(.bold)
-                        .foregroundColor(Color(red: 0/255, green: 121/255, blue: 153/255))
-                        .padding(.leading, 20)
-                        .padding(.bottom, 20)
+                HStack {
+                    Button(action: {
+                        // Present SettingsView when gear icon is tapped
+                        isSettingsViewPresented.toggle()
+                    }) {
+                        Image(systemName: "gear")
+                            .foregroundColor(.white)
+                            .padding(.leading, 20)
+                    }
+
+                    VStack(alignment: .leading) {
+                        Text("Night Supplication")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding(.top, 20)
+                            .padding(.leading, 20)
+                        
+                        Text(viewModel.islamicDate)
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color(red: 0/255, green: 121/255, blue: 153/255))
+                            .padding(.leading, 20)
+                        
+                        Text("\(viewModel.currentPlacemark?.administrativeArea ?? ""), \(viewModel.currentPlacemark?.country ?? "")")
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color(red: 0/255, green: 121/255, blue: 153/255))
+                            .padding(.leading, 20)
+                            .padding(.bottom, 20)
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 .background(Color.clear)
@@ -78,13 +92,15 @@ struct ContentView: View {
                         }
                     }
                 }
-                
-                if isSurahMulkExpanded {
-                    SurahMulkPageView(isExpanded: $isSurahMulkExpanded)
-                        .transition(.move(edge: .top))
-                        .zIndex(1)
-                }
             }
+        }
+        .sheet(isPresented: $isSettingsViewPresented) {
+            // Present SettingsView as a sheet
+            SettingView()
+        }
+        .sheet(isPresented: $isSurahMulkSheetPresented) {
+            // Present SurahMulkPageView as a sheet
+            SurahMulkPageView(isExpanded: $isSurahMulkExpanded)
         }
         .onTapGesture {
             withAnimation {
@@ -233,4 +249,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-

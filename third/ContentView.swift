@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var isSettingsViewPresented = false // Added state for presenting SettingsView
     @State private var isSurahMulkSheetPresented = false // Added state for presenting SurahMulkPageView
     @State private var isBasicPrayerGuidancePresented = false //as a sheet
+    @State private var isNamesOfAllahPresented = false
 
     var body: some View {
         ZStack {
@@ -106,6 +107,11 @@ struct ContentView: View {
             .sheet(isPresented: $isBasicPrayerGuidancePresented) {
                 BasicPrayerGuidance()
             }
+            
+            .sheet(isPresented: $isNamesOfAllahPresented) {
+                        // Present NamesOfAllahView as a sheet
+                NamesOfAllahView()
+            }
 
             .onTapGesture {
                 withAnimation {
@@ -131,6 +137,7 @@ struct ContentView: View {
                 },
                 namesOfAllahAction: {
                     // Action for names of Allah
+                    isNamesOfAllahPresented.toggle()
                 }
             )
         }

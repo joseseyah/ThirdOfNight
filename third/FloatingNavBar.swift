@@ -1,5 +1,16 @@
 import SwiftUI
 
+struct AllahIcon: View {
+    var body: some View {
+        Text("الله")
+            .font(.system(size: 15))
+            .foregroundColor(.white)
+            .padding(8)
+            .background(Color.blue) // Change color as needed
+            .clipShape(Circle())
+    }
+}
+
 struct FloatingNavBar: View {
     var prayerGuidanceAction: () -> Void
     var namesOfAllahAction: () -> Void
@@ -20,13 +31,9 @@ struct FloatingNavBar: View {
             Button(action: {
                 namesOfAllahAction()
             }) {
-                Image(systemName: "person.fill")
-                    .foregroundColor(.white)
-                    .padding(8)
-                    .background(Color.blue)
-                    .clipShape(Circle())
-                    .shadow(color: Color.blue.opacity(0.5), radius: 5, x: 0, y: 3)
+                AllahIcon()
             }
+
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 5)

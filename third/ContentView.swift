@@ -13,7 +13,8 @@ struct ContentView: View {
     @State private var totalFastingDuration: TimeInterval?
 
     @State private var isSettingsViewPresented = false // Added state for presenting SettingsView
-    @State private var isSurahMulkSheetPresented = false // Added state for presenting SurahMulkPageView as a sheet
+    @State private var isSurahMulkSheetPresented = false // Added state for presenting SurahMulkPageView
+    @State private var isBasicPrayerGuidancePresented = false //as a sheet
 
     var body: some View {
         ZStack {
@@ -101,6 +102,10 @@ struct ContentView: View {
             .sheet(isPresented: $isSurahMulkExpanded) {
                 SurahMulkPageView(isExpanded: $isSurahMulkExpanded)
             }
+        
+            .sheet(isPresented: $isBasicPrayerGuidancePresented) {
+                BasicPrayerGuidance()
+            }
 
             .onTapGesture {
                 withAnimation {
@@ -119,6 +124,15 @@ struct ContentView: View {
             }
             .navigationTitle("")
             .navigationBarHidden(true)
+            FloatingNavBar(
+                prayerGuidanceAction: {
+                    // Action for prayer guidance
+                    isBasicPrayerGuidancePresented.toggle()
+                },
+                namesOfAllahAction: {
+                    // Action for names of Allah
+                }
+            )
         }
     
     func calculateFastingProgress() {
@@ -249,3 +263,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+

@@ -78,7 +78,7 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         let city = self.currentPlacemark?.administrativeArea ?? ""
         let country = self.currentPlacemark?.country ?? ""
-        let method = 2 // Islamic Society of North America
+        let method = 15 // Islamic Society of North America
 
         guard let url = URL(string: "https://api.aladhan.com/v1/calendarByCity/\(currentDateAndMonth.year)/\(currentDateAndMonth.month)?city=\(city)&country=\(country)&method=\(method)") else {
             return

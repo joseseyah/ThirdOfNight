@@ -5,7 +5,7 @@ struct PrayerDetailView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("Obligatory Prayers")
+            Text(prayer == "Voluntary" ? "Voluntary Prayer" : "Obligatory Prayers")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255)) // Adjust color to match your app's theme
@@ -15,19 +15,26 @@ struct PrayerDetailView: View {
                 .fontWeight(.bold)
                 .foregroundColor(.white)
             
-            CircleNumberView(number: fardRakats(for: prayer), label: "Fard Rakats")
-            
-            Text(importanceDescription(for: prayer))
-                .foregroundColor(.white)
-                .multilineTextAlignment(.center) // Center-align the description
-            
-            HStack {
-                CircleNumberView(number: sunnahBeforeRakats(for: prayer), label: "Sunnah Before")
-                CircleNumberView(number: sunnahAfterRakats(for: prayer), label: "Sunnah After")
-            }
-            
-            if prayer == "Isha" {
-                CircleNumberView(number: "Odd", label: "Witr")
+            if prayer == "Voluntary" {
+                Text("Perform 2 rakats to pray at night to have a conversation with Allah, to complain about yourself. Do it in the dark, where nobody can see or hear you but Allah.")
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
+                    .padding()
+            } else {
+                CircleNumberView(number: fardRakats(for: prayer), label: "Fard Rakats")
+                
+                Text(importanceDescription(for: prayer))
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center) // Center-align the description
+                
+                HStack {
+                    CircleNumberView(number: sunnahBeforeRakats(for: prayer), label: "Sunnah Before")
+                    CircleNumberView(number: sunnahAfterRakats(for: prayer), label: "Sunnah After")
+                }
+                
+                if prayer == "Isha" {
+                    CircleNumberView(number: "Odd", label: "Witr")
+                }
             }
             
             Spacer()
@@ -107,8 +114,6 @@ struct PrayerDetailView: View {
     }
 }
 
-
-
 struct CircleNumberView: View {
     var number: String
     var label: String
@@ -127,6 +132,12 @@ struct CircleNumberView: View {
                 .foregroundColor(.white)
                 .font(.caption)
         }
+    }
+}
+
+struct PrayerDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        PrayerDetailView(prayer: "Voluntary")
     }
 }
 

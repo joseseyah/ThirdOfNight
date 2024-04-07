@@ -1,37 +1,48 @@
 import SwiftUI
 
-
 struct BasicPrayerGuidance: View {
     @Environment(\.presentationMode) var presentationMode
+    @State private var selectedTabIndex = 0
+    
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTabIndex) {
             PrayerDetailView(prayer: "Fajr")
                 .tabItem {
-                    Text("Fajr")
+                    Text("Obligatory Prayers")
                 }
+                .tag(0)
             
             PrayerDetailView(prayer: "Dhuhr")
                 .tabItem {
-                    Text("Dhuhr")
+                    Text("Obligatory Prayers")
                 }
+                .tag(1)
             
             PrayerDetailView(prayer: "Asr")
                 .tabItem {
-                    Text("Asr")
+                    Text("Obligatory Prayers")
                 }
+                .tag(2)
             
             PrayerDetailView(prayer: "Maghrib")
                 .tabItem {
-                    Text("Maghrib")
+                    Text("Obligatory Prayers")
                 }
+                .tag(3)
             
             PrayerDetailView(prayer: "Isha")
                 .tabItem {
-                    Text("Isha")
+                    Text("Obligatory Prayers")
                 }
+                .tag(4)
+            
+            PrayerDetailView(prayer: "Voluntary")
+                .tabItem {
+                    Text("Voluntary Prayer")
+                }
+                .tag(5)
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-        .navigationTitle("Obligatory Prayers")
+        .navigationTitle(selectedTabIndex == 5 ? "Voluntary Prayer" : "Obligatory Prayers")
     }
 }
-

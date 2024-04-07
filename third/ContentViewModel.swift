@@ -207,4 +207,3 @@ struct HijriMonth: Codable {
     let number: Int?
     let en: String?
 }
-

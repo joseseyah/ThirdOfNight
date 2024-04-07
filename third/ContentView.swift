@@ -12,20 +12,19 @@ struct ContentView: View {
     @State private var isFastingInProgress: Bool = true
     @State private var totalFastingDuration: TimeInterval?
 
-    @State private var isSettingsViewPresented = false // Added state for presenting SettingsView
-    @State private var isSurahMulkSheetPresented = false // Added state for presenting SurahMulkPageView
-    @State private var isBasicPrayerGuidancePresented = false //as a sheet
+    @State private var isSettingsViewPresented = false
+    @State private var isSurahMulkSheetPresented = false
+    @State private var isBasicPrayerGuidancePresented = false
     @State private var isNamesOfAllahPresented = false
 
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color(red: 0/255, green: 40/255, blue: 70/255), Color(red: 0/255, green: 30/255, blue: 50/255)]), startPoint: .top, endPoint: .bottom) // Darker background
+            LinearGradient(gradient: Gradient(colors: [Color(red: 0/255, green: 40/255, blue: 70/255), Color(red: 0/255, green: 30/255, blue: 50/255)]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 0) {
                 HStack {
                     Button(action: {
-                        // Present SettingsView when gear icon is tapped
                         isSettingsViewPresented.toggle()
                     }) {
                         Image(systemName: "gear")
@@ -34,7 +33,7 @@ struct ContentView: View {
                     }
 
                     VStack(alignment: .leading) {
-                        Text("Night Supplication")
+                        Text("Night Suplication")
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
@@ -44,13 +43,13 @@ struct ContentView: View {
                         Text(viewModel.islamicDate)
                             .font(.subheadline)
                             .fontWeight(.bold)
-                            .foregroundColor(Color(red: 150/255, green: 180/255, blue: 210/255)) // Adjusted text color
+                            .foregroundColor(Color(red: 150/255, green: 180/255, blue: 210/255))
                             .padding(.leading, 20)
                         
                         Text("\(viewModel.currentPlacemark?.administrativeArea ?? ""), \(viewModel.currentPlacemark?.country ?? "")")
                             .font(.subheadline)
                             .fontWeight(.bold)
-                            .foregroundColor(Color(red: 150/255, green: 180/255, blue: 210/255)) // Adjusted text color
+                            .foregroundColor(Color(red: 150/255, green: 180/255, blue: 210/255))
                             .padding(.leading, 20)
                             .padding(.bottom, 20)
                     }
@@ -79,6 +78,9 @@ struct ContentView: View {
                         MidnightTimeView(midnightTime: viewModel.midnightTimeView)
                             .padding(.horizontal, 20)
                         
+                        LastThirdOfNightView(lastThirdTime: lastThirdTime)
+                            .padding(.horizontal, 20)
+                        
                         CircularTimelineView(timings: ["Sunset", "Midnight", "Last Third", "Fajr", "Sunrise"])
                             .padding(.horizontal, 20)
                         
@@ -97,7 +99,6 @@ struct ContentView: View {
             }
         }
             .sheet(isPresented: $isSettingsViewPresented) {
-                // Present SettingsView as a sheet
                 SettingView()
             }
             .sheet(isPresented: $isSurahMulkExpanded) {
@@ -109,7 +110,6 @@ struct ContentView: View {
             }
             
             .sheet(isPresented: $isNamesOfAllahPresented) {
-                        // Present NamesOfAllahView as a sheet
                 NamesOfAllahView()
             }
 
@@ -121,7 +121,6 @@ struct ContentView: View {
             .onAppear {
                 viewModel.requestPermission()
                 calculateFastingProgress()
-                calculateMidnightTime()
                 calculateLastThirdOfNight()
                 updateCurrentTimeMarkerIndex()
             }
@@ -132,11 +131,9 @@ struct ContentView: View {
             .navigationBarHidden(true)
             FloatingNavBar(
                 prayerGuidanceAction: {
-                    // Action for prayer guidance
                     isBasicPrayerGuidancePresented.toggle()
                 },
                 namesOfAllahAction: {
-                    // Action for names of Allah
                     isNamesOfAllahPresented.toggle()
                 }
             )
@@ -169,39 +166,22 @@ struct ContentView: View {
         return String(format: "%02d:%02d", remainingHours, remainingMinutes)
     }
     
-    func calculateMidnightTime() {
-        guard let maghribTime = convertTimeStringToDecimal(viewModel.maghribTime),
-              let fajrTimeNextDay = convertTimeStringToDecimal(viewModel.fajrTimeNextDay)
-        else {
-            return
-        }
-        
-        var timeDifference = fajrTimeNextDay - maghribTime
-        
-        if timeDifference < 0 {
-            timeDifference += 24
-        }
-        
-        let midnightTimeDecimal = maghribTime + (timeDifference / 2)
-        
-        let midnightHour = Int(midnightTimeDecimal)
-        let midnightMinute = Int((midnightTimeDecimal - Double(midnightHour)) * 60)
-        
-        self.midnightTime = String(format: "%02d:%02d", midnightHour, midnightMinute)
-    }
-    
     func calculateLastThirdOfNight() {
-        guard let fajrTime = convertTimeStringToDecimal(viewModel.fajrTime) else {
+        guard let fajrTime = convertTimeStringToDecimal(viewModel.fajrTimeNextDay),
+              let maghribTime = convertTimeStringToDecimal(viewModel.maghribTime) else {
             return
         }
         
-        let lastThirdTimeDecimal = fajrTime - 2
+        let difference = fajrTime - maghribTime
+        let thirdOfTheDifference = difference / 3
+        let lastThirdStartTimeDecimal = maghribTime + thirdOfTheDifference
         
-        let lastThirdHour = Int(lastThirdTimeDecimal)
-        let lastThirdMinute = Int((lastThirdTimeDecimal - Double(lastThirdHour)) * 60)
+        let lastThirdHour = Int(lastThirdStartTimeDecimal)
+        let lastThirdMinute = Int((lastThirdStartTimeDecimal - Double(lastThirdHour)) * 60)
         
         self.lastThirdTime = String(format: "%02d:%02d", lastThirdHour, lastThirdMinute)
     }
+
 
     func convertTimeStringToDecimal(_ timeString: String) -> Double? {
         let components = timeString.components(separatedBy: ":")

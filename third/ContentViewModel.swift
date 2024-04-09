@@ -8,6 +8,7 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var maghribTime: String = ""
     @Published var fajrTimeNextDay: String = "" // Fajr time for the next day
     @Published var midnightTimeView: String = "" // Middle of the night time
+    @Published var lastThirdView: String = ""
     
     //for location purpose
     private let locationManager: CLLocationManager
@@ -49,15 +50,16 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
 
-    func getCurrentDateAndMonth() -> (year: Int, month: Int) {
+    func getCurrentDateAndMonth() -> (year: Int, month: Int, day: Int) {
         let currentDate = Date()
         let calendar = Calendar.current
         
         // Extract day and month components from the current date
         let year = calendar.component(.year, from: currentDate)
         let month = calendar.component(.month, from: currentDate)
+        let day = calendar.component(.day, from: currentDate)
         
-        return (year: year, month: month)
+        return (year: year, month: month, day: day)
     }
     
     func extractTime(from timeString: String) -> String {
@@ -70,6 +72,50 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             return maghribTime - fajrTime
     }
+    func calculateTotalNightDuration()-> TimeInterval? {
+        guard let fajrTime = convertTimeStringToDecimal(fajrTimeNextDay), let maghribTime = convertTimeStringToDecimal(maghribTime) else {
+            return nil
+        }
+        return maghribTime - fajrTime
+        
+    }
+    
+    func calculate1Third() -> String? {
+        guard let totalDuration = calculateTotalNightDuration() else {
+            return nil
+        }
+        
+        let oneThirdDuration = totalDuration / 3
+        let oneThirdTimeString = formatTimeInterval(timeInterval: oneThirdDuration)
+        
+        return addTimeStrings(timeString1: oneThirdTimeString, timeString2: maghribTime)
+    }
+
+
+
+
+    func formatTimeInterval(timeInterval: TimeInterval) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        return formatter.string(from: timeInterval)!
+    }
+
+    func addTimeStrings(timeString1: String, timeString2: String) -> String {
+        let time1Components = timeString1.split(separator: ":").compactMap { Int($0) }
+        let time2Components = timeString2.split(separator: ":").compactMap { Int($0) }
+
+        let hours = time1Components[0] + time2Components[0]
+        let minutes = time1Components[1] + time2Components[1]
+
+        let correctedHours = hours + (minutes / 60)
+        let correctedMinutes = minutes % 60
+
+        return String(format: "%02d:%02d", correctedHours, correctedMinutes)
+    }
+
+    
 
 
     func fetchPrayerTimes() {
@@ -79,6 +125,9 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         let city = self.currentPlacemark?.administrativeArea ?? ""
         let country = self.currentPlacemark?.country ?? ""
         let method = 15 // Islamic Society of North America
+        
+        let currentDay = currentDateAndMonth.day
+        let currentDayString = String(format: "%02d", currentDay)
 
         guard let url = URL(string: "https://api.aladhan.com/v1/calendarByCity/\(currentDateAndMonth.year)/\(currentDateAndMonth.month)?city=\(city)&country=\(country)&method=\(method)") else {
             return
@@ -95,10 +144,21 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                 let calendarResponse = try decoder.decode(CalendarResponse.self, from: data)
 
                 // Extract Islamic date, Fajr time, Maghrib time, and Midnight time from the response
-                guard let firstData = calendarResponse.data.first else {
-                    print("Error: Unable to extract data from response")
-                    return
+//                guard let firstData = calendarResponse.data.first else {
+//                    print("Error: Unable to extract data from response")
+//                    return
+//                }
+                
+                var arrayIndexToUse = 0
+                let dataArray: [PrayerTimeData] = calendarResponse.data ?? [PrayerTimeData]()
+                for (index, response) in dataArray.enumerated() {
+                    if response.date.gregorian?.day ?? "0" == currentDayString {
+//                        print("see index \(index)")
+                        arrayIndexToUse = index
+                        break
+                    }
                 }
+                let firstData = dataArray[arrayIndexToUse]
 
                 if let islamicDate = firstData.date.hijri,
                    let fajrTime = firstData.timings.fajr,
@@ -109,6 +169,10 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                         self.fajrTime = self.extractTime(from: fajrTime)
                         self.maghribTime = self.extractTime(from: maghribTime)
                         self.midnightTimeView = self.extractTime(from: midnightTime)
+                        if let oneThirdTime = self.calculate1Third() {
+                            self.lastThirdView = oneThirdTime
+                        }
+
 
                         // Schedule a notification 10 minutes before midnight
                         self.scheduleMidnightNotification(midnightTime: midnightTime)
@@ -184,6 +248,7 @@ struct PrayerTimings: Codable {
 
 struct DateInfo: Codable {
     let hijri: HijriDate?
+    let gregorian: Gregorian?
     // You can add more properties if needed
 }
 
@@ -201,6 +266,10 @@ struct HijriDate: Codable {
 
 struct Designation: Codable {
     let abbreviated: String?
+}
+
+struct Gregorian: Codable {
+    let day: String?
 }
 
 struct HijriMonth: Codable {

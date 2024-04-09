@@ -2,78 +2,65 @@ import SwiftUI
 
 struct SettingView: View {
     @AppStorage("isDarkMode") private var isDarkMode = false
-    @AppStorage("isDaytimePrayersEnabled") private var isDaytimePrayersEnabled = false
-
-    @State private var isMissionExpanded = false
-    @State private var isPrivacyExpanded = false
-    @State private var redirectToDaytimePrayers = false
-
-    // Keep track of the app's current scene phase
-    @Environment(\.scenePhase) private var scenePhase
-
+    @State private var isMissionExpanded = false // State variable to track mission dropdown
+    @State private var isPrivacyExpanded = false // State variable to track privacy policy dropdown
+    
     var body: some View {
         VStack {
             Text("Settings")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .foregroundColor(Color.blue)
+                .foregroundColor(Color.blue) // Set title color to blue
                 .padding(.bottom, 20)
             
             Toggle(isOn: $isDarkMode) {
                 Text("Dark Mode")
+                    .foregroundColor(isDarkMode ? .white : .black) // Adjust text color based on dark mode state
             }
             .padding(.bottom, 20)
             
-            Toggle(isOn: $isDaytimePrayersEnabled) {
-                Text("Enable Daytime Prayers")
-            }
-            .padding(.bottom, 20)
-            .onChange(of: isDaytimePrayersEnabled) { _ in
-                redirectToDaytimePrayers = isDaytimePrayersEnabled
-            }
-
+            // Our Mission section
             DisclosureGroup(
                 isExpanded: $isMissionExpanded,
                 content: {
                     Text("The Third of the Night app revolutionizes Tahajjud prayers, empowering Muslims to connect deeply with Allah during the sacred hours. Through innovative technology, the app facilitates a profound spiritual experience, allowing users to engage in intimate conversation with Allah, transforming nights into moments of profound connection and reflection.")
                         .padding()
-                        .foregroundColor(.black)
+                        .foregroundColor(isDarkMode ? .white : .black) // Adjust text color based on dark mode state
                 },
                 label: {
                     Text("Our Mission")
-                        .foregroundColor(.blue)
+                        .foregroundColor(Color.blue) // Adjusted label color to blue
                         .font(.headline)
                 }
             )
-            .accentColor(.blue)
-
+            .accentColor(Color.blue) // Adjusted accent color to blue
+            
+            // Privacy Policy section
             DisclosureGroup(
                 isExpanded: $isPrivacyExpanded,
                 content: {
                     Text("Our Privacy Policy ensures that your personal information is protected and used responsibly. We collect data only for enhancing your app experience and employ strict security measures to safeguard it. You have full control over your information, and we are committed to transparency and compliance with privacy regulations.")
                         .padding()
-                        .foregroundColor(.black)
+                        .foregroundColor(isDarkMode ? .white : .black) // Adjust text color based on dark mode state
                 },
                 label: {
                     Text("Privacy Policy")
-                        .foregroundColor(.blue)
+                        .foregroundColor(Color.blue) // Adjusted label color to blue
                         .font(.headline)
                 }
             )
-            .accentColor(.blue)
+            .accentColor(Color.blue) // Adjusted accent color to blue
             
             Spacer()
         }
         .padding()
         .preferredColorScheme(isDarkMode ? .dark : .light)
-        .fullScreenCover(isPresented: $redirectToDaytimePrayers) {
-            DaytimePrayersView()
-        }
-        .onChange(of: scenePhase) { newPhase in
-            // Reset the toggle state when the app moves to the background or terminates
-            if newPhase == .inactive || newPhase == .background {
-                isDaytimePrayersEnabled = false
-            }
-        }
     }
 }
+
+struct SettingView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingView()
+    }
+}
+

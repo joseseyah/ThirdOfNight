@@ -11,9 +11,23 @@ struct AllahIcon: View {
     }
 }
 
+struct QiblaIcon: View {
+    var body: some View {
+        Image(systemName: "location.north.line.fill")
+            .foregroundColor(.white)
+            .font(.system(size: 20))
+            .padding(8)
+            .background(Color.blue) // Change color as needed
+            .clipShape(Circle())
+    }
+}
+
+
 struct FloatingNavBar: View {
     var prayerGuidanceAction: () -> Void
     var namesOfAllahAction: () -> Void
+    var prayerTimesAction: () -> Void
+    var qiblaDirectionAction: () -> Void
 
     var body: some View {
         HStack(spacing: 15) {
@@ -34,6 +48,21 @@ struct FloatingNavBar: View {
                 AllahIcon()
             }
 
+            Button(action: {
+                prayerTimesAction()
+            }) {
+                Image(systemName: "clock.fill") // You can change the icon to an appropriate one
+                    .foregroundColor(.white)
+                    .padding(8)
+                    .background(Color.blue)
+                    .clipShape(Circle())
+                    .shadow(color: Color.blue.opacity(0.5), radius: 5, x: 0, y: 3)
+            }
+            Button(action: {
+                qiblaDirectionAction()
+            }) {
+                QiblaIcon() // Adding Qibla icon button
+            }
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 5)
@@ -43,6 +72,7 @@ struct FloatingNavBar: View {
         .shadow(color: Color.blue.opacity(0.5), radius: 10, x: 0, y: 5)
     }
 }
+
 
 struct Blur: UIViewRepresentable {
     let style: UIBlurEffect.Style

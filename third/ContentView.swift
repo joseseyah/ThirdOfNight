@@ -5,7 +5,7 @@ struct ContentView: View {
     @State private var isSurahMulkExpanded = false
     @State private var fastingProgress: Double = 0.0
     @State private var midnightTime: String = ""
-    @State private var lastThirdTime: String = "0:00"
+    @State private var lastThirdTime: String = ""
     @State private var fajrStartTime: String = ""
     @State private var currentTime: String = ""
     @State private var currentMarkerIndex: Int = 0
@@ -16,7 +16,8 @@ struct ContentView: View {
     @State private var isSurahMulkSheetPresented = false
     @State private var isBasicPrayerGuidancePresented = false
     @State private var isNamesOfAllahPresented = false
-    @State private var shouldRedirectToDaytimePrayers = false
+    @State private var isPrayerTimesPresented = false
+    @State private var isQiblaDirectionPresented = false
 
     var body: some View {
         ZStack {
@@ -34,14 +35,14 @@ struct ContentView: View {
                     }
 
                     VStack(alignment: .leading) {
-                        NavigationLink(destination: DaytimePrayersView()) {
-                            Text("Night Suplication")
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .padding(.top, 20)
-                                .padding(.leading, 20)
-                        }
+                        
+                        Text("Night Suplication")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding(.top, 20)
+                            .padding(.leading, 20)
+                        
                         
                         Text(viewModel.islamicDate)
                             .font(.subheadline)
@@ -83,8 +84,10 @@ struct ContentView: View {
                         MidnightTimeView(midnightTime: viewModel.midnightTimeView)
                             .padding(.horizontal, 20)
                         
-                        LastThirdOfNightView(lastThirdTime: $lastThirdTime)
+                        LastThirdOfNightView(lastThirdTime: $viewModel.lastThirdView)
                             .padding(.horizontal, 20)
+
+
                         
                         CircularTimelineView(timings: ["Sunset", "Midnight", "Last Third", "Fajr", "Sunrise"])
                             .padding(.horizontal, 20)
@@ -117,6 +120,10 @@ struct ContentView: View {
             .sheet(isPresented: $isNamesOfAllahPresented) {
                 NamesOfAllahView()
             }
+        
+            .sheet(isPresented: $isPrayerTimesPresented){
+                DaytimePrayersView()
+            }
 
             .onTapGesture {
                 withAnimation {
@@ -142,8 +149,15 @@ struct ContentView: View {
                 },
                 namesOfAllahAction: {
                     isNamesOfAllahPresented.toggle()
+                },
+                prayerTimesAction: {
+                    isPrayerTimesPresented.toggle()
+                },
+                qiblaDirectionAction: {
+                    isQiblaDirectionPresented.toggle()
                 }
             )
+
         }
     
     func calculateFastingProgress() {
@@ -265,9 +279,9 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}
 

@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct LastThirdOfNightView: View {
-    let lastThirdTime: String
+    @Binding var lastThirdTime: String
     @State private var isShowing = false // State variable to toggle animation
 
     var body: some View {

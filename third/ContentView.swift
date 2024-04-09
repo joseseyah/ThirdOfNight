@@ -4,10 +4,10 @@ struct ContentView: View {
     @ObservedObject private var viewModel = ContentViewModel()
     @State private var isSurahMulkExpanded = false
     @State private var fastingProgress: Double = 0.0
-    @State private var midnightTime: String = "23.41"
-    @State private var lastThirdTime: String = "00.59"
-    @State private var fajrStartTime: String = "04:09"
-    @State private var currentTime: String = "02.00"
+    @State private var midnightTime: String = ""
+    @State private var lastThirdTime: String = "0:00"
+    @State private var fajrStartTime: String = ""
+    @State private var currentTime: String = ""
     @State private var currentMarkerIndex: Int = 0
     @State private var isFastingInProgress: Bool = true
     @State private var totalFastingDuration: TimeInterval?
@@ -16,6 +16,7 @@ struct ContentView: View {
     @State private var isSurahMulkSheetPresented = false
     @State private var isBasicPrayerGuidancePresented = false
     @State private var isNamesOfAllahPresented = false
+    @State private var shouldRedirectToDaytimePrayers = false
 
     var body: some View {
         ZStack {
@@ -33,12 +34,14 @@ struct ContentView: View {
                     }
 
                     VStack(alignment: .leading) {
-                        Text("Night Suplication")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(.top, 20)
-                            .padding(.leading, 20)
+                        NavigationLink(destination: DaytimePrayersView()) {
+                            Text("Night Suplication")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .padding(.top, 20)
+                                .padding(.leading, 20)
+                        }
                         
                         Text(viewModel.islamicDate)
                             .font(.subheadline)
@@ -56,6 +59,8 @@ struct ContentView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .background(Color.clear)
+                
+                .navigationBarHidden(true)
                 
                 ScrollView {
                     VStack(spacing: 20) {
@@ -78,7 +83,7 @@ struct ContentView: View {
                         MidnightTimeView(midnightTime: viewModel.midnightTimeView)
                             .padding(.horizontal, 20)
                         
-                        LastThirdOfNightView(lastThirdTime: lastThirdTime)
+                        LastThirdOfNightView(lastThirdTime: $lastThirdTime)
                             .padding(.horizontal, 20)
                         
                         CircularTimelineView(timings: ["Sunset", "Midnight", "Last Third", "Fajr", "Sunrise"])
@@ -121,8 +126,10 @@ struct ContentView: View {
             .onAppear {
                 viewModel.requestPermission()
                 calculateFastingProgress()
-                calculateLastThirdOfNight()
+                
                 updateCurrentTimeMarkerIndex()
+                
+                calculateLastThirdOfNight()
             }
             .onReceive(Timer.publish(every: 60, on: .main, in: .common).autoconnect()) { _ in
                 updateProgressView()
@@ -169,18 +176,31 @@ struct ContentView: View {
     func calculateLastThirdOfNight() {
         guard let fajrTime = convertTimeStringToDecimal(viewModel.fajrTimeNextDay),
               let maghribTime = convertTimeStringToDecimal(viewModel.maghribTime) else {
+            print("Error: Unable to parse fajrTimeNextDay or maghribTime")
             return
         }
         
-        let difference = fajrTime - maghribTime
-        let thirdOfTheDifference = difference / 3
-        let lastThirdStartTimeDecimal = maghribTime + thirdOfTheDifference
+        print("Fajr Time Next Day:", fajrTime)
+        print("Maghrib Time:", maghribTime)
         
+        // Calculate the total night duration
+        let nightDuration = 24.0 - maghribTime + fajrTime
+        print("Night Duration:", nightDuration)
+        
+        // Calculate the start time of the last third of the night
+        let lastThirdStartTimeDecimal = fajrTime - nightDuration / 3.0
+        print("Last Third Start Time Decimal:", lastThirdStartTimeDecimal)
+        
+        // Convert the decimal time to hours and minutes
         let lastThirdHour = Int(lastThirdStartTimeDecimal)
         let lastThirdMinute = Int((lastThirdStartTimeDecimal - Double(lastThirdHour)) * 60)
         
+        // Format the last third time as a string
         self.lastThirdTime = String(format: "%02d:%02d", lastThirdHour, lastThirdMinute)
+        print("Last Third Time:", lastThirdTime)
     }
+
+
 
 
     func convertTimeStringToDecimal(_ timeString: String) -> Double? {

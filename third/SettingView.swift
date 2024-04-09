@@ -2,9 +2,15 @@ import SwiftUI
 
 struct SettingView: View {
     @AppStorage("isDarkMode") private var isDarkMode = false
-    @State private var isMissionExpanded = false // State variable to track mission dropdown
-    @State private var isPrivacyExpanded = false // State variable to track privacy policy dropdown
-    
+    @AppStorage("isDaytimePrayersEnabled") private var isDaytimePrayersEnabled = false
+
+    @State private var isMissionExpanded = false
+    @State private var isPrivacyExpanded = false
+    @State private var redirectToDaytimePrayers = false
+
+    // Keep track of the app's current scene phase
+    @Environment(\.scenePhase) private var scenePhase
+
     var body: some View {
         VStack {
             Text("Settings")
@@ -18,7 +24,14 @@ struct SettingView: View {
             }
             .padding(.bottom, 20)
             
-            // Our Mission section
+            Toggle(isOn: $isDaytimePrayersEnabled) {
+                Text("Enable Daytime Prayers")
+            }
+            .padding(.bottom, 20)
+            .onChange(of: isDaytimePrayersEnabled) { _ in
+                redirectToDaytimePrayers = isDaytimePrayersEnabled
+            }
+
             DisclosureGroup(
                 isExpanded: $isMissionExpanded,
                 content: {
@@ -28,13 +41,12 @@ struct SettingView: View {
                 },
                 label: {
                     Text("Our Mission")
-                        .foregroundColor(.blue) // Adjusted label color to blue
+                        .foregroundColor(.blue)
                         .font(.headline)
                 }
             )
-            .accentColor(.blue) // Adjusted accent color to blue
-            
-            // Privacy Policy section
+            .accentColor(.blue)
+
             DisclosureGroup(
                 isExpanded: $isPrivacyExpanded,
                 content: {
@@ -44,21 +56,24 @@ struct SettingView: View {
                 },
                 label: {
                     Text("Privacy Policy")
-                        .foregroundColor(.blue) // Adjusted label color to blue
+                        .foregroundColor(.blue)
                         .font(.headline)
                 }
             )
-            .accentColor(.blue) // Adjusted accent color to blue
+            .accentColor(.blue)
             
             Spacer()
         }
         .padding()
         .preferredColorScheme(isDarkMode ? .dark : .light)
-    }
-}
-
-struct SettingView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingView()
+        .fullScreenCover(isPresented: $redirectToDaytimePrayers) {
+            DaytimePrayersView()
+        }
+        .onChange(of: scenePhase) { newPhase in
+            // Reset the toggle state when the app moves to the background or terminates
+            if newPhase == .inactive || newPhase == .background {
+                isDaytimePrayersEnabled = false
+            }
+        }
     }
 }

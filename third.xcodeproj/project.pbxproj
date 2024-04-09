@@ -33,6 +33,7 @@
 		6D4361D02BC0FBD9007AE49C /* NamesofAllah.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361CF2BC0FBD9007AE49C /* NamesofAllah.swift */; };
 		6D4361D22BC0FC73007AE49C /* NamesOfAllahView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361D12BC0FC73007AE49C /* NamesOfAllahView.swift */; };
 		6D4361D42BC10459007AE49C /* NamesOfAllahDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361D32BC10459007AE49C /* NamesOfAllahDetailView.swift */; };
+		6D4361D82BC4BDEA007AE49C /* DaytimePrayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361D72BC4BDEA007AE49C /* DaytimePrayersView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		6D4361CF2BC0FBD9007AE49C /* NamesofAllah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamesofAllah.swift; sourceTree = "<group>"; };
 		6D4361D12BC0FC73007AE49C /* NamesOfAllahView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamesOfAllahView.swift; sourceTree = "<group>"; };
 		6D4361D32BC10459007AE49C /* NamesOfAllahDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamesOfAllahDetailView.swift; sourceTree = "<group>"; };
+		6D4361D72BC4BDEA007AE49C /* DaytimePrayersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaytimePrayersView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 				6D4361CB2BC0EC8F007AE49C /* BasicPrayerGuidance.swift */,
 				6D4361CD2BC0EF13007AE49C /* PrayerDetailView.swift */,
 				6D4361D32BC10459007AE49C /* NamesOfAllahDetailView.swift */,
+				6D4361D72BC4BDEA007AE49C /* DaytimePrayersView.swift */,
 			);
 			path = third;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				6D4361CE2BC0EF13007AE49C /* PrayerDetailView.swift in Sources */,
 				6D4361D22BC0FC73007AE49C /* NamesOfAllahView.swift in Sources */,
 				6D43617A2BB63E94007AE49C /* PrayerTimeView.swift in Sources */,
+				6D4361D82BC4BDEA007AE49C /* DaytimePrayersView.swift in Sources */,
 				6D4361D02BC0FBD9007AE49C /* NamesofAllah.swift in Sources */,
 				6D43614E2BB63D32007AE49C /* ContentView.swift in Sources */,
 				6D4361C62BC04C39007AE49C /* SettingView.swift in Sources */,

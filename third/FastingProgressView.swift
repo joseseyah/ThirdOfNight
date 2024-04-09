@@ -32,9 +32,11 @@ struct FastingProgressView: View {
                 RoundedRectangle(cornerRadius: 5)
                     .fill(progressColor(progress)) // Fill color based on progress
                     .frame(height: 10)
-                RoundedRectangle(cornerRadius: 5)
-                    .fill(Color.white)
-                    .frame(width: CGFloat(progress) * 150, height: 10) // Adjust width based on progress
+                GeometryReader { proxy in
+                    RoundedRectangle(cornerRadius: 5)
+                        .fill(Color.white)
+                    .frame(width: CGFloat(progress * self.getWidth(proxy: proxy)), height: 10)
+                } // Adjust width based on progress
             }
             .frame(height: 10)
             .padding(.horizontal, 20)
@@ -51,3 +53,18 @@ struct FastingProgressView: View {
     }
 }
 
+struct FastingProgressVieww_Previews: PreviewProvider {
+    static var previews: some View {
+        FastingProgressView(progress: 0.5, remainingTime: "00:40", totalDuration: 13.84)
+    }
+}
+
+extension View{
+    func getScreenBounds() -> CGRect{
+        return UIScreen.main.bounds
+    }
+    
+    func getWidth(proxy: GeometryProxy) -> CGFloat {
+        return proxy.size.width
+    }
+}

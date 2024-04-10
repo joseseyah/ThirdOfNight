@@ -72,19 +72,21 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             return maghribTime - fajrTime
     }
-    func calculateTotalNightDuration()-> TimeInterval? {
-        guard let fajrTime = convertTimeStringToDecimal(fajrTimeNextDay), let maghribTime = convertTimeStringToDecimal(maghribTime) else {
+    func calculateTotalNightDuration() -> TimeInterval? {
+        guard let fajrTimeDecimal = convertTimeStringToDecimal(fajrTimeNextDay),
+              let maghribTimeDecimal = convertTimeStringToDecimal(maghribTime) else {
             return nil
         }
-        return maghribTime - fajrTime
-        
+        return maghribTimeDecimal - fajrTimeDecimal
     }
+
+
     
     func calculate1Third() -> String? {
         guard let totalDuration = calculateTotalNightDuration() else {
             return nil
         }
-        
+        print(totalDuration)
         let oneThirdDuration = totalDuration / 3
         let oneThirdTimeString = formatTimeInterval(timeInterval: oneThirdDuration)
         
@@ -165,6 +167,8 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                    let maghribTime = firstData.timings.maghrib,
                    let midnightTime = firstData.timings.midnight {
                     DispatchQueue.main.async {
+                        print("Maghrib Time String:", maghribTime)
+
                         self.islamicDate = "\(islamicDate.getDisplayIslamicDate())"
                         self.fajrTime = self.extractTime(from: fajrTime)
                         self.maghribTime = self.extractTime(from: maghribTime)

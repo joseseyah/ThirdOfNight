@@ -84,8 +84,9 @@ struct ContentView: View {
                         MidnightTimeView(midnightTime: viewModel.midnightTimeView)
                             .padding(.horizontal, 20)
                         
-                        LastThirdOfNightView(lastThirdTime: $viewModel.lastThirdView)
+                        LastThirdOfNightView(lastThirdTime: viewModel.lastThirdView)
                             .padding(.horizontal, 20)
+
 
 
                         
@@ -135,8 +136,6 @@ struct ContentView: View {
                 calculateFastingProgress()
                 
                 updateCurrentTimeMarkerIndex()
-                
-                calculateLastThirdOfNight()
             }
             .onReceive(Timer.publish(every: 60, on: .main, in: .common).autoconnect()) { _ in
                 updateProgressView()

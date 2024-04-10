@@ -1,14 +1,7 @@
-//  LastThirdOfNightView.swift
-//  third
-//
-//  Created by Joseph Hayes on 07/04/2024.
-//
-
 import SwiftUI
 
 struct LastThirdOfNightView: View {
-    @Binding var lastThirdTime: String
-    @State private var isShowing = false // State variable to toggle animation
+    var lastThirdTime: String // Change to regular property
 
     var body: some View {
         VStack(spacing: 10) {
@@ -30,12 +23,6 @@ struct LastThirdOfNightView: View {
                 )
                 .padding(.horizontal, 20)
                 .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
-                .scaleEffect(isShowing ? 1.0 : 0.5)
-                .onAppear {
-                    withAnimation(.spring()) { // Apply spring animation effect
-                        self.isShowing = true // Toggle animation when view appears
-                    }
-                }
         }
         .padding(.top, 10)
         .padding(.bottom, 20)
@@ -43,3 +30,4 @@ struct LastThirdOfNightView: View {
         .cornerRadius(15)
     }
 }
+

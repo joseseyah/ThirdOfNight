@@ -34,6 +34,7 @@
 		6D4361D22BC0FC73007AE49C /* NamesOfAllahView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361D12BC0FC73007AE49C /* NamesOfAllahView.swift */; };
 		6D4361D42BC10459007AE49C /* NamesOfAllahDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361D32BC10459007AE49C /* NamesOfAllahDetailView.swift */; };
 		6D4361D82BC4BDEA007AE49C /* DaytimePrayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361D72BC4BDEA007AE49C /* DaytimePrayersView.swift */; };
+		6D4361DA2BC61D18007AE49C /* qiblaDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361D92BC61D18007AE49C /* qiblaDirection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		6D4361D12BC0FC73007AE49C /* NamesOfAllahView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamesOfAllahView.swift; sourceTree = "<group>"; };
 		6D4361D32BC10459007AE49C /* NamesOfAllahDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamesOfAllahDetailView.swift; sourceTree = "<group>"; };
 		6D4361D72BC4BDEA007AE49C /* DaytimePrayersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaytimePrayersView.swift; sourceTree = "<group>"; };
+		6D4361D92BC61D18007AE49C /* qiblaDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = qiblaDirection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 				6D4361CD2BC0EF13007AE49C /* PrayerDetailView.swift */,
 				6D4361D32BC10459007AE49C /* NamesOfAllahDetailView.swift */,
 				6D4361D72BC4BDEA007AE49C /* DaytimePrayersView.swift */,
+				6D4361D92BC61D18007AE49C /* qiblaDirection.swift */,
 			);
 			path = third;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				6D4361862BBA5A7C007AE49C /* CircularTimelineView.swift in Sources */,
 				6D4361C02BBB8066007AE49C /* EatingProgressView.swift in Sources */,
 				6D43617C2BB63F04007AE49C /* ContentViewModel.swift in Sources */,
+				6D4361DA2BC61D18007AE49C /* qiblaDirection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

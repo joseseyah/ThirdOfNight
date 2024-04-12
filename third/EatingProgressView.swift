@@ -33,7 +33,8 @@ struct EatingProgressView: View {
                     .frame(height: 10)
                 RoundedRectangle(cornerRadius: 5)
                     .fill(Color.white)
-                    .frame(width: CGFloat(progress) * 150, height: 10)
+//                    .frame(width: CGFloat(progress) * 150, height: 10)
+                    .frame(width: CGFloat(progress * getScreenBounds().width), height: 10) // Adjust width based on progress
             }
             .frame(height: 10)
             .padding(.horizontal, 20)

@@ -12,8 +12,10 @@ struct ContentView: View {
     @State private var isFastingInProgress: Bool = true
     @State private var totalFastingDuration: TimeInterval?
 
-    @State private var isSettingsViewPresented = false
-    @State private var isSurahMulkSheetPresented = false
+    @State private var isSettingsViewPresented = false // Added state for presenting SettingsView
+    @State private var isSurahMulkSheetPresented = false // Added state for presenting SurahMulkPageView as a sheet
+    
+    @State private var isFasting: Bool?
     @State private var isBasicPrayerGuidancePresented = false
     @State private var isNamesOfAllahPresented = false
     @State private var isPrayerTimesPresented = false
@@ -142,32 +144,37 @@ struct ContentView: View {
             }
             .navigationTitle("")
             .navigationBarHidden(true)
-            FloatingNavBar(
-                prayerGuidanceAction: {
-                    isBasicPrayerGuidancePresented.toggle()
-                },
-                namesOfAllahAction: {
-                    isNamesOfAllahPresented.toggle()
-                },
-                prayerTimesAction: {
-                    isPrayerTimesPresented.toggle()
-                },
-                qiblaDirectionAction: {
-                    isQiblaDirectionPresented.toggle()
-                }
-            )
+        
+        
+        FloatingNavBar(
+            prayerGuidanceAction: {
+                isBasicPrayerGuidancePresented.toggle()
+            },
+            namesOfAllahAction: {
+                isNamesOfAllahPresented.toggle()
+            },
+            prayerTimesAction: {
+                isPrayerTimesPresented.toggle()
+            },
+            qiblaDirectionAction: {
+                isQiblaDirectionPresented.toggle()
+            }
+        )
 
         }
     
     func calculateFastingProgress() {
-        guard let fajrTime = Double(viewModel.fajrTime), let maghribTime = Double(viewModel.maghribTime) else {
-            return
-        }
-        let currentTime = Date()
-        let totalFastingDuration = maghribTime - fajrTime
-        let elapsedFastingDuration = currentTime.timeIntervalSinceReferenceDate - fajrTime
-        let progress = elapsedFastingDuration / totalFastingDuration
-        self.fastingProgress = max(0.0, min(progress, 1.0))
+//        guard let fajrTime = Double(viewModel.fajrTime), let maghribTime = Double(viewModel.maghribTime) else {
+//            return
+//        }
+//        let currentTime = Date()
+//        let totalFastingDuration = maghribTime - fajrTime
+//        let elapsedFastingDuration = currentTime.timeIntervalSinceReferenceDate - fajrTime
+//        let progress = elapsedFastingDuration / totalFastingDuration
+//        self.fastingProgress = max(0.0, min(progress, 1.0))
+        
+        print("see fajr \(viewModel.fajrTime) and magh \(viewModel.maghribTime)")
+        self.fastingProgress = calculateFastingProgress(fajrTime: viewModel.fajrTime, maghribTime: viewModel.maghribTime) ?? 0.3
     }
     
     func remainingTimeUntilIftar() -> String {
@@ -175,17 +182,54 @@ struct ContentView: View {
             return "Error"
         }
         
+                
         let currentTime = Date()
         let maghribDate = Calendar.current.date(bySettingHour: Int(maghribTime), minute: Int((maghribTime - floor(maghribTime)) * 60), second: 0, of: currentTime)!
-        
+
         let remainingTimeInterval = maghribDate.timeIntervalSince(currentTime)
         
         let remainingHours = Int(remainingTimeInterval) / 3600
         let remainingMinutes = (Int(remainingTimeInterval) % 3600) / 60
         
+//        print("see ramaining hours \(remainingHours), and min \(remainingMinutes)")
+        if remainingHours < 1 && remainingMinutes < 1 {
+            setIsFastingProgress(to: false)
+        } else {
+            setIsFastingProgress(to: true)
+            print("no see isfastingprog \(isFastingInProgress)")
+        }
+        
         return String(format: "%02d:%02d", remainingHours, remainingMinutes)
     }
     
+    func setIsFastingProgress(to trueOrFalse: Bool){
+//        self.isFastingInProgress = trueOrFalse
+//        isFasting = trueOrFalse
+//        print("see isfastingprog \(self.isFastingInProgress)")
+    }
+    
+    func calculateMidnightTime() {
+        guard let maghribTime = convertTimeStringToDecimal(viewModel.maghribTime),
+              let fajrTimeNextDay = convertTimeStringToDecimal(viewModel.fajrTimeNextDay)
+        else {
+            return
+        }
+        
+        var timeDifference = fajrTimeNextDay - maghribTime
+        
+        if timeDifference < 0 {
+            timeDifference += 24
+        }
+        
+        let midnightTimeDecimal = maghribTime + (timeDifference / 2)
+        
+        let midnightHour = Int(midnightTimeDecimal)
+        let midnightMinute = Int((midnightTimeDecimal - Double(midnightHour)) * 60)
+        
+        self.midnightTime = String(format: "%02d:%02d", midnightHour, midnightMinute)
+    }
+    
+
     func calculateLastThirdOfNight() {
         guard let fajrTime = convertTimeStringToDecimal(viewModel.fajrTimeNextDay),
               let maghribTime = convertTimeStringToDecimal(viewModel.maghribTime) else {
@@ -245,27 +289,36 @@ struct ContentView: View {
     func updateProgressView() {
         let currentTimeDecimal = convertTimeStringToDecimal(currentTime) ?? 0.0
         
-        if currentMarkerIndex == 3 && currentTimeDecimal >= convertTimeStringToDecimal(viewModel.maghribTime) ?? 0.0 {
-            isFastingInProgress = false
-        }
+        print("see currenttimedecimal \(currentTimeDecimal)")
+//
+//        if currentMarkerIndex == 3 && currentTimeDecimal >= convertTimeStringToDecimal(viewModel.maghribTime) ?? 0.0 {
+//            isFastingInProgress = false
+//        }
+        
+        isFastingInProgress = isFasting ?? false
     }
     
     func eatingProgress() -> Double {
-        guard let fajrTime = Double(viewModel.fajrTime), let maghribTime = Double(viewModel.maghribTime) else {
-            return 0.0
-        }
-        let currentTime = Date().timeIntervalSince1970
-        let totalEatingDuration = fajrTime - maghribTime
-        let elapsedEatingDuration = currentTime - maghribTime
-        let progress = elapsedEatingDuration / totalEatingDuration
-        return max(0.0, min(progress, 1.0))
+        let currentTimes = Date().timeIntervalSince1970
+        print("see viewmodel fajr \(viewModel.fajrTime) and current time \(currentTimes)")
+
+//        guard let fajrTime = Double(viewModel.fajrTime), let maghribTime = Double(viewModel.maghribTime) else {
+//            return 0.8
+//        }
+//        let currentTime = Date().timeIntervalSince1970
+//        let totalEatingDuration = fajrTime - maghribTime
+//        let elapsedEatingDuration = currentTime - maghribTime
+//        let progress = elapsedEatingDuration / totalEatingDuration
+//        return max(0.0, min(progress, 1.0))
+        print("see fajr 2 \(viewModel.fajrTime) and magh 2 \(viewModel.maghribTime)")
+        return calculateEatingProgress(fajrTime: viewModel.fajrTime, maghribTime: viewModel.maghribTime) ?? 0.2
     }
     
     func remainingTimeUntilFajr() -> String {
         guard let fajrTime = convertTimeStringToDecimal(viewModel.fajrTime) else {
             return "Error"
         }
-        
+                
         let currentTime = Date()
         let fajrDate = Calendar.current.date(bySettingHour: Int(fajrTime), minute: Int((fajrTime - floor(fajrTime)) * 60), second: 0, of: currentTime)!
         
@@ -276,7 +329,79 @@ struct ContentView: View {
         
         return String(format: "%02d:%02d", remainingHours, remainingMinutes)
     }
+    
+    func calculateFastingProgress(fajrTime: String, maghribTime: String) -> Double? {
+        let currentTime = getCurrentTime()
+        // Convert times to minutes from midnight
+        guard let fajrMinutes = convertToMinutes(from: fajrTime),
+              let maghribMinutes = convertToMinutes(from: maghribTime),
+              let currentMinutes = convertToMinutes(from: currentTime) else {
+            return nil
+        }
+        
+        // Calculate total fasting duration in minutes
+        let totalFastingDuration = maghribMinutes - fajrMinutes
+        
+        // Calculate elapsed fasting time in minutes
+        var elapsedFastingTime = currentMinutes - fajrMinutes
+        if elapsedFastingTime < 0 {
+            // Adjust for the case when the current time is before Fajr of the same day
+            elapsedFastingTime += (24 * 60)
+        }
+        
+        // Calculate fasting progress as a percentage
+        let fastingProgress = (Double(elapsedFastingTime) / Double(totalFastingDuration)) // * 100.0
+        
+        return fastingProgress
+    }
+    
+    func calculateEatingProgress(fajrTime: String, maghribTime: String) -> Double? {
+        let currentTime = getCurrentTime()
+//        let currentTime = "22:25"
+        // Convert times to minutes from midnight
+        guard let fajrMinutes = convertToMinutes(from: fajrTime),
+              let maghribMinutes = convertToMinutes(from: maghribTime),
+              let currentMinutes = convertToMinutes(from: currentTime) else {
+            return nil
+        }
+        print("fajr min \(fajrMinutes), magh \(maghribMinutes) and curr \(currentMinutes)")
+        
+        // Calculate total fasting duration in minutes
+        let totalHoursInADay = 1440
+        let totalEatingDuration = (totalHoursInADay - maghribMinutes) + fajrMinutes
+        
+        // Calculate elapsed fasting time in minutes
+        var elapsedEatingTime = currentMinutes - maghribMinutes
+        if elapsedEatingTime < 0 {
+            // Adjust for the case when the current time is before Fajr of the same day
+            elapsedEatingTime += (24 * 60)
+        }
+        
+        // Calculate fasting progress as a percentage
+        let fastingProgress = (Double(elapsedEatingTime) / Double(totalEatingDuration))
+        print("See eating prog \(fastingProgress)")
+        
+        return fastingProgress
+    }
+
+
+    func convertToMinutes(from timeString: String) -> Int? {
+        let timeComponents = timeString.components(separatedBy: ":")
+        guard timeComponents.count == 2,
+              let hours = Int(timeComponents[0]),
+              let minutes = Int(timeComponents[1]) else {
+            return nil
+        }
+        return (hours * 60) + minutes
+    }
+
+    func getCurrentTime() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.string(from: Date())
+    }
 }
+
 
 //struct ContentView_Previews: PreviewProvider {
 //    static var previews: some View {

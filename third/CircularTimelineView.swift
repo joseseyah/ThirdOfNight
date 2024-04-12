@@ -6,7 +6,7 @@ struct CircularTimelineView: View {
     @State private var rotationAngle: Double = 0
     @State private var trackerAngle: Double = 0
     @State private var trackerTime: String = ""
-    @State private var timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
+    @State private var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
         VStack {
@@ -88,6 +88,7 @@ struct CircularTimelineView: View {
         }
         .onReceive(timer) { _ in
             updateTrackerTime()
+            updateStageText()
         }
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
             updateStageText()
@@ -95,13 +96,19 @@ struct CircularTimelineView: View {
     }
     
     private func updateStageText() {
-        guard let currentTime = Double(trackerTime) else { return }
-
-        if currentTime >= 0 && currentTime < 5.0 {
+        // Get the current time
+        let currentDate = Date()
+        
+        // Calculate the current hour
+        let calendar = Calendar.current
+        let currentTime = calendar.component(.hour, from: currentDate)
+        
+        
+        if currentTime >= 0 && currentTime < 5 {
             stageText = "Fajr Prayer"
-        } else if currentTime >= 5.0 && currentTime < 18.0 {
+        } else if currentTime >= 5 && currentTime < 18 {
             stageText = "Complete the fast"
-        } else if currentTime >= 18.0 && currentTime < 24.0 {
+        } else if currentTime >= 18 && currentTime < 24 {
             stageText = "Break Fast and pray"
         } else {
             stageText = "Isha has ended"
@@ -115,15 +122,21 @@ struct CircularTimelineView: View {
     }
 
     private func updateTrackerTime() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "H"
-        trackerTime = dateFormatter.string(from: Date())
+        // Get the current time
+        let currentDate = Date()
         
-        guard let currentTime = Double(trackerTime) else { return }
+        // Calculate the current second
+        let calendar = Calendar.current
+        let currentSecond = calendar.component(.hour, from: currentDate) // Change to .second
+        
+        // Calculate the angle based on the current second and the total number of timings
         let totalTimings = Double(timings.count)
-        let angle = (currentTime.truncatingRemainder(dividingBy: totalTimings) / totalTimings) * 2 * .pi
+        let angle = -(Double(currentSecond).truncatingRemainder(dividingBy: totalTimings) / totalTimings) * 2 * .pi // Change sign here
+        
+        // Set the tracker angle to rotate the red circle along the orbit
         self.trackerAngle = angle - .pi / 2
     }
+
 }
 
 struct CircularTimelineView_Previews: PreviewProvider {

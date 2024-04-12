@@ -10,6 +10,10 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var midnightTimeView: String = "" // Middle of the night time
     @Published var lastThirdView: String = ""
     
+    @Published var dhuhr: String = ""
+    @Published var asr: String = ""
+    @Published var isha: String = ""
+    
     //for location purpose
     private let locationManager: CLLocationManager
     @Published var authorizationStatus: CLAuthorizationStatus
@@ -135,6 +139,7 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             return
         }
 
+        print("https://api.aladhan.com/v1/calendarByCity/\(currentDateAndMonth.year)/\(currentDateAndMonth.month)?city=\(city)&country=\(country)&method=\(method)")
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else {
                 print("Error fetching prayer times:", error?.localizedDescription ?? "Unknown error")
@@ -144,43 +149,38 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             do {
                 let decoder = JSONDecoder()
                 let calendarResponse = try decoder.decode(CalendarResponse.self, from: data)
-
-                // Extract Islamic date, Fajr time, Maghrib time, and Midnight time from the response
-//                guard let firstData = calendarResponse.data.first else {
-//                    print("Error: Unable to extract data from response")
-//                    return
-//                }
                 
                 var arrayIndexToUse = 0
                 let dataArray: [PrayerTimeData] = calendarResponse.data ?? [PrayerTimeData]()
                 for (index, response) in dataArray.enumerated() {
                     if response.date.gregorian?.day ?? "0" == currentDayString {
-//                        print("see index \(index)")
                         arrayIndexToUse = index
                         break
                     }
                 }
-                let firstData = dataArray[arrayIndexToUse]
+                let todayData = dataArray[arrayIndexToUse]
 
-                if let islamicDate = firstData.date.hijri,
-                   let fajrTime = firstData.timings.fajr,
-                   let maghribTime = firstData.timings.maghrib,
-                   let midnightTime = firstData.timings.midnight {
+                if let fajrTime = todayData.timings.fajr,
+                   let dhuhrTime = todayData.timings.dhuhr,
+                   let asrTime = todayData.timings.asr,
+                   let maghribTime = todayData.timings.maghrib,
+                   let ishaTime = todayData.timings.isha {
+
+                    // Extract and store prayer times for display in your app
                     DispatchQueue.main.async {
-                        print("Maghrib Time String:", maghribTime)
-
-                        self.islamicDate = "\(islamicDate.getDisplayIslamicDate())"
                         self.fajrTime = self.extractTime(from: fajrTime)
+                        self.dhuhr = self.extractTime(from: dhuhrTime)
+                        self.asr = self.extractTime(from: asrTime)
                         self.maghribTime = self.extractTime(from: maghribTime)
-                        self.midnightTimeView = self.extractTime(from: midnightTime)
-                        if let oneThirdTime = self.calculate1Third() {
-                            self.lastThirdView = oneThirdTime
-                        }
-
-
-                        // Schedule a notification 10 minutes before midnight
-                        self.scheduleMidnightNotification(midnightTime: midnightTime)
+                        self.isha = self.extractTime(from: ishaTime)
                     }
+                    
+                    // Schedule notifications for each prayer time
+                    self.schedulePrayerNotification(prayerTime: fajrTime, title: "Fajr Prayer Reminder", body: "It's almost time for Fajr prayer. Make sure you have Wudu.")
+                    self.schedulePrayerNotification(prayerTime: dhuhrTime, title: "Dhuhr Prayer Reminder", body: "It's almost time for Dhuhr prayer. Make sure you have Wudu.")
+                    self.schedulePrayerNotification(prayerTime: asrTime, title: "Asr Prayer Reminder", body: "It's almost time for Asr prayer. Make sure you have Wudu.")
+                    self.schedulePrayerNotification(prayerTime: maghribTime, title: "Maghrib Prayer Reminder", body: "It's almost time for Maghrib prayer. Make sure you have Wudu.")
+                    self.schedulePrayerNotification(prayerTime: ishaTime, title: "Isha Prayer Reminder", body: "It's almost time for Isha prayer. Make sure you have Wudu.")
                 } else {
                     print("Error: Prayer timings not found in response")
                 }
@@ -191,6 +191,42 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
         task.resume()
     }
+
+    func schedulePrayerNotification(prayerTime: String, title: String, body: String) {
+        guard let prayerTimeDecimal = convertTimeStringToDecimal(prayerTime) else { return }
+
+        // Calculate notification trigger time (10 minutes before prayer time)
+        let notificationTime = prayerTimeDecimal - (10.0 / 60.0)
+        
+        // Check if notification for this prayer time has already been scheduled
+        let notificationIdentifier = "PrayerReminder_\(prayerTime)"
+        if UserDefaults.standard.bool(forKey: notificationIdentifier) {
+            print("Notification for \(prayerTime) already scheduled")
+            return
+        }
+
+        var dateComponents = Calendar.current.dateComponents([.hour, .minute], from: Date())
+        dateComponents.hour = Int(notificationTime)
+        dateComponents.minute = Int((notificationTime - Double(Int(notificationTime))) * 60)
+
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        let request = UNNotificationRequest(identifier: notificationIdentifier, content: content, trigger: trigger)
+
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error scheduling prayer notification: \(error.localizedDescription)")
+            } else {
+                print("Prayer notification for \(prayerTime) scheduled successfully")
+                // Store flag indicating notification has been scheduled for this prayer time
+                UserDefaults.standard.set(true, forKey: notificationIdentifier)
+            }
+        }
+    }
+
     
     func convertTimeStringToDecimal(_ timeString: String) -> Double? {
             let components = timeString.components(separatedBy: ":")
@@ -205,7 +241,15 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     func scheduleMidnightNotification(midnightTime: String) {
         guard let midnightTimeDecimal = convertTimeStringToDecimal(midnightTime) else { return }
+
+        let notificationIdentifier = "MidnightReminder"
         
+        // Check if notification is already scheduled
+        if UserDefaults.standard.bool(forKey: notificationIdentifier) {
+            print("Notification already scheduled")
+            return
+        }
+
         let content = UNMutableNotificationContent()
         content.title = "Midnight Reminder"
         content.body = "Midnight is approaching. Make sure you have completed Isha."
@@ -217,20 +261,23 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         dateComponents.minute = Int((notificationTime - Double(Int(notificationTime))) * 60)
 
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-        let request = UNNotificationRequest(identifier: "MidnightReminder", content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: notificationIdentifier, content: content, trigger: trigger)
 
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
                 print("Error scheduling notification: \(error.localizedDescription)")
             } else {
                 print("Notification scheduled successfully")
+                // Store flag indicating notification has been scheduled
+                UserDefaults.standard.set(true, forKey: notificationIdentifier)
             }
         }
     }
+
 }
 
 struct CalendarResponse: Codable {
-    let data: [PrayerTimeData]
+    let data: [PrayerTimeData]?
 }
 
 struct PrayerTimeData: Codable {
@@ -241,12 +288,18 @@ struct PrayerTimeData: Codable {
 struct PrayerTimings: Codable {
     let fajr: String?
     let maghrib: String?
-    let midnight: String? // Add midnight property
+    let midnight: String?
+    let dhuhr: String?
+    let asr: String?
+    let isha:String?
     
     private enum CodingKeys: String, CodingKey {
         case fajr = "Fajr"
         case maghrib = "Maghrib"
-        case midnight = "Midnight" // Map to the appropriate key in API response
+        case midnight = "Midnight"
+        case dhuhr = "Dhuhr"
+        case asr = "Asr"
+        case isha = "Isha"
     }
 }
 
@@ -280,3 +333,15 @@ struct HijriMonth: Codable {
     let number: Int?
     let en: String?
 }
+
+extension Data
+{
+    func printJSON()
+    {
+        if let JSONString = String(data: self, encoding: String.Encoding.utf8)
+        {
+            print(JSONString)
+        }
+    }
+}
+

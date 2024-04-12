@@ -47,6 +47,7 @@ struct FastingProgressView: View {
 
     // Function to calculate progress bar color based on progress
     private func progressColor(_ progress: Double) -> Color {
+//        print("Progress is " + progress)
         let blue = Color(red: 0/255, green: 121/255, blue: 153/255)
         let white = Color.white
         return progress == 1.0 ? white : blue

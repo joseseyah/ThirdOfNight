@@ -19,10 +19,10 @@ struct DaytimePrayersView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         PrayerRowView(prayerName: "Fajr", prayerTime: viewModel.fajrTime)
-                        PrayerRowView(prayerName: "Dhuhr", prayerTime: "12:30")
-                        PrayerRowView(prayerName: "Asr", prayerTime: "15:45")
+                        PrayerRowView(prayerName: "Dhuhr", prayerTime: viewModel.dhuhr)
+                        PrayerRowView(prayerName: "Asr", prayerTime: viewModel.asr)
                         PrayerRowView(prayerName: "Maghrib", prayerTime: viewModel.maghribTime)
-                        PrayerRowView(prayerName: "Isha", prayerTime: "20:00")
+                        PrayerRowView(prayerName: "Isha", prayerTime: viewModel.isha)
                     }
                     .padding()
                     .background(Color.white.opacity(0.9)) // Semi-transparent white background

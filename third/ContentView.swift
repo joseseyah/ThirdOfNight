@@ -127,6 +127,9 @@ struct ContentView: View {
             .sheet(isPresented: $isPrayerTimesPresented){
                 DaytimePrayersView()
             }
+            .sheet(isPresented: $isQiblaDirectionPresented) {
+                QiblaDirectionView()
+            }
 
             .onTapGesture {
                 withAnimation {

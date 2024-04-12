@@ -2,6 +2,7 @@ import SwiftUI
 
 struct QiblaDirectionView: View {
     @State private var direction: Double?
+    @State private var isLoading: Bool = false
     
     let apiURL = "http://api.aladhan.com/v1/qibla/"
     let latitude = 25.4106386
@@ -9,11 +10,15 @@ struct QiblaDirectionView: View {
     
     var body: some View {
         VStack {
-            if let direction = direction {
+            if isLoading {
+                ProgressView()
+                    .padding()
+            } else if let direction = direction {
                 CompassView(direction: direction)
                     .padding()
             } else {
-                ProgressView()
+                Text("Failed to fetch Qibla direction.")
+                    .foregroundColor(.red)
                     .padding()
             }
         }
@@ -23,12 +28,19 @@ struct QiblaDirectionView: View {
     }
     
     func fetchQiblaDirection() {
+        isLoading = true
+        
         guard let url = URL(string: "\(apiURL)\(latitude)/\(longitude)") else {
             print("Invalid API URL")
+            isLoading = false
             return
         }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
+            defer {
+                isLoading = false
+            }
+            
             if let error = error {
                 print("Error: \(error)")
                 return
@@ -60,12 +72,12 @@ struct CompassView: View {
     
     var body: some View {
         VStack {
-            Image(systemName: "location.north.line.fill")
+            Image(systemName: "compass")
                 .font(.system(size: 100))
                 .rotationEffect(.degrees(-direction))
                 .padding()
             
-            Text("Qibla Direction: \(String(format: "%.2f", direction))°")
+            Text("Compass Direction: \(String(format: "%.2f", direction))°")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.black)
@@ -76,3 +88,4 @@ struct CompassView: View {
         .shadow(radius: 5)
     }
 }
+

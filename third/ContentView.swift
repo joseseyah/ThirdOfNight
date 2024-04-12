@@ -23,8 +23,16 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color(red: 0/255, green: 40/255, blue: 70/255), Color(red: 0/255, green: 30/255, blue: 50/255)]), startPoint: .top, endPoint: .bottom)
-                .edgesIgnoringSafeArea(.all)
+//            LinearGradient(gradient: Gradient(colors: [Color(red: 0/255, green: 40/255, blue: 70/255), Color(red: 0/255, green: 30/255, blue: 50/255)]), startPoint: .top, endPoint: .bottom)
+//                .edgesIgnoringSafeArea(.all)
+            LinearGradient(gradient: Gradient(colors: [Color(red: 0/255, green: 0/255, blue: 20/255), Color(red: 0/255, green: 0/255, blue: 70/255)]), startPoint: .top, endPoint: .bottom)
+                            .edgesIgnoringSafeArea(.all)
+            // Stars
+            NightSkyView()
+                .edgesIgnoringSafeArea(.top)
+            
+            LandscapeView()
+                .edgesIgnoringSafeArea(.bottom)
             
             VStack(spacing: 0) {
                 HStack {
@@ -38,7 +46,7 @@ struct ContentView: View {
 
                     VStack(alignment: .leading) {
                         
-                        Text("Night Suplication")
+                        Text("Night Supplication")
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
@@ -210,58 +218,6 @@ struct ContentView: View {
 //        isFasting = trueOrFalse
 //        print("see isfastingprog \(self.isFastingInProgress)")
     }
-    
-    func calculateMidnightTime() {
-        guard let maghribTime = convertTimeStringToDecimal(viewModel.maghribTime),
-              let fajrTimeNextDay = convertTimeStringToDecimal(viewModel.fajrTimeNextDay)
-        else {
-            return
-        }
-        
-        var timeDifference = fajrTimeNextDay - maghribTime
-        
-        if timeDifference < 0 {
-            timeDifference += 24
-        }
-        
-        let midnightTimeDecimal = maghribTime + (timeDifference / 2)
-        
-        let midnightHour = Int(midnightTimeDecimal)
-        let midnightMinute = Int((midnightTimeDecimal - Double(midnightHour)) * 60)
-        
-        self.midnightTime = String(format: "%02d:%02d", midnightHour, midnightMinute)
-    }
-    
-
-    func calculateLastThirdOfNight() {
-        guard let fajrTime = convertTimeStringToDecimal(viewModel.fajrTimeNextDay),
-              let maghribTime = convertTimeStringToDecimal(viewModel.maghribTime) else {
-            print("Error: Unable to parse fajrTimeNextDay or maghribTime")
-            return
-        }
-        
-        print("Fajr Time Next Day:", fajrTime)
-        print("Maghrib Time:", maghribTime)
-        
-        // Calculate the total night duration
-        let nightDuration = 24.0 - maghribTime + fajrTime
-        print("Night Duration:", nightDuration)
-        
-        // Calculate the start time of the last third of the night
-        let lastThirdStartTimeDecimal = fajrTime - nightDuration / 3.0
-        print("Last Third Start Time Decimal:", lastThirdStartTimeDecimal)
-        
-        // Convert the decimal time to hours and minutes
-        let lastThirdHour = Int(lastThirdStartTimeDecimal)
-        let lastThirdMinute = Int((lastThirdStartTimeDecimal - Double(lastThirdHour)) * 60)
-        
-        // Format the last third time as a string
-        self.lastThirdTime = String(format: "%02d:%02d", lastThirdHour, lastThirdMinute)
-        print("Last Third Time:", lastThirdTime)
-    }
-
-
-
 
     func convertTimeStringToDecimal(_ timeString: String) -> Double? {
         let components = timeString.components(separatedBy: ":")
@@ -405,10 +361,45 @@ struct ContentView: View {
     }
 }
 
+// Night Sky View
+struct NightSkyView: View {
+    @State private var moonOffset: CGFloat = -100 // Initial moon offset
+    
+    var body: some View {
+        ZStack {
+            // Background Image
+            Image("night_sky_background") // Replace "night_sky_background" with the name of your night sky image
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 300) // Adjust height as needed
+                .opacity(0.8) // Adjust opacity to blend with background gradient
+            
+            // Moon
+            Image("moon")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 100, height: 100) // Adjust moon size as needed
+                .offset(x: moonOffset, y: -100) // Initial offset and position
+            
+        }
+        .onAppear {
+            withAnimation(Animation.linear(duration: 20).repeatForever(autoreverses: false)) {
+                self.moonOffset = UIScreen.main.bounds.width + 100 // Final offset position (off-screen)
+            }
+        }
+    }
+}
 
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}
+
+
+// Landscape View
+struct LandscapeView: View {
+    var body: some View {
+        Image("landscape")
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .edgesIgnoringSafeArea(.bottom)
+    }
+}
 

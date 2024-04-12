@@ -35,6 +35,7 @@
 		6D4361D42BC10459007AE49C /* NamesOfAllahDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361D32BC10459007AE49C /* NamesOfAllahDetailView.swift */; };
 		6D4361D82BC4BDEA007AE49C /* DaytimePrayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361D72BC4BDEA007AE49C /* DaytimePrayersView.swift */; };
 		6D4361DA2BC61D18007AE49C /* qiblaDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361D92BC61D18007AE49C /* qiblaDirection.swift */; };
+		6D4361DF2BC92D6A007AE49C /* sunMovementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4361DE2BC92D6A007AE49C /* sunMovementView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		6D4361D32BC10459007AE49C /* NamesOfAllahDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamesOfAllahDetailView.swift; sourceTree = "<group>"; };
 		6D4361D72BC4BDEA007AE49C /* DaytimePrayersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaytimePrayersView.swift; sourceTree = "<group>"; };
 		6D4361D92BC61D18007AE49C /* qiblaDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = qiblaDirection.swift; sourceTree = "<group>"; };
+		6D4361DE2BC92D6A007AE49C /* sunMovementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sunMovementView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 				6D4361D32BC10459007AE49C /* NamesOfAllahDetailView.swift */,
 				6D4361D72BC4BDEA007AE49C /* DaytimePrayersView.swift */,
 				6D4361D92BC61D18007AE49C /* qiblaDirection.swift */,
+				6D4361DE2BC92D6A007AE49C /* sunMovementView.swift */,
 			);
 			path = third;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 				6D4361D42BC10459007AE49C /* NamesOfAllahDetailView.swift in Sources */,
 				6D4361CC2BC0EC8F007AE49C /* BasicPrayerGuidance.swift in Sources */,
 				6D4361C22BC013BF007AE49C /* NotificationManager.swift in Sources */,
+				6D4361DF2BC92D6A007AE49C /* sunMovementView.swift in Sources */,
 				6D4361842BBA2567007AE49C /* LastThirdOfNightView.swift in Sources */,
 				6D43617E2BB643BA007AE49C /* ProgressBar.swift in Sources */,
 				6D4361862BBA5A7C007AE49C /* CircularTimelineView.swift in Sources */,

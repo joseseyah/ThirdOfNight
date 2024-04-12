@@ -15,17 +15,18 @@ struct NameOfAllahDetailView: View {
                 .foregroundColor(.blue)
                 .overlay(
                     Text(name.arabicName)
-                        .foregroundColor(.white)
+                        .foregroundColor(Color.white)
                         .font(.system(size: 48, weight: .bold))
                 )
             
             Text(name.transliteration)
                 .font(.title)
                 .fontWeight(.bold)
-                .foregroundColor(.white)
+                .foregroundColor(Color.primary)
+                .colorScheme(.light)
             
             Text(name.definition)
-                .foregroundColor(.white)
+                .foregroundColor(Color.primary)
                 .multilineTextAlignment(.center)
                 .padding()
             

@@ -76,26 +76,71 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             return maghribTime - fajrTime
     }
-    func calculateTotalNightDuration() -> TimeInterval? {
-        guard let fajrTimeDecimal = convertTimeStringToDecimal(fajrTimeNextDay),
-              let maghribTimeDecimal = convertTimeStringToDecimal(maghribTime) else {
+    func calculateTotalNightDuration(fajrTimeNextDay: String, maghribTime: String) -> TimeInterval? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        
+        guard let fajrTimeNextDayDate = dateFormatter.date(from: fajrTimeNextDay) else {
+            print("Error: Unable to parse Fajr time")
             return nil
         }
-        return maghribTimeDecimal - fajrTimeDecimal
+        
+        guard let maghribTimeDate = dateFormatter.date(from: maghribTime) else {
+            print("Error: Unable to parse Maghrib time")
+            return nil
+        }
+        
+        // If Fajr time is earlier than Maghrib time, it means Fajr time is on the next day
+        var fajrTimeAdjusted = fajrTimeNextDayDate
+        if fajrTimeNextDayDate < maghribTimeDate {
+            // Adjust Fajr time to be on the same day by adding 1 day
+            fajrTimeAdjusted = Calendar.current.date(byAdding: .day, value: 1, to: fajrTimeNextDayDate)!
+        }
+        
+        // Calculate the time interval between Fajr of the next day and Maghrib of the current day
+        let totalNightDuration = fajrTimeAdjusted.timeIntervalSince(maghribTimeDate)
+        
+        print("Total night duration: \(totalNightDuration)")
+        
+        return totalNightDuration
     }
+
+
+
 
 
     
-    func calculate1Third() -> String? {
-        guard let totalDuration = calculateTotalNightDuration() else {
+    func calculate1Third(fajrTimeNextDay: String, maghribTime: String) -> String? {
+        guard let totalNightDuration = calculateTotalNightDuration(fajrTimeNextDay: fajrTimeNextDay, maghribTime: maghribTime) else {
+            print("Error: Unable to calculate total night duration")
             return nil
         }
-        print(totalDuration)
-        let oneThirdDuration = totalDuration / 3
-        let oneThirdTimeString = formatTimeInterval(timeInterval: oneThirdDuration)
         
-        return addTimeStrings(timeString1: oneThirdTimeString, timeString2: maghribTime)
+        // Divide the total night duration by 3 and multiply by 2
+        let oneThirdDuration = totalNightDuration / 3
+        
+        print("Total night duration: \(totalNightDuration)")
+        print("One third duration: \(oneThirdDuration)")
+        
+        // Parse Maghrib time
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        
+        guard let maghribTimeDate = dateFormatter.date(from: maghribTime) else {
+            print("Error: Unable to parse Maghrib time")
+            return nil
+        }
+        
+        // Add one third duration to Maghrib time
+        let oneThirdDate = maghribTimeDate.addingTimeInterval(oneThirdDuration + oneThirdDuration)
+        let formattedOneThirdTime = dateFormatter.string(from: oneThirdDate)
+        print("Formatted one third time: \(formattedOneThirdTime)")
+        
+        return formattedOneThirdTime
     }
+
+
+
 
 
 
@@ -120,12 +165,11 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
         return String(format: "%02d:%02d", correctedHours, correctedMinutes)
     }
-
     
 
 
     func fetchPrayerTimes() {
-        //please get current year and current month
+        // Get current year and current month
         let currentDateAndMonth = getCurrentDateAndMonth()
         
         let city = self.currentPlacemark?.administrativeArea ?? ""
@@ -134,18 +178,18 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         let currentDay = currentDateAndMonth.day
         let currentDayString = String(format: "%02d", currentDay)
-
+        
         guard let url = URL(string: "https://api.aladhan.com/v1/calendarByCity/\(currentDateAndMonth.year)/\(currentDateAndMonth.month)?city=\(city)&country=\(country)&method=\(method)") else {
             return
         }
-
+        
         print("https://api.aladhan.com/v1/calendarByCity/\(currentDateAndMonth.year)/\(currentDateAndMonth.month)?city=\(city)&country=\(country)&method=\(method)")
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else {
                 print("Error fetching prayer times:", error?.localizedDescription ?? "Unknown error")
                 return
             }
-
+            
             do {
                 let decoder = JSONDecoder()
                 let calendarResponse = try decoder.decode(CalendarResponse.self, from: data)
@@ -159,38 +203,64 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                     }
                 }
                 let todayData = dataArray[arrayIndexToUse]
-
-                if let fajrTime = todayData.timings.fajr,
+                
+                if let islamicDate = todayData.date.hijri,
+                   let fajrTime = todayData.timings.fajr,
                    let dhuhrTime = todayData.timings.dhuhr,
                    let asrTime = todayData.timings.asr,
                    let maghribTime = todayData.timings.maghrib,
+                   let midnightTime = todayData.timings.midnight,
                    let ishaTime = todayData.timings.isha {
-
+                    
                     // Extract and store prayer times for display in your app
                     DispatchQueue.main.async {
+                        self.islamicDate = "\(islamicDate.getDisplayIslamicDate())"
                         self.fajrTime = self.extractTime(from: fajrTime)
                         self.dhuhr = self.extractTime(from: dhuhrTime)
                         self.asr = self.extractTime(from: asrTime)
                         self.maghribTime = self.extractTime(from: maghribTime)
                         self.isha = self.extractTime(from: ishaTime)
+                        self.midnightTimeView = self.extractTime(from: midnightTime)
+                        
+                        // Schedule notifications for each prayer time
+                        self.schedulePrayerNotification(prayerTime: fajrTime, title: "Fajr Prayer Reminder", body: "It's almost time for Fajr prayer. Make sure you have Wudu.")
+                        self.schedulePrayerNotification(prayerTime: dhuhrTime, title: "Dhuhr Prayer Reminder", body: "It's almost time for Dhuhr prayer. Make sure you have Wudu.")
+                        self.schedulePrayerNotification(prayerTime: asrTime, title: "Asr Prayer Reminder", body: "It's almost time for Asr prayer. Make sure you have Wudu.")
+                        self.schedulePrayerNotification(prayerTime: maghribTime, title: "Maghrib Prayer Reminder", body: "It's almost time for Maghrib prayer. Make sure you have Wudu.")
+                        self.schedulePrayerNotification(prayerTime: ishaTime, title: "Isha Prayer Reminder", body: "It's almost time for Isha prayer. Make sure you have Wudu.")
                     }
-                    
-                    // Schedule notifications for each prayer time
-                    self.schedulePrayerNotification(prayerTime: fajrTime, title: "Fajr Prayer Reminder", body: "It's almost time for Fajr prayer. Make sure you have Wudu.")
-                    self.schedulePrayerNotification(prayerTime: dhuhrTime, title: "Dhuhr Prayer Reminder", body: "It's almost time for Dhuhr prayer. Make sure you have Wudu.")
-                    self.schedulePrayerNotification(prayerTime: asrTime, title: "Asr Prayer Reminder", body: "It's almost time for Asr prayer. Make sure you have Wudu.")
-                    self.schedulePrayerNotification(prayerTime: maghribTime, title: "Maghrib Prayer Reminder", body: "It's almost time for Maghrib prayer. Make sure you have Wudu.")
-                    self.schedulePrayerNotification(prayerTime: ishaTime, title: "Isha Prayer Reminder", body: "It's almost time for Isha prayer. Make sure you have Wudu.")
                 } else {
                     print("Error: Prayer timings not found in response")
+                }
+                
+                // Find tomorrow's Fajr time
+                let tomorrowIndex = arrayIndexToUse + 1
+                guard tomorrowIndex < dataArray.count else {
+                    print("Error: Tomorrow's data not available")
+                    return
+                }
+                let tomorrowData = dataArray[tomorrowIndex]
+                if let fajrTimeNextDay = tomorrowData.timings.fajr {
+                    // Store tomorrow's Fajr time
+                    DispatchQueue.main.async {
+                        self.fajrTimeNextDay = self.extractTime(from: fajrTimeNextDay)
+                        if let lastThird = self.calculate1Third(fajrTimeNextDay: self.fajrTimeNextDay, maghribTime: self.maghribTime) {
+                            self.lastThirdView = lastThird
+                        } else {
+                            print("Error: Unable to calculate last third view")
+                        }
+                    }
+                } else {
+                    print("Error: Tomorrow's Fajr time not found in response")
                 }
             } catch {
                 print("Error decoding calendar response:", error)
             }
         }
-
+        
         task.resume()
     }
+
 
     func schedulePrayerNotification(prayerTime: String, title: String, body: String) {
         guard let prayerTimeDecimal = convertTimeStringToDecimal(prayerTime) else { return }

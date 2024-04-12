@@ -100,7 +100,7 @@ struct ContentView: View {
                                 isSurahMulkExpanded.toggle()
                             }
                         }) {
-                            Text("Surah Al-Mulk Translation:")
+                            Text("Night Verses:")
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .padding(.leading, 20)

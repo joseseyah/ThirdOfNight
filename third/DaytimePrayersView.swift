@@ -9,55 +9,56 @@ struct DaytimePrayersView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color(red: 0/255, green: 40/255, blue: 70/255), Color(red: 0/255, green: 30/255, blue: 50/255)]), startPoint: .top, endPoint: .bottom)
+            Image("IMG_2946") // Replace "IMG_2946" with the name of your daytime image background
+                .resizable()
+                .aspectRatio(contentMode: .fill)
                 .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 0) {
-                ScrollView {
-                    VStack(spacing: 20) {
-                        PrayerRowView(prayerName: "Fajr", prayerTime: viewModel.fajrTime)
-                        PrayerRowView(prayerName: "Dhuhr", prayerTime: viewModel.dhuhr)
-                        PrayerRowView(prayerName: "Asr", prayerTime: viewModel.asr)
-                        PrayerRowView(prayerName: "Maghrib", prayerTime: viewModel.maghribTime)
-                        PrayerRowView(prayerName: "Isha", prayerTime: viewModel.isha)
-                    }
-                    .padding()
-                    .background(LinearGradient(gradient: Gradient(colors: [Color(red: 0/255, green: 40/255, blue: 70/255), Color(red: 0/255, green: 30/255, blue: 50/255)]), startPoint: .top, endPoint: .bottom)) // Apply gradient background
-                    .cornerRadius(20) // Rounded corners
-                    .padding(20) // Add padding around the prayer times
+                LazyVStack(spacing: 20) { // Use LazyVStack instead of VStack
+                    PrayerRowView(prayerName: "Fajr", prayerTime: viewModel.fajrTime)
+                    PrayerRowView(prayerName: "Dhuhr", prayerTime: viewModel.dhuhr)
+                    PrayerRowView(prayerName: "Asr", prayerTime: viewModel.asr)
+                    PrayerRowView(prayerName: "Maghrib", prayerTime: viewModel.maghribTime)
+                    PrayerRowView(prayerName: "Isha", prayerTime: viewModel.isha)
                 }
+                .padding()
+                .background(Color.white.opacity(0.5)) // Semi-transparent white background
+                .cornerRadius(20) // Rounded corners
+                .padding(20) // Add padding around the prayer times
                 
                 HStack(spacing: 20) {
                     VStack {
                         Text("Sunrise")
                             .font(.headline)
                             .fontWeight(.semibold)
-                            .foregroundColor(.white)
+                            .foregroundColor(Color.white) // Text color
                         Text(viewModel.sunrise)
                             .font(.subheadline)
-                            .foregroundColor(.white.opacity(0.7))
+                            .foregroundColor(Color.white) // Text color
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color(red: 0/255, green: 40/255, blue: 70/255))
+                    .background(Color(red: 26/255, green: 25/255, blue: 28/255)) // Darker color for mountains
                     .cornerRadius(10)
                     
                     VStack {
                         Text("Sunset")
                             .font(.headline)
                             .fontWeight(.semibold)
-                            .foregroundColor(.white)
+                            .foregroundColor(Color.white) // Text color
                         Text(viewModel.sunset)
                             .font(.subheadline)
-                            .foregroundColor(.white.opacity(0.7))
+                            .foregroundColor(Color.white) // Text color
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color(red: 0/255, green: 40/255, blue: 70/255))
+                    .background(Color(red: 26/255, green: 25/255, blue: 28/255)) // Darker color for mountains
                     .cornerRadius(10)
                 }
                 .padding(.horizontal)
             }
+            .padding(.bottom, 20) // Add padding to the bottom of the VStack
         }
         .onAppear {
             viewModel.requestPermission()

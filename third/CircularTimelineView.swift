@@ -15,31 +15,42 @@ struct CircularTimelineView: View {
                 Text("Night Cycle")
                     .font(.caption)
                     .fontWeight(.bold)
-                    .foregroundColor(.blue) // Adjusted to match the new color theme
+                    .foregroundColor(.white) // Adjusted to match the new color theme
                     .padding(.leading, 10)
                     .padding(.top, 5)
                 Spacer()
                 Text(stageText)
                     .font(.caption)
                     .fontWeight(.bold)
-                    .foregroundColor(.blue) // Adjusted to match the new color theme
+                    .foregroundColor(.white) // Adjusted to match the new color theme
                     .padding(.trailing, 10)
             }
 
             ZStack {
                 RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.white)
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(
+                                colors: [
+                                    Color(red: 26/255, green: 25/255, blue: 28/255),
+                                    Color(red: 101/255, green: 126/255, blue: 154/255)
+                                ]
+                            ),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
                     .frame(height: 170)
                 
                 ZStack {
                     Circle()
-                        .fill(Color.blue) // Adjusted to match the new color theme
+                        .fill(Color(red: 101/255, green: 126/255, blue: 154/255)) // Adjusted to match the new color theme
                         .frame(width: 60, height: 60)
                         .overlay(
                             Image(systemName: "circle.grid.cross.fill")
                                 .resizable()
                                 .frame(width: 30, height: 30)
-                                .foregroundColor(.green)
+                                .foregroundColor(Color.green)
                         )
                         .rotationEffect(.degrees(rotationAngle))
 
@@ -63,7 +74,7 @@ struct CircularTimelineView: View {
                         VStack {
                             Text(timing)
                                 .font(.caption)
-                                .foregroundColor(.black) // Adjusted to match the new color theme
+                                .foregroundColor(Color.white) // Adjusted to match the new color theme
                         }
                         .offset(x: CGFloat(labelX), y: CGFloat(labelY))
                     }
@@ -79,7 +90,18 @@ struct CircularTimelineView: View {
             .frame(height: 170)
         }
         .padding()
-        .background(Color(red: 204/255, green: 229/255, blue: 255/255)) // Adjusted to match the new color theme
+        .background(
+            LinearGradient(
+                gradient: Gradient(
+                    colors: [
+                        Color(red: 26/255, green: 25/255, blue: 28/255),
+                        Color(red: 101/255, green: 126/255, blue: 154/255)
+                    ]
+                ),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
         .cornerRadius(15)
         .onAppear {
             updateStageText()
@@ -146,4 +168,3 @@ struct CircularTimelineView_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
-

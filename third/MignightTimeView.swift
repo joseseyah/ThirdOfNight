@@ -1,10 +1,3 @@
-//
-//  MignightTimeView.swift
-//  third
-//
-//  Created by Joseph Hayes on 31/03/2024.
-//
-
 import SwiftUI
 
 struct MidnightTimeView: View {
@@ -14,9 +7,9 @@ struct MidnightTimeView: View {
     var body: some View {
         VStack(spacing: 10) {
             HStack {
-                Text("Isha ends")
+                Text("Midnight Occurs")
                     .font(.caption)
-                    .foregroundColor(Color(red: 0/255, green: 121/255, blue: 153/255))
+                    .foregroundColor(Color.white) // Changed text color to white
                     .padding(.leading, 20)
                 Spacer()
             }
@@ -40,7 +33,35 @@ struct MidnightTimeView: View {
         }
         .padding(.top, 10)
         .padding(.bottom, 20)
-        .background(Color(red: 204/255, green: 229/255, blue: 255/255))
+        .background(
+            VStack {
+                Spacer()
+                AnimatedMountainView()
+            }
+        )
         .cornerRadius(15)
     }
 }
+
+struct AnimatedMountainView: View {
+    @State private var mountainOffset: CGFloat = -200 // Initial mountain offset
+
+    var body: some View {
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [Color(red: 101/255, green: 126/255, blue: 154/255), Color(red: 26/255, green: 25/255, blue: 28/255)]), startPoint: .top, endPoint: .bottom) // Flipped gradient
+                .edgesIgnoringSafeArea(.all)
+            
+            Image("animated_mountain")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(height: UIScreen.main.bounds.height / 2) // Adjust mountain height as needed
+                .offset(x: mountainOffset, y: 0) // Initial offset
+        }
+        .onAppear {
+            withAnimation(Animation.linear(duration: 30).repeatForever(autoreverses: false)) {
+                self.mountainOffset = UIScreen.main.bounds.width + 200 // Final offset position (off-screen)
+            }
+        }
+    }
+}
+

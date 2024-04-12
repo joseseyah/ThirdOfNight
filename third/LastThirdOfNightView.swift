@@ -8,7 +8,7 @@ struct LastThirdOfNightView: View {
             HStack {
                 Text("Last Third of Night")
                     .font(.caption)
-                    .foregroundColor(Color(red: 0/255, green: 121/255, blue: 153/255))
+                    .foregroundColor(Color.white) // Changed text color to white
                     .padding(.leading, 20)
                 Spacer()
             }
@@ -26,7 +26,12 @@ struct LastThirdOfNightView: View {
         }
         .padding(.top, 10)
         .padding(.bottom, 20)
-        .background(Color(red: 204/255, green: 229/255, blue: 255/255))
+        .background(
+            VStack {
+                Spacer()
+                AnimatedMountainView()
+            }
+        )
         .cornerRadius(15)
     }
 }

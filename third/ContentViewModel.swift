@@ -109,6 +109,28 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
 
 
+    func calculateMidNight(fajrTimeNextDay: String, maghribTime: String) -> String {
+        guard let totalNightDuration = calculateTotalNightDuration(fajrTimeNextDay: fajrTimeNextDay, maghribTime: maghribTime) else {
+            print("Error: Unable to calculate total night duration")
+            return "" // Return an empty string or handle the error accordingly
+        }
+        
+        let half = totalNightDuration / 2
+        
+        // Parse Maghrib time
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        
+        guard let maghribTimeDate = dateFormatter.date(from: maghribTime) else {
+            print("Error: Unable to parse Maghrib time")
+            return "" // Return an empty string or handle the error accordingly
+        }
+        
+        let oneHalf = maghribTimeDate.addingTimeInterval(half)
+        let formatted = dateFormatter.string(from: oneHalf)
+        
+        return formatted
+    }
 
 
 
@@ -141,11 +163,6 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         return formattedOneThirdTime
     }
-
-
-
-
-
 
 
     func formatTimeInterval(timeInterval: TimeInterval) -> String {
@@ -225,7 +242,7 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                         self.asr = self.extractTime(from: asrTime)
                         self.maghribTime = self.extractTime(from: maghribTime)
                         self.isha = self.extractTime(from: ishaTime)
-                        self.midnightTimeView = self.extractTime(from: midnightTime)
+//                        self.midnightTimeView = self.extractTime(from: midnightTime)
                         self.sunrise = self.extractTime(from: sunriseTime)
                         self.sunset = self.extractTime(from: sunsetTime)
                         
@@ -253,6 +270,7 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                         self.fajrTimeNextDay = self.extractTime(from: fajrTimeNextDay)
                         if let lastThird = self.calculate1Third(fajrTimeNextDay: self.fajrTimeNextDay, maghribTime: self.maghribTime) {
                             self.lastThirdView = lastThird
+                            self.midnightTimeView = self.calculateMidNight(fajrTimeNextDay: self.fajrTimeNextDay, maghribTime: self.maghribTime)
                         } else {
                             print("Error: Unable to calculate last third view")
                         }

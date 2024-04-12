@@ -368,19 +368,13 @@ struct NightSkyView: View {
     var body: some View {
         ZStack {
             // Background Image
-            Image("night_sky_background") // Replace "night_sky_background" with the name of your night sky image
+            Image("IMG_2947") // Replace "night_sky_background" with the name of your night sky image
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 300) // Adjust height as needed
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: UIScreen.main.bounds.height * 0.6) // Adjust height as needed
                 .opacity(0.8) // Adjust opacity to blend with background gradient
             
-            // Moon
-            Image("moon")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 100, height: 100) // Adjust moon size as needed
-                .offset(x: moonOffset, y: -100) // Initial offset and position
-            
+        
         }
         .onAppear {
             withAnimation(Animation.linear(duration: 20).repeatForever(autoreverses: false)) {
@@ -389,6 +383,7 @@ struct NightSkyView: View {
         }
     }
 }
+
 
 
 

@@ -10,6 +10,9 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var midnightTimeView: String = "" // Middle of the night time
     @Published var lastThirdView: String = ""
     
+    @Published var sunrise: String = ""
+    @Published var sunset: String = ""
+    
     @Published var dhuhr: String = ""
     @Published var asr: String = ""
     @Published var isha: String = ""
@@ -205,6 +208,8 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                 let todayData = dataArray[arrayIndexToUse]
                 
                 if let islamicDate = todayData.date.hijri,
+                   let sunriseTime = todayData.timings.sunrise,
+                   let sunsetTime = todayData.timings.sunset,
                    let fajrTime = todayData.timings.fajr,
                    let dhuhrTime = todayData.timings.dhuhr,
                    let asrTime = todayData.timings.asr,
@@ -221,6 +226,8 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                         self.maghribTime = self.extractTime(from: maghribTime)
                         self.isha = self.extractTime(from: ishaTime)
                         self.midnightTimeView = self.extractTime(from: midnightTime)
+                        self.sunrise = self.extractTime(from: sunriseTime)
+                        self.sunset = self.extractTime(from: sunsetTime)
                         
                         // Schedule notifications for each prayer time
                         self.schedulePrayerNotification(prayerTime: fajrTime, title: "Fajr Prayer Reminder", body: "It's almost time for Fajr prayer. Make sure you have Wudu.")
@@ -362,6 +369,8 @@ struct PrayerTimings: Codable {
     let dhuhr: String?
     let asr: String?
     let isha:String?
+    let sunrise:String?
+    let sunset:String?
     
     private enum CodingKeys: String, CodingKey {
         case fajr = "Fajr"
@@ -370,6 +379,8 @@ struct PrayerTimings: Codable {
         case dhuhr = "Dhuhr"
         case asr = "Asr"
         case isha = "Isha"
+        case sunrise = "Sunrise"
+        case sunset = "Sunset"
     }
 }
 

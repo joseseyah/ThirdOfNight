@@ -5,7 +5,6 @@ struct DaytimePrayersView: View {
 
     @State private var isBasicPrayerGuidancePresented = false
     @State private var isNamesOfAllahPresented = false
-    @State private var isPrayerTimesSheetPresented = false
     @State private var isQiblaDirectionPresented = false
 
     var body: some View {
@@ -14,8 +13,6 @@ struct DaytimePrayersView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 0) {
-                Spacer()
-                
                 ScrollView {
                     VStack(spacing: 20) {
                         PrayerRowView(prayerName: "Fajr", prayerTime: viewModel.fajrTime)
@@ -25,37 +22,42 @@ struct DaytimePrayersView: View {
                         PrayerRowView(prayerName: "Isha", prayerTime: viewModel.isha)
                     }
                     .padding()
-                    .background(Color.white.opacity(0.9)) // Semi-transparent white background
+                    .background(LinearGradient(gradient: Gradient(colors: [Color(red: 0/255, green: 40/255, blue: 70/255), Color(red: 0/255, green: 30/255, blue: 50/255)]), startPoint: .top, endPoint: .bottom)) // Apply gradient background
                     .cornerRadius(20) // Rounded corners
                     .padding(20) // Add padding around the prayer times
                 }
                 
-                Spacer()
-                
-                FloatingNavBar(
-                    prayerGuidanceAction: {
-                        isBasicPrayerGuidancePresented.toggle()
-                    },
-                    namesOfAllahAction: {
-                        isNamesOfAllahPresented.toggle()
-                    },
-                    prayerTimesAction: {
-                        isPrayerTimesSheetPresented.toggle()
-                    },
-                    qiblaDirectionAction: {
-                        isQiblaDirectionPresented.toggle()
+                HStack(spacing: 20) {
+                    VStack {
+                        Text("Sunrise")
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                        Text(viewModel.sunrise)
+                            .font(.subheadline)
+                            .foregroundColor(.white.opacity(0.7))
                     }
-                )
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color(red: 0/255, green: 40/255, blue: 70/255))
+                    .cornerRadius(10)
+                    
+                    VStack {
+                        Text("Sunset")
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                        Text(viewModel.sunset)
+                            .font(.subheadline)
+                            .foregroundColor(.white.opacity(0.7))
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color(red: 0/255, green: 40/255, blue: 70/255))
+                    .cornerRadius(10)
+                }
+                .padding(.horizontal)
             }
-        }
-        .sheet(isPresented: $isBasicPrayerGuidancePresented) {
-            BasicPrayerGuidance()
-        }
-        .sheet(isPresented: $isNamesOfAllahPresented) {
-            NamesOfAllahView()
-        }
-        .sheet(isPresented: $isPrayerTimesSheetPresented) {
-            PrayerTimesSheetView()
         }
         .onAppear {
             viewModel.requestPermission()
@@ -64,35 +66,6 @@ struct DaytimePrayersView: View {
         .navigationBarHidden(true)
     }
 }
-
-struct PrayerTimesSheetView: View {
-    var body: some View {
-        NavigationView {
-            VStack(spacing: 20) {
-                Text("Prayer Times")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(Color(red: 0/255, green: 40/255, blue: 70/255)) // Title color
-                    .padding(.bottom, 10) // Add spacing below the title
-                
-                Divider() // Divider
-                
-                // Add your prayer times here
-                PrayerRowView(prayerName: "Fajr", prayerTime: "5:00")
-                PrayerRowView(prayerName: "Dhuhr", prayerTime: "12:30")
-                PrayerRowView(prayerName: "Asr", prayerTime: "15:45")
-                PrayerRowView(prayerName: "Maghrib", prayerTime: "18:20")
-                PrayerRowView(prayerName: "Isha", prayerTime: "20:00")
-            }
-            .padding()
-            .background(Color.white.opacity(0.9)) // Semi-transparent white background
-            .cornerRadius(20) // Rounded corners
-            .padding(20) // Add padding around the prayer times
-            .navigationTitle("Prayer Times") // Set navigation title
-        }
-    }
-}
-
 
 struct PrayerRowView: View {
     var prayerName: String
@@ -117,11 +90,5 @@ struct PrayerRowView: View {
         .padding(.vertical, 10)
         .background(Color.white.opacity(0.5)) // Semi-transparent white background
         .cornerRadius(10) // Rounded corners
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        DaytimePrayersView()
     }
 }

@@ -2,6 +2,10 @@ import SwiftUI
 
 struct SettingView: View {
     @AppStorage("isDarkMode") private var isDarkMode = false
+    @AppStorage("isRamadanMode") private var isRamadanMode = false
+    
+    @State private var isUniversityPrayerTimes = false
+
     @State private var isMissionExpanded = false // State variable to track mission dropdown
     @State private var isPrivacyExpanded = false // State variable to track privacy policy dropdown
     
@@ -15,7 +19,19 @@ struct SettingView: View {
             
             Toggle(isOn: $isDarkMode) {
                 Text("Dark Mode")
-                    .foregroundColor(isDarkMode ? .white : .black) // Adjust text color based on dark mode state
+                    .foregroundColor(.black) // Set text color to black
+            }
+            .padding(.bottom, 20)
+            
+            Toggle(isOn: $isRamadanMode) {
+                Text("Ramadan Mode")
+                    .foregroundColor(.black) // Set text color to black
+            }
+            .padding(.bottom, 20)
+            
+            Toggle(isOn: $isUniversityPrayerTimes) {
+                Text("University of Manchester Prayer Times")
+                    .foregroundColor(.black) // Set text color to black
             }
             .padding(.bottom, 20)
             
@@ -63,4 +79,8 @@ struct SettingView_Previews: PreviewProvider {
         SettingView()
     }
 }
+
+
+
+
 

@@ -20,6 +20,9 @@ struct ContentView: View {
     @State private var isNamesOfAllahPresented = false
     @State private var isPrayerTimesPresented = false
     @State private var isQiblaDirectionPresented = false
+    
+    @AppStorage("isRamadanMode") private var isRamadanMode = false
+
 
     var body: some View {
         ZStack {
@@ -81,37 +84,56 @@ struct ContentView: View {
                         }
                         .padding(.horizontal)
                         
-                        if isFastingInProgress {
-                            if let totalDuration = viewModel.calculateTotalFastingDuration() {
-                                FastingProgressView(progress: fastingProgress, remainingTime: remainingTimeUntilIftar(), totalDuration: totalDuration)
+                        if isRamadanMode {
+                            // Ramadan Mode Specific Elements
+                            if isFastingInProgress {
+                                if let totalDuration = viewModel.calculateTotalFastingDuration() {
+                                    FastingProgressView(progress: fastingProgress, remainingTime: remainingTimeUntilIftar(), totalDuration: totalDuration)
+                                        .padding(.horizontal, 20)
+                                }
+                            } else {
+                                EatingProgressView(progress: eatingProgress(), remainingTime: remainingTimeUntilFajr())
                                     .padding(.horizontal, 20)
                             }
-                        } else {
-                            EatingProgressView(progress: eatingProgress(), remainingTime: remainingTimeUntilFajr())
+                            
+                            MidnightTimeView(midnightTime: viewModel.midnightTimeView)
                                 .padding(.horizontal, 20)
-                        }
-                        
-                        MidnightTimeView(midnightTime: viewModel.midnightTimeView)
-                            .padding(.horizontal, 20)
-                        
-                        LastThirdOfNightView(lastThirdTime: viewModel.lastThirdView)
-                            .padding(.horizontal, 20)
-
-
-
-                        
-                        CircularTimelineView(timings: ["Sunset", "Midnight", "Last Third", "Fajr", "Sunrise"])
-                            .padding(.horizontal, 20)
-                        
-                        Button(action: {
-                            withAnimation {
-                                isSurahMulkExpanded.toggle()
+                            
+                            LastThirdOfNightView(lastThirdTime: viewModel.lastThirdView)
+                                .padding(.horizontal, 20)
+                            
+                            CircularTimelineView(timings: ["Sunset", "Midnight", "Last Third", "Fajr", "Sunrise"])
+                                .padding(.horizontal, 20)
+                            
+                            Button(action: {
+                                withAnimation {
+                                    isSurahMulkExpanded.toggle()
+                                }
+                            }) {
+                                Text("Night Verses:")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding(.leading, 20)
                             }
-                        }) {
-                            Text("Night Verses:")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .padding(.leading, 20)
+                            
+                        } else {
+                            // Normal Mode Specific Elements
+                            MidnightTimeView(midnightTime: viewModel.midnightTimeView)
+                                .padding(.horizontal, 20)
+                            
+                            LastThirdOfNightView(lastThirdTime: viewModel.lastThirdView)
+                                .padding(.horizontal, 20)
+                            
+                            Button(action: {
+                                withAnimation {
+                                    isSurahMulkExpanded.toggle()
+                                }
+                            }) {
+                                Text("Night Verses:")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding(.leading, 20)
+                            }
                         }
                     }
                 }

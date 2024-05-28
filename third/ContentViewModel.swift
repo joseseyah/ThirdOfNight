@@ -186,22 +186,41 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         return String(format: "%02d:%02d", correctedHours, correctedMinutes)
     }
     
+    
+    let prayerTimesCache = PrayerTimesCache()
+
+    // Use the cache to load data
+    func loadDataFromCache(for date: String) -> CalendarResponse? {
+        return prayerTimesCache.loadData(for: date)
+    }
+
+    // Use the cache to save data
+    func saveDataToCache(_ data: CalendarResponse, for date: String) {
+        prayerTimesCache.saveData(data, for: date)
+    }
 
 
     func fetchPrayerTimes() {
         // Get current year and current month
         let currentDateAndMonth = getCurrentDateAndMonth()
         
+        let currentDay = currentDateAndMonth.day
+        let currentDayString = String(format: "%02d", currentDay)
+        let currentDate = "\(currentDateAndMonth.year)-\(currentDateAndMonth.month)-\(currentDayString)"
+        
+        if let cachedData = prayerTimesCache.loadData(for: currentDate) {
+            self.updatePrayerTimes(with: cachedData, for: currentDayString)
+            return
+        }
+        
         let city = self.currentPlacemark?.administrativeArea ?? ""
         let country = self.currentPlacemark?.country ?? ""
         let method = 15 // Islamic Society of North America
         
-        let currentDay = currentDateAndMonth.day
-        let currentDayString = String(format: "%02d", currentDay)
-        
         guard let url = URL(string: "https://api.aladhan.com/v1/calendarByCity/\(currentDateAndMonth.year)/\(currentDateAndMonth.month)?city=\(city)&country=\(country)&method=\(method)") else {
             return
         }
+        
         
         print("https://api.aladhan.com/v1/calendarByCity/\(currentDateAndMonth.year)/\(currentDateAndMonth.month)?city=\(city)&country=\(country)&method=\(method)")
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -321,6 +340,65 @@ class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
         }
     }
+    
+    func updatePrayerTimes(with response: CalendarResponse, for currentDayString: String) {
+            let dataArray: [PrayerTimeData] = response.data ?? [PrayerTimeData]()
+            var arrayIndexToUse = 0
+            
+            for (index, response) in dataArray.enumerated() {
+                if response.date.gregorian?.day ?? "0" == currentDayString {
+                    arrayIndexToUse = index
+                    break
+                }
+            }
+            let todayData = dataArray[arrayIndexToUse]
+            
+            if let islamicDate = todayData.date.hijri,
+               let sunriseTime = todayData.timings.sunrise,
+               let sunsetTime = todayData.timings.sunset,
+               let fajrTime = todayData.timings.fajr,
+               let dhuhrTime = todayData.timings.dhuhr,
+               let asrTime = todayData.timings.asr,
+               let maghribTime = todayData.timings.maghrib,
+               let midnightTime = todayData.timings.midnight,
+               let ishaTime = todayData.timings.isha {
+                
+                self.islamicDate = "\(islamicDate.getDisplayIslamicDate())"
+                self.fajrTime = self.extractTime(from: fajrTime)
+                self.dhuhr = self.extractTime(from: dhuhrTime)
+                self.asr = self.extractTime(from: asrTime)
+                self.maghribTime = self.extractTime(from: maghribTime)
+                self.isha = self.extractTime(from: ishaTime)
+                self.sunrise = self.extractTime(from: sunriseTime)
+                self.sunset = self.extractTime(from: sunsetTime)
+                
+                self.schedulePrayerNotification(prayerTime: fajrTime, title: "Fajr Prayer Reminder", body: "It's almost time for Fajr prayer. Make sure you have Wudu.")
+                self.schedulePrayerNotification(prayerTime: dhuhrTime, title: "Dhuhr Prayer Reminder", body: "It's almost time for Dhuhr prayer. Make sure you have Wudu.")
+                self.schedulePrayerNotification(prayerTime: asrTime, title: "Asr Prayer Reminder", body: "It's almost time for Asr prayer. Make sure you have Wudu.")
+                self.schedulePrayerNotification(prayerTime: maghribTime, title: "Maghrib Prayer Reminder", body: "It's almost time for Maghrib prayer. Make sure you have Wudu.")
+                self.schedulePrayerNotification(prayerTime: ishaTime, title: "Isha Prayer Reminder", body: "It's almost time for Isha prayer. Make sure you have Wudu.")
+            } else {
+                print("Error: Prayer timings not found in response")
+            }
+            
+            let tomorrowIndex = arrayIndexToUse + 1
+            guard tomorrowIndex < dataArray.count else {
+                print("Error: Tomorrow's data not available")
+                return
+            }
+            let tomorrowData = dataArray[tomorrowIndex]
+            if let fajrTimeNextDay = tomorrowData.timings.fajr {
+                self.fajrTimeNextDay = self.extractTime(from: fajrTimeNextDay)
+                if let lastThird = self.calculate1Third(fajrTimeNextDay: self.fajrTimeNextDay, maghribTime: self.maghribTime) {
+                    self.lastThirdView = lastThird
+                    self.midnightTimeView = self.calculateMidNight(fajrTimeNextDay: self.fajrTimeNextDay, maghribTime: self.maghribTime)
+                } else {
+                    print("Error: Unable to calculate last third view")
+                }
+            } else {
+                print("Error: Tomorrow's Fajr time not found in response")
+            }
+        }
 
     
     func convertTimeStringToDecimal(_ timeString: String) -> Double? {

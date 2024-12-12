@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct Surah: Identifiable {
+    let id = UUID()
+    let name: String
+    let audioFileName: String
+    let imageFileName: String
+}

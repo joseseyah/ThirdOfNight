@@ -1,0 +1,900 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6DAD84802CB7176B0027BF5A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6DAD847F2CB7176B0027BF5A /* FirebaseAnalytics */; };
+		6DAD84822CB7176B0027BF5A /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6DAD84812CB7176B0027BF5A /* FirebaseCore */; };
+		6DAD84842CB7176B0027BF5A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6DAD84832CB7176B0027BF5A /* FirebaseFirestore */; };
+		6DAD84862CB71B6F0027BF5A /* TasbihCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DAD84852CB71B6F0027BF5A /* TasbihCounterView.swift */; };
+		6DAD848A2CBD09230027BF5A /* DayPrayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DAD84892CBD09230027BF5A /* DayPrayerView.swift */; };
+		6DAD848C2CBD0A1F0027BF5A /* DesertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DAD848B2CBD0A1F0027BF5A /* DesertView.swift */; };
+		6DAD848E2CBD0A9C0027BF5A /* StarrySkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DAD848D2CBD0A9C0027BF5A /* StarrySkyView.swift */; };
+		6DBCFC4E2CB25CC30074796A /* third2_0App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCFC4D2CB25CC30074796A /* third2_0App.swift */; };
+		6DBCFC502CB25CC30074796A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCFC4F2CB25CC30074796A /* ContentView.swift */; };
+		6DBCFC522CB25CC30074796A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCFC512CB25CC30074796A /* Item.swift */; };
+		6DBCFC542CB25CC40074796A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DBCFC532CB25CC40074796A /* Assets.xcassets */; };
+		6DBCFC572CB25CC40074796A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DBCFC562CB25CC40074796A /* Preview Assets.xcassets */; };
+		6DBCFC612CB25CC40074796A /* third2_0Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCFC602CB25CC40074796A /* third2_0Tests.swift */; };
+		6DBCFC6B2CB25CC40074796A /* third2_0UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCFC6A2CB25CC40074796A /* third2_0UITests.swift */; };
+		6DBCFC6D2CB25CC40074796A /* third2_0UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCFC6C2CB25CC40074796A /* third2_0UITestsLaunchTests.swift */; };
+		6DCC12DF2CFD10D900E352BD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DCC12DE2CFD10D900E352BD /* WidgetKit.framework */; };
+		6DCC12E12CFD10D900E352BD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DCC12E02CFD10D900E352BD /* SwiftUI.framework */; };
+		6DCC12FE2D0629BC00E352BD /* MissionText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC12FD2D0629BC00E352BD /* MissionText.swift */; };
+		6DCC13002D0629CF00E352BD /* PrivacyPolicyText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC12FF2D0629CF00E352BD /* PrivacyPolicyText.swift */; };
+		6DCC13022D062FD700E352BD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6DCC13012D062FD700E352BD /* FirebaseAuth */; };
+		6DCC13042D062FD700E352BD /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 6DCC13032D062FD700E352BD /* FirebaseFunctions */; };
+		6DCC13062D062FD700E352BD /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 6DCC13052D062FD700E352BD /* FirebaseMessaging */; };
+		6DCC13082D083FAC00E352BD /* countryCodeMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC13072D083FAC00E352BD /* countryCodeMapping.swift */; };
+		6DCC131C2D09853D00E352BD /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC131B2D09853D00E352BD /* NotificationManager.swift */; };
+		6DCC13202D0AD43500E352BD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC131F2D0AD43500E352BD /* GoogleService-Info.plist */; };
+		6DE78BCB2CB2610F0068F84C /* PrayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCA2CB2610F0068F84C /* PrayerView.swift */; };
+		6DE78BCD2CB2613E0068F84C /* TimeBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCC2CB2613E0068F84C /* TimeBox.swift */; };
+		6DE78BCF2CB2615E0068F84C /* SurahMulkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */; };
+		6DE78BD12CB261880068F84C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BD02CB261880068F84C /* SettingsView.swift */; };
+		6DE78BDE2CB28C400068F84C /* CityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BDD2CB28C400068F84C /* CityViewModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6DBCFC5D2CB25CC40074796A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6DBCFC422CB25CC30074796A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6DBCFC492CB25CC30074796A;
+			remoteInfo = third2.0;
+		};
+		6DBCFC672CB25CC40074796A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6DBCFC422CB25CC30074796A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6DBCFC492CB25CC30074796A;
+			remoteInfo = third2.0;
+		};
+		6DCC12EE2CFD10DB00E352BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6DBCFC422CB25CC30074796A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6DCC12DB2CFD10D800E352BD;
+			remoteInfo = DaytimeExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6DCC12F12CFD10DB00E352BD /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		6DAD84852CB71B6F0027BF5A /* TasbihCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasbihCounterView.swift; sourceTree = "<group>"; };
+		6DAD84892CBD09230027BF5A /* DayPrayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayPrayerView.swift; sourceTree = "<group>"; };
+		6DAD848B2CBD0A1F0027BF5A /* DesertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesertView.swift; sourceTree = "<group>"; };
+		6DAD848D2CBD0A9C0027BF5A /* StarrySkyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarrySkyView.swift; sourceTree = "<group>"; };
+		6DBCFC4A2CB25CC30074796A /* Night Prayers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Night Prayers.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DBCFC4D2CB25CC30074796A /* third2_0App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = third2_0App.swift; sourceTree = "<group>"; };
+		6DBCFC4F2CB25CC30074796A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		6DBCFC512CB25CC30074796A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		6DBCFC532CB25CC40074796A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6DBCFC562CB25CC40074796A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		6DBCFC5C2CB25CC40074796A /* Night PrayersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Night PrayersTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DBCFC602CB25CC40074796A /* third2_0Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = third2_0Tests.swift; sourceTree = "<group>"; };
+		6DBCFC662CB25CC40074796A /* Night PrayersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Night PrayersUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DBCFC6A2CB25CC40074796A /* third2_0UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = third2_0UITests.swift; sourceTree = "<group>"; };
+		6DBCFC6C2CB25CC40074796A /* third2_0UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = third2_0UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6DCC12DC2CFD10D800E352BD /* DaytimeExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DaytimeExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DCC12DE2CFD10D900E352BD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		6DCC12E02CFD10D900E352BD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		6DCC12FD2D0629BC00E352BD /* MissionText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionText.swift; sourceTree = "<group>"; };
+		6DCC12FF2D0629CF00E352BD /* PrivacyPolicyText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyText.swift; sourceTree = "<group>"; };
+		6DCC13072D083FAC00E352BD /* countryCodeMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = countryCodeMapping.swift; sourceTree = "<group>"; };
+		6DCC131B2D09853D00E352BD /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		6DCC131F2D0AD43500E352BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6DE78BCA2CB2610F0068F84C /* PrayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerView.swift; sourceTree = "<group>"; };
+		6DE78BCC2CB2613E0068F84C /* TimeBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBox.swift; sourceTree = "<group>"; };
+		6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurahMulkView.swift; sourceTree = "<group>"; };
+		6DE78BD02CB261880068F84C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		6DE78BDD2CB28C400068F84C /* CityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewModel.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6DBCFC472CB25CC30074796A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DCC13062D062FD700E352BD /* FirebaseMessaging in Frameworks */,
+				6DAD84822CB7176B0027BF5A /* FirebaseCore in Frameworks */,
+				6DAD84802CB7176B0027BF5A /* FirebaseAnalytics in Frameworks */,
+				6DCC13042D062FD700E352BD /* FirebaseFunctions in Frameworks */,
+				6DAD84842CB7176B0027BF5A /* FirebaseFirestore in Frameworks */,
+				6DCC13022D062FD700E352BD /* FirebaseAuth in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DBCFC592CB25CC40074796A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DBCFC632CB25CC40074796A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DCC12D92CFD10D800E352BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DCC12E12CFD10D900E352BD /* SwiftUI.framework in Frameworks */,
+				6DCC12DF2CFD10D900E352BD /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6DBCFC412CB25CC30074796A = {
+			isa = PBXGroup;
+			children = (
+				6DBCFC4C2CB25CC30074796A /* third2.0 */,
+				6DBCFC5F2CB25CC40074796A /* third2.0Tests */,
+				6DBCFC692CB25CC40074796A /* third2.0UITests */,
+				6DCC12DD2CFD10D900E352BD /* Frameworks */,
+				6DBCFC4B2CB25CC30074796A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6DBCFC4B2CB25CC30074796A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6DBCFC4A2CB25CC30074796A /* Night Prayers.app */,
+				6DBCFC5C2CB25CC40074796A /* Night PrayersTests.xctest */,
+				6DBCFC662CB25CC40074796A /* Night PrayersUITests.xctest */,
+				6DCC12DC2CFD10D800E352BD /* DaytimeExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6DBCFC4C2CB25CC30074796A /* third2.0 */ = {
+			isa = PBXGroup;
+			children = (
+				6DBCFC4D2CB25CC30074796A /* third2_0App.swift */,
+				6DCC131B2D09853D00E352BD /* NotificationManager.swift */,
+				6DE78BDD2CB28C400068F84C /* CityViewModel.swift */,
+				6DBCFC512CB25CC30074796A /* Item.swift */,
+				6DE78BCC2CB2613E0068F84C /* TimeBox.swift */,
+				6DCC13222D0AE68500E352BD /* Text */,
+				6DCC13212D0AE61900E352BD /* PrayerViews */,
+				6DCC13232D0AE6BE00E352BD /* Views */,
+				6DBCFC532CB25CC40074796A /* Assets.xcassets */,
+				6DBCFC552CB25CC40074796A /* Preview Content */,
+				6DCC131F2D0AD43500E352BD /* GoogleService-Info.plist */,
+			);
+			path = third2.0;
+			sourceTree = "<group>";
+		};
+		6DBCFC552CB25CC40074796A /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				6DBCFC562CB25CC40074796A /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		6DBCFC5F2CB25CC40074796A /* third2.0Tests */ = {
+			isa = PBXGroup;
+			children = (
+				6DBCFC602CB25CC40074796A /* third2_0Tests.swift */,
+			);
+			path = third2.0Tests;
+			sourceTree = "<group>";
+		};
+		6DBCFC692CB25CC40074796A /* third2.0UITests */ = {
+			isa = PBXGroup;
+			children = (
+				6DBCFC6A2CB25CC40074796A /* third2_0UITests.swift */,
+				6DBCFC6C2CB25CC40074796A /* third2_0UITestsLaunchTests.swift */,
+			);
+			path = third2.0UITests;
+			sourceTree = "<group>";
+		};
+		6DCC12DD2CFD10D900E352BD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6DCC12DE2CFD10D900E352BD /* WidgetKit.framework */,
+				6DCC12E02CFD10D900E352BD /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6DCC13212D0AE61900E352BD /* PrayerViews */ = {
+			isa = PBXGroup;
+			children = (
+				6DAD84892CBD09230027BF5A /* DayPrayerView.swift */,
+				6DE78BCA2CB2610F0068F84C /* PrayerView.swift */,
+			);
+			path = PrayerViews;
+			sourceTree = "<group>";
+		};
+		6DCC13222D0AE68500E352BD /* Text */ = {
+			isa = PBXGroup;
+			children = (
+				6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */,
+				6DCC12FF2D0629CF00E352BD /* PrivacyPolicyText.swift */,
+				6DCC13072D083FAC00E352BD /* countryCodeMapping.swift */,
+				6DCC12FD2D0629BC00E352BD /* MissionText.swift */,
+			);
+			path = Text;
+			sourceTree = "<group>";
+		};
+		6DCC13232D0AE6BE00E352BD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6DBCFC4F2CB25CC30074796A /* ContentView.swift */,
+				6DAD84852CB71B6F0027BF5A /* TasbihCounterView.swift */,
+				6DE78BD02CB261880068F84C /* SettingsView.swift */,
+				6DAD848D2CBD0A9C0027BF5A /* StarrySkyView.swift */,
+				6DAD848B2CBD0A1F0027BF5A /* DesertView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6DBCFC492CB25CC30074796A /* Night Prayers */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6DBCFC702CB25CC40074796A /* Build configuration list for PBXNativeTarget "Night Prayers" */;
+			buildPhases = (
+				6DBCFC462CB25CC30074796A /* Sources */,
+				6DBCFC472CB25CC30074796A /* Frameworks */,
+				6DBCFC482CB25CC30074796A /* Resources */,
+				6DCC12F12CFD10DB00E352BD /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6DCC12EF2CFD10DB00E352BD /* PBXTargetDependency */,
+			);
+			name = "Night Prayers";
+			packageProductDependencies = (
+				6DAD847F2CB7176B0027BF5A /* FirebaseAnalytics */,
+				6DAD84812CB7176B0027BF5A /* FirebaseCore */,
+				6DAD84832CB7176B0027BF5A /* FirebaseFirestore */,
+				6DCC13012D062FD700E352BD /* FirebaseAuth */,
+				6DCC13032D062FD700E352BD /* FirebaseFunctions */,
+				6DCC13052D062FD700E352BD /* FirebaseMessaging */,
+			);
+			productName = third2.0;
+			productReference = 6DBCFC4A2CB25CC30074796A /* Night Prayers.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6DBCFC5B2CB25CC40074796A /* Night PrayersTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6DBCFC732CB25CC40074796A /* Build configuration list for PBXNativeTarget "Night PrayersTests" */;
+			buildPhases = (
+				6DBCFC582CB25CC40074796A /* Sources */,
+				6DBCFC592CB25CC40074796A /* Frameworks */,
+				6DBCFC5A2CB25CC40074796A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6DBCFC5E2CB25CC40074796A /* PBXTargetDependency */,
+			);
+			name = "Night PrayersTests";
+			productName = third2.0Tests;
+			productReference = 6DBCFC5C2CB25CC40074796A /* Night PrayersTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6DBCFC652CB25CC40074796A /* Night PrayersUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6DBCFC762CB25CC40074796A /* Build configuration list for PBXNativeTarget "Night PrayersUITests" */;
+			buildPhases = (
+				6DBCFC622CB25CC40074796A /* Sources */,
+				6DBCFC632CB25CC40074796A /* Frameworks */,
+				6DBCFC642CB25CC40074796A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6DBCFC682CB25CC40074796A /* PBXTargetDependency */,
+			);
+			name = "Night PrayersUITests";
+			productName = third2.0UITests;
+			productReference = 6DBCFC662CB25CC40074796A /* Night PrayersUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		6DCC12DB2CFD10D800E352BD /* DaytimeExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6DCC12F42CFD10DB00E352BD /* Build configuration list for PBXNativeTarget "DaytimeExtension" */;
+			buildPhases = (
+				6DCC12D82CFD10D800E352BD /* Sources */,
+				6DCC12D92CFD10D800E352BD /* Frameworks */,
+				6DCC12DA2CFD10D800E352BD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DaytimeExtension;
+			productName = DaytimeExtension;
+			productReference = 6DCC12DC2CFD10D800E352BD /* DaytimeExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6DBCFC422CB25CC30074796A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					6DBCFC492CB25CC30074796A = {
+						CreatedOnToolsVersion = 15.3;
+					};
+					6DBCFC5B2CB25CC40074796A = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 6DBCFC492CB25CC30074796A;
+					};
+					6DBCFC652CB25CC40074796A = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 6DBCFC492CB25CC30074796A;
+					};
+					6DCC12DB2CFD10D800E352BD = {
+						CreatedOnToolsVersion = 15.3;
+					};
+				};
+			};
+			buildConfigurationList = 6DBCFC452CB25CC30074796A /* Build configuration list for PBXProject "Night Prayers" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6DBCFC412CB25CC30074796A;
+			packageReferences = (
+				6DE78BD62CB2660E0068F84C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
+			productRefGroup = 6DBCFC4B2CB25CC30074796A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6DBCFC492CB25CC30074796A /* Night Prayers */,
+				6DBCFC5B2CB25CC40074796A /* Night PrayersTests */,
+				6DBCFC652CB25CC40074796A /* Night PrayersUITests */,
+				6DCC12DB2CFD10D800E352BD /* DaytimeExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6DBCFC482CB25CC30074796A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DBCFC572CB25CC40074796A /* Preview Assets.xcassets in Resources */,
+				6DBCFC542CB25CC40074796A /* Assets.xcassets in Resources */,
+				6DCC13202D0AD43500E352BD /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DBCFC5A2CB25CC40074796A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DBCFC642CB25CC40074796A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DCC12DA2CFD10D800E352BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6DBCFC462CB25CC30074796A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DCC13082D083FAC00E352BD /* countryCodeMapping.swift in Sources */,
+				6DAD848A2CBD09230027BF5A /* DayPrayerView.swift in Sources */,
+				6DCC13002D0629CF00E352BD /* PrivacyPolicyText.swift in Sources */,
+				6DAD84862CB71B6F0027BF5A /* TasbihCounterView.swift in Sources */,
+				6DAD848C2CBD0A1F0027BF5A /* DesertView.swift in Sources */,
+				6DE78BD12CB261880068F84C /* SettingsView.swift in Sources */,
+				6DCC131C2D09853D00E352BD /* NotificationManager.swift in Sources */,
+				6DBCFC502CB25CC30074796A /* ContentView.swift in Sources */,
+				6DAD848E2CBD0A9C0027BF5A /* StarrySkyView.swift in Sources */,
+				6DCC12FE2D0629BC00E352BD /* MissionText.swift in Sources */,
+				6DE78BCD2CB2613E0068F84C /* TimeBox.swift in Sources */,
+				6DE78BDE2CB28C400068F84C /* CityViewModel.swift in Sources */,
+				6DE78BCB2CB2610F0068F84C /* PrayerView.swift in Sources */,
+				6DBCFC522CB25CC30074796A /* Item.swift in Sources */,
+				6DBCFC4E2CB25CC30074796A /* third2_0App.swift in Sources */,
+				6DE78BCF2CB2615E0068F84C /* SurahMulkView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DBCFC582CB25CC40074796A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DBCFC612CB25CC40074796A /* third2_0Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DBCFC622CB25CC40074796A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DBCFC6D2CB25CC40074796A /* third2_0UITestsLaunchTests.swift in Sources */,
+				6DBCFC6B2CB25CC40074796A /* third2_0UITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DCC12D82CFD10D800E352BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6DBCFC5E2CB25CC40074796A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6DBCFC492CB25CC30074796A /* Night Prayers */;
+			targetProxy = 6DBCFC5D2CB25CC40074796A /* PBXContainerItemProxy */;
+		};
+		6DBCFC682CB25CC40074796A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6DBCFC492CB25CC30074796A /* Night Prayers */;
+			targetProxy = 6DBCFC672CB25CC40074796A /* PBXContainerItemProxy */;
+		};
+		6DCC12EF2CFD10DB00E352BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6DCC12DB2CFD10D800E352BD /* DaytimeExtension */;
+			targetProxy = 6DCC12EE2CFD10DB00E352BD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		6DBCFC6E2CB25CC40074796A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6DBCFC6F2CB25CC40074796A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6DBCFC712CB25CC40074796A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"third2.0/Preview Content\"";
+				DEVELOPMENT_TEAM = CZPKAZHKAR;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Third of the Night";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6DBCFC722CB25CC40074796A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"third2.0/Preview Content\"";
+				DEVELOPMENT_TEAM = CZPKAZHKAR;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Third of the Night";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6DBCFC742CB25CC40074796A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CZPKAZHKAR;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "testing.third2-0Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Night Prayers.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Night Prayers";
+			};
+			name = Debug;
+		};
+		6DBCFC752CB25CC40074796A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CZPKAZHKAR;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "testing.third2-0Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Night Prayers.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Night Prayers";
+			};
+			name = Release;
+		};
+		6DBCFC772CB25CC40074796A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CZPKAZHKAR;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "testing.third2-0UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = third2.0;
+			};
+			name = Debug;
+		};
+		6DBCFC782CB25CC40074796A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CZPKAZHKAR;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "testing.third2-0UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = third2.0;
+			};
+			name = Release;
+		};
+		6DCC12F22CFD10DB00E352BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CZPKAZHKAR;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Daytime/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Daytime;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit.Daytime;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6DCC12F32CFD10DB00E352BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CZPKAZHKAR;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Daytime/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Daytime;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit.Daytime;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6DBCFC452CB25CC30074796A /* Build configuration list for PBXProject "Night Prayers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DBCFC6E2CB25CC40074796A /* Debug */,
+				6DBCFC6F2CB25CC40074796A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6DBCFC702CB25CC40074796A /* Build configuration list for PBXNativeTarget "Night Prayers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DBCFC712CB25CC40074796A /* Debug */,
+				6DBCFC722CB25CC40074796A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6DBCFC732CB25CC40074796A /* Build configuration list for PBXNativeTarget "Night PrayersTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DBCFC742CB25CC40074796A /* Debug */,
+				6DBCFC752CB25CC40074796A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6DBCFC762CB25CC40074796A /* Build configuration list for PBXNativeTarget "Night PrayersUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DBCFC772CB25CC40074796A /* Debug */,
+				6DBCFC782CB25CC40074796A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6DCC12F42CFD10DB00E352BD /* Build configuration list for PBXNativeTarget "DaytimeExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DCC12F22CFD10DB00E352BD /* Debug */,
+				6DCC12F32CFD10DB00E352BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6DE78BD62CB2660E0068F84C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6DAD847F2CB7176B0027BF5A /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6DE78BD62CB2660E0068F84C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		6DAD84812CB7176B0027BF5A /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6DE78BD62CB2660E0068F84C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		6DAD84832CB7176B0027BF5A /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6DE78BD62CB2660E0068F84C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		6DCC13012D062FD700E352BD /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6DE78BD62CB2660E0068F84C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		6DCC13032D062FD700E352BD /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6DE78BD62CB2660E0068F84C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
+		6DCC13052D062FD700E352BD /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6DE78BD62CB2660E0068F84C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 6DBCFC422CB25CC30074796A /* Project object */;
+}

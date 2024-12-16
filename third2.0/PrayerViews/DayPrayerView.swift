@@ -3,11 +3,13 @@ import FirebaseFirestore
 
 struct DayPrayerView: View {
     @ObservedObject var viewModel: CityViewModel
-    @State private var prayerTimes: [String: String] = [:]
-    @State private var currentDayIndex = 0  // Current index of day
-    @State private var dateKeys: [String] = []  // Sorted list of dates
+    @State private var prayerTimes: [String: String] = [:]  // Dynamic prayer times
+    @State private var currentDayIndex = Calendar.current.component(.day, from: Date()) - 1
+    @State private var dateKeys: [String] = []  // Sorted list of dates for London API
     @State private var readableDate: String = ""
     @State private var londonPrayerData: [String: Timings] = [:]  // API prayer data
+    @State private var prayerData: [[String: Any]] = []  // Firebase prayer data
+    @State private var maxDayIndex: Int = 0  // Maximum day index for navigation
     @Binding var isDaytime: Bool
     @Binding var moonScale: CGFloat
 
@@ -60,7 +62,7 @@ struct DayPrayerView: View {
                             .font(.title)
                             .foregroundColor(.black)
                     }
-                    .disabled(currentDayIndex >= dateKeys.count - 1)
+                    .disabled(currentDayIndex >= maxDayIndex - 1)
                 }
                 .padding(.horizontal, 20)
 
@@ -123,6 +125,7 @@ struct DayPrayerView: View {
                 DispatchQueue.main.async {
                     self.londonPrayerData = decodedResponse.times
                     self.dateKeys = decodedResponse.times.keys.sorted()
+                    self.maxDayIndex = self.dateKeys.count
                     self.currentDayIndex = self.dateKeys.firstIndex(of: currentReadableDate()) ?? 0
                     updatePrayerTimesForDay()
                 }
@@ -140,7 +143,10 @@ struct DayPrayerView: View {
             if let document = document, document.exists {
                 if let fetchedPrayerData = document.data()?["prayerTimes"] as? [[String: Any]] {
                     DispatchQueue.main.async {
-                        self.updatePrayerTimesForDay()
+                        self.prayerData = fetchedPrayerData
+                        self.maxDayIndex = fetchedPrayerData.count
+                        self.currentDayIndex = Calendar.current.component(.day, from: Date()) - 1
+                        updatePrayerTimesForDay()
                     }
                 }
             } else {
@@ -148,22 +154,42 @@ struct DayPrayerView: View {
             }
         }
     }
+    
+    func sanitizeTime(_ time: String) -> String {
+        return time.components(separatedBy: " ").first ?? time
+    }
+
 
     // MARK: - Update Prayer Times for Current Day
     func updatePrayerTimesForDay() {
-        guard !dateKeys.isEmpty else { return }
-        let selectedDate = dateKeys[currentDayIndex]
-        if let timings = londonPrayerData[selectedDate] {
-            self.prayerTimes = [
-                "Fajr": timings.fajr,
-                "Sunrise": timings.sunrise,
-                "Dhuhr": timings.dhuhr,
-                "Asr": timings.asr,
-                "Maghrib": timings.magrib
-            ]
-            self.readableDate = selectedDate
+        if viewModel.selectedCity.lowercased() == "london" {
+            // London Unified Timetable
+            guard !dateKeys.isEmpty else { return }
+            let selectedDate = dateKeys[currentDayIndex]
+            if let timings = londonPrayerData[selectedDate] {
+                self.prayerTimes = [
+                    "Fajr": sanitizeTime(timings.fajr),
+                    "Sunrise": sanitizeTime(timings.sunrise),
+                    "Dhuhr": sanitizeTime(timings.dhuhr),
+                    "Asr": sanitizeTime(timings.asr),
+                    "Maghrib": sanitizeTime(timings.magrib)
+                ]
+                self.readableDate = selectedDate
+            }
+        } else {
+            // Firebase Prayer Times
+            guard currentDayIndex < prayerData.count else { return }
+            let dayData = prayerData[currentDayIndex]
+            if let date = dayData["date"] as? [String: Any],
+               let readable = date["readable"] as? String {
+                self.readableDate = readable
+            }
+            if let timings = dayData["timings"] as? [String: String] {
+                self.prayerTimes = timings.mapValues { sanitizeTime($0) }
+            }
         }
     }
+
 
     // MARK: - Navigation
     func navigateToPreviousDay() {
@@ -174,7 +200,7 @@ struct DayPrayerView: View {
     }
 
     func navigateToNextDay() {
-        if currentDayIndex < dateKeys.count - 1 {
+        if currentDayIndex < maxDayIndex - 1 {
             currentDayIndex += 1
             updatePrayerTimesForDay()
         }

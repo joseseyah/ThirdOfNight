@@ -2,14 +2,19 @@ import SwiftUI
 
 struct OnboardingView: View {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
+    @AppStorage("selectedCountry") private var selectedCountry: String = ""
+    @AppStorage("selectedCity") private var selectedCity: String = ""
+
+    @State private var currentPageIndex: Int = 0  // Tracks the current page index
 
     var body: some View {
-        TabView {
+        TabView(selection: $currentPageIndex) {
             // First Page: App Icon with Animation
             AnimatedAppIconView(
                 title: "As-salamu alaykum",
                 description: "Welcome to your guide for seamless night prayers and Islamic reminders."
             )
+            .tag(0)
 
             // Second Page: Midnight & Last Third
             OnboardingSlideView(
@@ -18,6 +23,7 @@ struct OnboardingView: View {
                 imageName: "clock.arrow.circlepath",
                 backgroundColor: Color("BoxBackgroundColor")
             )
+            .tag(1)
 
             // Third Page: Tasbih
             OnboardingSlideView(
@@ -26,25 +32,44 @@ struct OnboardingView: View {
                 imageName: "hands.sparkles",
                 backgroundColor: Color("HighlightColor")
             )
-            
+            .tag(2)
+
+            // Fourth Page: Surah Mulk
             OnboardingSlideView(
-                title: "Surah Mulk",
+                title: "Surah Mulk Before Sleep",
                 description: """
-                “Blessed is He in whose hand is the dominion, and He is over all things competent.”
-                Surah Al-Mulk (سورة الملك)
+                Recite Surah Al-Mulk before you sleep, as recommended by the Prophet Muhammad (ﷺ).
+                You can read it in Arabic, English, or both to reflect on its beautiful meanings.
                 """,
-                imageName: "book.fill", // Replace with a more appropriate symbol if needed
+                imageName: "book.fill",
                 backgroundColor: Color("HighlightColor")
             )
+            .tag(3)
 
-
-            // Fourth Page: Quran Listening
+            // Fifth Page: Quran Listening
             OnboardingSlideView(
                 title: "Listen to the Quran",
                 description: "Enjoy listening to your favorite Surahs anytime.",
                 imageName: "music.note.list",
                 backgroundColor: Color("PageBackgroundColor")
             )
+            .tag(4)
+
+            // Sixth Page: Location Selection
+            LocationSelectionView(
+                onContinue: {
+                    // Set default values if needed
+                    if selectedCountry.isEmpty && selectedCity.isEmpty {
+                        selectedCountry = "United Kingdom"
+                        selectedCity = "London"
+                    }
+                    // Move to the next page
+                    withAnimation {
+                        currentPageIndex += 1
+                    }
+                }
+            )
+            .tag(5)
 
             // Last Page: Ready to Begin
             LastOnboardingSlide(
@@ -54,11 +79,14 @@ struct OnboardingView: View {
                     hasSeenOnboarding = true
                 }
             )
+            .tag(6)
         }
         .tabViewStyle(PageTabViewStyle())
         .ignoresSafeArea()
     }
 }
+
+
 
 // First Page with Animated App Icon
 struct AnimatedAppIconView: View {

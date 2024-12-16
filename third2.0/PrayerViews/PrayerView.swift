@@ -8,6 +8,8 @@ struct PrayerView: View {
     @State private var timer: Timer?  // Timer to check for time
     @State private var moonScale: CGFloat = 1.0  // Moon scale for animation
     @State private var isDaytime = false  // Toggle between day and night mode
+    @State private var readableDate: String = ""  // Holds the readable date from API
+
 
     var body: some View {
         ZStack {
@@ -55,11 +57,18 @@ struct PrayerView: View {
                         // Move city name higher
                         VStack {
                             Text(viewModel.selectedCity)
-                                .font(.largeTitle)  // Larger font for the city name
+                                .font(.largeTitle)  // City name
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
-                                .padding(.top, 20)  // Reduced padding to move it higher
+                                .padding(.top, 20)
+
+                            if !readableDate.isEmpty {
+                                Text(readableDate)  // Display the date below the city
+                                    .font(.headline)
+                                    .foregroundColor(Color(hex: "#F6923A"))  // Orange color
+                            }
                         }
+
 
                         Spacer()
 
@@ -111,39 +120,37 @@ struct PrayerView: View {
             if let document = document, document.exists {
                 if let prayerData = document.data()?["prayerTimes"] as? [[String: Any]] {
                     let currentDay = Calendar.current.component(.day, from: Date())
-                    
+
                     if currentDay <= prayerData.count {
                         let dayData = prayerData[currentDay - 1]
-                        
+
+                        // Fetch readable date
+                        if let date = dayData["date"] as? [String: Any],
+                           let readable = date["readable"] as? String {
+                            self.readableDate = readable  // Update state
+                        }
+
                         if let timings = dayData["timings"] as? [String: String],
                            let nextDayTimings = prayerData[(currentDay % prayerData.count)]["timings"] as? [String: String],
                            let fajrNextDay = nextDayTimings["Fajr"],
                            let maghrib = timings["Maghrib"] {
-                            
-                            // Sanitize times to remove timezone info
+
+                            // Sanitize times
                             self.prayerTimes = timings.mapValues { sanitizeTime($0) }
-                            
-                            // Calculate Midnight time
+
+                            // Calculate special times
                             let midnight = calculateMidnightTime(maghribTime: maghrib, fajrTime: fajrNextDay)
                             self.prayerTimes["Midnight"] = midnight
-                            
-                            // Calculate Last Third of the Night
+
                             let lastThird = calculateLastThirdOfNight(maghribTime: maghrib, fajrTime: fajrNextDay)
                             self.prayerTimes["Lastthird"] = lastThird
                         }
-                    } else {
-                        print("Day index out of range")
                     }
-                } else {
-                    print("Prayer times not available for \(city).")
-                    self.prayerTimes = ["Error": "Prayer times not available."]
                 }
-            } else {
-                print("Document does not exist for \(city): \(error?.localizedDescription ?? "Unknown error")")
-                self.prayerTimes = ["Error": "City not found in Firestore."]
             }
         }
     }
+
 
 
 

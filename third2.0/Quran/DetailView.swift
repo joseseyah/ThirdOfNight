@@ -158,6 +158,8 @@ struct DetailView: View {
             }
         }
     }
+    
+    
 
     private func formatTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60

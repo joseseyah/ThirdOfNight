@@ -2,12 +2,21 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseFunctions
 
+import SwiftUI
+import FirebaseFirestore
+import FirebaseFunctions
+import MessageUI
+
+import SwiftUI
+
 struct SettingsView: View {
     @ObservedObject var viewModel: CityViewModel
     @State private var searchQuery: String = ""  // City input
     @State private var countryQuery: String = ""  // Country input
     @State private var isAddingNewCity: Bool = false  // Toggle for adding a new city
     @State private var errorMessage: String? = nil  // To show error messages
+    @State private var showMailView: Bool = false  // Toggle to show email composer
+    @State private var showMailError: Bool = false  // Show error if mail can't be sent
 
     var body: some View {
         NavigationView {
@@ -83,8 +92,8 @@ struct SettingsView: View {
                             }) {
                                 Text("Add New City")
                                     .foregroundColor(.white)
-                                    .padding()
-                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 10)  // Smaller height
+                                    .padding(.horizontal, 20)
                                     .background(Color("HighlightColor"))
                                     .cornerRadius(10)
                                     .shadow(radius: 5)
@@ -94,14 +103,31 @@ struct SettingsView: View {
 
                     Spacer()
 
+                    // Feature request button
+                    Button(action: {
+                        if MFMailComposeViewController.canSendMail() {
+                            showMailView = true
+                        } else {
+                            showMailError = true
+                        }
+                    }) {
+                        SettingsButton(title: "Feature Request", icon: "envelope")
+                    }
+                    .sheet(isPresented: $showMailView) {
+                        MailView(recipientEmail: "joseph.hayes003@gmail.com", subject: "Feature Request", body: "Please share your feature request here.")
+                    }
+                    .alert(isPresented: $showMailError) {
+                        Alert(title: Text("Mail Not Set Up"), message: Text("Please set up a mail account to send feature requests."), dismissButton: .default(Text("OK")))
+                    }
+
                     // Navigation Links for Mission and Privacy Policy
                     VStack(spacing: 15) {
                         NavigationLink(destination: TextDetailView(title: "Our Mission", content: MissionText.content)) {
-                            SettingsButton(title: "Our Mission")
+                            SettingsButton(title: "Our Mission", icon: "chevron.right")
                         }
 
                         NavigationLink(destination: TextDetailView(title: "Privacy Policy", content: PrivacyPolicyText.content)) {
-                            SettingsButton(title: "Privacy Policy")
+                            SettingsButton(title: "Privacy Policy", icon: "chevron.right")
                         }
                     }
                     .padding()
@@ -143,19 +169,14 @@ struct SettingsView: View {
     }
 }
 
-
-
-
-
-
-
 // Custom reusable button style
 struct SettingsButton: View {
     var title: String
+    var icon: String
 
     var body: some View {
         HStack {
-            Image(systemName: "chevron.right")
+            Image(systemName: icon)
                 .foregroundColor(.white)
             Text(title)
                 .font(.headline)
@@ -169,6 +190,39 @@ struct SettingsButton: View {
         .shadow(radius: 5)
     }
 }
+
+// MailView struct remains unchanged
+
+
+
+
+
+struct MailView: UIViewControllerRepresentable {
+    var recipientEmail: String
+    var subject: String
+    var body: String
+
+    func makeUIViewController(context: Context) -> MFMailComposeViewController {
+        let mail = MFMailComposeViewController()
+        mail.setToRecipients([recipientEmail])
+        mail.setSubject(subject)
+        mail.setMessageBody(body, isHTML: false)
+        return mail
+    }
+
+    func updateUIViewController(_ uiViewController: MFMailComposeViewController, context: Context) {}
+
+    class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
+        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+            controller.dismiss(animated: true)
+        }
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+}
+
 
 // Notifications Settings View
 struct NotificationsView: View {

@@ -4,8 +4,21 @@ struct ContentView: View {
     @State private var selectedTab = 0
     @StateObject var viewModel = CityViewModel() // Shared instance of the view model
     @StateObject var audioPlayerViewModel = AudioPlayerViewModel() // Global audio player state
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false // Track onboarding status
 
     var body: some View {
+        Group {
+            if hasSeenOnboarding {
+                // Main App Content
+                mainContent
+            } else {
+                // Onboarding View
+                OnboardingView()
+            }
+        }
+    }
+
+    private var mainContent: some View {
         ZStack {
             // Main TabView
             TabView(selection: $selectedTab) {
@@ -64,6 +77,7 @@ struct ContentView: View {
                 .padding(.bottom, 48) // Adjust this to avoid overlapping the TabView
             }
         }
+        // Proper Binding to handle the sheet presentation for DetailView
         .sheet(isPresented: $audioPlayerViewModel.showDetailView) {
             if let currentIndex = audioPlayerViewModel.currentTrackIndex {
                 DetailView(

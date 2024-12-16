@@ -23,18 +23,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             if granted {
                 print("Notification permission granted.")
             } else if let error = error {
-                print("Notification permission denied: \(error.localizedDescription)")
-            } else {
-                print("Notification permission denied.")
+                print("Notification permission denied: \(error.localizedDescription ?? "Unknown error")")
             }
         }
     }
 }
 
-
 @main
 struct third2_0App: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -48,10 +46,17 @@ struct third2_0App: App {
         }
     }()
 
+    // App storage to track onboarding
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if hasSeenOnboarding {
+                ContentView() // Main App Content
+                    .modelContainer(sharedModelContainer)
+            } else {
+                OnboardingView() // Onboarding Slides
+            }
         }
-        .modelContainer(sharedModelContainer)
     }
 }

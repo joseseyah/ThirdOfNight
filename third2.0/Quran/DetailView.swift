@@ -11,82 +11,93 @@ struct DetailView: View {
     @State private var timer: Timer?
 
     var body: some View {
-        VStack {
-            if let currentIndex = currentTrackIndex { // Safely unwrap the index
-                // Surah Image
-                Image(surahs[currentIndex].imageFileName)
-                    .resizable()
-                    .frame(width: 250, height: 250) // Reduced size
-                    .cornerRadius(12)
-                    .padding()
+        ZStack {
+            // Background Color
+            Color("BackgroundColor")
+                .edgesIgnoringSafeArea(.all)
 
-                // Surah Name
-                Text(surahs[currentIndex].name)
-                    .font(.title)
-                    .padding()
-
-                // Playback Slider
-                if let audioPlayer = audioPlayer {
-                    VStack {
-                        Slider(value: $currentTime, in: 0...audioPlayer.duration, onEditingChanged: { editing in
-                            if !editing {
-                                audioPlayer.currentTime = currentTime
-                            }
-                        })
-                        .accentColor(Color("HighlightColor"))
+            VStack {
+                if let currentIndex = currentTrackIndex {
+                    // Surah Image
+                    Image(surahs[currentIndex].imageFileName)
+                        .resizable()
+                        .frame(width: 250, height: 250)
+                        .cornerRadius(12)
                         .padding()
 
-                        // Current time and duration
-                        HStack {
-                            Text(formatTime(currentTime))
-                                .font(.caption)
-                            Spacer()
-                            Text(formatTime(audioPlayer.duration))
-                                .font(.caption)
-                        }
-                        .padding([.horizontal, .bottom])
+                    // Surah Name
+                    Text(surahs[currentIndex].name)
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("HighlightColor"))
+                        .padding()
 
-                        // Playback Controls
-                        HStack {
-                            // Previous Track
-                            Button(action: previousTrack) {
-                                Image(systemName: "backward.fill")
-                                    .font(.title)
-                                    .foregroundColor(Color("HighlightColor"))
-                                    .padding()
-                            }
+                    // Playback Slider
+                    if let audioPlayer = audioPlayer {
+                        VStack {
+                            Slider(value: $currentTime, in: 0...audioPlayer.duration, onEditingChanged: { editing in
+                                if !editing {
+                                    audioPlayer.currentTime = currentTime
+                                }
+                            })
+                            .accentColor(Color("HighlightColor")) // Slider color
+                            .padding()
 
-                            Spacer()
-
-                            // Play/Pause Button
-                            Button(action: togglePlayback) {
-                                Image(systemName: isPlaying ? "pause.fill" : "play.fill")
-                                    .font(.largeTitle)
+                            // Current time and duration
+                            HStack {
+                                Text(formatTime(currentTime))
+                                    .font(.caption)
                                     .foregroundColor(.white)
-                                    .frame(width: 60, height: 60)
-                                    .background(Color("HighlightColor"))
-                                    .clipShape(Circle())
+                                Spacer()
+                                Text(formatTime(audioPlayer.duration))
+                                    .font(.caption)
+                                    .foregroundColor(.white)
                             }
+                            .padding([.horizontal, .bottom])
 
-                            Spacer()
+                            // Playback Controls
+                            HStack {
+                                // Previous Track
+                                Button(action: previousTrack) {
+                                    Image(systemName: "backward.fill")
+                                        .font(.title)
+                                        .foregroundColor(Color("HighlightColor"))
+                                        .padding()
+                                }
 
-                            // Next Track
-                            Button(action: nextTrack) {
-                                Image(systemName: "forward.fill")
-                                    .font(.title)
-                                    .foregroundColor(Color("HighlightColor"))
-                                    .padding()
+                                Spacer()
+
+                                // Play/Pause Button
+                                Button(action: togglePlayback) {
+                                    Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                                        .font(.largeTitle)
+                                        .foregroundColor(.white)
+                                        .frame(width: 70, height: 70)
+                                        .background(Color("HighlightColor"))
+                                        .clipShape(Circle())
+                                }
+
+                                Spacer()
+
+                                // Next Track
+                                Button(action: nextTrack) {
+                                    Image(systemName: "forward.fill")
+                                        .font(.title)
+                                        .foregroundColor(Color("HighlightColor"))
+                                        .padding()
+                                }
                             }
+                            .padding([.horizontal, .top])
                         }
-                        .padding([.horizontal, .top])
                     }
+                } else {
+                    Text("No Surah Selected")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
                 }
-            } else {
-                Text("No Surah Selected")
-                    .font(.headline)
-                    .padding()
+                Spacer()
             }
-            Spacer()
         }
         .onAppear {
             updateNowPlayingInfo()
@@ -97,8 +108,10 @@ struct DetailView: View {
             timer?.invalidate()
         }
         .navigationTitle(currentTrackIndex != nil ? surahs[currentTrackIndex!].name : "Quran")
+        .foregroundColor(.white)
     }
 
+    // MARK: - Playback Functions
     private func togglePlayback() {
         if isPlaying {
             audioPlayer?.pause()
@@ -111,22 +124,16 @@ struct DetailView: View {
 
     private func previousTrack() {
         guard let currentIndex = currentTrackIndex else { return }
-        // Stop the current track before switching
         audioPlayer?.stop()
         isPlaying = false
-
-        // Move to the previous track index (circular behavior)
         currentTrackIndex = (currentIndex - 1 + surahs.count) % surahs.count
         playCurrentTrack()
     }
 
     private func nextTrack() {
         guard let currentIndex = currentTrackIndex else { return }
-        // Stop the current track before switching
         audioPlayer?.stop()
         isPlaying = false
-
-        // Move to the next track index (circular behavior)
         currentTrackIndex = (currentIndex + 1) % surahs.count
         playCurrentTrack()
     }
@@ -136,12 +143,9 @@ struct DetailView: View {
         let surah = surahs[currentIndex]
         if let path = Bundle.main.path(forResource: surah.audioFileName, ofType: "mp3") {
             do {
-                // Initialize the audio player with the new track
                 audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
                 audioPlayer?.play()
                 isPlaying = true
-
-                // Update Now Playing info
                 updateNowPlayingInfo()
             } catch {
                 print("Error: Could not play audio file. \(error.localizedDescription)")
@@ -158,8 +162,6 @@ struct DetailView: View {
             }
         }
     }
-    
-    
 
     private func formatTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60

@@ -7,6 +7,7 @@ struct MinimizedAudioPlayerView: View {
     @Binding var isPlaying: Bool
     @Binding var audioPlayer: AVAudioPlayer?
     @Binding var showDetailView: Bool
+    @Binding var isMinimizedViewVisible: Bool // Control minimized view visibility
 
     var body: some View {
         HStack {
@@ -20,12 +21,23 @@ struct MinimizedAudioPlayerView: View {
             VStack(alignment: .leading) {
                 Text(surah.name)
                     .font(.headline)
+                    .foregroundColor(.white)
                 Text(isPlaying ? "Playing" : "Paused")
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
 
             Spacer()
+
+            // X Button to close the minimized view
+            Button(action: {
+                closeMinimizedView()
+            }) {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.title2)
+                    .foregroundColor(Color("HighlightColor"))
+                    .padding(8)
+            }
 
             // Play/Pause Button
             Button(action: togglePlayback) {
@@ -55,6 +67,7 @@ struct MinimizedAudioPlayerView: View {
         }
     }
 
+    // MARK: - Actions
     private func togglePlayback() {
         if isPlaying {
             audioPlayer?.pause()
@@ -62,5 +75,11 @@ struct MinimizedAudioPlayerView: View {
             audioPlayer?.play()
         }
         isPlaying.toggle()
+    }
+
+    private func closeMinimizedView() {
+        isMinimizedViewVisible = false // Hide the minimized player view
+        audioPlayer?.stop() // Optionally stop playback
+        isPlaying = false
     }
 }

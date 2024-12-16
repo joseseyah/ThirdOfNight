@@ -10,10 +10,12 @@ import AVKit
 import SwiftUI
 
 class AudioPlayerViewModel: ObservableObject {
-    @Published var currentTrackIndex: Int? = nil // Index of the current Surah
+    @Published var currentTrackIndex: Int? = nil
     @Published var isPlaying: Bool = false
     @Published var audioPlayer: AVAudioPlayer? = nil
     @Published var showDetailView: Bool = false
+    @Published var isMinimizedViewVisible: Bool = true // Add this property
 }
+
 
 

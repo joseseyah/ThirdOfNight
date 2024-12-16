@@ -75,7 +75,12 @@ struct DayPrayerView: View {
                     VStack(spacing: 16) {
                         TimeBox(title: "Fajr", time: prayerTimes["Fajr"] ?? "N/A", isDaytime: isDaytime)
                         TimeBox(title: "Sunrise", time: prayerTimes["Sunrise"] ?? "N/A", isDaytime: isDaytime)
-                        TimeBox(title: "Dhuhr", time: prayerTimes["Dhuhr"] ?? "N/A", isDaytime: isDaytime)
+                        TimeBox(
+                            title: isFriday() ? "Jummah" : "Dhuhr",
+                            time: prayerTimes["Dhuhr"] ?? "N/A",
+                            isDaytime: isDaytime
+                        )
+
                         TimeBox(title: "Asr", time: prayerTimes["Asr"] ?? "N/A", isDaytime: isDaytime)
                         TimeBox(title: "Maghrib", time: prayerTimes["Maghrib"] ?? "N/A", isDaytime: isDaytime)
                     }
@@ -158,6 +163,13 @@ struct DayPrayerView: View {
     func sanitizeTime(_ time: String) -> String {
         return time.components(separatedBy: " ").first ?? time
     }
+    
+    func isFriday() -> Bool {
+        let calendar = Calendar.current
+        let currentDate = calendar.date(byAdding: .day, value: currentDayIndex, to: Date()) ?? Date()
+        return calendar.component(.weekday, from: currentDate) == 7
+    }
+
 
 
     // MARK: - Update Prayer Times for Current Day

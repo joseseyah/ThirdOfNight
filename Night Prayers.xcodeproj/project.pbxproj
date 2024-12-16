@@ -153,6 +153,7 @@
 		6DCC14152D0B00C600E352BD /* 074.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13DF2D0B00C600E352BD /* 074.mp3 */; };
 		6DCC14172D0B180400E352BD /* AudioPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC14162D0B180400E352BD /* AudioPlayerViewModel.swift */; };
 		6DCC141F2D0B9CAC00E352BD /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC141E2D0B9CAC00E352BD /* OnboardingView.swift */; };
+		6DCC14202D10193200E352BD /* PrayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCA2CB2610F0068F84C /* PrayerView.swift */; };
 		6DE78BCB2CB2610F0068F84C /* PrayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCA2CB2610F0068F84C /* PrayerView.swift */; };
 		6DE78BCD2CB2613E0068F84C /* TimeBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCC2CB2613E0068F84C /* TimeBox.swift */; };
 		6DE78BCF2CB2615E0068F84C /* SurahMulkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */; };
@@ -975,6 +976,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DBCFC6D2CB25CC40074796A /* third2_0UITestsLaunchTests.swift in Sources */,
+				6DCC14202D10193200E352BD /* PrayerView.swift in Sources */,
 				6DBCFC6B2CB25CC40074796A /* third2_0UITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

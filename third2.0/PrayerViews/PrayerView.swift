@@ -2,51 +2,44 @@ import SwiftUI
 import FirebaseFirestore
 
 struct PrayerView: View {
-    @ObservedObject var viewModel: CityViewModel  // Observing the view model
+    @ObservedObject var viewModel: CityViewModel
     @State private var prayerTimes: [String: String] = [:]
-    @State private var currentDayIndex = 0  // Store the current day index (0 for 1st day of the month)
-    @State private var timer: Timer?  // Timer to check for time
-    @State private var moonScale: CGFloat = 1.0  // Moon scale for animation
-    @State private var isDaytime = false  // Toggle between day and night mode
-    @State private var readableDate: String = ""  // Holds the readable date from API
-
+    @State private var currentDayIndex = Calendar.current.component(.day, from: Date()) - 1
+    @State private var maxDayIndex = 30  // Default max days for the month
+    @State private var timer: Timer?
+    @State private var moonScale: CGFloat = 1.0
+    @State private var isDaytime = false
+    @State private var readableDate: String = ""  // Holds the readable date
+    @State private var prayerData: [[String: Any]] = []  // Store prayer times for the entire month
 
     var body: some View {
         ZStack {
             if isDaytime {
-                // Switch to DayPrayerView when it's daytime
                 DayPrayerView(viewModel: viewModel, isDaytime: $isDaytime, moonScale: $moonScale)
-                    .transition(.opacity)  // Transition animation
+                    .transition(.opacity)
             } else {
-                // Night prayer view
                 ZStack {
                     Color("BackgroundColor")
                         .edgesIgnoringSafeArea(.all)
 
-                    // Starry background
                     StarrySkyView()
 
                     VStack(spacing: 20) {
-                        // Animated moon and desert scene
                         ZStack {
-                            // Desert dunes
                             DesertView()
-                                .foregroundColor(Color(hex: "#FDF3E7"))  // Light cream for desert
+                                .foregroundColor(Color(hex: "#FDF3E7"))
 
-                            // Pulsating Moon
                             Circle()
-                                .fill(Color(hex: "#F6923A"))  // Orange moon
+                                .fill(Color(hex: "#F6923A"))
                                 .frame(width: 100, height: 100)
-                                .scaleEffect(moonScale)  // Apply the pulsating scale effect
+                                .scaleEffect(moonScale)
                                 .offset(y: -80)
                                 .onAppear {
-                                    // Start the pulsating moon animation
                                     withAnimation(Animation.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
-                                        moonScale = 1.2  // Increase scale slightly
+                                        moonScale = 1.2
                                     }
                                 }
                                 .onTapGesture {
-                                    // Toggle between day and night views
                                     withAnimation(.easeInOut) {
                                         isDaytime.toggle()
                                     }
@@ -54,36 +47,55 @@ struct PrayerView: View {
                         }
                         .frame(height: 300)
 
-                        // Move city name higher
-                        VStack {
-                            Text(viewModel.selectedCity)
-                                .font(.largeTitle)  // City name
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .padding(.top, 20)
-
-                            if !readableDate.isEmpty {
-                                Text(readableDate)  // Display the date below the city
-                                    .font(.headline)
-                                    .foregroundColor(Color(hex: "#F6923A"))  // Orange color
+                        // Navigation Arrows and City Name
+                        HStack {
+                            Button(action: {
+                                navigateToPreviousDay()
+                            }) {
+                                Image(systemName: "arrow.left.circle.fill")
+                                    .font(.title)
+                                    .foregroundColor(.white)
                             }
-                        }
+                            .disabled(currentDayIndex <= 0)
 
+                            Spacer()
+
+                            VStack {
+                                Text(viewModel.selectedCity)
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                                if !readableDate.isEmpty {
+                                    Text(readableDate)
+                                        .font(.headline)
+                                        .foregroundColor(Color(hex: "#F6923A"))
+                                }
+                            }
+
+                            Spacer()
+
+                            Button(action: {
+                                navigateToNextDay()
+                            }) {
+                                Image(systemName: "arrow.right.circle.fill")
+                                    .font(.title)
+                                    .foregroundColor(.white)
+                            }
+                            .disabled(currentDayIndex >= maxDayIndex - 1)
+                        }
+                        .padding(.horizontal, 20)
 
                         Spacer()
 
-                        // Check if prayer times have been loaded
                         if prayerTimes.isEmpty {
                             Text("Loading prayer times...")
                                 .foregroundColor(.white)
                                 .font(.title)
                                 .padding()
                         } else {
-                            // Display dynamically loaded prayer times
-                            TimeBox(title: "Isha", time: prayerTimes["Isha"] ?? "08:00 PM", isDaytime: isDaytime)  // Add Isha TimeBox
+                            TimeBox(title: "Isha", time: prayerTimes["Isha"] ?? "08:00 PM", isDaytime: isDaytime)
                             TimeBox(title: "Midnight", time: prayerTimes["Midnight"] ?? "00:00 AM", isDaytime: isDaytime)
                             TimeBox(title: "Last Third of Night", time: prayerTimes["Lastthird"] ?? "03:00 AM", isDaytime: isDaytime)
-                            
                         }
 
                         Spacer()
@@ -93,76 +105,69 @@ struct PrayerView: View {
             }
         }
         .onAppear {
-            // Fetch prayer times for the selected city and the current day
             fetchPrayerTimes(city: viewModel.selectedCity)
-            
-            // Start the timer to check for 6 a.m. refresh
             startTimer()
         }
         .onDisappear {
-            // Invalidate the timer when the view disappears
             timer?.invalidate()
         }
-        .onChange(of: viewModel.selectedCity) { newCity in
-            fetchPrayerTimes(city: newCity)
-
-        }
-
-
     }
 
-    // Fetch prayer times for the selected city from Firestore
+    // MARK: - Fetch Prayer Times Once
     func fetchPrayerTimes(city: String) {
         let db = Firestore.firestore()
         let docRef = db.collection("prayerTimes").document(city)
 
         docRef.getDocument { document, error in
             if let document = document, document.exists {
-                if let prayerData = document.data()?["prayerTimes"] as? [[String: Any]] {
-                    let currentDay = Calendar.current.component(.day, from: Date())
-
-                    if currentDay <= prayerData.count {
-                        let dayData = prayerData[currentDay - 1]
-
-                        // Fetch readable date
-                        if let date = dayData["date"] as? [String: Any],
-                           let readable = date["readable"] as? String {
-                            self.readableDate = readable  // Update state
-                        }
-
-                        if let timings = dayData["timings"] as? [String: String],
-                           let nextDayTimings = prayerData[(currentDay % prayerData.count)]["timings"] as? [String: String],
-                           let fajrNextDay = nextDayTimings["Fajr"],
-                           let maghrib = timings["Maghrib"] {
-
-                            // Sanitize times
-                            self.prayerTimes = timings.mapValues { sanitizeTime($0) }
-
-                            // Calculate special times
-                            let midnight = calculateMidnightTime(maghribTime: maghrib, fajrTime: fajrNextDay)
-                            self.prayerTimes["Midnight"] = midnight
-
-                            let lastThird = calculateLastThirdOfNight(maghribTime: maghrib, fajrTime: fajrNextDay)
-                            self.prayerTimes["Lastthird"] = lastThird
-                        }
-                    }
+                if let fetchedPrayerData = document.data()?["prayerTimes"] as? [[String: Any]] {
+                    self.prayerData = fetchedPrayerData
+                    self.maxDayIndex = fetchedPrayerData.count
+                    updatePrayerTimesForDay()
                 }
+            } else {
+                print("Failed to fetch document for city: \(city)")
             }
         }
     }
 
+    // MARK: - Update Prayer Times for the Current Day Index
+    func updatePrayerTimesForDay() {
+        guard currentDayIndex < prayerData.count else { return }
 
+        let dayData = prayerData[currentDayIndex]
 
+        if let date = dayData["date"] as? [String: Any],
+           let readable = date["readable"] as? String {
+            self.readableDate = readable
+        }
 
-    
-    
+        if let timings = dayData["timings"] as? [String: String],
+           let nextDayTimings = prayerData[(currentDayIndex + 1) % prayerData.count]["timings"] as? [String: String],
+           let fajrNextDay = nextDayTimings["Fajr"],
+           let maghrib = timings["Maghrib"] {
+            self.prayerTimes = timings.mapValues { sanitizeTime($0) }
+            self.prayerTimes["Midnight"] = calculateMidnightTime(maghribTime: maghrib, fajrTime: fajrNextDay)
+            self.prayerTimes["Lastthird"] = calculateLastThirdOfNight(maghribTime: maghrib, fajrTime: fajrNextDay)
+        }
+    }
 
+    // MARK: - Navigation
+    func navigateToPreviousDay() {
+        if currentDayIndex > 0 {
+            currentDayIndex -= 1
+            updatePrayerTimesForDay()
+        }
+    }
 
+    func navigateToNextDay() {
+        if currentDayIndex < maxDayIndex - 1 {
+            currentDayIndex += 1
+            updatePrayerTimesForDay()
+        }
+    }
 
-
-
-
-    // Start a timer to check for 6 a.m. refresh
+    // MARK: - Utility Functions
     func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in
             let now = Date()
@@ -170,82 +175,54 @@ struct PrayerView: View {
             let hour = calendar.component(.hour, from: now)
             let minute = calendar.component(.minute, from: now)
 
-            // Check if it is exactly 6:00 a.m.
             if hour == 6 && minute == 0 {
-                // Fetch prayer times for the selected city at 6 a.m.
                 fetchPrayerTimes(city: viewModel.selectedCity)
-
             }
         }
     }
-    
+
     func sanitizeTime(_ time: String) -> String {
-        // Extract the time part before any timezone or additional text
         return time.components(separatedBy: " ").first ?? time
     }
 
-    
     func calculateMidnightTime(maghribTime: String, fajrTime: String) -> String {
-        // Create a date formatter
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"  // Expect "HH:mm" format
-        formatter.timeZone = TimeZone.current  // Use the current time zone
+        formatter.dateFormat = "HH:mm"
+        formatter.timeZone = TimeZone.current
 
-        // Parse Maghrib time to Date
-        guard let maghribDate = sanitizeAndParseTime(maghribTime, using: formatter) else {
-            return "Invalid Maghrib Time"
+        guard let maghribDate = sanitizeAndParseTime(maghribTime, using: formatter),
+              let fajrDate = sanitizeAndParseTime(fajrTime, using: formatter)?.addingTimeInterval(24 * 60 * 60) else {
+            return "Invalid"
         }
-        
-        // Parse Fajr time to Date (for the next day)
-        guard let fajrDate = sanitizeAndParseTime(fajrTime, using: formatter)?.addingTimeInterval(24 * 60 * 60) else {
-            return "Invalid Fajr Time"
-        }
-        
-        // Calculate the duration between Maghrib and Fajr
+
         let totalDuration = fajrDate.timeIntervalSince(maghribDate)
-        
-        // Calculate the midpoint
         let midnightDate = maghribDate.addingTimeInterval(totalDuration / 2)
-        
-        // Convert the midpoint back to a string
         return formatter.string(from: midnightDate)
     }
-    
-    func calculateLastThirdOfNight(maghribTime: String, fajrTime: String) -> String {
-        // Create a date formatter
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"  // Expect "HH:mm" format
-        formatter.timeZone = TimeZone.current  // Use the current time zone
 
-        // Parse Maghrib time to Date
-        guard let maghribDate = sanitizeAndParseTime(maghribTime, using: formatter) else {
-            return "Invalid Maghrib Time"
+    func calculateLastThirdOfNight(maghribTime: String, fajrTime: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        formatter.timeZone = TimeZone.current
+
+        guard let maghribDate = sanitizeAndParseTime(maghribTime, using: formatter),
+              let fajrDate = sanitizeAndParseTime(fajrTime, using: formatter)?.addingTimeInterval(24 * 60 * 60) else {
+            return "Invalid"
         }
-        
-        // Parse Fajr time to Date (for the next day)
-        guard let fajrDate = sanitizeAndParseTime(fajrTime, using: formatter)?.addingTimeInterval(24 * 60 * 60) else {
-            return "Invalid Fajr Time"
-        }
-        
-        // Calculate the duration between Maghrib and Fajr
+
         let totalDuration = fajrDate.timeIntervalSince(maghribDate)
-        
-        // Calculate the start of the last third
-        let lastThirdStartDate = fajrDate.addingTimeInterval(-totalDuration / 3)
-        
-        // Convert the last third start time back to a string
-        return formatter.string(from: lastThirdStartDate)
+        let lastThirdStart = fajrDate.addingTimeInterval(-totalDuration / 3)
+        return formatter.string(from: lastThirdStart)
     }
 
-
-    // Helper function to sanitize and parse time strings
     func sanitizeAndParseTime(_ time: String, using formatter: DateFormatter) -> Date? {
-        // Remove timezone information if present
         let sanitizedTime = time.components(separatedBy: " ").first ?? time
         return formatter.date(from: sanitizedTime)
     }
-
 }
+
+
+
 
 
 

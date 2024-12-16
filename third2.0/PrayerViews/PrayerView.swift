@@ -5,12 +5,15 @@ struct PrayerView: View {
     @ObservedObject var viewModel: CityViewModel
     @State private var prayerTimes: [String: String] = [:]
     @State private var currentDayIndex = Calendar.current.component(.day, from: Date()) - 1
-    @State private var maxDayIndex = 30  // Default max days for the month
+    @State private var maxDayIndex = 30
     @State private var timer: Timer?
     @State private var moonScale: CGFloat = 1.0
     @State private var isDaytime = false
-    @State private var readableDate: String = ""  // Holds the readable date
-    @State private var prayerData: [[String: Any]] = []  // Store prayer times for the entire month
+    @State private var readableDate: String = ""
+    @State private var hijriDate: String = ""
+    @State private var prayerData: [[String: Any]] = []
+    
+    @AppStorage("dateFormat") private var dateFormat: String = "Gregorian" // Date format setting
 
     var body: some View {
         ZStack {
@@ -49,9 +52,7 @@ struct PrayerView: View {
 
                         // Navigation Arrows and City Name
                         HStack {
-                            Button(action: {
-                                navigateToPreviousDay()
-                            }) {
+                            Button(action: { navigateToPreviousDay() }) {
                                 Image(systemName: "arrow.left.circle.fill")
                                     .font(.title)
                                     .foregroundColor(.white)
@@ -65,7 +66,13 @@ struct PrayerView: View {
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
-                                if !readableDate.isEmpty {
+                                
+                                // Date Display - Hijri or Gregorian
+                                if dateFormat == "Hijri" {
+                                    Text(hijriDate)
+                                        .font(.headline)
+                                        .foregroundColor(Color(hex: "#F6923A"))
+                                } else {
                                     Text(readableDate)
                                         .font(.headline)
                                         .foregroundColor(Color(hex: "#F6923A"))
@@ -74,9 +81,7 @@ struct PrayerView: View {
 
                             Spacer()
 
-                            Button(action: {
-                                navigateToNextDay()
-                            }) {
+                            Button(action: { navigateToNextDay() }) {
                                 Image(systemName: "arrow.right.circle.fill")
                                     .font(.title)
                                     .foregroundColor(.white)
@@ -107,14 +112,93 @@ struct PrayerView: View {
         .onAppear {
             fetchPrayerTimes(city: viewModel.selectedCity)
             startTimer()
+
+            // Listen for date format changes
+            NotificationCenter.default.addObserver(forName: .dateFormatChanged, object: nil, queue: .main) { _ in
+                updatePrayerTimesForDay()
+            }
         }
         .onDisappear {
             timer?.invalidate()
+            NotificationCenter.default.removeObserver(self, name: .dateFormatChanged, object: nil)
         }
     }
 
-    // MARK: - Fetch Prayer Times Once
+    // MARK: - Fetch Prayer Times
+    
     func fetchPrayerTimes(city: String) {
+        if viewModel.selectedCity.lowercased() == "london" && viewModel.selectedCountry.lowercased() == "unified timetable" {
+            fetchLondonUnifiedTimetableAPI()
+        } else {
+            fetchPrayerTimesFromFirestore(city: city)
+        }
+    }
+
+    // MARK: - Fetch London Unified Timetable API
+    func fetchLondonUnifiedTimetableAPI() {
+        let year = Calendar.current.component(.year, from: Date())
+        let month = Calendar.current.component(.month, from: Date())
+        let formattedMonth = String(format: "%02d", month)
+
+        guard let url = URL(string: "https://www.londonprayertimes.com/api/times/?format=json&key=f31cd22f-be6a-4410-bd20-cdd3b9923cff&year=\(year)&month=\(formattedMonth)&24hours=true") else {
+            print("Invalid API URL")
+            return
+        }
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error fetching Unified Timetable API: \(error.localizedDescription)")
+                return
+            }
+
+            guard let data = data else {
+                print("No data returned from API")
+                return
+            }
+
+            // Debug: Print raw JSON response
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("Raw JSON Response: \(jsonString)")
+            }
+
+            do {
+                let decodedResponse = try JSONDecoder().decode(LondonPrayerTimesResponse.self, from: data)
+
+                DispatchQueue.main.async {
+                    self.prayerData = decodedResponse.times.map { date, timings in
+                        return [
+                            "date": date,
+                            "timings": timings
+                        ]
+                    }
+
+                    // Sort prayerData by date
+                    self.prayerData.sort {
+                        guard let date1 = $0["date"] as? String,
+                              let date2 = $1["date"] as? String else {
+                            return false
+                        }
+                        return date1 < date2
+                    }
+
+                    self.maxDayIndex = self.prayerData.count
+
+                    // Set default to today
+                    self.currentDayIndex = self.prayerData.firstIndex(where: { ($0["date"] as? String) == self.currentReadableDate() }) ?? 0
+                    self.updatePrayerTimesForLondonDay()
+                }
+            } catch {
+                print("Error decoding JSON response: \(error.localizedDescription)")
+            }
+        }.resume()
+    }
+
+
+
+
+
+    // MARK: - Fetch from Firestore
+    func fetchPrayerTimesFromFirestore(city: String) {
         let db = Firestore.firestore()
         let docRef = db.collection("prayerTimes").document(city)
 
@@ -131,7 +215,17 @@ struct PrayerView: View {
         }
     }
 
-    // MARK: - Update Prayer Times for the Current Day Index
+    // MARK: - Helper to Get Current Date
+    func currentReadableDate() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: Date())
+    }
+
+    
+
+
+    // MARK: - Update Prayer Times for the Day
     func updatePrayerTimesForDay() {
         guard currentDayIndex < prayerData.count else { return }
 
@@ -140,6 +234,14 @@ struct PrayerView: View {
         if let date = dayData["date"] as? [String: Any],
            let readable = date["readable"] as? String {
             self.readableDate = readable
+        }
+
+        if let hijri = dayData["hijri"] as? [String: Any],
+           let day = hijri["day"] as? String,
+           let month = hijri["month"] as? [String: Any],
+           let monthName = month["en"] as? String,
+           let year = hijri["year"] as? String {
+            self.hijriDate = "\(day) \(monthName) \(year)"  // Format Hijri date
         }
 
         if let timings = dayData["timings"] as? [String: String],
@@ -151,18 +253,42 @@ struct PrayerView: View {
             self.prayerTimes["Lastthird"] = calculateLastThirdOfNight(maghribTime: maghrib, fajrTime: fajrNextDay)
         }
     }
+    
+    func updatePrayerTimesForLondonDay() {
+        guard currentDayIndex < prayerData.count else { return }
 
-    // MARK: - Navigation
+        let dayData = prayerData[currentDayIndex]
+        if let date = dayData["date"] as? String,
+           let timings = dayData["timings"] as? Timings {
+            self.readableDate = date
+            self.prayerTimes = [
+                "Isha": timings.isha,
+                "Midnight": calculateMidnightTime(maghribTime: timings.magrib, fajrTime: timings.fajr),
+                "Lastthird": calculateLastThirdOfNight(maghribTime: timings.magrib, fajrTime: timings.fajr)
+            ]
+        }
+    }
+
+
     func navigateToPreviousDay() {
         if currentDayIndex > 0 {
             currentDayIndex -= 1
-            updatePrayerTimesForDay()
+            updatePrayerTimes()
         }
     }
 
     func navigateToNextDay() {
-        if currentDayIndex < maxDayIndex - 1 {
+        if currentDayIndex < prayerData.count - 1 {
             currentDayIndex += 1
+            updatePrayerTimes()
+        }
+    }
+
+    // Unified function to decide which update function to call
+    func updatePrayerTimes() {
+        if viewModel.selectedCity.lowercased() == "london" && viewModel.selectedCountry.lowercased() == "unified timetable" {
+            updatePrayerTimesForLondonDay()
+        } else {
             updatePrayerTimesForDay()
         }
     }
@@ -171,9 +297,8 @@ struct PrayerView: View {
     func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in
             let now = Date()
-            let calendar = Calendar.current
-            let hour = calendar.component(.hour, from: now)
-            let minute = calendar.component(.minute, from: now)
+            let hour = Calendar.current.component(.hour, from: now)
+            let minute = Calendar.current.component(.minute, from: now)
 
             if hour == 6 && minute == 0 {
                 fetchPrayerTimes(city: viewModel.selectedCity)
@@ -188,31 +313,21 @@ struct PrayerView: View {
     func calculateMidnightTime(maghribTime: String, fajrTime: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
-        formatter.timeZone = TimeZone.current
-
         guard let maghribDate = sanitizeAndParseTime(maghribTime, using: formatter),
-              let fajrDate = sanitizeAndParseTime(fajrTime, using: formatter)?.addingTimeInterval(24 * 60 * 60) else {
-            return "Invalid"
-        }
+              let fajrDate = sanitizeAndParseTime(fajrTime, using: formatter)?.addingTimeInterval(24 * 60 * 60) else { return "Invalid" }
 
         let totalDuration = fajrDate.timeIntervalSince(maghribDate)
-        let midnightDate = maghribDate.addingTimeInterval(totalDuration / 2)
-        return formatter.string(from: midnightDate)
+        return formatter.string(from: maghribDate.addingTimeInterval(totalDuration / 2))
     }
 
     func calculateLastThirdOfNight(maghribTime: String, fajrTime: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
-        formatter.timeZone = TimeZone.current
-
         guard let maghribDate = sanitizeAndParseTime(maghribTime, using: formatter),
-              let fajrDate = sanitizeAndParseTime(fajrTime, using: formatter)?.addingTimeInterval(24 * 60 * 60) else {
-            return "Invalid"
-        }
+              let fajrDate = sanitizeAndParseTime(fajrTime, using: formatter)?.addingTimeInterval(24 * 60 * 60) else { return "Invalid" }
 
         let totalDuration = fajrDate.timeIntervalSince(maghribDate)
-        let lastThirdStart = fajrDate.addingTimeInterval(-totalDuration / 3)
-        return formatter.string(from: lastThirdStart)
+        return formatter.string(from: fajrDate.addingTimeInterval(-totalDuration / 3))
     }
 
     func sanitizeAndParseTime(_ time: String, using formatter: DateFormatter) -> Date? {
@@ -222,10 +337,6 @@ struct PrayerView: View {
 }
 
 
-
-
-
-
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
@@ -233,9 +344,9 @@ extension Color {
         Scanner(string: hex).scanHexInt64(&int)
         let r, g, b: UInt64
         switch hex.count {
-        case 3: // RGB (12-bit)
+        case 3:
             (r, g, b) = ((int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
-        case 6: // RGB (24-bit)
+        case 6:
             (r, g, b) = (int >> 16, int >> 8 & 0xFF, int & 0xFF)
         default:
             (r, g, b) = (1, 1, 0)
@@ -249,3 +360,5 @@ extension Color {
         )
     }
 }
+
+

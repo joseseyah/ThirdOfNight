@@ -154,6 +154,8 @@
 		6DCC14172D0B180400E352BD /* AudioPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC14162D0B180400E352BD /* AudioPlayerViewModel.swift */; };
 		6DCC141F2D0B9CAC00E352BD /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC141E2D0B9CAC00E352BD /* OnboardingView.swift */; };
 		6DCC14202D10193200E352BD /* PrayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCA2CB2610F0068F84C /* PrayerView.swift */; };
+		6DCC14232D10B50200E352BD /* LondonPrayerTimesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC14222D10B50200E352BD /* LondonPrayerTimesResponse.swift */; };
+		6DCC14252D10C60B00E352BD /* PrayerTimeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC14242D10C60B00E352BD /* PrayerTimeCalculator.swift */; };
 		6DE78BCB2CB2610F0068F84C /* PrayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCA2CB2610F0068F84C /* PrayerView.swift */; };
 		6DE78BCD2CB2613E0068F84C /* TimeBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCC2CB2613E0068F84C /* TimeBox.swift */; };
 		6DE78BCF2CB2615E0068F84C /* SurahMulkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */; };
@@ -344,6 +346,8 @@
 		6DCC14162D0B180400E352BD /* AudioPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewModel.swift; sourceTree = "<group>"; };
 		6DCC14182D0B28B200E352BD /* Night-Prayers-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Night-Prayers-Info.plist"; sourceTree = "<group>"; };
 		6DCC141E2D0B9CAC00E352BD /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		6DCC14222D10B50200E352BD /* LondonPrayerTimesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LondonPrayerTimesResponse.swift; sourceTree = "<group>"; };
+		6DCC14242D10C60B00E352BD /* PrayerTimeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerTimeCalculator.swift; sourceTree = "<group>"; };
 		6DE78BCA2CB2610F0068F84C /* PrayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerView.swift; sourceTree = "<group>"; };
 		6DE78BCC2CB2613E0068F84C /* TimeBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBox.swift; sourceTree = "<group>"; };
 		6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurahMulkView.swift; sourceTree = "<group>"; };
@@ -417,6 +421,7 @@
 		6DBCFC4C2CB25CC30074796A /* third2.0 */ = {
 			isa = PBXGroup;
 			children = (
+				6DCC14212D10B4F200E352BD /* Responses */,
 				6DBCFC4D2CB25CC30074796A /* third2_0App.swift */,
 				6DCC14192D0B9B8E00E352BD /* Launch */,
 				6DCC13272D0AF5F500E352BD /* Models */,
@@ -430,6 +435,7 @@
 				6DBCFC532CB25CC40074796A /* Assets.xcassets */,
 				6DBCFC552CB25CC40074796A /* Preview Content */,
 				6DCC131F2D0AD43500E352BD /* GoogleService-Info.plist */,
+				6DCC14242D10C60B00E352BD /* PrayerTimeCalculator.swift */,
 			);
 			path = third2.0;
 			sourceTree = "<group>";
@@ -649,6 +655,14 @@
 				6DCC141E2D0B9CAC00E352BD /* OnboardingView.swift */,
 			);
 			path = Launch;
+			sourceTree = "<group>";
+		};
+		6DCC14212D10B4F200E352BD /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				6DCC14222D10B50200E352BD /* LondonPrayerTimesResponse.swift */,
+			);
+			path = Responses;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -953,8 +967,10 @@
 				6DE78BCD2CB2613E0068F84C /* TimeBox.swift in Sources */,
 				6DE78BDE2CB28C400068F84C /* CityViewModel.swift in Sources */,
 				6DE78BCB2CB2610F0068F84C /* PrayerView.swift in Sources */,
+				6DCC14232D10B50200E352BD /* LondonPrayerTimesResponse.swift in Sources */,
 				6DBCFC522CB25CC30074796A /* Item.swift in Sources */,
 				6DBCFC4E2CB25CC30074796A /* third2_0App.swift in Sources */,
+				6DCC14252D10C60B00E352BD /* PrayerTimeCalculator.swift in Sources */,
 				6DCC14172D0B180400E352BD /* AudioPlayerViewModel.swift in Sources */,
 				6DCC132D2D0AF70400E352BD /* MinimizedAudioPlayerView.swift in Sources */,
 				6DCC141F2D0B9CAC00E352BD /* OnboardingView.swift in Sources */,

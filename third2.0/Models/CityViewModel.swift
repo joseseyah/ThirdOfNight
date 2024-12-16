@@ -1,62 +1,107 @@
 import Foundation
 import Combine
-import UserNotifications
 
 class CityViewModel: ObservableObject {
     @Published var selectedCity: String {
         didSet {
             UserDefaults.standard.set(selectedCity, forKey: "selectedCity")
-            scheduleNotifications(for: prayerTimes) // Reschedule notifications when the city changes
         }
     }
-
     @Published var selectedCountry: String {
         didSet {
             UserDefaults.standard.set(selectedCountry, forKey: "selectedCountry")
         }
     }
+    @Published var prayerTimes: [String: String] = [:]
+    @Published var readableDate: String = ""
+    @Published var isUsingLondonUnifiedTimetable = false
 
-    @Published var prayerTimes: [String: String] = [:] {
-        didSet {
-            scheduleNotifications(for: prayerTimes) // Schedule notifications whenever prayer times update
-        }
-    }
+    private var cancellables = Set<AnyCancellable>()
+    private let londonPrayerTimesAPI = "https://www.londonprayertimes.com/api/times/?format=json&key=f31cd22f-be6a-4410-bd20-cdd3b9923cff"
 
     init() {
         self.selectedCity = UserDefaults.standard.string(forKey: "selectedCity") ?? "Singapore"
-        self.selectedCountry = UserDefaults.standard.string(forKey: "selectedCountry") ?? "Unknown Country"
+        self.selectedCountry = UserDefaults.standard.string(forKey: "selectedCountry") ?? "Unknown"
     }
 
-    func scheduleNotifications(for prayerTimes: [String: String]) {
-        let center = UNUserNotificationCenter.current()
-        center.removeAllPendingNotificationRequests() // Clear existing notifications
+    // MARK: - Fetch Unified Timetable API
+    func fetchLondonUnifiedTimetable() {
+        let year = Calendar.current.component(.year, from: Date())
+        let month = Calendar.current.component(.month, from: Date())
+        let formattedMonth = String(format: "%02d", month)
 
-        for (prayerName, prayerTime) in prayerTimes {
-            if let date = getDateFromPrayerTime(prayerTime) {
-                let content = UNMutableNotificationContent()
-                content.title = "\(prayerName) Prayer"
-                content.body = "It's time for \(prayerName)."
-                content.sound = .default
-
-                let trigger = UNCalendarNotificationTrigger(
-                    dateMatching: Calendar.current.dateComponents([.hour, .minute], from: date),
-                    repeats: false
-                )
-
-                let request = UNNotificationRequest(identifier: "\(prayerName)-notification", content: content, trigger: trigger)
-                center.add(request) { error in
-                    if let error = error {
-                        print("Error scheduling \(prayerName) notification: \(error.localizedDescription)")
-                    }
-                }
-            }
+        guard let url = URL(string: "\(londonPrayerTimesAPI)&year=\(year)&month=\(formattedMonth)&24hours=true") else {
+            print("Invalid URL")
+            return
         }
+
+        print("Fetching data from URL: \(url)")
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error fetching London Unified Timetable: \(error.localizedDescription)")
+                return
+            }
+
+            guard let data = data else {
+                print("No data returned from API")
+                return
+            }
+
+            // Debug: Print the raw JSON response
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("Raw JSON Response: \(jsonString)")
+            }
+
+            do {
+                let decodedResponse = try JSONDecoder().decode(LondonPrayerTimesResponse.self, from: data)
+                let todayDateString = self.currentReadableDate()
+                let dateKeys = decodedResponse.times.keys.sorted() // Get sorted date keys
+
+                // Extract today's prayer data
+                guard let todayPrayerData = decodedResponse.times[todayDateString] else {
+                    print("Error: Could not find today's prayer times.")
+                    return
+                }
+
+                // Extract next day's prayer data for calculations
+                let todayIndex = dateKeys.firstIndex(of: todayDateString) ?? 0
+                let nextDayIndex = dateKeys.index(after: todayIndex)
+                let nextDayDateString = nextDayIndex < dateKeys.count ? dateKeys[nextDayIndex] : todayDateString
+                let nextDayPrayerData = decodedResponse.times[nextDayDateString]
+
+                let maghribTime = todayPrayerData.magrib
+                let fajrTimeNextDay = nextDayPrayerData?.fajr ?? "00:00"
+
+                // Calculate Midnight and Last Third
+                let midnight = PrayerTimeCalculator.calculateMidnightTime(maghribTime: maghribTime, fajrTime: fajrTimeNextDay)
+                let lastThird = PrayerTimeCalculator.calculateLastThirdOfNight(maghribTime: maghribTime, fajrTime: fajrTimeNextDay)
+
+                DispatchQueue.main.async {
+                    self.prayerTimes = [
+                        "Isha": todayPrayerData.isha,
+                        "Midnight": midnight,
+                        "Lastthird": lastThird
+                    ]
+                    self.readableDate = todayDateString // Set the readable date as today's date
+                }
+
+            } catch {
+                print("Error decoding JSON response: \(error.localizedDescription)")
+            }
+        }.resume()
     }
 
-    private func getDateFromPrayerTime(_ time: String) -> Date? {
+
+
+    
+    private func currentReadableDate() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        formatter.timeZone = TimeZone.current
-        return formatter.date(from: time)
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: Date())
     }
+
 }
+
+
+

@@ -3,22 +3,20 @@ import FirebaseFirestore
 
 struct DayPrayerView: View {
     @ObservedObject var viewModel: CityViewModel
-    @State private var prayerTimes: [String: String] = [:]  // Dynamic prayer times
-    @State private var currentDayIndex = Calendar.current.component(.day, from: Date()) - 1
-    @State private var maxDayIndex = 30  // Default max days for the month
-    @State private var readableDate: String = ""  // Holds the readable date
-    @State private var prayerData: [[String: Any]] = []  // Store all prayer times for the month
-    @Binding var isDaytime: Bool  // Bind the toggle to switch back to night mode
-    @Binding var moonScale: CGFloat  // Reuse moonScale to animate the sun
+    @State private var prayerTimes: [String: String] = [:]
+    @State private var currentDayIndex = 0  // Current index of day
+    @State private var dateKeys: [String] = []  // Sorted list of dates
+    @State private var readableDate: String = ""
+    @State private var londonPrayerData: [String: Timings] = [:]  // API prayer data
+    @Binding var isDaytime: Bool
+    @Binding var moonScale: CGFloat
 
     var body: some View {
         ZStack {
-            // Daytime color background
-            Color("DayBackgroundColor")
-                .edgesIgnoringSafeArea(.all)
-
+            Color("DayBackgroundColor").edgesIgnoringSafeArea(.all)
+            
             VStack(spacing: 20) {
-                // Pulsating Sun
+                // Sun animation
                 Circle()
                     .fill(Color.yellow)
                     .frame(width: 100, height: 100)
@@ -34,11 +32,9 @@ struct DayPrayerView: View {
                         }
                     }
 
-                // Navigation Arrows and City Name
+                // Navigation and city name
                 HStack {
-                    Button(action: {
-                        navigateToPreviousDay()
-                    }) {
+                    Button(action: navigateToPreviousDay) {
                         Image(systemName: "arrow.left.circle.fill")
                             .font(.title)
                             .foregroundColor(.black)
@@ -52,38 +48,32 @@ struct DayPrayerView: View {
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundColor(.black)
-
-                        if !readableDate.isEmpty {
-                            Text(readableDate)
-                                .font(.headline)
-                                .foregroundColor(.gray)
-                        }
+                        Text(readableDate)
+                            .font(.headline)
+                            .foregroundColor(.gray)
                     }
 
                     Spacer()
 
-                    Button(action: {
-                        navigateToNextDay()
-                    }) {
+                    Button(action: navigateToNextDay) {
                         Image(systemName: "arrow.right.circle.fill")
                             .font(.title)
                             .foregroundColor(.black)
                     }
-                    .disabled(currentDayIndex >= maxDayIndex - 1)
+                    .disabled(currentDayIndex >= dateKeys.count - 1)
                 }
                 .padding(.horizontal, 20)
 
-                // Prayer Times
+                // Display prayer times
                 if prayerTimes.isEmpty {
                     Text("Loading prayer times...")
-                        .foregroundColor(.black)
                         .font(.title)
-                        .padding()
+                        .foregroundColor(.black)
                 } else {
                     VStack(spacing: 16) {
                         TimeBox(title: "Fajr", time: prayerTimes["Fajr"] ?? "N/A", isDaytime: isDaytime)
                         TimeBox(title: "Sunrise", time: prayerTimes["Sunrise"] ?? "N/A", isDaytime: isDaytime)
-                        TimeBox(title: isFriday() ? "Jummah" : "Dhuhr", time: prayerTimes["Dhuhr"] ?? "N/A", isDaytime: isDaytime)
+                        TimeBox(title: "Dhuhr", time: prayerTimes["Dhuhr"] ?? "N/A", isDaytime: isDaytime)
                         TimeBox(title: "Asr", time: prayerTimes["Asr"] ?? "N/A", isDaytime: isDaytime)
                         TimeBox(title: "Maghrib", time: prayerTimes["Maghrib"] ?? "N/A", isDaytime: isDaytime)
                     }
@@ -96,22 +86,62 @@ struct DayPrayerView: View {
         .onAppear {
             fetchPrayerTimes(city: viewModel.selectedCity)
         }
-        .onChange(of: viewModel.selectedCity) { _ in
-            fetchPrayerTimes(city: viewModel.selectedCity)
+    }
+
+    // MARK: - Fetch Prayer Times
+    func fetchPrayerTimes(city: String) {
+        if city.lowercased() == "london" {
+            fetchLondonUnifiedTimetable()
+        } else {
+            fetchPrayerTimesFromFirestore(city: city)
         }
     }
 
-    // MARK: - Fetch Prayer Times Once
-    func fetchPrayerTimes(city: String) {
+    func fetchLondonUnifiedTimetable() {
+        let year = Calendar.current.component(.year, from: Date())
+        let month = Calendar.current.component(.month, from: Date())
+        let formattedMonth = String(format: "%02d", month)
+
+        guard let url = URL(string: "https://www.londonprayertimes.com/api/times/?format=json&key=f31cd22f-be6a-4410-bd20-cdd3b9923cff&year=\(year)&month=\(formattedMonth)&24hours=true") else {
+            print("Invalid URL")
+            return
+        }
+
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            if let error = error {
+                print("Error fetching London Unified Timetable: \(error.localizedDescription)")
+                return
+            }
+
+            guard let data = data else {
+                print("No data returned from API")
+                return
+            }
+
+            do {
+                let decodedResponse = try JSONDecoder().decode(LondonPrayerTimesResponse.self, from: data)
+                DispatchQueue.main.async {
+                    self.londonPrayerData = decodedResponse.times
+                    self.dateKeys = decodedResponse.times.keys.sorted()
+                    self.currentDayIndex = self.dateKeys.firstIndex(of: currentReadableDate()) ?? 0
+                    updatePrayerTimesForDay()
+                }
+            } catch {
+                print("Error decoding JSON response: \(error.localizedDescription)")
+            }
+        }.resume()
+    }
+
+    func fetchPrayerTimesFromFirestore(city: String) {
         let db = Firestore.firestore()
         let docRef = db.collection("prayerTimes").document(city)
 
         docRef.getDocument { document, error in
             if let document = document, document.exists {
                 if let fetchedPrayerData = document.data()?["prayerTimes"] as? [[String: Any]] {
-                    self.prayerData = fetchedPrayerData
-                    self.maxDayIndex = fetchedPrayerData.count
-                    updatePrayerTimesForDay()
+                    DispatchQueue.main.async {
+                        self.updatePrayerTimesForDay()
+                    }
                 }
             } else {
                 print("Failed to fetch document for city: \(city)")
@@ -119,25 +149,19 @@ struct DayPrayerView: View {
         }
     }
 
-    // MARK: - Update Prayer Times for the Current Day Index
+    // MARK: - Update Prayer Times for Current Day
     func updatePrayerTimesForDay() {
-        guard currentDayIndex < prayerData.count else { return }
-
-        let dayData = prayerData[currentDayIndex]
-
-        if let date = dayData["date"] as? [String: Any],
-           let readable = date["readable"] as? String {
-            self.readableDate = readable
-        }
-
-        if let timings = dayData["timings"] as? [String: String] {
+        guard !dateKeys.isEmpty else { return }
+        let selectedDate = dateKeys[currentDayIndex]
+        if let timings = londonPrayerData[selectedDate] {
             self.prayerTimes = [
-                "Fajr": sanitizeTime(timings["Fajr"] ?? "N/A"),
-                "Sunrise": sanitizeTime(timings["Sunrise"] ?? "N/A"),
-                "Dhuhr": sanitizeTime(timings["Dhuhr"] ?? "N/A"),
-                "Asr": sanitizeTime(timings["Asr"] ?? "N/A"),
-                "Maghrib": sanitizeTime(timings["Maghrib"] ?? "N/A")
+                "Fajr": timings.fajr,
+                "Sunrise": timings.sunrise,
+                "Dhuhr": timings.dhuhr,
+                "Asr": timings.asr,
+                "Maghrib": timings.magrib
             ]
+            self.readableDate = selectedDate
         }
     }
 
@@ -150,26 +174,15 @@ struct DayPrayerView: View {
     }
 
     func navigateToNextDay() {
-        if currentDayIndex < maxDayIndex - 1 {
+        if currentDayIndex < dateKeys.count - 1 {
             currentDayIndex += 1
             updatePrayerTimesForDay()
         }
     }
 
-    // MARK: - Utility Functions
-    func sanitizeTime(_ time: String) -> String {
-        return time.components(separatedBy: " ").first ?? time
-    }
-
-    func isFriday() -> Bool {
-        // Get the weekday for the current date based on the day index
-        let calendar = Calendar.current
-        let today = Date()
-        let components = calendar.dateComponents([.year, .month], from: today)
-        if let startOfMonth = calendar.date(from: components),
-           let currentDay = calendar.date(byAdding: .day, value: currentDayIndex, to: startOfMonth) {
-            return calendar.component(.weekday, from: currentDay) == 6  // 6 = Friday
-        }
-        return false
+    func currentReadableDate() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: Date())
     }
 }

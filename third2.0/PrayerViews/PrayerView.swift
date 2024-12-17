@@ -254,6 +254,8 @@ struct PrayerView: View {
             
             
             scheduleLastThirdOfNightNotification(prayerTimes: self.prayerTimes)
+            scheduleTenMinutesBeforeMidnightNotification(prayerTimes: self.prayerTimes)
+            scheduleTenMinutesBeforeIshaNotification(prayerTimes: self.prayerTimes)
         }
     }
     
@@ -271,6 +273,8 @@ struct PrayerView: View {
             ]
             
             scheduleLastThirdOfNightNotification(prayerTimes: self.prayerTimes)
+            scheduleTenMinutesBeforeMidnightNotification(prayerTimes: self.prayerTimes)
+            scheduleTenMinutesBeforeIshaNotification(prayerTimes: self.prayerTimes)
         }
     }
 

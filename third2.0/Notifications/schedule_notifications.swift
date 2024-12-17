@@ -102,4 +102,87 @@ func sanitizeAndParseTime(_ time: String, using formatter: DateFormatter) -> Dat
     return formatter.date(from: sanitizedTime)
 }
 
+func scheduleTenMinutesBeforeMidnightNotification(prayerTimes: [String: String]) {
+    guard let maghribTime = prayerTimes["Maghrib"],
+          let fajrTime = prayerTimes["Fajr"] else {
+        print("Missing Maghrib or Fajr times")
+        return
+    }
+
+    let formatter = DateFormatter()
+    formatter.dateFormat = "HH:mm"
+
+    guard let maghribDate = sanitizeAndParseTime(maghribTime, using: formatter),
+          let fajrDate = sanitizeAndParseTime(fajrTime, using: formatter)?.addingTimeInterval(24 * 60 * 60) else {
+        print("Invalid Maghrib or Fajr times")
+        return
+    }
+
+    // Calculate Midnight Time
+    let totalDuration = fajrDate.timeIntervalSince(maghribDate)
+    let midnightTime = maghribDate.addingTimeInterval(totalDuration / 2)
+
+    // Subtract 10 minutes for the notification time
+    let notificationTime = Calendar.current.date(byAdding: .minute, value: -10, to: midnightTime)!
+
+    // Schedule Notification
+    let content = UNMutableNotificationContent()
+    content.title = "Reminder: 10 Minutes Before Midnight"
+    content.body = "Midnight is approaching. Make sure you have done Isha Prayer"
+    content.sound = .default
+
+    let triggerDate = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
+    let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
+
+    let identifier = "TenMinutesBeforeMidnightReminder"
+    let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+
+    UNUserNotificationCenter.current().add(request) { error in
+        if let error = error {
+            print("Error scheduling 10 Minutes Before Midnight notification: \(error.localizedDescription)")
+        } else {
+            print("Notification for 10 minutes before Midnight scheduled at \(notificationTime).")
+        }
+    }
+}
+
+
+func scheduleTenMinutesBeforeIshaNotification(prayerTimes: [String: String]) {
+    guard let ishaTime = prayerTimes["Isha"] else {
+        print("Missing Isha prayer time")
+        return
+    }
+
+    let formatter = DateFormatter()
+    formatter.dateFormat = "HH:mm" // Assuming prayer times are in 24-hour format
+
+    guard let ishaDate = sanitizeAndParseTime(ishaTime, using: formatter) else {
+        print("Invalid Isha prayer time")
+        return
+    }
+
+    // Subtract 10 minutes from Isha time
+    let notificationTime = Calendar.current.date(byAdding: .minute, value: -10, to: ishaDate)!
+
+    // Schedule Notification
+    let content = UNMutableNotificationContent()
+    content.title = "Reminder: 10 Minutes Before Isha Prayer"
+    content.body = "Make sure you have completed Maghrib prayer"
+    content.sound = .default
+
+    let triggerDate = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
+    let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
+
+    let identifier = "TenMinutesBeforeIshaReminder"
+    let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+
+    UNUserNotificationCenter.current().add(request) { error in
+        if let error = error {
+            print("Error scheduling 10 Minutes Before Isha notification: \(error.localizedDescription)")
+        } else {
+            print("Notification for 10 minutes before Isha scheduled at \(notificationTime).")
+        }
+    }
+}
+
 

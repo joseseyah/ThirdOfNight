@@ -40,6 +40,7 @@ func scheduleNextPrayerNotification(prayerTimes: [String: String]) {
     content.title = "Reminder: \(prayerName) Prayer"
     content.body = "15 minutes left until \(prayerName). Prepare to pray if you haven’t already!"
     content.sound = .default
+    content.interruptionLevel = .timeSensitive
 
     let triggerDate = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
     let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
@@ -81,6 +82,7 @@ func scheduleLastThirdOfNightNotification(prayerTimes: [String: String]) {
     content.title = "Last Third of the Night has begun"
     content.body = "This is the Last Third of the Night. A great time for supplication and prayer."
     content.sound = .default
+    content.interruptionLevel = .timeSensitive
 
     let triggerDate = Calendar.current.dateComponents([.hour, .minute], from: lastThirdStartTime)
     let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
@@ -130,6 +132,7 @@ func scheduleTenMinutesBeforeMidnightNotification(prayerTimes: [String: String])
     content.title = "Reminder: 10 Minutes Before Midnight"
     content.body = "Midnight is approaching. Make sure you have done Isha Prayer"
     content.sound = .default
+    content.interruptionLevel = .timeSensitive
 
     let triggerDate = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
     let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
@@ -169,6 +172,7 @@ func scheduleTenMinutesBeforeIshaNotification(prayerTimes: [String: String]) {
     content.title = "Reminder: 10 Minutes Before Isha Prayer"
     content.body = "Make sure you have completed Maghrib prayer"
     content.sound = .default
+    content.interruptionLevel = .timeSensitive
 
     let triggerDate = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
     let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)

@@ -157,6 +157,7 @@
 		6DCC14232D10B50200E352BD /* LondonPrayerTimesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC14222D10B50200E352BD /* LondonPrayerTimesResponse.swift */; };
 		6DCC14252D10C60B00E352BD /* PrayerTimeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC14242D10C60B00E352BD /* PrayerTimeCalculator.swift */; };
 		6DCC14272D10D10E00E352BD /* LocationSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC14262D10D10E00E352BD /* LocationSelectionView.swift */; };
+		6DCC142B2D10DEB900E352BD /* schedule_notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC142A2D10DEB900E352BD /* schedule_notifications.swift */; };
 		6DE78BCB2CB2610F0068F84C /* PrayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCA2CB2610F0068F84C /* PrayerView.swift */; };
 		6DE78BCD2CB2613E0068F84C /* TimeBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCC2CB2613E0068F84C /* TimeBox.swift */; };
 		6DE78BCF2CB2615E0068F84C /* SurahMulkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */; };
@@ -350,6 +351,8 @@
 		6DCC14222D10B50200E352BD /* LondonPrayerTimesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LondonPrayerTimesResponse.swift; sourceTree = "<group>"; };
 		6DCC14242D10C60B00E352BD /* PrayerTimeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerTimeCalculator.swift; sourceTree = "<group>"; };
 		6DCC14262D10D10E00E352BD /* LocationSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionView.swift; sourceTree = "<group>"; };
+		6DCC14282D10D9CC00E352BD /* Night Prayers.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Night Prayers.entitlements"; sourceTree = "<group>"; };
+		6DCC142A2D10DEB900E352BD /* schedule_notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = schedule_notifications.swift; sourceTree = "<group>"; };
 		6DE78BCA2CB2610F0068F84C /* PrayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerView.swift; sourceTree = "<group>"; };
 		6DE78BCC2CB2613E0068F84C /* TimeBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBox.swift; sourceTree = "<group>"; };
 		6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurahMulkView.swift; sourceTree = "<group>"; };
@@ -400,6 +403,7 @@
 		6DBCFC412CB25CC30074796A = {
 			isa = PBXGroup;
 			children = (
+				6DCC14282D10D9CC00E352BD /* Night Prayers.entitlements */,
 				6DCC14182D0B28B200E352BD /* Night-Prayers-Info.plist */,
 				6DBCFC4C2CB25CC30074796A /* third2.0 */,
 				6DBCFC5F2CB25CC40074796A /* third2.0Tests */,
@@ -423,6 +427,7 @@
 		6DBCFC4C2CB25CC30074796A /* third2.0 */ = {
 			isa = PBXGroup;
 			children = (
+				6DCC14292D10DEA900E352BD /* Notifications */,
 				6DCC14212D10B4F200E352BD /* Responses */,
 				6DBCFC4D2CB25CC30074796A /* third2_0App.swift */,
 				6DCC14192D0B9B8E00E352BD /* Launch */,
@@ -666,6 +671,14 @@
 				6DCC14222D10B50200E352BD /* LondonPrayerTimesResponse.swift */,
 			);
 			path = Responses;
+			sourceTree = "<group>";
+		};
+		6DCC14292D10DEA900E352BD /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				6DCC142A2D10DEB900E352BD /* schedule_notifications.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -955,6 +968,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DCC13082D083FAC00E352BD /* countryCodeMapping.swift in Sources */,
+				6DCC142B2D10DEB900E352BD /* schedule_notifications.swift in Sources */,
 				6DCC132B2D0AF63C00E352BD /* surahs.swift in Sources */,
 				6DCC13262D0AF36F00E352BD /* QuranView.swift in Sources */,
 				6DAD848A2CBD09230027BF5A /* DayPrayerView.swift in Sources */,
@@ -1153,6 +1167,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Night Prayers.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"third2.0/Preview Content\"";
@@ -1186,6 +1201,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Night Prayers.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"third2.0/Preview Content\"";

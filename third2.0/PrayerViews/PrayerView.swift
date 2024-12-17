@@ -251,6 +251,9 @@ struct PrayerView: View {
             self.prayerTimes = timings.mapValues { sanitizeTime($0) }
             self.prayerTimes["Midnight"] = calculateMidnightTime(maghribTime: maghrib, fajrTime: fajrNextDay)
             self.prayerTimes["Lastthird"] = calculateLastThirdOfNight(maghribTime: maghrib, fajrTime: fajrNextDay)
+            
+            
+            scheduleLastThirdOfNightNotification(prayerTimes: self.prayerTimes)
         }
     }
     
@@ -266,6 +269,8 @@ struct PrayerView: View {
                 "Midnight": calculateMidnightTime(maghribTime: timings.magrib, fajrTime: timings.fajr),
                 "Lastthird": calculateLastThirdOfNight(maghribTime: timings.magrib, fajrTime: timings.fajr)
             ]
+            
+            scheduleLastThirdOfNightNotification(prayerTimes: self.prayerTimes)
         }
     }
 

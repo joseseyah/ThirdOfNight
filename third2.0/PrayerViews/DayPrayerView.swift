@@ -92,6 +92,7 @@ struct DayPrayerView: View {
         }
         .onAppear {
             fetchPrayerTimes(city: viewModel.selectedCity)
+            updatePrayerTimesForDay()
         }
     }
 
@@ -187,6 +188,9 @@ struct DayPrayerView: View {
                     "Maghrib": sanitizeTime(timings.magrib)
                 ]
                 self.readableDate = selectedDate
+
+                // Schedule notification for the next prayer
+                scheduleNextPrayerNotification(prayerTimes: self.prayerTimes)
             }
         } else {
             // Firebase Prayer Times
@@ -198,9 +202,13 @@ struct DayPrayerView: View {
             }
             if let timings = dayData["timings"] as? [String: String] {
                 self.prayerTimes = timings.mapValues { sanitizeTime($0) }
+
+                // Schedule notification for the next prayer
+                scheduleNextPrayerNotification(prayerTimes: self.prayerTimes)
             }
         }
     }
+
 
 
     // MARK: - Navigation

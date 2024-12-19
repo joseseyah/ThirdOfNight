@@ -9,12 +9,14 @@ import SwiftUI
 import SwiftData
 import FirebaseCore
 import UserNotifications
+import MediaPlayer
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
-        requestNotificationPermission() // Request notification permission
+        requestNotificationPermission()
+        configureAudioSession()
         return true
     }
 
@@ -27,11 +29,26 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             }
         }
     }
+    
+    
+    private func configureAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
+            try AVAudioSession.sharedInstance().setActive(true)
+            print("Audio session configured for background playback.")
+        } catch {
+            print("Failed to set up audio session: \(error.localizedDescription)")
+        }
+        
+    }
+    
 }
+
 
 @main
 struct third2_0App: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject var audioPlayerViewModel = AudioPlayerViewModel() // Shared ViewModel
 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -46,17 +63,25 @@ struct third2_0App: App {
         }
     }()
 
-    // App storage to track onboarding
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
 
     var body: some Scene {
         WindowGroup {
+            // Main App Content
             if hasSeenOnboarding {
-                ContentView() // Main App Content
+                ContentView()
                     .modelContainer(sharedModelContainer)
+                    .environmentObject(audioPlayerViewModel)
+                    .overlay(
+                        RemoteControlWrapper(audioPlayerViewModel: audioPlayerViewModel)
+                            .frame(width: 0, height: 0) // Invisible, just to handle events
+                    )
             } else {
-                OnboardingView() // Onboarding Slides
+                // Onboarding Slides
+                OnboardingView()
             }
         }
     }
 }
+
+

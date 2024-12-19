@@ -158,6 +158,8 @@
 		6DCC14252D10C60B00E352BD /* PrayerTimeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC14242D10C60B00E352BD /* PrayerTimeCalculator.swift */; };
 		6DCC14272D10D10E00E352BD /* LocationSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC14262D10D10E00E352BD /* LocationSelectionView.swift */; };
 		6DCC142B2D10DEB900E352BD /* schedule_notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC142A2D10DEB900E352BD /* schedule_notifications.swift */; };
+		6DCC142D2D14290200E352BD /* RemoteControlHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC142C2D14290200E352BD /* RemoteControlHandler.swift */; };
+		6DCC142F2D14299400E352BD /* RemoteControlHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC142E2D14299400E352BD /* RemoteControlHostingController.swift */; };
 		6DE78BCB2CB2610F0068F84C /* PrayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCA2CB2610F0068F84C /* PrayerView.swift */; };
 		6DE78BCD2CB2613E0068F84C /* TimeBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCC2CB2613E0068F84C /* TimeBox.swift */; };
 		6DE78BCF2CB2615E0068F84C /* SurahMulkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */; };
@@ -353,6 +355,8 @@
 		6DCC14262D10D10E00E352BD /* LocationSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionView.swift; sourceTree = "<group>"; };
 		6DCC14282D10D9CC00E352BD /* Night Prayers.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Night Prayers.entitlements"; sourceTree = "<group>"; };
 		6DCC142A2D10DEB900E352BD /* schedule_notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = schedule_notifications.swift; sourceTree = "<group>"; };
+		6DCC142C2D14290200E352BD /* RemoteControlHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteControlHandler.swift; sourceTree = "<group>"; };
+		6DCC142E2D14299400E352BD /* RemoteControlHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteControlHostingController.swift; sourceTree = "<group>"; };
 		6DE78BCA2CB2610F0068F84C /* PrayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerView.swift; sourceTree = "<group>"; };
 		6DE78BCC2CB2613E0068F84C /* TimeBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBox.swift; sourceTree = "<group>"; };
 		6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurahMulkView.swift; sourceTree = "<group>"; };
@@ -668,6 +672,8 @@
 			isa = PBXGroup;
 			children = (
 				6DCC14222D10B50200E352BD /* LondonPrayerTimesResponse.swift */,
+				6DCC142C2D14290200E352BD /* RemoteControlHandler.swift */,
+				6DCC142E2D14299400E352BD /* RemoteControlHostingController.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -967,12 +973,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6DCC142D2D14290200E352BD /* RemoteControlHandler.swift in Sources */,
 				6DCC13082D083FAC00E352BD /* countryCodeMapping.swift in Sources */,
 				6DCC142B2D10DEB900E352BD /* schedule_notifications.swift in Sources */,
 				6DCC132B2D0AF63C00E352BD /* surahs.swift in Sources */,
 				6DCC13262D0AF36F00E352BD /* QuranView.swift in Sources */,
 				6DAD848A2CBD09230027BF5A /* DayPrayerView.swift in Sources */,
 				6DCC13002D0629CF00E352BD /* PrivacyPolicyText.swift in Sources */,
+				6DCC142F2D14299400E352BD /* RemoteControlHostingController.swift in Sources */,
 				6DAD84862CB71B6F0027BF5A /* TasbihCounterView.swift in Sources */,
 				6DAD848C2CBD0A1F0027BF5A /* DesertView.swift in Sources */,
 				6DE78BD12CB261880068F84C /* SettingsView.swift in Sources */,

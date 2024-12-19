@@ -191,6 +191,13 @@ struct DayPrayerView: View {
 
                 // Schedule notification for the next prayer
                 scheduleNextPrayerNotification(prayerTimes: self.prayerTimes)
+                scheduleTenMinutesBeforeSunriseNotification(prayerTimes: self.prayerTimes)
+                scheduleTenMinutesBeforeDhuhrNotification(prayerTimes: self.prayerTimes)
+                scheduleDhuhrNotification(prayerTimes: self.prayerTimes)
+                scheduleAsrNotification(prayerTimes: self.prayerTimes)
+                scheduleMaghribNotification(prayerTimes:self.prayerTimes)
+                scheduleFortyMinutesBeforeMaghribNotification(prayerTimes:self.prayerTimes)
+                scheduleTenMinutesBeforeAsrNotification(prayerTimes: self.prayerTimes)
             }
         } else {
             // Firebase Prayer Times
@@ -205,6 +212,13 @@ struct DayPrayerView: View {
 
                 // Schedule notification for the next prayer
                 scheduleNextPrayerNotification(prayerTimes: self.prayerTimes)
+                scheduleTenMinutesBeforeSunriseNotification(prayerTimes: self.prayerTimes)
+                scheduleTenMinutesBeforeDhuhrNotification(prayerTimes: self.prayerTimes)
+                scheduleDhuhrNotification(prayerTimes: self.prayerTimes)
+                scheduleAsrNotification(prayerTimes: self.prayerTimes)
+                scheduleMaghribNotification(prayerTimes:self.prayerTimes)
+                scheduleFortyMinutesBeforeMaghribNotification(prayerTimes:self.prayerTimes)
+                scheduleTenMinutesBeforeAsrNotification(prayerTimes: self.prayerTimes)
             }
         }
     }

@@ -432,7 +432,6 @@
 				6DBCFC4D2CB25CC30074796A /* third2_0App.swift */,
 				6DCC14192D0B9B8E00E352BD /* Launch */,
 				6DCC13272D0AF5F500E352BD /* Models */,
-				6DCC131B2D09853D00E352BD /* NotificationManager.swift */,
 				6DBCFC512CB25CC30074796A /* Item.swift */,
 				6DCC13312D0AFD6B00E352BD /* SurahMP3s */,
 				6DCC13242D0AF35A00E352BD /* Quran */,
@@ -676,6 +675,7 @@
 		6DCC14292D10DEA900E352BD /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
+				6DCC131B2D09853D00E352BD /* NotificationManager.swift */,
 				6DCC142A2D10DEB900E352BD /* schedule_notifications.swift */,
 			);
 			path = Notifications;

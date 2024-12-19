@@ -2,7 +2,7 @@ import SwiftUI
 
 struct TasbihCounterView: View {
     @State private var count: Int = 0
-    let target: Int = 100  // Default goal (can be customized)
+    let target: Int = 99
     
     var body: some View {
         ZStack {
@@ -68,11 +68,18 @@ struct TasbihCounterView: View {
     func incrementCounter() {
         if count < target {
             count += 1
+            provideHapticFeedback() // Add haptic feedback here
         }
     }
     
     // Reset counter
     func resetCounter() {
         count = 0
+    }
+
+    // Function for haptic feedback
+    private func provideHapticFeedback() {
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
     }
 }

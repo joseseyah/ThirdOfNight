@@ -2,14 +2,10 @@ import Foundation
 import SwiftUI
 
 struct LocationSelectionView: View {
-    @AppStorage("selectedCountry") private var selectedCountry: String = "United Kingdom"
-    @AppStorage("selectedCity") private var selectedCity: String = "London"
+    @AppStorage("selectedCountry") private var selectedCountry: String = ""
+    @AppStorage("selectedCity") private var selectedCity: String = ""
 
-    @State private var countries = ["United Kingdom", "Saudi Arabia", "Unified Timetable"]
-    @State private var cities = ["London", "Makkah", "Medina"]
-    @State private var customCountry: String = ""
     @State private var customCity: String = ""
-    @State private var isCustomLocation = false
     @State private var errorMessage: String? = nil  // Holds the validation error
 
     let onContinue: () -> Void
@@ -30,17 +26,16 @@ struct LocationSelectionView: View {
                     .foregroundColor(.white.opacity(0.8))
 
                 Menu {
-                    ForEach(countries, id: \.self) { country in
+                    ForEach(countryCodeMapping.keys.sorted(), id: \.self) { country in
                         Button(action: {
                             selectedCountry = country
-                            selectedCity = "London"  // Reset city when country changes
-                            isCustomLocation = (country == "Custom")
+                            selectedCity = ""  // Reset city when country changes
                         }) {
                             Text(country)
                         }
                     }
                 } label: {
-                    Text(selectedCountry)
+                    Text(selectedCountry.isEmpty ? "Select a country" : selectedCountry)
                         .font(.body)
                         .foregroundColor(.white)
                         .padding()
@@ -51,45 +46,18 @@ struct LocationSelectionView: View {
             }
             .padding(.horizontal, 20)
 
-            // City Selection
-            if !isCustomLocation {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("City")
-                        .font(.headline)
-                        .foregroundColor(.white.opacity(0.8))
+            // City Input
+            VStack(alignment: .leading, spacing: 10) {
+                Text("City")
+                    .font(.headline)
+                    .foregroundColor(.white.opacity(0.8))
 
-                    Menu {
-                        ForEach(cities, id: \.self) { city in
-                            Button(action: {
-                                selectedCity = city
-                            }) {
-                                Text(city)
-                            }
-                        }
-                    } label: {
-                        Text(selectedCity)
-                            .font(.body)
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color("BoxBackgroundColor"))
-                            .cornerRadius(10)
-                    }
-                }
-                .padding(.horizontal, 20)
-            } else {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Custom City")
-                        .font(.headline)
-                        .foregroundColor(.white.opacity(0.8))
-
-                    TextField("Enter Custom City", text: $customCity)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal)
-                        .background(Color.white.opacity(0.2))
-                        .cornerRadius(10)
-                }
-                .padding(.horizontal, 20)
+                TextField("Enter city", text: $customCity)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.horizontal)
+                    .background(Color.white.opacity(0.2))
+                    .cornerRadius(10)
+                    .padding(.horizontal, 20)
             }
 
             Spacer()
@@ -106,9 +74,10 @@ struct LocationSelectionView: View {
             Button(action: {
                 if validateSelection() {
                     errorMessage = nil
+                    selectedCity = customCity  // Save the entered city
                     onContinue()
                 } else {
-                    errorMessage = "Invalid location combination. Please try again."
+                    errorMessage = "Invalid selection. Please select a valid country and city."
                 }
             }) {
                 Text("Continue")
@@ -123,6 +92,7 @@ struct LocationSelectionView: View {
                     .cornerRadius(15)
                     .padding(.horizontal, 20)
             }
+            .disabled(!isSelectionComplete())  // Disable button until selection is complete
 
             Spacer()
         }
@@ -132,15 +102,16 @@ struct LocationSelectionView: View {
 
     // MARK: - Validation Logic
     private func validateSelection() -> Bool {
-        switch selectedCountry {
-        case "United Kingdom":
-            return selectedCity == "London"
-        case "Saudi Arabia":
-            return selectedCity == "Makkah" || selectedCity == "Medina"
-        case "Unified Timetable":
-            return selectedCity == "London"
-        default:
-            return false
+        if selectedCountry == "Unified Timetable" {
+            if customCity.lowercased() != "london" {
+                errorMessage = "For Unified Timetable, only 'London' is allowed as a city."
+                return false
+            }
         }
+        return !selectedCountry.isEmpty && !customCity.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+
+    private func isSelectionComplete() -> Bool {
+        return !selectedCountry.isEmpty && !customCity.trimmingCharacters(in: .whitespaces).isEmpty
     }
 }

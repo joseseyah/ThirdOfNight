@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D4D62802D143692003D7F11 /* big-quran.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6D4D627F2D143692003D7F11 /* big-quran.pdf */; };
+		6D4D62822D143844003D7F11 /* QuranBookshelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D62812D143844003D7F11 /* QuranBookshelfView.swift */; };
 		6DAD84802CB7176B0027BF5A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6DAD847F2CB7176B0027BF5A /* FirebaseAnalytics */; };
 		6DAD84822CB7176B0027BF5A /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6DAD84812CB7176B0027BF5A /* FirebaseCore */; };
 		6DAD84842CB7176B0027BF5A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6DAD84832CB7176B0027BF5A /* FirebaseFirestore */; };
@@ -205,6 +207,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6D4D627F2D143692003D7F11 /* big-quran.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "big-quran.pdf"; path = "../../../../../big-quran.pdf"; sourceTree = "<group>"; };
+		6D4D62812D143844003D7F11 /* QuranBookshelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuranBookshelfView.swift; sourceTree = "<group>"; };
 		6DAD84852CB71B6F0027BF5A /* TasbihCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasbihCounterView.swift; sourceTree = "<group>"; };
 		6DAD84892CBD09230027BF5A /* DayPrayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayPrayerView.swift; sourceTree = "<group>"; };
 		6DAD848B2CBD0A1F0027BF5A /* DesertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesertView.swift; sourceTree = "<group>"; };
@@ -496,6 +500,7 @@
 		6DCC13222D0AE68500E352BD /* Text */ = {
 			isa = PBXGroup;
 			children = (
+				6D4D627F2D143692003D7F11 /* big-quran.pdf */,
 				6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */,
 				6DCC132A2D0AF63C00E352BD /* surahs.swift */,
 				6DCC12FF2D0629CF00E352BD /* PrivacyPolicyText.swift */,
@@ -523,6 +528,7 @@
 				6DCC13252D0AF36F00E352BD /* QuranView.swift */,
 				6DCC132E2D0AF76C00E352BD /* DetailView.swift */,
 				6DCC132C2D0AF70400E352BD /* MinimizedAudioPlayerView.swift */,
+				6D4D62812D143844003D7F11 /* QuranBookshelfView.swift */,
 			);
 			path = Quran;
 			sourceTree = "<group>";
@@ -870,6 +876,7 @@
 				6DCC13672D0AFF1E00E352BD /* 036.mp3 in Resources */,
 				6DCC13682D0AFF1E00E352BD /* 002.mp3 in Resources */,
 				6DCC13792D0AFF1E00E352BD /* 030.mp3 in Resources */,
+				6D4D62802D143692003D7F11 /* big-quran.pdf in Resources */,
 				6DCC14112D0B00C600E352BD /* 061.mp3 in Resources */,
 				6DBCFC572CB25CC40074796A /* Preview Assets.xcassets in Resources */,
 				6DCC14002D0B00C600E352BD /* 096.mp3 in Resources */,
@@ -981,6 +988,7 @@
 				6DAD848A2CBD09230027BF5A /* DayPrayerView.swift in Sources */,
 				6DCC13002D0629CF00E352BD /* PrivacyPolicyText.swift in Sources */,
 				6DCC142F2D14299400E352BD /* RemoteControlHostingController.swift in Sources */,
+				6D4D62822D143844003D7F11 /* QuranBookshelfView.swift in Sources */,
 				6DAD84862CB71B6F0027BF5A /* TasbihCounterView.swift in Sources */,
 				6DAD848C2CBD0A1F0027BF5A /* DesertView.swift in Sources */,
 				6DE78BD12CB261880068F84C /* SettingsView.swift in Sources */,
@@ -1195,7 +1203,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1229,7 +1237,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

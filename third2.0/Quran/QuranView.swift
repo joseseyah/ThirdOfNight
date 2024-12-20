@@ -1,10 +1,21 @@
 import Foundation
 import SwiftUI
 import AVKit
+import PDFKit
 
 struct QuranView: View {
     @ObservedObject var audioPlayerViewModel: AudioPlayerViewModel // Receive ViewModel
     @State private var searchText = ""
+    @State private var selectedMode: Mode = .listen // Default to "Listen" mode
+    @State private var selectedBook: Book? = nil // Track selected book
+    @State private var preloadedPDFs: [String: PDFDocument] = [:] // Cache preloaded PDFs
+
+    enum Mode: String, CaseIterable, Identifiable {
+        case listen = "Listen"
+        case read = "Read"
+
+        var id: String { rawValue }
+    }
 
     var filteredSurahs: [Surah] {
         if searchText.isEmpty {
@@ -14,6 +25,16 @@ struct QuranView: View {
         }
     }
 
+    let books: [Book] = [
+        Book(title: "Quran", coverImage: "big-quran-cover", pdfFileName: "big-quran")
+    ]
+
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -22,56 +43,112 @@ struct QuranView: View {
                     .edgesIgnoringSafeArea(.all)
 
                 VStack {
-                    // Search Bar
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(Color("HighlightColor"))
-                        TextField("Search Surah...", text: $searchText)
-                            .foregroundColor(Color("HighlightColor"))
-                            .placeholder(when: searchText.isEmpty) {
-                                Text("Search Surah...")
-                                    .foregroundColor(Color.gray.opacity(0.6))
-                            }
+                    // Mode Picker
+                    Picker("Mode", selection: $selectedMode) {
+                        ForEach(Mode.allCases) { mode in
+                            Text(mode.rawValue).tag(mode)
+                        }
                     }
-                    .padding(10)
-                    .background(Color("BoxBackgroundColor"))
-                    .cornerRadius(8)
+                    .pickerStyle(SegmentedPickerStyle())
                     .padding([.horizontal, .top])
 
-                    // Surah List
-                    List(filteredSurahs) { surah in
-                        Button(action: {
-                            playSurah(surah)
-                        }) {
-                            HStack {
-                                Image(surah.imageFileName)
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                    .cornerRadius(8)
-                                Text(surah.name)
-                                    .font(.headline)
-                                    .foregroundColor(Color("HighlightColor"))
-                            }
-                            .padding()
-                            .background(Color("BoxBackgroundColor")) // Box Background
-                            .cornerRadius(12)
-                        }
-                        .listRowBackground(Color.clear) // Transparent row background
+                    // Content Based on Selected Mode
+                    if selectedMode == .listen {
+                        listenModeContent
+                    } else {
+                        readModeContent
                     }
-                    .scrollContentBackground(.hidden) // Hide default List background
-                    .background(Color("BackgroundColor")) // Ensure consistent background
                 }
                 .navigationTitle("Quran")
                 .foregroundColor(.white)
+                .onAppear {
+                    preloadPDFs()
+                }
             }
+        }
+    }
+
+    private var listenModeContent: some View {
+        VStack {
+            // Search Bar
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(Color("HighlightColor"))
+                TextField("Search Surah...", text: $searchText)
+                    .foregroundColor(Color("HighlightColor"))
+                    .placeholder(when: searchText.isEmpty) {
+                        Text("Search Surah...")
+                            .foregroundColor(Color.gray.opacity(0.6))
+                    }
+            }
+            .padding(10)
+            .background(Color("BoxBackgroundColor"))
+            .cornerRadius(8)
+            .padding([.horizontal, .top])
+
+            // Surah List
+            List(filteredSurahs) { surah in
+                Button(action: {
+                    playSurah(surah)
+                }) {
+                    HStack {
+                        Image(surah.imageFileName)
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .cornerRadius(8)
+                        Text(surah.name)
+                            .font(.headline)
+                            .foregroundColor(Color("HighlightColor"))
+                    }
+                    .padding()
+                    .background(Color("BoxBackgroundColor")) // Box Background
+                    .cornerRadius(12)
+                }
+                .listRowBackground(Color.clear) // Transparent row background
+            }
+            .scrollContentBackground(.hidden) // Hide default List background
+            .background(Color("BackgroundColor")) // Ensure consistent background
+        }
+    }
+
+    private var readModeContent: some View {
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 20) {
+                ForEach(books) { book in
+                    VStack {
+                        NavigationLink(
+                            destination: {
+                                if let preloadedPDF = preloadedPDFs[book.pdfFileName] {
+                                    FullScreenPDFView(preloadedPDF: preloadedPDF, bookTitle: book.title)
+                                } else {
+                                    Text("Error: PDF not found.")
+                                }
+                            }
+                        ) {
+                            VStack {
+                                Image(book.coverImage)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 100, height: 150)
+                                    .cornerRadius(8)
+                                    .shadow(radius: 4)
+                                Text(book.title)
+                                    .font(.headline)
+                                    .foregroundColor(Color("HighlightColor"))
+                            }
+                        }
+                    }
+                }
+            }
+            .padding()
         }
     }
 
     private func playSurah(_ surah: Surah) {
         if let index = surahs.firstIndex(where: { $0.id == surah.id }) {
             audioPlayerViewModel.currentTrackIndex = index
-            audioPlayerViewModel.isMinimizedViewVisible = true // Ensure minimized view is visible
-            
+            audioPlayerViewModel.isMinimizedViewVisible = true
+
             if let path = Bundle.main.path(forResource: surah.audioFileName, ofType: "mp3") {
                 do {
                     audioPlayerViewModel.audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
@@ -86,9 +163,51 @@ struct QuranView: View {
         }
     }
 
+    private func preloadPDFs() {
+        for book in books {
+            if let path = Bundle.main.path(forResource: book.pdfFileName, ofType: "pdf"),
+               let document = PDFDocument(url: URL(fileURLWithPath: path)) {
+                preloadedPDFs[book.pdfFileName] = document
+            }
+        }
+    }
 }
 
-// Add a placeholder modifier for TextField
+struct FullScreenPDFView: View {
+    let preloadedPDF: PDFDocument
+    let bookTitle: String
+
+    var body: some View {
+        PDFKitRepresentable(preloadedPDF: preloadedPDF)
+            .edgesIgnoringSafeArea(.all)
+            .navigationBarTitle(bookTitle, displayMode: .inline)
+    }
+}
+
+struct PDFKitRepresentable: UIViewRepresentable {
+    let preloadedPDF: PDFDocument
+
+    func makeUIView(context: Context) -> PDFView {
+        let pdfView = PDFView()
+        pdfView.autoScales = true
+        pdfView.displayMode = .singlePageContinuous
+        pdfView.displayDirection = .horizontal
+        pdfView.usePageViewController(true)
+        pdfView.document = preloadedPDF
+        return pdfView
+    }
+
+    func updateUIView(_ uiView: PDFView, context: Context) {}
+}
+
+struct Book: Identifiable {
+    let id = UUID()
+    let title: String
+    let coverImage: String
+    let pdfFileName: String
+}
+
+
 extension View {
     func placeholder<Content: View>(
         when shouldShow: Bool,
@@ -101,3 +220,4 @@ extension View {
         }
     }
 }
+

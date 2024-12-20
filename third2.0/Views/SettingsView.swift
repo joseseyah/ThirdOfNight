@@ -10,7 +10,7 @@ struct SettingsView: View {
     @State private var errorMessage: String? = nil
     @State private var showMailView: Bool = false
     @State private var showMailError: Bool = false
-
+    
     @AppStorage("dateFormat") private var dateFormat: String = "Gregorian"
 
     var body: some View {

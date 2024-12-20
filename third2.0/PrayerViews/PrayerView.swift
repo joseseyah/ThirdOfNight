@@ -123,6 +123,16 @@ struct PrayerView: View {
             NotificationCenter.default.removeObserver(self, name: .dateFormatChanged, object: nil)
         }
     }
+    
+    func convertToHijri(from date: Date) -> String {
+        let islamicCalendar = Calendar(identifier: .islamicUmmAlQura)
+        let formatter = DateFormatter()
+        formatter.calendar = islamicCalendar
+        formatter.dateFormat = "dd MMMM yyyy" // Example format: 05 Jumada I 1445
+        formatter.locale = Locale(identifier: "en") // Set to "ar" for Arabic names if needed
+        return formatter.string(from: date)
+    }
+
 
     // MARK: - Fetch Prayer Times
     

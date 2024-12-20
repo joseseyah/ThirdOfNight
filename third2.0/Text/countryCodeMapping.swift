@@ -8,6 +8,7 @@
 import Foundation
 
 let countryCodeMapping: [String: String] = [
+    "Unified Timetable": "Unified Timetable",
     "Aruba": "AW",
     "Afghanistan": "AF",
     "Angola": "AO",

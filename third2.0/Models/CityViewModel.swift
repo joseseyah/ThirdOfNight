@@ -15,6 +15,8 @@ class CityViewModel: ObservableObject {
     @Published var prayerTimes: [String: String] = [:]
     @Published var readableDate: String = ""
     @Published var isUsingLondonUnifiedTimetable = false
+    
+    @Published var isUsingMosqueTimetable: Bool = false
 
     private var cancellables = Set<AnyCancellable>()
     private let londonPrayerTimesAPI = "https://www.londonprayertimes.com/api/times/?format=json&key=f31cd22f-be6a-4410-bd20-cdd3b9923cff"
@@ -92,9 +94,6 @@ class CityViewModel: ObservableObject {
         }.resume()
     }
 
-
-
-    
     private func currentReadableDate() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -102,6 +101,4 @@ class CityViewModel: ObservableObject {
     }
 
 }
-
-
 

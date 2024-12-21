@@ -4,60 +4,101 @@ import SwiftUI
 struct LocationSelectionView: View {
     @AppStorage("selectedCountry") private var selectedCountry: String = ""
     @AppStorage("selectedCity") private var selectedCity: String = ""
+    @AppStorage("selectedMosque") private var selectedMosque: String = ""
+    @State private var useMosqueTimetable: Bool = false  // New toggle for mosque timetable
 
     @State private var customCity: String = ""
     @State private var errorMessage: String? = nil  // Holds the validation error
 
+     // Sample mosque list
     let onContinue: () -> Void
 
     var body: some View {
         VStack(spacing: 30) {
             Spacer()
 
-            Text("Select Your Location")
+            Text("Select Your Preference")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
 
-            // Country Selection
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Country")
-                    .font(.headline)
-                    .foregroundColor(.white.opacity(0.8))
-
-                Menu {
-                    ForEach(countryCodeMapping.keys.sorted(), id: \.self) { country in
-                        Button(action: {
-                            selectedCountry = country
-                            selectedCity = ""  // Reset city when country changes
-                        }) {
-                            Text(country)
-                        }
-                    }
-                } label: {
-                    Text(selectedCountry.isEmpty ? "Select a country" : selectedCountry)
-                        .font(.body)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color("BoxBackgroundColor"))
-                        .cornerRadius(10)
-                }
+            // Toggle between location or mosque timetable
+            Picker("Timetable Type", selection: $useMosqueTimetable) {
+                Text("Location").tag(false)
+                Text("Mosque").tag(true)
             }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+            .background(Color("BoxBackgroundColor"))
+            .cornerRadius(10)
             .padding(.horizontal, 20)
 
-            // City Input
-            VStack(alignment: .leading, spacing: 10) {
-                Text("City")
-                    .font(.headline)
-                    .foregroundColor(.white.opacity(0.8))
+            if useMosqueTimetable {
+                // Mosque Selection
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Mosque")
+                        .font(.headline)
+                        .foregroundColor(.white.opacity(0.8))
 
-                TextField("Enter city", text: $customCity)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.horizontal)
-                    .background(Color.white.opacity(0.2))
-                    .cornerRadius(10)
-                    .padding(.horizontal, 20)
+                    Menu {
+                        ForEach(mosqueList, id: \..self) { mosque in
+                            Button(action: {
+                                selectedMosque = mosque
+                            }) {
+                                Text(mosque)
+                            }
+                        }
+                    } label: {
+                        Text(selectedMosque.isEmpty ? "Select a mosque" : selectedMosque)
+                            .font(.body)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color("BoxBackgroundColor"))
+                            .cornerRadius(10)
+                    }
+                }
+                .padding(.horizontal, 20)
+            } else {
+                // Location Selection
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Country")
+                        .font(.headline)
+                        .foregroundColor(.white.opacity(0.8))
+
+                    Menu {
+                        ForEach(countryCodeMapping.keys.sorted(), id: \..self) { country in
+                            Button(action: {
+                                selectedCountry = country
+                                selectedCity = ""  // Reset city when country changes
+                            }) {
+                                Text(country)
+                            }
+                        }
+                    } label: {
+                        Text(selectedCountry.isEmpty ? "Select a country" : selectedCountry)
+                            .font(.body)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color("BoxBackgroundColor"))
+                            .cornerRadius(10)
+                    }
+                }
+                .padding(.horizontal, 20)
+
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("City")
+                        .font(.headline)
+                        .foregroundColor(.white.opacity(0.8))
+
+                    TextField("Enter city", text: $customCity)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.horizontal)
+                        .background(Color.white.opacity(0.2))
+                        .cornerRadius(10)
+                        .padding(.horizontal, 20)
+                }
             }
 
             Spacer()
@@ -74,10 +115,12 @@ struct LocationSelectionView: View {
             Button(action: {
                 if validateSelection() {
                     errorMessage = nil
-                    selectedCity = customCity  // Save the entered city
+                    if !useMosqueTimetable {
+                        selectedCity = customCity  // Save the entered city
+                    }
                     onContinue()
                 } else {
-                    errorMessage = "Invalid selection. Please select a valid country and city."
+                    errorMessage = "Invalid selection. Please select a valid option."
                 }
             }) {
                 Text("Continue")
@@ -102,16 +145,25 @@ struct LocationSelectionView: View {
 
     // MARK: - Validation Logic
     private func validateSelection() -> Bool {
-        if selectedCountry == "Unified Timetable" {
-            if customCity.lowercased() != "london" {
-                errorMessage = "For Unified Timetable, only 'London' is allowed as a city."
-                return false
+        if useMosqueTimetable {
+            return !selectedMosque.isEmpty
+        } else {
+            if selectedCountry == "Unified Timetable" {
+                if customCity.lowercased() != "london" {
+                    errorMessage = "For Unified Timetable, only 'London' is allowed as a city."
+                    return false
+                }
             }
+            return !selectedCountry.isEmpty && !customCity.trimmingCharacters(in: .whitespaces).isEmpty
         }
-        return !selectedCountry.isEmpty && !customCity.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
     private func isSelectionComplete() -> Bool {
-        return !selectedCountry.isEmpty && !customCity.trimmingCharacters(in: .whitespaces).isEmpty
+        if useMosqueTimetable {
+            return !selectedMosque.isEmpty
+        } else {
+            return !selectedCountry.isEmpty && !customCity.trimmingCharacters(in: .whitespaces).isEmpty
+        }
     }
 }
+

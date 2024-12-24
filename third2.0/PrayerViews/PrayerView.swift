@@ -62,11 +62,19 @@ struct PrayerView: View {
                             Spacer()
 
                             VStack {
-                                Text(viewModel.selectedCity)
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.white)
-                                
+                                // Show mosque name if mosque timetables are enabled
+                                if viewModel.isUsingMosqueTimetable {
+                                    Text(viewModel.selectedMosque)
+                                        .font(.title)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
+                                } else {
+                                    Text(viewModel.selectedCity)
+                                        .font(.largeTitle)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
+                                }
+
                                 // Date Display - Hijri or Gregorian
                                 if dateFormat == "Hijri" {
                                     Text(hijriDate)
@@ -78,6 +86,7 @@ struct PrayerView: View {
                                         .foregroundColor(Color(hex: "#F6923A"))
                                 }
                             }
+
 
                             Spacer()
 
@@ -137,12 +146,15 @@ struct PrayerView: View {
     // MARK: - Fetch Prayer Times
     
     func fetchPrayerTimes(city: String) {
-        if viewModel.selectedCity.lowercased() == "london" && viewModel.selectedCountry.lowercased() == "unified timetable" {
+        if viewModel.isUsingMosqueTimetable {
+            fetchMosqueDetails(mosque: viewModel.selectedMosque)
+        } else if city.lowercased() == "london" && viewModel.selectedCountry.lowercased() == "unified timetable" {
             fetchLondonUnifiedTimetableAPI()
         } else {
             fetchPrayerTimesFromFirestore(city: city)
         }
     }
+
 
     // MARK: - Fetch London Unified Timetable API
     func fetchLondonUnifiedTimetableAPI() {
@@ -202,7 +214,37 @@ struct PrayerView: View {
             }
         }.resume()
     }
+    
+    
+    func fetchMosqueDetails(mosque: String) {
+        let db = Firestore.firestore()
+        let docRef = db.collection("Mosques").document(mosque)
 
+        docRef.getDocument { document, error in
+            if let document = document, document.exists {
+                if let data = document.data() {
+                    let rawPrayerTimes = data["prayerTimes"] as? [String: String] ?? [:]
+
+                    // Normalize keys to use uppercase first letters
+                    let normalizedPrayerTimes = rawPrayerTimes.reduce(into: [String: String]()) { result, pair in
+                        let normalizedKey = pair.key.capitalized // Converts "isha" to "Isha"
+                        result[normalizedKey] = pair.value
+                    }
+
+                    let date = data["date"] as? String ?? ""
+
+                    DispatchQueue.main.async {
+                        self.prayerTimes = normalizedPrayerTimes
+                        self.readableDate = date
+                    }
+                } else {
+                    print("Failed to parse mosque details.")
+                }
+            } else {
+                print("Failed to fetch mosque document: \(mosque)")
+            }
+        }
+    }
 
 
 
@@ -224,6 +266,8 @@ struct PrayerView: View {
             }
         }
     }
+    
+    
 
     // MARK: - Helper to Get Current Date
     func currentReadableDate() -> String {
@@ -237,36 +281,43 @@ struct PrayerView: View {
 
     // MARK: - Update Prayer Times for the Day
     func updatePrayerTimesForDay() {
-        guard currentDayIndex < prayerData.count else { return }
-
-        let dayData = prayerData[currentDayIndex]
-
-        if let date = dayData["date"] as? [String: Any],
-           let readable = date["readable"] as? String {
-            self.readableDate = readable
-        }
-
-        if let hijri = dayData["hijri"] as? [String: Any],
-           let day = hijri["day"] as? String,
-           let month = hijri["month"] as? [String: Any],
-           let monthName = month["en"] as? String,
-           let year = hijri["year"] as? String {
-            self.hijriDate = "\(day) \(monthName) \(year)"  // Format Hijri date
-        }
-
-        if let timings = dayData["timings"] as? [String: String],
-           let nextDayTimings = prayerData[(currentDayIndex + 1) % prayerData.count]["timings"] as? [String: String],
-           let fajrNextDay = nextDayTimings["Fajr"],
-           let maghrib = timings["Maghrib"] {
-            self.prayerTimes = timings.mapValues { sanitizeTime($0) }
-            self.prayerTimes["Midnight"] = calculateMidnightTime(maghribTime: maghrib, fajrTime: fajrNextDay)
-            self.prayerTimes["Lastthird"] = calculateLastThirdOfNight(maghribTime: maghrib, fajrTime: fajrNextDay)
+        if viewModel.isUsingMosqueTimetable {
+            fetchMosqueDetails(mosque: viewModel.selectedMosque)
             
+        } else{
+            guard currentDayIndex < prayerData.count else { return }
+
+            let dayData = prayerData[currentDayIndex]
+
+            if let date = dayData["date"] as? [String: Any],
+               let readable = date["readable"] as? String {
+                self.readableDate = readable
+            }
+
+            if let hijri = dayData["hijri"] as? [String: Any],
+               let day = hijri["day"] as? String,
+               let month = hijri["month"] as? [String: Any],
+               let monthName = month["en"] as? String,
+               let year = hijri["year"] as? String {
+                self.hijriDate = "\(day) \(monthName) \(year)"  // Format Hijri date
+            }
+
+            if let timings = dayData["timings"] as? [String: String],
+               let nextDayTimings = prayerData[(currentDayIndex + 1) % prayerData.count]["timings"] as? [String: String],
+               let fajrNextDay = nextDayTimings["Fajr"],
+               let maghrib = timings["Maghrib"] {
+                self.prayerTimes = timings.mapValues { sanitizeTime($0) }
+                self.prayerTimes["Midnight"] = calculateMidnightTime(maghribTime: maghrib, fajrTime: fajrNextDay)
+                self.prayerTimes["Lastthird"] = calculateLastThirdOfNight(maghribTime: maghrib, fajrTime: fajrNextDay)
+                
+                
+                scheduleLastThirdOfNightNotification(prayerTimes: self.prayerTimes)
+                scheduleTenMinutesBeforeMidnightNotification(prayerTimes: self.prayerTimes)
+                scheduleTenMinutesBeforeIshaNotification(prayerTimes: self.prayerTimes)
+            }
             
-            scheduleLastThirdOfNightNotification(prayerTimes: self.prayerTimes)
-            scheduleTenMinutesBeforeMidnightNotification(prayerTimes: self.prayerTimes)
-            scheduleTenMinutesBeforeIshaNotification(prayerTimes: self.prayerTimes)
         }
+        
     }
     
     func updatePrayerTimesForLondonDay() {

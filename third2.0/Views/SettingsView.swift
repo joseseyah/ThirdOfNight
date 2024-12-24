@@ -10,7 +10,10 @@ struct SettingsView: View {
     @State private var errorMessage: String? = nil
     @State private var showMailView: Bool = false
     @State private var showMailError: Bool = false
-    @State private var useMosqueTimetable: Bool = false
+    @AppStorage("useMosqueTimetable") private var useMosqueTimetable: Bool = false
+    @State private var selectedMosque: String = mosqueList.first ?? ""
+
+
     
     @AppStorage("dateFormat") private var dateFormat: String = "Gregorian"
 
@@ -39,7 +42,7 @@ struct SettingsView: View {
                                 }
                         }
 
-                        // Custom Location or Mosque Timetable Section
+                        
                         if useMosqueTimetable {
                             settingsSection(title: "Select Mosque Timetable") {
                                 VStack(spacing: 15) {
@@ -49,13 +52,24 @@ struct SettingsView: View {
                                         .padding()
                                         .background(Color("BoxBackgroundColor"))
                                         .cornerRadius(10)
+                                    
+                                    // Use a Picker to display the mosqueList options
+                                    Picker("Choose Mosque", selection: $selectedMosque) {
+                                        ForEach(mosqueList, id: \.self) { mosque in
+                                            Text(mosque).tag(mosque)
+                                        }
+                                    }
+                                    .pickerStyle(MenuPickerStyle())
+                                    .padding()
+                                    .background(Color("PageBackgroundColor"))
+                                    .cornerRadius(10)
 
-                                    // Add additional UI for selecting mosque timetables here
-                                    // Example:
+
+                                    // Save button for confirming selection
                                     Button(action: {
-                                        // Placeholder action for selecting a mosque
+                                        saveSelectedMosque()
                                     }) {
-                                        Text("Choose Mosque")
+                                        Text("Save Mosque")
                                             .font(.headline)
                                             .foregroundColor(.white)
                                             .padding()
@@ -63,6 +77,7 @@ struct SettingsView: View {
                                             .background(Color("HighlightColor"))
                                             .cornerRadius(10)
                                     }
+                                    .disabled(selectedMosque.isEmpty)
                                 }
                             }
                         } else {
@@ -184,15 +199,53 @@ struct SettingsView: View {
             }
         }
     }
+    
+    private func saveSelectedMosque() {
+        guard !selectedMosque.isEmpty else {
+            print("No mosque selected")
+            return
+        }
+
+        print("Fetching prayer times for mosque: \(selectedMosque)")
+
+        // Fetch prayer times from Firebase
+        let functions = Functions.functions()
+        functions.httpsCallable("getPrayerTimes").call(["mosque": selectedMosque]) { result, error in
+            if let error = error {
+                print("Error fetching prayer times: \(error.localizedDescription)")
+                return
+            }
+
+            guard let data = result?.data as? [String: Any],
+                  let prayerTimes = data["prayerTimes"] as? [String: String] else {
+                print("Invalid prayer times format or data")
+                return
+            }
+
+            // Store prayer times locally
+            viewModel.prayerTimes = prayerTimes
+            print("Prayer times fetched: \(prayerTimes)")
+        }
+
+        viewModel.selectedMosque = selectedMosque
+        print("Selected mosque saved: \(selectedMosque)")
+    }
+
+
 
     // MARK: - Handle Timetable Toggle
+//    private func handleTimetableToggle() {
+//        if useMosqueTimetable {
+//            viewModel.isUsingMosqueTimetable = true
+//        } else {
+//            viewModel.isUsingMosqueTimetable = false
+//        }
+//    }
+    
     private func handleTimetableToggle() {
-        if useMosqueTimetable {
-            viewModel.isUsingMosqueTimetable = true
-        } else {
-            viewModel.isUsingMosqueTimetable = false
-        }
+        viewModel.isUsingMosqueTimetable = useMosqueTimetable
     }
+
 
     // MARK: - Save City Logic
     private func saveCity(city: String, countryName: String) {

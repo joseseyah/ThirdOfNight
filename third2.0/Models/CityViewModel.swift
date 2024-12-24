@@ -12,11 +12,21 @@ class CityViewModel: ObservableObject {
             UserDefaults.standard.set(selectedCountry, forKey: "selectedCountry")
         }
     }
+    @Published var selectedMosque: String {
+        didSet {
+            UserDefaults.standard.set(selectedMosque, forKey: "selectedMosque")
+        }
+    }
     @Published var prayerTimes: [String: String] = [:]
     @Published var readableDate: String = ""
     @Published var isUsingLondonUnifiedTimetable = false
     
-    @Published var isUsingMosqueTimetable: Bool = false
+    @Published var isUsingMosqueTimetable: Bool {
+        didSet {
+            UserDefaults.standard.set(isUsingMosqueTimetable, forKey: "isUsingMosqueTimetable")
+        }
+    }
+
 
     private var cancellables = Set<AnyCancellable>()
     private let londonPrayerTimesAPI = "https://www.londonprayertimes.com/api/times/?format=json&key=f31cd22f-be6a-4410-bd20-cdd3b9923cff"
@@ -24,6 +34,8 @@ class CityViewModel: ObservableObject {
     init() {
         self.selectedCity = UserDefaults.standard.string(forKey: "selectedCity") ?? "Singapore"
         self.selectedCountry = UserDefaults.standard.string(forKey: "selectedCountry") ?? "Unknown"
+        self.isUsingMosqueTimetable = UserDefaults.standard.bool(forKey: "useMosqueTimetable")
+        self.selectedMosque = UserDefaults.standard.string(forKey: "selectedMosque") ?? "Manchester Isoc"
     }
 
     // MARK: - Fetch Unified Timetable API
@@ -99,6 +111,5 @@ class CityViewModel: ObservableObject {
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: Date())
     }
-
 }
 

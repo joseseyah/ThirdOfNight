@@ -46,14 +46,24 @@ struct DayPrayerView: View {
                     Spacer()
 
                     VStack {
-                        Text(viewModel.selectedCity)
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
+                        // Display mosque name if mosque timetable is enabled, otherwise city name
+                        if viewModel.isUsingMosqueTimetable {
+                            Text(viewModel.selectedMosque)
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundColor(.black)
+                        } else {
+                            Text(viewModel.selectedCity)
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .foregroundColor(.black)
+                        }
+
                         Text(readableDate)
                             .font(.headline)
                             .foregroundColor(.gray)
                     }
+
 
                     Spacer()
 
@@ -170,12 +180,54 @@ struct DayPrayerView: View {
         let currentDate = calendar.date(byAdding: .day, value: currentDayIndex, to: Date()) ?? Date()
         return calendar.component(.weekday, from: currentDate) == 7
     }
+    
+    
+    func fetchMosqueDetails(mosque: String) {
+        let db = Firestore.firestore()
+        let docRef = db.collection("Mosques").document(mosque)
+
+        docRef.getDocument { document, error in
+            if let document = document, document.exists {
+                if let data = document.data() {
+                    let rawPrayerTimes = data["prayerTimes"] as? [String: String] ?? [:]
+                    let normalizedPrayerTimes = rawPrayerTimes.reduce(into: [String: String]()) { result, pair in
+                        let normalizedKey = pair.key.capitalized // Convert keys to "Fajr", "Dhuhr", etc.
+                        result[normalizedKey] = pair.value
+                    }
+
+                    let date = data["date"] as? String ?? ""
+
+                    DispatchQueue.main.async {
+                        self.prayerTimes = normalizedPrayerTimes
+                        self.readableDate = date
+                    }
+                } else {
+                    print("Failed to parse mosque details.")
+                }
+            } else {
+                print("Failed to fetch mosque document: \(mosque)")
+            }
+        }
+    }
+
 
 
 
     // MARK: - Update Prayer Times for Current Day
     func updatePrayerTimesForDay() {
-        if viewModel.selectedCity.lowercased() == "london" {
+        if viewModel.isUsingMosqueTimetable {
+            // Mosque Prayer Times
+            fetchMosqueDetails(mosque: viewModel.selectedMosque)
+            
+            scheduleNextPrayerNotification(prayerTimes: self.prayerTimes)
+            scheduleTenMinutesBeforeSunriseNotification(prayerTimes: self.prayerTimes)
+            scheduleTenMinutesBeforeDhuhrNotification(prayerTimes: self.prayerTimes)
+            scheduleDhuhrNotification(prayerTimes: self.prayerTimes)
+            scheduleAsrNotification(prayerTimes: self.prayerTimes)
+            scheduleMaghribNotification(prayerTimes: self.prayerTimes)
+            scheduleFortyMinutesBeforeMaghribNotification(prayerTimes: self.prayerTimes)
+            scheduleTenMinutesBeforeAsrNotification(prayerTimes: self.prayerTimes)
+        } else if viewModel.selectedCity.lowercased() == "london" {
             // London Unified Timetable
             guard !dateKeys.isEmpty else { return }
             let selectedDate = dateKeys[currentDayIndex]
@@ -185,43 +237,44 @@ struct DayPrayerView: View {
                     "Sunrise": sanitizeTime(timings.sunrise),
                     "Dhuhr": sanitizeTime(timings.dhuhr),
                     "Asr": sanitizeTime(timings.asr),
-                    "Maghrib": sanitizeTime(timings.magrib)
+                    "Maghrib": sanitizeTime(timings.magrib),
+                    "Isha": sanitizeTime(timings.isha)
                 ]
                 self.readableDate = selectedDate
 
-                // Schedule notification for the next prayer
+                // Schedule notifications
                 scheduleNextPrayerNotification(prayerTimes: self.prayerTimes)
                 scheduleTenMinutesBeforeSunriseNotification(prayerTimes: self.prayerTimes)
                 scheduleTenMinutesBeforeDhuhrNotification(prayerTimes: self.prayerTimes)
                 scheduleDhuhrNotification(prayerTimes: self.prayerTimes)
                 scheduleAsrNotification(prayerTimes: self.prayerTimes)
-                scheduleMaghribNotification(prayerTimes:self.prayerTimes)
-                scheduleFortyMinutesBeforeMaghribNotification(prayerTimes:self.prayerTimes)
+                scheduleMaghribNotification(prayerTimes: self.prayerTimes)
+                scheduleFortyMinutesBeforeMaghribNotification(prayerTimes: self.prayerTimes)
                 scheduleTenMinutesBeforeAsrNotification(prayerTimes: self.prayerTimes)
             }
         } else {
             // Firebase Prayer Times
             guard currentDayIndex < prayerData.count else { return }
             let dayData = prayerData[currentDayIndex]
-            if let date = dayData["date"] as? [String: Any],
-               let readable = date["readable"] as? String {
-                self.readableDate = readable
+            if let date = dayData["date"] as? String {
+                self.readableDate = date
             }
             if let timings = dayData["timings"] as? [String: String] {
                 self.prayerTimes = timings.mapValues { sanitizeTime($0) }
 
-                // Schedule notification for the next prayer
+                // Schedule notifications
                 scheduleNextPrayerNotification(prayerTimes: self.prayerTimes)
                 scheduleTenMinutesBeforeSunriseNotification(prayerTimes: self.prayerTimes)
                 scheduleTenMinutesBeforeDhuhrNotification(prayerTimes: self.prayerTimes)
                 scheduleDhuhrNotification(prayerTimes: self.prayerTimes)
                 scheduleAsrNotification(prayerTimes: self.prayerTimes)
-                scheduleMaghribNotification(prayerTimes:self.prayerTimes)
-                scheduleFortyMinutesBeforeMaghribNotification(prayerTimes:self.prayerTimes)
+                scheduleMaghribNotification(prayerTimes: self.prayerTimes)
+                scheduleFortyMinutesBeforeMaghribNotification(prayerTimes: self.prayerTimes)
                 scheduleTenMinutesBeforeAsrNotification(prayerTimes: self.prayerTimes)
             }
         }
     }
+
 
 
 

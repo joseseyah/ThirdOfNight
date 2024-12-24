@@ -418,6 +418,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D4D628F2D1732DB003D7F11 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				6DBCFC512CB25CC30074796A /* Item.swift */,
+				6DCC14242D10C60B00E352BD /* PrayerTimeCalculator.swift */,
+			);
+			path = Logic;
+			sourceTree = "<group>";
+		};
 		6DBCFC412CB25CC30074796A = {
 			isa = PBXGroup;
 			children = (
@@ -446,6 +455,7 @@
 			isa = PBXGroup;
 			children = (
 				6DBCFC4D2CB25CC30074796A /* third2_0App.swift */,
+				6D4D628F2D1732DB003D7F11 /* Logic */,
 				6DCC14292D10DEA900E352BD /* Notifications */,
 				6DCC14212D10B4F200E352BD /* Responses */,
 				6DCC14192D0B9B8E00E352BD /* Launch */,
@@ -458,8 +468,6 @@
 				6DBCFC532CB25CC40074796A /* Assets.xcassets */,
 				6DBCFC552CB25CC40074796A /* Preview Content */,
 				6DCC131F2D0AD43500E352BD /* GoogleService-Info.plist */,
-				6DCC14242D10C60B00E352BD /* PrayerTimeCalculator.swift */,
-				6DBCFC512CB25CC30074796A /* Item.swift */,
 			);
 			path = third2.0;
 			sourceTree = "<group>";

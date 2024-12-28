@@ -86,7 +86,7 @@ struct DayPrayerView: View {
                         TimeBox(title: "Fajr", time: prayerTimes["Fajr"] ?? "N/A", isDaytime: isDaytime)
                         TimeBox(title: "Sunrise", time: prayerTimes["Sunrise"] ?? "N/A", isDaytime: isDaytime)
                         TimeBox(
-                            title: isFriday() ? "Jummah" : "Dhuhr",
+                            title: "Dhuhr",
                             time: prayerTimes["Dhuhr"] ?? "N/A",
                             isDaytime: isDaytime
                         )
@@ -175,13 +175,6 @@ struct DayPrayerView: View {
         return time.components(separatedBy: " ").first ?? time
     }
     
-    func isFriday() -> Bool {
-        let calendar = Calendar.current
-        let currentDate = calendar.date(byAdding: .day, value: currentDayIndex, to: Date()) ?? Date()
-        return calendar.component(.weekday, from: currentDate) == 7
-    }
-    
-    
     func fetchMosqueDetails(mosque: String) {
         let db = Firestore.firestore()
         let docRef = db.collection("Mosques").document(mosque)
@@ -189,20 +182,19 @@ struct DayPrayerView: View {
         docRef.getDocument { document, error in
             if let document = document, document.exists {
                 if let data = document.data() {
-                    let rawPrayerTimes = data["prayerTimes"] as? [String: String] ?? [:]
-                    let normalizedPrayerTimes = rawPrayerTimes.reduce(into: [String: String]()) { result, pair in
-                        let normalizedKey = pair.key.capitalized // Convert keys to "Fajr", "Dhuhr", etc.
-                        result[normalizedKey] = pair.value
+                    if let nestedData = data["data"] as? [[String: String]] {
+                        if currentDayIndex < nestedData.count {
+                            let prayerTimesDict = nestedData[currentDayIndex]
+                            let mappedPrayerTimes = mapCheadleMasjidKeys(prayerTimesDict)
+                            let date = prayerTimesDict["d_date"] ?? ""
+                            DispatchQueue.main.async {
+                                self.prayerTimes = mappedPrayerTimes
+                                self.readableDate = date // Use d_date for the readable date
+                            }
+                        } else {
+                            print("Day index out of range for prayer times data.")
+                        }
                     }
-
-                    let date = data["date"] as? String ?? ""
-
-                    DispatchQueue.main.async {
-                        self.prayerTimes = normalizedPrayerTimes
-                        self.readableDate = date
-                    }
-                } else {
-                    print("Failed to parse mosque details.")
                 }
             } else {
                 print("Failed to fetch mosque document: \(mosque)")
@@ -211,6 +203,30 @@ struct DayPrayerView: View {
     }
 
 
+    func mapCheadleMasjidKeys(_ prayerTimesDict: [String: String]) -> [String: String] {
+        return [
+            "Fajr": formatTime(prayerTimesDict["fajr_begins"] ?? "N/A"),
+            "Sunrise": formatTime(prayerTimesDict["sunrise"] ?? "N/A"),
+            "Dhuhr": formatTime(prayerTimesDict["zuhr_begins"] ?? "N/A"),
+            "Asr": formatTime(prayerTimesDict["asr_jamah"] ?? "N/A"),
+            "Maghrib": formatTime(prayerTimesDict["maghrib_begins"] ?? "N/A"),
+            "Isha": formatTime(prayerTimesDict["isha_begins"] ?? "N/A")
+        ]
+    }
+    
+    func formatTime(_ time: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "HH:mm:ss" // Input format from Firestore
+
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "HH:mm" // Desired output format
+
+        if let date = inputFormatter.date(from: time) {
+            return outputFormatter.string(from: date)
+        }
+
+        return time // Fallback to original if parsing fails
+    }
 
 
     // MARK: - Update Prayer Times for Current Day
@@ -218,15 +234,6 @@ struct DayPrayerView: View {
         if viewModel.isUsingMosqueTimetable {
             // Mosque Prayer Times
             fetchMosqueDetails(mosque: viewModel.selectedMosque)
-            
-            scheduleNextPrayerNotification(prayerTimes: self.prayerTimes)
-            scheduleTenMinutesBeforeSunriseNotification(prayerTimes: self.prayerTimes)
-            scheduleTenMinutesBeforeDhuhrNotification(prayerTimes: self.prayerTimes)
-            scheduleDhuhrNotification(prayerTimes: self.prayerTimes)
-            scheduleAsrNotification(prayerTimes: self.prayerTimes)
-            scheduleMaghribNotification(prayerTimes: self.prayerTimes)
-            scheduleFortyMinutesBeforeMaghribNotification(prayerTimes: self.prayerTimes)
-            scheduleTenMinutesBeforeAsrNotification(prayerTimes: self.prayerTimes)
         } else if viewModel.selectedCity.lowercased() == "london" {
             // London Unified Timetable
             guard !dateKeys.isEmpty else { return }
@@ -241,16 +248,6 @@ struct DayPrayerView: View {
                     "Isha": sanitizeTime(timings.isha)
                 ]
                 self.readableDate = selectedDate
-
-                // Schedule notifications
-                scheduleNextPrayerNotification(prayerTimes: self.prayerTimes)
-                scheduleTenMinutesBeforeSunriseNotification(prayerTimes: self.prayerTimes)
-                scheduleTenMinutesBeforeDhuhrNotification(prayerTimes: self.prayerTimes)
-                scheduleDhuhrNotification(prayerTimes: self.prayerTimes)
-                scheduleAsrNotification(prayerTimes: self.prayerTimes)
-                scheduleMaghribNotification(prayerTimes: self.prayerTimes)
-                scheduleFortyMinutesBeforeMaghribNotification(prayerTimes: self.prayerTimes)
-                scheduleTenMinutesBeforeAsrNotification(prayerTimes: self.prayerTimes)
             }
         } else {
             // Firebase Prayer Times
@@ -261,21 +258,23 @@ struct DayPrayerView: View {
             }
             if let timings = dayData["timings"] as? [String: String] {
                 self.prayerTimes = timings.mapValues { sanitizeTime($0) }
-
-                // Schedule notifications
-                scheduleNextPrayerNotification(prayerTimes: self.prayerTimes)
-                scheduleTenMinutesBeforeSunriseNotification(prayerTimes: self.prayerTimes)
-                scheduleTenMinutesBeforeDhuhrNotification(prayerTimes: self.prayerTimes)
-                scheduleDhuhrNotification(prayerTimes: self.prayerTimes)
-                scheduleAsrNotification(prayerTimes: self.prayerTimes)
-                scheduleMaghribNotification(prayerTimes: self.prayerTimes)
-                scheduleFortyMinutesBeforeMaghribNotification(prayerTimes: self.prayerTimes)
-                scheduleTenMinutesBeforeAsrNotification(prayerTimes: self.prayerTimes)
             }
         }
+
+        // Schedule notifications for all cases
+        scheduleAllNotifications(prayerTimes: self.prayerTimes)
     }
 
-
+    private func scheduleAllNotifications(prayerTimes: [String: String]) {
+        scheduleNextPrayerNotification(prayerTimes: prayerTimes)
+        scheduleTenMinutesBeforeSunriseNotification(prayerTimes: prayerTimes)
+        scheduleTenMinutesBeforeDhuhrNotification(prayerTimes: prayerTimes)
+        scheduleDhuhrNotification(prayerTimes: prayerTimes)
+        scheduleAsrNotification(prayerTimes: prayerTimes)
+        scheduleMaghribNotification(prayerTimes: prayerTimes)
+        scheduleFortyMinutesBeforeMaghribNotification(prayerTimes: prayerTimes)
+        scheduleTenMinutesBeforeAsrNotification(prayerTimes: prayerTimes)
+    }
 
 
     // MARK: - Navigation

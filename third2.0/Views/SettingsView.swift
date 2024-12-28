@@ -12,6 +12,8 @@ struct SettingsView: View {
     @State private var showMailError: Bool = false
     @AppStorage("useMosqueTimetable") private var useMosqueTimetable: Bool = false
     @State private var selectedMosque: String = mosqueList.first ?? ""
+    @State private var showTick: Bool = false
+
 
 
     
@@ -69,15 +71,25 @@ struct SettingsView: View {
                                     Button(action: {
                                         saveSelectedMosque()
                                     }) {
-                                        Text("Save Mosque")
-                                            .font(.headline)
-                                            .foregroundColor(.white)
-                                            .padding()
-                                            .frame(maxWidth: .infinity)
-                                            .background(Color("HighlightColor"))
-                                            .cornerRadius(10)
+                                        HStack {
+                                            if showTick {
+                                                Image(systemName: "checkmark.circle.fill")
+                                                    .foregroundColor(.green)
+                                                    .transition(.scale)
+                                            } else {
+                                                Text("Save Mosque")
+                                                    .font(.headline)
+                                                    .foregroundColor(.white)
+                                            }
+                                        }
+                                        .padding()
+                                        .frame(maxWidth: .infinity)
+                                        .background(Color("HighlightColor"))
+                                        .cornerRadius(10)
                                     }
                                     .disabled(selectedMosque.isEmpty)
+
+
                                 }
                             }
                         } else {
@@ -208,7 +220,6 @@ struct SettingsView: View {
 
         print("Fetching prayer times for mosque: \(selectedMosque)")
 
-        // Fetch prayer times from Firebase
         let functions = Functions.functions()
         functions.httpsCallable("getPrayerTimes").call(["mosque": selectedMosque]) { result, error in
             if let error = error {
@@ -222,9 +233,20 @@ struct SettingsView: View {
                 return
             }
 
-            // Store prayer times locally
             viewModel.prayerTimes = prayerTimes
             print("Prayer times fetched: \(prayerTimes)")
+
+            // Show the tick
+            withAnimation {
+                showTick = true
+            }
+
+            // Hide the tick after 2 seconds
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                withAnimation {
+                    showTick = false
+                }
+            }
         }
 
         viewModel.selectedMosque = selectedMosque
@@ -233,14 +255,8 @@ struct SettingsView: View {
 
 
 
+
     // MARK: - Handle Timetable Toggle
-//    private func handleTimetableToggle() {
-//        if useMosqueTimetable {
-//            viewModel.isUsingMosqueTimetable = true
-//        } else {
-//            viewModel.isUsingMosqueTimetable = false
-//        }
-//    }
     
     private func handleTimetableToggle() {
         viewModel.isUsingMosqueTimetable = useMosqueTimetable

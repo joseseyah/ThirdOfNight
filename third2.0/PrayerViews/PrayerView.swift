@@ -107,9 +107,10 @@ struct PrayerView: View {
                                 .font(.title)
                                 .padding()
                         } else {
-                            TimeBox(title: "Isha", time: prayerTimes["Isha"] ?? "08:00 PM", isDaytime: isDaytime)
-                            TimeBox(title: "Midnight", time: prayerTimes["Midnight"] ?? "00:00 AM", isDaytime: isDaytime)
-                            TimeBox(title: "Last Third of Night", time: prayerTimes["Lastthird"] ?? "03:00 AM", isDaytime: isDaytime)
+                            TimeBox(title: "Isha", time: prayerTimes["Isha"] ?? defaultPrayerTimes["Isha"]!, isDaytime: isDaytime)
+                            TimeBox(title: "Midnight", time: prayerTimes["Midnight"] ?? defaultPrayerTimes["Midnight"]!, isDaytime: isDaytime)
+                            TimeBox(title: "Last Third of Night", time: prayerTimes["Lastthird"] ?? defaultPrayerTimes["Lastthird"]!, isDaytime: isDaytime)
+
                         }
 
                         Spacer()
@@ -222,23 +223,29 @@ struct PrayerView: View {
 
         docRef.getDocument { document, error in
             if let document = document, document.exists {
-                if let data = document.data() {
-                    let rawPrayerTimes = data["prayerTimes"] as? [String: String] ?? [:]
+                if let data = document.data(),
+                   let nestedData = data["data"] as? [[String: String]] {
+                    if currentDayIndex < nestedData.count {
+                        let prayerTimesDict = nestedData[currentDayIndex]
+                        let mappedPrayerTimes = mapCheadleMasjidKeys(prayerTimesDict)
+                        let date = prayerTimesDict["d_date"] ?? ""
 
-                    // Normalize keys to use uppercase first letters
-                    let normalizedPrayerTimes = rawPrayerTimes.reduce(into: [String: String]()) { result, pair in
-                        let normalizedKey = pair.key.capitalized // Converts "isha" to "Isha"
-                        result[normalizedKey] = pair.value
+                        // Fetch next day's Fajr time
+                        fetchNextDayFajrTime(mosque: mosque, nextDayIndex: currentDayIndex + 1) { nextDayFajr in
+                            DispatchQueue.main.async {
+                                var updatedPrayerTimes = mappedPrayerTimes
+                                if let maghribTime = mappedPrayerTimes["Maghrib"],
+                                   let fajrTime = nextDayFajr {
+                                    updatedPrayerTimes["Midnight"] = calculateMidnightTime(maghribTime: maghribTime, fajrTime: fajrTime)
+                                    updatedPrayerTimes["Lastthird"] = calculateLastThirdOfNight(maghribTime: maghribTime, fajrTime: fajrTime)
+                                }
+                                self.prayerTimes = updatedPrayerTimes
+                                self.readableDate = date
+                            }
+                        }
+                    } else {
+                        print("Day index out of range for prayer times data.")
                     }
-
-                    let date = data["date"] as? String ?? ""
-
-                    DispatchQueue.main.async {
-                        self.prayerTimes = normalizedPrayerTimes
-                        self.readableDate = date
-                    }
-                } else {
-                    print("Failed to parse mosque details.")
                 }
             } else {
                 print("Failed to fetch mosque document: \(mosque)")
@@ -248,6 +255,17 @@ struct PrayerView: View {
 
 
 
+
+    func mapCheadleMasjidKeys(_ prayerTimesDict: [String: String]) -> [String: String] {
+        return [
+            "Fajr": formatTime(prayerTimesDict["fajr_begins"] ?? "N/A"),
+            "Sunrise": formatTime(prayerTimesDict["sunrise"] ?? "N/A"),
+            "Dhuhr": formatTime(prayerTimesDict["zuhr_begins"] ?? "N/A"),
+            "Asr": formatTime(prayerTimesDict["asr_jamah"] ?? "N/A"),
+            "Maghrib": formatTime(prayerTimesDict["maghrib_begins"] ?? "N/A"),
+            "Isha": formatTime(prayerTimesDict["isha_begins"] ?? "N/A")
+        ]
+    }
 
     // MARK: - Fetch from Firestore
     func fetchPrayerTimesFromFirestore(city: String) {
@@ -275,9 +293,6 @@ struct PrayerView: View {
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: Date())
     }
-
-    
-
 
     // MARK: - Update Prayer Times for the Day
     func updatePrayerTimesForDay() {
@@ -319,6 +334,27 @@ struct PrayerView: View {
         }
         
     }
+    
+    func fetchNextDayFajrTime(mosque: String, nextDayIndex: Int, completion: @escaping (String?) -> Void) {
+        let db = Firestore.firestore()
+        let docRef = db.collection("Mosques").document(mosque)
+
+        docRef.getDocument { document, error in
+            if let document = document, document.exists {
+                if let data = document.data(),
+                   let nestedData = data["data"] as? [[String: String]] {
+                    if nextDayIndex < nestedData.count {
+                        let nextDayPrayerTimes = nestedData[nextDayIndex]
+                        let fajrTime = nextDayPrayerTimes["fajr_begins"]
+                        completion(fajrTime)
+                        return
+                    }
+                }
+            }
+            completion(nil) // Return nil if fetching fails
+        }
+    }
+
     
     func updatePrayerTimesForLondonDay() {
         guard currentDayIndex < prayerData.count else { return }
@@ -379,31 +415,79 @@ struct PrayerView: View {
     func sanitizeTime(_ time: String) -> String {
         return time.components(separatedBy: " ").first ?? time
     }
+    
+    func formatTime(_ time: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "HH:mm:ss" // Input format from Firestore
+
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "HH:mm" // Desired output format
+
+        if let date = inputFormatter.date(from: time) {
+            return outputFormatter.string(from: date)
+        }
+
+        return time // Fallback to original if parsing fails
+    }
+
 
     func calculateMidnightTime(maghribTime: String, fajrTime: String) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        guard let maghribDate = sanitizeAndParseTime(maghribTime, using: formatter),
-              let fajrDate = sanitizeAndParseTime(fajrTime, using: formatter)?.addingTimeInterval(24 * 60 * 60) else { return "Invalid" }
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "HH:mm" // Input format
+
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "HH:mm" // Desired output format
+
+        guard let maghribDate = sanitizeAndParseTime(maghribTime, using: inputFormatter),
+              let fajrDate = sanitizeAndParseTime(fajrTime, using: inputFormatter)?.addingTimeInterval(24 * 60 * 60) else {
+            print("Error calculating Midnight: Invalid Maghrib (\(maghribTime)) or Fajr (\(fajrTime)) time")
+            return "Invalid"
+        }
 
         let totalDuration = fajrDate.timeIntervalSince(maghribDate)
-        return formatter.string(from: maghribDate.addingTimeInterval(totalDuration / 2))
+        return outputFormatter.string(from: maghribDate.addingTimeInterval(totalDuration / 2))
     }
 
     func calculateLastThirdOfNight(maghribTime: String, fajrTime: String) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        guard let maghribDate = sanitizeAndParseTime(maghribTime, using: formatter),
-              let fajrDate = sanitizeAndParseTime(fajrTime, using: formatter)?.addingTimeInterval(24 * 60 * 60) else { return "Invalid" }
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "HH:mm" // Input format
+
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "HH:mm" // Desired output format
+
+        guard let maghribDate = sanitizeAndParseTime(maghribTime, using: inputFormatter),
+              let fajrDate = sanitizeAndParseTime(fajrTime, using: inputFormatter)?.addingTimeInterval(24 * 60 * 60) else {
+            print("Error calculating Last Third of Night: Invalid Maghrib (\(maghribTime)) or Fajr (\(fajrTime)) time")
+            return "Invalid"
+        }
 
         let totalDuration = fajrDate.timeIntervalSince(maghribDate)
-        return formatter.string(from: fajrDate.addingTimeInterval(-totalDuration / 3))
+        return outputFormatter.string(from: fajrDate.addingTimeInterval(-totalDuration / 3))
     }
+
+
+
+
 
     func sanitizeAndParseTime(_ time: String, using formatter: DateFormatter) -> Date? {
         let sanitizedTime = time.components(separatedBy: " ").first ?? time
-        return formatter.date(from: sanitizedTime)
+        
+        // Try parsing with "HH:mm" format first
+        formatter.dateFormat = "HH:mm"
+        if let date = formatter.date(from: sanitizedTime) {
+            return date
+        }
+        
+        // Fallback to "HH:mm:ss" if "HH:mm" fails
+        formatter.dateFormat = "HH:mm:ss"
+        if let date = formatter.date(from: sanitizedTime) {
+            return date
+        }
+        
+        print("Failed to parse time: \(sanitizedTime)")
+        return nil
     }
+
 }
 
 

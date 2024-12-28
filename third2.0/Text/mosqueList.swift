@@ -7,4 +7,4 @@
 
 import Foundation
 
-let mosqueList = ["Manchester Isoc"] 
+let mosqueList = ["Manchester Isoc", "Cheadle Masjid", "AlFurqan Manchester","Wythenshawe Masjid", "Masjid Eumer"]

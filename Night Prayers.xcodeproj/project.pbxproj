@@ -14,6 +14,7 @@
 		6D4D628A2D161DB3003D7F11 /* SettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D62892D161DB3003D7F11 /* SettingsButton.swift */; };
 		6D4D628C2D161E42003D7F11 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D628B2D161E42003D7F11 /* NotificationsView.swift */; };
 		6D4D628E2D173181003D7F11 /* mosqueList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D628D2D173181003D7F11 /* mosqueList.swift */; };
+		6D4D62912D205B87003D7F11 /* defaultPrayerTimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D62902D205B86003D7F11 /* defaultPrayerTimes.swift */; };
 		6DAD84802CB7176B0027BF5A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6DAD847F2CB7176B0027BF5A /* FirebaseAnalytics */; };
 		6DAD84822CB7176B0027BF5A /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6DAD84812CB7176B0027BF5A /* FirebaseCore */; };
 		6DAD84842CB7176B0027BF5A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6DAD84832CB7176B0027BF5A /* FirebaseFirestore */; };
@@ -219,6 +220,7 @@
 		6D4D62892D161DB3003D7F11 /* SettingsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButton.swift; sourceTree = "<group>"; };
 		6D4D628B2D161E42003D7F11 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		6D4D628D2D173181003D7F11 /* mosqueList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mosqueList.swift; sourceTree = "<group>"; };
+		6D4D62902D205B86003D7F11 /* defaultPrayerTimes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = defaultPrayerTimes.swift; sourceTree = "<group>"; };
 		6DAD84852CB71B6F0027BF5A /* TasbihCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasbihCounterView.swift; sourceTree = "<group>"; };
 		6DAD84892CBD09230027BF5A /* DayPrayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayPrayerView.swift; sourceTree = "<group>"; };
 		6DAD848B2CBD0A1F0027BF5A /* DesertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesertView.swift; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 				6DCC13072D083FAC00E352BD /* countryCodeMapping.swift */,
 				6DCC12FD2D0629BC00E352BD /* MissionText.swift */,
 				6D4D628D2D173181003D7F11 /* mosqueList.swift */,
+				6D4D62902D205B86003D7F11 /* defaultPrayerTimes.swift */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -1036,6 +1039,7 @@
 				6DCC141F2D0B9CAC00E352BD /* OnboardingView.swift in Sources */,
 				6DE78BCF2CB2615E0068F84C /* SurahMulkView.swift in Sources */,
 				6D4D628A2D161DB3003D7F11 /* SettingsButton.swift in Sources */,
+				6D4D62912D205B87003D7F11 /* defaultPrayerTimes.swift in Sources */,
 				6DCC13292D0AF60B00E352BD /* Surah.swift in Sources */,
 				6D4D628E2D173181003D7F11 /* mosqueList.swift in Sources */,
 			);

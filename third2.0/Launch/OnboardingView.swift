@@ -4,6 +4,9 @@ struct OnboardingView: View {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
     @AppStorage("selectedCountry") private var selectedCountry: String = ""
     @AppStorage("selectedCity") private var selectedCity: String = ""
+    @AppStorage("selectedMosque") private var selectedMosque: String = ""
+    
+    @State private var useMosqueTimetable: Bool = false
 
     @State private var currentPageIndex: Int = 0  // Tracks the current page index
 
@@ -52,9 +55,16 @@ struct OnboardingView: View {
                 )
             } else if currentPageIndex == 5 {
                 LocationSelectionView(
+                    useMosqueTimetable: $useMosqueTimetable,  // Pass the state as a binding
                     onContinue: {
-                        if !selectedCountry.isEmpty && !selectedCity.isEmpty {
-                            currentPageIndex += 1
+                        if useMosqueTimetable {
+                            if !selectedMosque.isEmpty {
+                                currentPageIndex += 1
+                            }
+                        } else {
+                            if !selectedCountry.isEmpty && !selectedCity.isEmpty {
+                                currentPageIndex += 1
+                            }
                         }
                     }
                 )

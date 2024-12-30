@@ -9,7 +9,12 @@ struct PrayerView: View {
     @State private var timer: Timer?
     @State private var moonScale: CGFloat = 1.0
     @State private var isDaytime = false
-    @State private var readableDate: String = ""
+    @State private var readableDate: String = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: Date())
+    }()
+
     @State private var hijriDate: String = ""
     @State private var prayerData: [[String: Any]] = []
     
@@ -52,12 +57,7 @@ struct PrayerView: View {
 
                         // Navigation Arrows and City Name
                         HStack {
-                            Button(action: { navigateToPreviousDay() }) {
-                                Image(systemName: "arrow.left.circle.fill")
-                                    .font(.title)
-                                    .foregroundColor(.white)
-                            }
-                            .disabled(currentDayIndex <= 0)
+                            
 
                             Spacer()
 
@@ -90,12 +90,7 @@ struct PrayerView: View {
 
                             Spacer()
 
-                            Button(action: { navigateToNextDay() }) {
-                                Image(systemName: "arrow.right.circle.fill")
-                                    .font(.title)
-                                    .foregroundColor(.white)
-                            }
-                            .disabled(currentDayIndex >= maxDayIndex - 1)
+                        
                         }
                         .padding(.horizontal, 20)
 
@@ -123,10 +118,16 @@ struct PrayerView: View {
             fetchPrayerTimes(city: viewModel.selectedCity)
             startTimer()
 
+            // Update the date based on the selected format initially
+            updateDisplayedDate()
+
             // Listen for date format changes
             NotificationCenter.default.addObserver(forName: .dateFormatChanged, object: nil, queue: .main) { _ in
-                updatePrayerTimesForDay()
+                updateDisplayedDate()
             }
+        }
+        .onChange(of: dateFormat) { _ in
+            updateDisplayedDate()
         }
         .onDisappear {
             timer?.invalidate()
@@ -134,13 +135,46 @@ struct PrayerView: View {
         }
     }
     
-    func convertToHijri(from date: Date) -> String {
-        let islamicCalendar = Calendar(identifier: .islamicUmmAlQura)
+    private func updateDisplayedDate() {
+        if dateFormat == "Hijri" {
+            if let hijri = convertToHijri(from: readableDate) {
+                self.hijriDate = hijri
+            }
+        } else {
+            self.readableDate = currentReadableDate()
+        }
+    }
+    
+    func convertToHijri(from gregorianDate: String) -> String? {
+        // Define the input format
         let formatter = DateFormatter()
-        formatter.calendar = islamicCalendar
-        formatter.dateFormat = "dd MMMM yyyy" // Example format: 05 Jumada I 1445
-        formatter.locale = Locale(identifier: "en") // Set to "ar" for Arabic names if needed
-        return formatter.string(from: date)
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.calendar = Calendar(identifier: .gregorian)
+        
+        // Convert string to Date
+        guard let date = formatter.date(from: gregorianDate) else {
+            print("Invalid Gregorian date format.")
+            return nil
+        }
+        
+        // Define the Hijri calendar
+        let hijriCalendar = Calendar(identifier: .islamicUmmAlQura)
+        
+        // Convert to Hijri date components
+        let hijriComponents = hijriCalendar.dateComponents([.year, .month, .day], from: date)
+        
+        // Format the Hijri date
+        let hijriFormatter = DateFormatter()
+        hijriFormatter.calendar = hijriCalendar
+        hijriFormatter.dateFormat = "yyyy-MM-dd" // Customize as needed (e.g., "dd MMM yyyy")
+        
+        // Create a new Hijri Date
+        guard let hijriDate = hijriCalendar.date(from: hijriComponents) else {
+            print("Failed to convert to Hijri date.")
+            return nil
+        }
+        
+        return hijriFormatter.string(from: hijriDate)
     }
 
 
@@ -298,6 +332,9 @@ struct PrayerView: View {
     func updatePrayerTimesForDay() {
         if viewModel.isUsingMosqueTimetable {
             fetchMosqueDetails(mosque: viewModel.selectedMosque)
+            scheduleLastThirdOfNightNotification(prayerTimes: self.prayerTimes)
+            scheduleTenMinutesBeforeMidnightNotification(prayerTimes: self.prayerTimes)
+            scheduleTenMinutesBeforeIshaNotification(prayerTimes: self.prayerTimes)
             
         } else{
             guard currentDayIndex < prayerData.count else { return }
@@ -372,21 +409,6 @@ struct PrayerView: View {
             scheduleLastThirdOfNightNotification(prayerTimes: self.prayerTimes)
             scheduleTenMinutesBeforeMidnightNotification(prayerTimes: self.prayerTimes)
             scheduleTenMinutesBeforeIshaNotification(prayerTimes: self.prayerTimes)
-        }
-    }
-
-
-    func navigateToPreviousDay() {
-        if currentDayIndex > 0 {
-            currentDayIndex -= 1
-            updatePrayerTimes()
-        }
-    }
-
-    func navigateToNextDay() {
-        if currentDayIndex < prayerData.count - 1 {
-            currentDayIndex += 1
-            updatePrayerTimes()
         }
     }
 

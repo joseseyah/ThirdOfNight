@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6D4D62802D143692003D7F11 /* big-quran.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6D4D627F2D143692003D7F11 /* big-quran.pdf */; };
 		6D4D62822D143844003D7F11 /* QuranBookshelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D62812D143844003D7F11 /* QuranBookshelfView.swift */; };
 		6D4D62862D15C53C003D7F11 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D62852D15C53C003D7F11 /* MailView.swift */; };
 		6D4D62882D15C589003D7F11 /* TextDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D62872D15C589003D7F11 /* TextDetailView.swift */; };
@@ -213,7 +212,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6D4D627F2D143692003D7F11 /* big-quran.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "big-quran.pdf"; path = "../../../../../big-quran.pdf"; sourceTree = "<group>"; };
 		6D4D62812D143844003D7F11 /* QuranBookshelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuranBookshelfView.swift; sourceTree = "<group>"; };
 		6D4D62852D15C53C003D7F11 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		6D4D62872D15C589003D7F11 /* TextDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDetailView.swift; sourceTree = "<group>"; };
@@ -520,7 +518,6 @@
 		6DCC13222D0AE68500E352BD /* Text */ = {
 			isa = PBXGroup;
 			children = (
-				6D4D627F2D143692003D7F11 /* big-quran.pdf */,
 				6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */,
 				6DCC132A2D0AF63C00E352BD /* surahs.swift */,
 				6DCC12FF2D0629CF00E352BD /* PrivacyPolicyText.swift */,
@@ -902,7 +899,6 @@
 				6DCC13672D0AFF1E00E352BD /* 036.mp3 in Resources */,
 				6DCC13682D0AFF1E00E352BD /* 002.mp3 in Resources */,
 				6DCC13792D0AFF1E00E352BD /* 030.mp3 in Resources */,
-				6D4D62802D143692003D7F11 /* big-quran.pdf in Resources */,
 				6DCC14112D0B00C600E352BD /* 061.mp3 in Resources */,
 				6DBCFC572CB25CC40074796A /* Preview Assets.xcassets in Resources */,
 				6DCC14002D0B00C600E352BD /* 096.mp3 in Resources */,

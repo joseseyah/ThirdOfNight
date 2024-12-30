@@ -5,7 +5,7 @@ struct LocationSelectionView: View {
     @AppStorage("selectedCountry") private var selectedCountry: String = ""
     @AppStorage("selectedCity") private var selectedCity: String = ""
     @AppStorage("selectedMosque") private var selectedMosque: String = ""
-    @State private var useMosqueTimetable: Bool = false  // New toggle for mosque timetable
+    @Binding var useMosqueTimetable: Bool   // New toggle for mosque timetable
 
     @State private var customCity: String = ""
     @State private var errorMessage: String? = nil  // Holds the validation error
@@ -93,11 +93,19 @@ struct LocationSelectionView: View {
                         .foregroundColor(.white.opacity(0.8))
 
                     TextField("Enter city", text: $customCity)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal)
-                        .background(Color.white.opacity(0.2))
-                        .cornerRadius(10)
+                        .font(.body)
+                        .foregroundColor(.white) // Text color
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color("BoxBackgroundColor")) // Match the background color theme
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color("HighlightColor"), lineWidth: 1) // Subtle border for visibility
+                        )
                         .padding(.horizontal, 20)
+
                 }
             }
 
@@ -137,6 +145,7 @@ struct LocationSelectionView: View {
             }
             .disabled(!isSelectionComplete())  // Disable button until selection is complete
 
+
             Spacer()
         }
         .background(Color("BackgroundColor"))
@@ -146,13 +155,11 @@ struct LocationSelectionView: View {
     // MARK: - Validation Logic
     private func validateSelection() -> Bool {
         if useMosqueTimetable {
-            return !selectedMosque.isEmpty
+            return !selectedMosque.isEmpty  // Valid if a mosque is selected
         } else {
-            if selectedCountry == "Unified Timetable" {
-                if customCity.lowercased() != "london" {
-                    errorMessage = "For Unified Timetable, only 'London' is allowed as a city."
-                    return false
-                }
+            if selectedCountry == "Unified Timetable" && customCity.lowercased() != "london" {
+                errorMessage = "For Unified Timetable, only 'London' is allowed as a city."
+                return false
             }
             return !selectedCountry.isEmpty && !customCity.trimmingCharacters(in: .whitespaces).isEmpty
         }
@@ -160,10 +167,12 @@ struct LocationSelectionView: View {
 
     private func isSelectionComplete() -> Bool {
         if useMosqueTimetable {
-            return !selectedMosque.isEmpty
+            return !selectedMosque.isEmpty  // Enable "Continue" if mosque is selected
         } else {
             return !selectedCountry.isEmpty && !customCity.trimmingCharacters(in: .whitespaces).isEmpty
         }
     }
+
+
 }
 

@@ -6,12 +6,18 @@ struct DayPrayerView: View {
     @State private var prayerTimes: [String: String] = [:]  // Dynamic prayer times
     @State private var currentDayIndex = Calendar.current.component(.day, from: Date()) - 1
     @State private var dateKeys: [String] = []  // Sorted list of dates for London API
-    @State private var readableDate: String = ""
+    @State private var readableDate: String = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: Date())
+    }()
+    @AppStorage("dateFormat") private var dateFormat: String = "Gregorian"
     @State private var londonPrayerData: [String: Timings] = [:]  // API prayer data
     @State private var prayerData: [[String: Any]] = []  // Firebase prayer data
     @State private var maxDayIndex: Int = 0  // Maximum day index for navigation
     @Binding var isDaytime: Bool
     @Binding var moonScale: CGFloat
+    @State private var hijriDate: String = ""
 
     var body: some View {
         ZStack {
@@ -36,12 +42,6 @@ struct DayPrayerView: View {
 
                 // Navigation and city name
                 HStack {
-                    Button(action: navigateToPreviousDay) {
-                        Image(systemName: "arrow.left.circle.fill")
-                            .font(.title)
-                            .foregroundColor(.black)
-                    }
-                    .disabled(currentDayIndex <= 0)
 
                     Spacer()
 
@@ -59,20 +59,14 @@ struct DayPrayerView: View {
                                 .foregroundColor(.black)
                         }
 
-                        Text(readableDate)
-                            .font(.headline)
-                            .foregroundColor(.gray)
+                        Text(dateFormat == "Hijri" ? hijriDate : readableDate)
+                                                    .font(.headline)
+                                                    .foregroundColor(.gray)
                     }
 
 
                     Spacer()
 
-                    Button(action: navigateToNextDay) {
-                        Image(systemName: "arrow.right.circle.fill")
-                            .font(.title)
-                            .foregroundColor(.black)
-                    }
-                    .disabled(currentDayIndex >= maxDayIndex - 1)
                 }
                 .padding(.horizontal, 20)
 
@@ -101,10 +95,61 @@ struct DayPrayerView: View {
             .padding()
         }
         .onAppear {
-            fetchPrayerTimes(city: viewModel.selectedCity)
-            updatePrayerTimesForDay()
+                    fetchPrayerTimes(city: viewModel.selectedCity)
+                    updatePrayerTimesForDay()
+                    updateDisplayedDate()
+                }
+                .onChange(of: dateFormat) { _ in
+                    updateDisplayedDate()
+                }
+
+    }
+    
+    private func updateDisplayedDate() {
+        if dateFormat == "Hijri" {
+            // Convert the current readableDate (Gregorian) to Hijri
+            if let hijri = convertToHijri(from: readableDate) {
+                self.hijriDate = hijri
+            }
+        } else {
+            // Update readableDate to Gregorian format
+            self.readableDate = currentReadableDate()
         }
     }
+    
+    func convertToHijri(from gregorianDate: String) -> String? {
+        // Define the input format
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.calendar = Calendar(identifier: .gregorian)
+        
+        // Convert string to Date
+        guard let date = formatter.date(from: gregorianDate) else {
+            print("Invalid Gregorian date format.")
+            return nil
+        }
+        
+        // Define the Hijri calendar
+        let hijriCalendar = Calendar(identifier: .islamicUmmAlQura)
+        
+        // Convert to Hijri date components
+        let hijriComponents = hijriCalendar.dateComponents([.year, .month, .day], from: date)
+        
+        // Format the Hijri date
+        let hijriFormatter = DateFormatter()
+        hijriFormatter.calendar = hijriCalendar
+        hijriFormatter.dateFormat = "yyyy-MM-dd" // Customize as needed (e.g., "dd MMM yyyy")
+        
+        // Create a new Hijri Date
+        guard let hijriDate = hijriCalendar.date(from: hijriComponents) else {
+            print("Failed to convert to Hijri date.")
+            return nil
+        }
+        
+        return hijriFormatter.string(from: hijriDate)
+    }
+
+
 
     // MARK: - Fetch Prayer Times
     func fetchPrayerTimes(city: String) {
@@ -234,6 +279,7 @@ struct DayPrayerView: View {
         if viewModel.isUsingMosqueTimetable {
             // Mosque Prayer Times
             fetchMosqueDetails(mosque: viewModel.selectedMosque)
+            scheduleAllNotifications(prayerTimes: self.prayerTimes)
         } else if viewModel.selectedCity.lowercased() == "london" {
             // London Unified Timetable
             guard !dateKeys.isEmpty else { return }
@@ -249,6 +295,7 @@ struct DayPrayerView: View {
                 ]
                 self.readableDate = selectedDate
             }
+            scheduleAllNotifications(prayerTimes: self.prayerTimes)
         } else {
             // Firebase Prayer Times
             guard currentDayIndex < prayerData.count else { return }
@@ -274,22 +321,6 @@ struct DayPrayerView: View {
         scheduleMaghribNotification(prayerTimes: prayerTimes)
         scheduleFortyMinutesBeforeMaghribNotification(prayerTimes: prayerTimes)
         scheduleTenMinutesBeforeAsrNotification(prayerTimes: prayerTimes)
-    }
-
-
-    // MARK: - Navigation
-    func navigateToPreviousDay() {
-        if currentDayIndex > 0 {
-            currentDayIndex -= 1
-            updatePrayerTimesForDay()
-        }
-    }
-
-    func navigateToNextDay() {
-        if currentDayIndex < maxDayIndex - 1 {
-            currentDayIndex += 1
-            updatePrayerTimesForDay()
-        }
     }
 
     func currentReadableDate() -> String {

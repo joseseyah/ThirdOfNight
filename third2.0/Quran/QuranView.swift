@@ -112,37 +112,24 @@ struct QuranView: View {
     }
 
     private var readModeContent: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, spacing: 20) {
-                ForEach(books) { book in
-                    VStack {
-                        NavigationLink(
-                            destination: {
-                                if let preloadedPDF = preloadedPDFs[book.pdfFileName] {
-                                    FullScreenPDFView(preloadedPDF: preloadedPDF, bookTitle: book.title)
-                                } else {
-                                    Text("Error: PDF not found.")
-                                }
-                            }
-                        ) {
-                            VStack {
-                                Image(book.coverImage)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 100, height: 150)
-                                    .cornerRadius(8)
-                                    .shadow(radius: 4)
-                                Text(book.title)
-                                    .font(.headline)
-                                    .foregroundColor(Color("HighlightColor"))
-                            }
-                        }
-                    }
-                }
-            }
-            .padding()
+        VStack {
+            Text("Coming Soon")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundColor(Color("HighlightColor"))
+                .padding()
+            Text("The Read feature is under development. Please check back later!")
+                .font(.body)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.white)
+                .padding()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color("BoxBackgroundColor"))
+        .cornerRadius(12)
+        .padding()
     }
+
 
     private func playSurah(_ surah: Surah) {
         if let index = surahs.firstIndex(where: { $0.id == surah.id }) {

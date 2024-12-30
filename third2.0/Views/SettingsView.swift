@@ -11,9 +11,9 @@ struct SettingsView: View {
     @State private var showMailView: Bool = false
     @State private var showMailError: Bool = false
     @AppStorage("useMosqueTimetable") private var useMosqueTimetable: Bool = false
-    @State private var selectedMosque: String = mosqueList.first ?? ""
+    @AppStorage("selectedMosque") private var selectedMosque: String = mosqueList.first ?? ""
     @State private var showTick: Bool = false
-
+    
 
 
     
@@ -65,29 +65,10 @@ struct SettingsView: View {
                                     .padding()
                                     .background(Color("PageBackgroundColor"))
                                     .cornerRadius(10)
-
-
-                                    // Save button for confirming selection
-                                    Button(action: {
+                                    .onChange(of: selectedMosque) { newValue in
                                         saveSelectedMosque()
-                                    }) {
-                                        HStack {
-                                            if showTick {
-                                                Image(systemName: "checkmark.circle.fill")
-                                                    .foregroundColor(.green)
-                                                    .transition(.scale)
-                                            } else {
-                                                Text("Save Mosque")
-                                                    .font(.headline)
-                                                    .foregroundColor(.white)
-                                            }
-                                        }
-                                        .padding()
-                                        .frame(maxWidth: .infinity)
-                                        .background(Color("HighlightColor"))
-                                        .cornerRadius(10)
                                     }
-                                    .disabled(selectedMosque.isEmpty)
+
 
 
                                 }
@@ -98,10 +79,10 @@ struct SettingsView: View {
                                 settingsSection(title: "Add New City") {
                                     VStack(spacing: 15) {
                                         TextField("Enter a city", text: $searchQuery)
-                                            .textFieldStyle(RoundedBorderTextFieldStyle())
                                             .padding(10)
-                                            .background(Color("PageBackgroundColor"))
+                                            .background(Color("BoxBackgroundColor"))
                                             .cornerRadius(10)
+                                            .foregroundColor(Color("HighlightColor"))
 
                                         Picker("Select a country", selection: $selectedCountry) {
                                             ForEach(countryCodeMapping.keys.sorted(), id: \.self) { country in
@@ -157,6 +138,89 @@ struct SettingsView: View {
                                 }
                             }
                         }
+                        
+                        // MARK: - Donation Section
+                        settingsSection(title: "Support Us") {
+                            VStack(spacing: 30) {
+                                // Decorative Banner
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(Color("HighlightColor").opacity(0.2))
+                                        .frame(height: 120)
+                                    VStack {
+                                        Text("Your Support Matters!")
+                                            .font(.title2)
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(Color("HighlightColor"))
+                                        Text("Help us grow and keep improving the app.")
+                                            .font(.subheadline)
+                                            .foregroundColor(Color.gray)
+                                    }
+                                }
+
+                                // Donation Options
+                                HStack(spacing: 20) {
+                                    VStack(spacing: 10) {
+                                        Image(systemName: "heart.fill")
+                                            .font(.system(size: 36))
+                                            .foregroundColor(Color("HighlightColor"))
+                                        Text("One-Time Donation")
+                                            .font(.headline)
+                                            .foregroundColor(.primary)
+                                        Button(action: {
+                                            // initiateOneTimeDonation()
+                                        }) {
+                                            Text("Donate")
+                                                .font(.callout)
+                                                .foregroundColor(.white)
+                                                .padding()
+                                                .frame(maxWidth: .infinity)
+                                                .background(Color("HighlightColor"))
+                                                .cornerRadius(10)
+                                        }
+                                    }
+                                    .padding()
+                                    .background(Color("BoxBackgroundColor"))
+                                    .cornerRadius(15)
+
+                                    VStack(spacing: 10) {
+                                        Image(systemName: "calendar")
+                                            .font(.system(size: 36))
+                                            .foregroundColor(Color("HighlightColor"))
+                                        Text("Monthly Support")
+                                            .font(.headline)
+                                            .foregroundColor(.primary)
+                                        Button(action: {
+                                            // initiateMonthlyDonation()
+                                        }) {
+                                            Text("Subscribe")
+                                                .font(.callout)
+                                                .foregroundColor(.white)
+                                                .padding()
+                                                .frame(maxWidth: .infinity)
+                                                .background(Color("HighlightColor"))
+                                                .cornerRadius(10)
+                                        }
+                                    }
+                                    .padding()
+                                    .background(Color("BoxBackgroundColor"))
+                                    .cornerRadius(15)
+                                }
+
+                                // Footer Message
+                                Text("Every contribution helps us build new features and improve your experience. Thank you!")
+                                    .font(.footnote)
+                                    .multilineTextAlignment(.center)
+                                    .foregroundColor(Color.gray)
+                                    .padding(.horizontal)
+                            }
+                            .padding()
+                            .background(Color("PageBackgroundColor"))
+                            .cornerRadius(20)
+                        }
+
+
+
 
                         // Date Format Picker
                         settingsSection(title: "Date Format") {
@@ -185,7 +249,7 @@ struct SettingsView: View {
                                 SettingsButton(title: "Send Feedback", icon: "envelope")
                             }
                             .sheet(isPresented: $showMailView) {
-                                MailView(recipientEmail: "joseph.hayes003@gmail.com", subject: "Feature Request", body: "Please share your feature request here.")
+                                MailView(recipientEmail: "thirdofthenightapp@gmail.com", subject: "Feature Request", body: "Please share your feature request here.")
                             }
                             .alert(isPresented: $showMailError) {
                                 Alert(title: Text("Mail Not Set Up"), message: Text("Please set up a mail account to send feature requests."), dismissButton: .default(Text("OK")))
@@ -205,6 +269,7 @@ struct SettingsView: View {
                         }
 
                         Spacer(minLength: 20)
+
                     }
                     .padding()
                 }
@@ -251,6 +316,7 @@ struct SettingsView: View {
 
         viewModel.selectedMosque = selectedMosque
         print("Selected mosque saved: \(selectedMosque)")
+  
     }
 
 
@@ -297,4 +363,3 @@ struct SettingsView: View {
 extension Notification.Name {
     static let dateFormatChanged = Notification.Name("dateFormatChanged")
 }
-

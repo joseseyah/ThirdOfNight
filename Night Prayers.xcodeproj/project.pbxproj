@@ -29,6 +29,8 @@
 		6DBCFC612CB25CC40074796A /* third2_0Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCFC602CB25CC40074796A /* third2_0Tests.swift */; };
 		6DBCFC6B2CB25CC40074796A /* third2_0UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCFC6A2CB25CC40074796A /* third2_0UITests.swift */; };
 		6DBCFC6D2CB25CC40074796A /* third2_0UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCFC6C2CB25CC40074796A /* third2_0UITestsLaunchTests.swift */; };
+		6DC3858A2D24CAFA00FC45D4 /* 67-surah-al-mulk.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6DC385892D24CAFA00FC45D4 /* 67-surah-al-mulk.pdf */; };
+		6DC3858E2D24D34000FC45D4 /* surah-al-mulk_word-to-word-translation.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6DC3858D2D24D34000FC45D4 /* surah-al-mulk_word-to-word-translation.pdf */; };
 		6DCC12DF2CFD10D900E352BD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DCC12DE2CFD10D900E352BD /* WidgetKit.framework */; };
 		6DCC12E12CFD10D900E352BD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DCC12E02CFD10D900E352BD /* SwiftUI.framework */; };
 		6DCC12FE2D0629BC00E352BD /* MissionText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC12FD2D0629BC00E352BD /* MissionText.swift */; };
@@ -167,6 +169,7 @@
 		6DCC142B2D10DEB900E352BD /* schedule_notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC142A2D10DEB900E352BD /* schedule_notifications.swift */; };
 		6DCC142D2D14290200E352BD /* RemoteControlHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC142C2D14290200E352BD /* RemoteControlHandler.swift */; };
 		6DCC142F2D14299400E352BD /* RemoteControlHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC142E2D14299400E352BD /* RemoteControlHostingController.swift */; };
+		6DD5AD442D22B644000288B6 /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD5AD432D22B644000288B6 /* DonateView.swift */; };
 		6DE78BCB2CB2610F0068F84C /* PrayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCA2CB2610F0068F84C /* PrayerView.swift */; };
 		6DE78BCD2CB2613E0068F84C /* TimeBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCC2CB2613E0068F84C /* TimeBox.swift */; };
 		6DE78BCF2CB2615E0068F84C /* SurahMulkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */; };
@@ -234,6 +237,8 @@
 		6DBCFC662CB25CC40074796A /* Night PrayersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Night PrayersUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DBCFC6A2CB25CC40074796A /* third2_0UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = third2_0UITests.swift; sourceTree = "<group>"; };
 		6DBCFC6C2CB25CC40074796A /* third2_0UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = third2_0UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6DC385892D24CAFA00FC45D4 /* 67-surah-al-mulk.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "67-surah-al-mulk.pdf"; path = "../../../../../../Downloads/67-surah-al-mulk.pdf"; sourceTree = "<group>"; };
+		6DC3858D2D24D34000FC45D4 /* surah-al-mulk_word-to-word-translation.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "surah-al-mulk_word-to-word-translation.pdf"; path = "../../../../../../Downloads/surah-al-mulk_word-to-word-translation.pdf"; sourceTree = "<group>"; };
 		6DCC12DC2CFD10D800E352BD /* DaytimeExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DaytimeExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DCC12DE2CFD10D900E352BD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		6DCC12E02CFD10D900E352BD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -371,6 +376,7 @@
 		6DCC142A2D10DEB900E352BD /* schedule_notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = schedule_notifications.swift; sourceTree = "<group>"; };
 		6DCC142C2D14290200E352BD /* RemoteControlHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteControlHandler.swift; sourceTree = "<group>"; };
 		6DCC142E2D14299400E352BD /* RemoteControlHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteControlHostingController.swift; sourceTree = "<group>"; };
+		6DD5AD432D22B644000288B6 /* DonateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateView.swift; sourceTree = "<group>"; };
 		6DE78BCA2CB2610F0068F84C /* PrayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerView.swift; sourceTree = "<group>"; };
 		6DE78BCC2CB2613E0068F84C /* TimeBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBox.swift; sourceTree = "<group>"; };
 		6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurahMulkView.swift; sourceTree = "<group>"; };
@@ -518,6 +524,8 @@
 		6DCC13222D0AE68500E352BD /* Text */ = {
 			isa = PBXGroup;
 			children = (
+				6DC3858D2D24D34000FC45D4 /* surah-al-mulk_word-to-word-translation.pdf */,
+				6DC385892D24CAFA00FC45D4 /* 67-surah-al-mulk.pdf */,
 				6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */,
 				6DCC132A2D0AF63C00E352BD /* surahs.swift */,
 				6DCC12FF2D0629CF00E352BD /* PrivacyPolicyText.swift */,
@@ -541,6 +549,7 @@
 				6D4D62872D15C589003D7F11 /* TextDetailView.swift */,
 				6D4D62892D161DB3003D7F11 /* SettingsButton.swift */,
 				6D4D628B2D161E42003D7F11 /* NotificationsView.swift */,
+				6DD5AD432D22B644000288B6 /* DonateView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -889,6 +898,7 @@
 				6DCC139A2D0AFF9B00E352BD /* 052.mp3 in Resources */,
 				6DCC13A82D0AFF9B00E352BD /* 042.mp3 in Resources */,
 				6DCC13FB2D0B00C600E352BD /* 114.mp3 in Resources */,
+				6DC3858A2D24CAFA00FC45D4 /* 67-surah-al-mulk.pdf in Resources */,
 				6DCC14102D0B00C600E352BD /* 075.mp3 in Resources */,
 				6DCC13A42D0AFF9B00E352BD /* 059.mp3 in Resources */,
 				6DCC140E2D0B00C600E352BD /* 102.mp3 in Resources */,
@@ -939,6 +949,7 @@
 				6DCC13FF2D0B00C600E352BD /* 091.mp3 in Resources */,
 				6DCC13FA2D0B00C600E352BD /* 086.mp3 in Resources */,
 				6DCC139F2D0AFF9B00E352BD /* 047.mp3 in Resources */,
+				6DC3858E2D24D34000FC45D4 /* surah-al-mulk_word-to-word-translation.pdf in Resources */,
 				6DCC13612D0AFF1E00E352BD /* 028.mp3 in Resources */,
 				6DCC139B2D0AFF9B00E352BD /* 056.mp3 in Resources */,
 				6DCC13A92D0AFF9B00E352BD /* 053.mp3 in Resources */,
@@ -1035,6 +1046,7 @@
 				6DCC141F2D0B9CAC00E352BD /* OnboardingView.swift in Sources */,
 				6DE78BCF2CB2615E0068F84C /* SurahMulkView.swift in Sources */,
 				6D4D628A2D161DB3003D7F11 /* SettingsButton.swift in Sources */,
+				6DD5AD442D22B644000288B6 /* DonateView.swift in Sources */,
 				6D4D62912D205B87003D7F11 /* defaultPrayerTimes.swift in Sources */,
 				6DCC13292D0AF60B00E352BD /* Surah.swift in Sources */,
 				6D4D628E2D173181003D7F11 /* mosqueList.swift in Sources */,

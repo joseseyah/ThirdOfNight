@@ -14,6 +14,10 @@ struct PrayerView: View {
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: Date())
     }()
+    
+    @State private var showDonationOptions = false
+    
+    @State private var selectedDonationType: String = "One-Time"
 
     @State private var hijriDate: String = ""
     @State private var prayerData: [[String: Any]] = []
@@ -32,7 +36,30 @@ struct PrayerView: View {
 
                     StarrySkyView()
 
-                    VStack(spacing: 20) {
+                    VStack(spacing: 12) {
+                        
+                        HStack {
+                            Button(action: {
+                                showDonationOptions.toggle()
+                            }) {
+                                Image(systemName: "heart.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20) // Adjust the size of the heart icon
+                                    .foregroundColor(.white)
+                                    .padding(10) // Inner padding for spacing inside the circle
+                                    .background(Circle().fill(Color(hex: "#FF9D66")))
+                                    .shadow(radius: 5)
+                            }
+                            .padding(.leading, 20) // Horizontal padding
+                            .padding(.top, 80) // Adjust vertical positioning
+                            Spacer()
+                        }
+                        .frame(height: 50)
+
+
+
+                        Spacer()
                         ZStack {
                             DesertView()
                                 .foregroundColor(Color(hex: "#FDF3E7"))
@@ -112,7 +139,12 @@ struct PrayerView: View {
                     }
                     .padding()
                 }
+                
+                .sheet(isPresented: $showDonationOptions) {
+                            DonationView(showDonationOptions: $showDonationOptions)
+                        }
             }
+                
         }
         .onAppear {
             fetchPrayerTimes(city: viewModel.selectedCity)

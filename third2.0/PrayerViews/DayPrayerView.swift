@@ -253,7 +253,7 @@ struct DayPrayerView: View {
             "Fajr": formatTime(prayerTimesDict["fajr_begins"] ?? "N/A"),
             "Sunrise": formatTime(prayerTimesDict["sunrise"] ?? "N/A"),
             "Dhuhr": formatTime(prayerTimesDict["zuhr_begins"] ?? "N/A"),
-            "Asr": formatTime(prayerTimesDict["asr_jamah"] ?? "N/A"),
+            "Asr": formatTime(prayerTimesDict["asr_mithl_2"] ?? "N/A"),
             "Maghrib": formatTime(prayerTimesDict["maghrib_begins"] ?? "N/A"),
             "Isha": formatTime(prayerTimesDict["isha_begins"] ?? "N/A")
         ]

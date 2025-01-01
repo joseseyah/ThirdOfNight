@@ -351,6 +351,22 @@ struct PrayerView: View {
         }
     }
     
+    // MARK: - Convert Date to YYYY-MM-DD Format
+    func convertToYYYYMMDD(from dateString: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd MMM yyyy" // Input format (e.g., "01 Dec 2024")
+
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "yyyy-MM-dd" // Desired output format
+
+        if let date = inputFormatter.date(from: dateString) {
+            return outputFormatter.string(from: date)
+        } else {
+            print("Failed to convert date: \(dateString)")
+            return dateString // Return the original string if conversion fails
+        }
+    }
+    
     
 
     // MARK: - Helper to Get Current Date
@@ -375,7 +391,10 @@ struct PrayerView: View {
 
             if let date = dayData["date"] as? [String: Any],
                let readable = date["readable"] as? String {
-                self.readableDate = readable
+                self.readableDate = convertToYYYYMMDD(from: readable)
+            } else {
+                // Fallback to the current date if no readable date is provided
+                self.readableDate = currentReadableDate()
             }
 
             if let hijri = dayData["hijri"] as? [String: Any],

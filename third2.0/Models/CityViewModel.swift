@@ -32,8 +32,8 @@ class CityViewModel: ObservableObject {
     private let londonPrayerTimesAPI = "https://www.londonprayertimes.com/api/times/?format=json&key=f31cd22f-be6a-4410-bd20-cdd3b9923cff"
 
     init() {
-        self.selectedCity = UserDefaults.standard.string(forKey: "selectedCity") ?? "Singapore"
-        self.selectedCountry = UserDefaults.standard.string(forKey: "selectedCountry") ?? "Unknown"
+        self.selectedCity = UserDefaults.standard.string(forKey: "selectedCity") ?? "Manchester"
+        self.selectedCountry = UserDefaults.standard.string(forKey: "selectedCountry") ?? "UK"
         self.isUsingMosqueTimetable = UserDefaults.standard.bool(forKey: "useMosqueTimetable")
         self.selectedMosque = UserDefaults.standard.string(forKey: "selectedMosque") ?? "Manchester Isoc"
     }

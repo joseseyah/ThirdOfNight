@@ -39,6 +39,7 @@ struct SettingsView: View {
                                 .padding()
                                 .background(Color("BoxBackgroundColor"))
                                 .cornerRadius(10)
+                                .foregroundColor(.white)
                                 .onChange(of: useMosqueTimetable) { _ in
                                     handleTimetableToggle()
                                 }
@@ -152,6 +153,7 @@ struct SettingsView: View {
                             .padding()
                             .background(Color("BoxBackgroundColor"))
                             .cornerRadius(10)
+                            .foregroundColor(.white)
                         }
                         .onChange(of: dateFormat) { _ in
                             NotificationCenter.default.post(name: .dateFormatChanged, object: nil)
@@ -238,9 +240,6 @@ struct SettingsView: View {
         print("Selected mosque saved: \(selectedMosque)")
   
     }
-
-
-
 
     // MARK: - Handle Timetable Toggle
     

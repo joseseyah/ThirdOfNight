@@ -113,11 +113,7 @@ struct PrayerView: View {
                                         .foregroundColor(Color(hex: "#F6923A"))
                                 }
                             }
-
-
                             Spacer()
-
-                        
                         }
                         .padding(.horizontal, 20)
 
@@ -132,7 +128,6 @@ struct PrayerView: View {
                             TimeBox(title: "Isha", time: prayerTimes["Isha"] ?? defaultPrayerTimes["Isha"]!, isDaytime: isDaytime)
                             TimeBox(title: "Midnight", time: prayerTimes["Midnight"] ?? defaultPrayerTimes["Midnight"]!, isDaytime: isDaytime)
                             TimeBox(title: "Last Third of Night", time: prayerTimes["Lastthird"] ?? defaultPrayerTimes["Lastthird"]!, isDaytime: isDaytime)
-
                         }
 
                         Spacer()
@@ -144,7 +139,6 @@ struct PrayerView: View {
                             DonationView(showDonationOptions: $showDonationOptions)
                         }
             }
-                
         }
         .onAppear {
             fetchPrayerTimes(city: viewModel.selectedCity)
@@ -169,44 +163,12 @@ struct PrayerView: View {
     
     private func updateDisplayedDate() {
         if dateFormat == "Hijri" {
-            if let hijri = convertToHijri(from: readableDate) {
+            if let hijri = PrayerHelper.convertToHijri(from: readableDate) {
                 self.hijriDate = hijri
             }
         } else {
-            self.readableDate = currentReadableDate()
+            self.readableDate = PrayerHelper.currentReadableDate()
         }
-    }
-    
-    func convertToHijri(from gregorianDate: String) -> String? {
-        // Define the input format
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        formatter.calendar = Calendar(identifier: .gregorian)
-        
-        // Convert string to Date
-        guard let date = formatter.date(from: gregorianDate) else {
-            print("Invalid Gregorian date format.")
-            return nil
-        }
-        
-        // Define the Hijri calendar
-        let hijriCalendar = Calendar(identifier: .islamicUmmAlQura)
-        
-        // Convert to Hijri date components
-        let hijriComponents = hijriCalendar.dateComponents([.year, .month, .day], from: date)
-        
-        // Format the Hijri date
-        let hijriFormatter = DateFormatter()
-        hijriFormatter.calendar = hijriCalendar
-        hijriFormatter.dateFormat = "yyyy-MM-dd" // Customize as needed (e.g., "dd MMM yyyy")
-        
-        // Create a new Hijri Date
-        guard let hijriDate = hijriCalendar.date(from: hijriComponents) else {
-            print("Failed to convert to Hijri date.")
-            return nil
-        }
-        
-        return hijriFormatter.string(from: hijriDate)
     }
 
 
@@ -293,7 +255,7 @@ struct PrayerView: View {
                    let nestedData = data["data"] as? [[String: String]] {
                     if currentDayIndex < nestedData.count {
                         let prayerTimesDict = nestedData[currentDayIndex]
-                        let mappedPrayerTimes = mapCheadleMasjidKeys(prayerTimesDict)
+                        let mappedPrayerTimes = PrayerHelper.mapCheadleMasjidKeys(prayerTimesDict)
                         let date = prayerTimesDict["d_date"] ?? ""
 
                         // Fetch next day's Fajr time
@@ -302,8 +264,8 @@ struct PrayerView: View {
                                 var updatedPrayerTimes = mappedPrayerTimes
                                 if let maghribTime = mappedPrayerTimes["Maghrib"],
                                    let fajrTime = nextDayFajr {
-                                    updatedPrayerTimes["Midnight"] = calculateMidnightTime(maghribTime: maghribTime, fajrTime: fajrTime)
-                                    updatedPrayerTimes["Lastthird"] = calculateLastThirdOfNight(maghribTime: maghribTime, fajrTime: fajrTime)
+                                    updatedPrayerTimes["Midnight"] = PrayerHelper.calculateMidnightTime(maghribTime: maghribTime, fajrTime: fajrTime)
+                                    updatedPrayerTimes["Lastthird"] = PrayerHelper.calculateLastThirdOfNight(maghribTime: maghribTime, fajrTime: fajrTime)
                                 }
                                 self.prayerTimes = updatedPrayerTimes
                                 self.readableDate = date
@@ -317,20 +279,6 @@ struct PrayerView: View {
                 print("Failed to fetch mosque document: \(mosque)")
             }
         }
-    }
-
-
-
-
-    func mapCheadleMasjidKeys(_ prayerTimesDict: [String: String]) -> [String: String] {
-        return [
-            "Fajr": formatTime(prayerTimesDict["fajr_begins"] ?? "N/A"),
-            "Sunrise": formatTime(prayerTimesDict["sunrise"] ?? "N/A"),
-            "Dhuhr": formatTime(prayerTimesDict["zuhr_begins"] ?? "N/A"),
-            "Asr": formatTime(prayerTimesDict["asr_mithl_2"] ?? "N/A"),
-            "Maghrib": formatTime(prayerTimesDict["maghrib_begins"] ?? "N/A"),
-            "Isha": formatTime(prayerTimesDict["isha_begins"] ?? "N/A")
-        ]
     }
 
     // MARK: - Fetch from Firestore
@@ -350,24 +298,6 @@ struct PrayerView: View {
             }
         }
     }
-    
-    // MARK: - Convert Date to YYYY-MM-DD Format
-    func convertToYYYYMMDD(from dateString: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "dd MMM yyyy" // Input format (e.g., "01 Dec 2024")
-
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "yyyy-MM-dd" // Desired output format
-
-        if let date = inputFormatter.date(from: dateString) {
-            return outputFormatter.string(from: date)
-        } else {
-            print("Failed to convert date: \(dateString)")
-            return dateString // Return the original string if conversion fails
-        }
-    }
-    
-    
 
     // MARK: - Helper to Get Current Date
     func currentReadableDate() -> String {
@@ -391,10 +321,10 @@ struct PrayerView: View {
 
             if let date = dayData["date"] as? [String: Any],
                let readable = date["readable"] as? String {
-                self.readableDate = convertToYYYYMMDD(from: readable)
+                self.readableDate = PrayerHelper.convertToYYYYMMDD(from: readable)
             } else {
                 // Fallback to the current date if no readable date is provided
-                self.readableDate = currentReadableDate()
+                self.readableDate = PrayerHelper.currentReadableDate()
             }
 
             if let hijri = dayData["hijri"] as? [String: Any],
@@ -409,11 +339,9 @@ struct PrayerView: View {
                let nextDayTimings = prayerData[(currentDayIndex + 1) % prayerData.count]["timings"] as? [String: String],
                let fajrNextDay = nextDayTimings["Fajr"],
                let maghrib = timings["Maghrib"] {
-                self.prayerTimes = timings.mapValues { sanitizeTime($0) }
-                self.prayerTimes["Midnight"] = calculateMidnightTime(maghribTime: maghrib, fajrTime: fajrNextDay)
-                self.prayerTimes["Lastthird"] = calculateLastThirdOfNight(maghribTime: maghrib, fajrTime: fajrNextDay)
-                
-                
+                self.prayerTimes = timings.mapValues { PrayerHelper.sanitizeTime($0) }
+                self.prayerTimes["Midnight"] = PrayerHelper.calculateMidnightTime(maghribTime: maghrib, fajrTime: fajrNextDay)
+                self.prayerTimes["Lastthird"] = PrayerHelper.calculateLastThirdOfNight(maghribTime: maghrib, fajrTime: fajrNextDay)
                 scheduleLastThirdOfNightNotification(prayerTimes: self.prayerTimes)
                 scheduleTenMinutesBeforeMidnightNotification(prayerTimes: self.prayerTimes)
                 scheduleTenMinutesBeforeIshaNotification(prayerTimes: self.prayerTimes)
@@ -453,8 +381,8 @@ struct PrayerView: View {
             self.readableDate = date
             self.prayerTimes = [
                 "Isha": timings.isha,
-                "Midnight": calculateMidnightTime(maghribTime: timings.magrib, fajrTime: timings.fajr),
-                "Lastthird": calculateLastThirdOfNight(maghribTime: timings.magrib, fajrTime: timings.fajr)
+                "Midnight": PrayerHelper.calculateMidnightTime(maghribTime: timings.magrib, fajrTime: timings.fajr),
+                "Lastthird": PrayerHelper.calculateLastThirdOfNight(maghribTime: timings.magrib, fajrTime: timings.fajr)
             ]
             
             scheduleLastThirdOfNightNotification(prayerTimes: self.prayerTimes)
@@ -484,85 +412,7 @@ struct PrayerView: View {
             }
         }
     }
-
-    func sanitizeTime(_ time: String) -> String {
-        return time.components(separatedBy: " ").first ?? time
-    }
-    
-    func formatTime(_ time: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "HH:mm:ss" // Input format from Firestore
-
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "HH:mm" // Desired output format
-
-        if let date = inputFormatter.date(from: time) {
-            return outputFormatter.string(from: date)
-        }
-
-        return time // Fallback to original if parsing fails
-    }
-
-
-    func calculateMidnightTime(maghribTime: String, fajrTime: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "HH:mm" // Input format
-
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "HH:mm" // Desired output format
-
-        guard let maghribDate = sanitizeAndParseTime(maghribTime, using: inputFormatter),
-              let fajrDate = sanitizeAndParseTime(fajrTime, using: inputFormatter)?.addingTimeInterval(24 * 60 * 60) else {
-            print("Error calculating Midnight: Invalid Maghrib (\(maghribTime)) or Fajr (\(fajrTime)) time")
-            return "Invalid"
-        }
-
-        let totalDuration = fajrDate.timeIntervalSince(maghribDate)
-        return outputFormatter.string(from: maghribDate.addingTimeInterval(totalDuration / 2))
-    }
-
-    func calculateLastThirdOfNight(maghribTime: String, fajrTime: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "HH:mm" // Input format
-
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "HH:mm" // Desired output format
-
-        guard let maghribDate = sanitizeAndParseTime(maghribTime, using: inputFormatter),
-              let fajrDate = sanitizeAndParseTime(fajrTime, using: inputFormatter)?.addingTimeInterval(24 * 60 * 60) else {
-            print("Error calculating Last Third of Night: Invalid Maghrib (\(maghribTime)) or Fajr (\(fajrTime)) time")
-            return "Invalid"
-        }
-
-        let totalDuration = fajrDate.timeIntervalSince(maghribDate)
-        return outputFormatter.string(from: fajrDate.addingTimeInterval(-totalDuration / 3))
-    }
-
-
-
-
-
-    func sanitizeAndParseTime(_ time: String, using formatter: DateFormatter) -> Date? {
-        let sanitizedTime = time.components(separatedBy: " ").first ?? time
-        
-        // Try parsing with "HH:mm" format first
-        formatter.dateFormat = "HH:mm"
-        if let date = formatter.date(from: sanitizedTime) {
-            return date
-        }
-        
-        // Fallback to "HH:mm:ss" if "HH:mm" fails
-        formatter.dateFormat = "HH:mm:ss"
-        if let date = formatter.date(from: sanitizedTime) {
-            return date
-        }
-        
-        print("Failed to parse time: \(sanitizedTime)")
-        return nil
-    }
-
 }
-
 
 extension Color {
     init(hex: String) {
@@ -587,5 +437,3 @@ extension Color {
         )
     }
 }
-
-

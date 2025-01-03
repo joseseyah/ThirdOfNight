@@ -167,6 +167,7 @@
 		6DCC142B2D10DEB900E352BD /* schedule_notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC142A2D10DEB900E352BD /* schedule_notifications.swift */; };
 		6DCC142D2D14290200E352BD /* RemoteControlHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC142C2D14290200E352BD /* RemoteControlHandler.swift */; };
 		6DCC142F2D14299400E352BD /* RemoteControlHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC142E2D14299400E352BD /* RemoteControlHostingController.swift */; };
+		6DD352832D2829260061E3C4 /* PrayerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD352822D2829260061E3C4 /* PrayerHelper.swift */; };
 		6DD5AD442D22B644000288B6 /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD5AD432D22B644000288B6 /* DonateView.swift */; };
 		6DE78BCB2CB2610F0068F84C /* PrayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCA2CB2610F0068F84C /* PrayerView.swift */; };
 		6DE78BCD2CB2613E0068F84C /* TimeBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCC2CB2613E0068F84C /* TimeBox.swift */; };
@@ -372,6 +373,7 @@
 		6DCC142A2D10DEB900E352BD /* schedule_notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = schedule_notifications.swift; sourceTree = "<group>"; };
 		6DCC142C2D14290200E352BD /* RemoteControlHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteControlHandler.swift; sourceTree = "<group>"; };
 		6DCC142E2D14299400E352BD /* RemoteControlHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteControlHostingController.swift; sourceTree = "<group>"; };
+		6DD352822D2829260061E3C4 /* PrayerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerHelper.swift; sourceTree = "<group>"; };
 		6DD5AD432D22B644000288B6 /* DonateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateView.swift; sourceTree = "<group>"; };
 		6DE78BCA2CB2610F0068F84C /* PrayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerView.swift; sourceTree = "<group>"; };
 		6DE78BCC2CB2613E0068F84C /* TimeBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBox.swift; sourceTree = "<group>"; };
@@ -513,6 +515,7 @@
 			children = (
 				6DAD84892CBD09230027BF5A /* DayPrayerView.swift */,
 				6DE78BCA2CB2610F0068F84C /* PrayerView.swift */,
+				6DD352822D2829260061E3C4 /* PrayerHelper.swift */,
 			);
 			path = PrayerViews;
 			sourceTree = "<group>";
@@ -1011,6 +1014,7 @@
 				6DCC13082D083FAC00E352BD /* countryCodeMapping.swift in Sources */,
 				6D4D62882D15C589003D7F11 /* TextDetailView.swift in Sources */,
 				6DCC142B2D10DEB900E352BD /* schedule_notifications.swift in Sources */,
+				6DD352832D2829260061E3C4 /* PrayerHelper.swift in Sources */,
 				6D4D62862D15C53C003D7F11 /* MailView.swift in Sources */,
 				6DCC132B2D0AF63C00E352BD /* surahs.swift in Sources */,
 				6DCC13262D0AF36F00E352BD /* QuranView.swift in Sources */,

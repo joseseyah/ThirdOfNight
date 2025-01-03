@@ -1,10 +1,3 @@
-//
-//  SettingsButton.swift
-//  Night Prayers
-//
-//  Created by Joseph Hayes on 20/12/2024.
-//
-
 import Foundation
 import SwiftUI
 

@@ -108,52 +108,19 @@ struct DayPrayerView: View {
     private func updateDisplayedDate() {
         if dateFormat == "Hijri" {
             // Convert the current readableDate (Gregorian) to Hijri
-            if let hijri = convertToHijri(from: readableDate) {
+            if let hijri = PrayerHelper.convertToHijri(from: readableDate) {
                 self.hijriDate = hijri
             }
         } else {
             // Update readableDate to Gregorian format
-            self.readableDate = currentReadableDate()
+            self.readableDate = PrayerHelper.currentReadableDate()
         }
     }
     
-    func convertToHijri(from gregorianDate: String) -> String? {
-        // Define the input format
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        formatter.calendar = Calendar(identifier: .gregorian)
-        
-        // Convert string to Date
-        guard let date = formatter.date(from: gregorianDate) else {
-            print("Invalid Gregorian date format.")
-            return nil
-        }
-        
-        // Define the Hijri calendar
-        let hijriCalendar = Calendar(identifier: .islamicUmmAlQura)
-        
-        // Convert to Hijri date components
-        let hijriComponents = hijriCalendar.dateComponents([.year, .month, .day], from: date)
-        
-        // Format the Hijri date
-        let hijriFormatter = DateFormatter()
-        hijriFormatter.calendar = hijriCalendar
-        hijriFormatter.dateFormat = "yyyy-MM-dd" // Customize as needed (e.g., "dd MMM yyyy")
-        
-        // Create a new Hijri Date
-        guard let hijriDate = hijriCalendar.date(from: hijriComponents) else {
-            print("Failed to convert to Hijri date.")
-            return nil
-        }
-        
-        return hijriFormatter.string(from: hijriDate)
-    }
-
-
-
-    // MARK: - Fetch Prayer Times
     func fetchPrayerTimes(city: String) {
-        if city.lowercased() == "london" {
+        if viewModel.isUsingMosqueTimetable {
+            fetchMosqueDetails(mosque: viewModel.selectedMosque)
+        } else if city.lowercased() == "london" && viewModel.selectedCountry.lowercased() == "unified timetable" {
             fetchLondonUnifiedTimetable()
         } else {
             fetchPrayerTimesFromFirestore(city: city)
@@ -187,7 +154,7 @@ struct DayPrayerView: View {
                     self.londonPrayerData = decodedResponse.times
                     self.dateKeys = decodedResponse.times.keys.sorted()
                     self.maxDayIndex = self.dateKeys.count
-                    self.currentDayIndex = self.dateKeys.firstIndex(of: currentReadableDate()) ?? 0
+                    self.currentDayIndex = self.dateKeys.firstIndex(of: PrayerHelper.currentReadableDate()) ?? 0
                     updatePrayerTimesForDay()
                 }
             } catch {
@@ -216,10 +183,6 @@ struct DayPrayerView: View {
         }
     }
     
-    func sanitizeTime(_ time: String) -> String {
-        return time.components(separatedBy: " ").first ?? time
-    }
-    
     func fetchMosqueDetails(mosque: String) {
         let db = Firestore.firestore()
         let docRef = db.collection("Mosques").document(mosque)
@@ -230,7 +193,7 @@ struct DayPrayerView: View {
                     if let nestedData = data["data"] as? [[String: String]] {
                         if currentDayIndex < nestedData.count {
                             let prayerTimesDict = nestedData[currentDayIndex]
-                            let mappedPrayerTimes = mapCheadleMasjidKeys(prayerTimesDict)
+                            let mappedPrayerTimes = PrayerHelper.mapCheadleMasjidKeys(prayerTimesDict)
                             let date = prayerTimesDict["d_date"] ?? ""
                             DispatchQueue.main.async {
                                 self.prayerTimes = mappedPrayerTimes
@@ -247,33 +210,6 @@ struct DayPrayerView: View {
         }
     }
 
-
-    func mapCheadleMasjidKeys(_ prayerTimesDict: [String: String]) -> [String: String] {
-        return [
-            "Fajr": formatTime(prayerTimesDict["fajr_begins"] ?? "N/A"),
-            "Sunrise": formatTime(prayerTimesDict["sunrise"] ?? "N/A"),
-            "Dhuhr": formatTime(prayerTimesDict["zuhr_begins"] ?? "N/A"),
-            "Asr": formatTime(prayerTimesDict["asr_mithl_2"] ?? "N/A"),
-            "Maghrib": formatTime(prayerTimesDict["maghrib_begins"] ?? "N/A"),
-            "Isha": formatTime(prayerTimesDict["isha_begins"] ?? "N/A")
-        ]
-    }
-    
-    func formatTime(_ time: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "HH:mm:ss" // Input format from Firestore
-
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "HH:mm" // Desired output format
-
-        if let date = inputFormatter.date(from: time) {
-            return outputFormatter.string(from: date)
-        }
-
-        return time // Fallback to original if parsing fails
-    }
-
-
     // MARK: - Update Prayer Times for Current Day
     func updatePrayerTimesForDay() {
         if viewModel.isUsingMosqueTimetable {
@@ -286,12 +222,12 @@ struct DayPrayerView: View {
             let selectedDate = dateKeys[currentDayIndex]
             if let timings = londonPrayerData[selectedDate] {
                 self.prayerTimes = [
-                    "Fajr": sanitizeTime(timings.fajr),
-                    "Sunrise": sanitizeTime(timings.sunrise),
-                    "Dhuhr": sanitizeTime(timings.dhuhr),
-                    "Asr": sanitizeTime(timings.asr),
-                    "Maghrib": sanitizeTime(timings.magrib),
-                    "Isha": sanitizeTime(timings.isha)
+                    "Fajr": PrayerHelper.sanitizeTime(timings.fajr),
+                    "Sunrise": PrayerHelper.sanitizeTime(timings.sunrise),
+                    "Dhuhr": PrayerHelper.sanitizeTime(timings.dhuhr),
+                    "Asr": PrayerHelper.sanitizeTime(timings.asr),
+                    "Maghrib": PrayerHelper.sanitizeTime(timings.magrib),
+                    "Isha": PrayerHelper.sanitizeTime(timings.isha)
                 ]
                 self.readableDate = selectedDate
             }
@@ -304,7 +240,7 @@ struct DayPrayerView: View {
                 self.readableDate = date
             }
             if let timings = dayData["timings"] as? [String: String] {
-                self.prayerTimes = timings.mapValues { sanitizeTime($0) }
+                self.prayerTimes = timings.mapValues { PrayerHelper.sanitizeTime($0) }
             }
         }
 
@@ -321,11 +257,5 @@ struct DayPrayerView: View {
         scheduleMaghribNotification(prayerTimes: prayerTimes)
         scheduleFortyMinutesBeforeMaghribNotification(prayerTimes: prayerTimes)
         scheduleTenMinutesBeforeAsrNotification(prayerTimes: prayerTimes)
-    }
-
-    func currentReadableDate() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.string(from: Date())
     }
 }

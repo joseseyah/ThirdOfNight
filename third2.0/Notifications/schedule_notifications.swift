@@ -61,7 +61,7 @@ func scheduleNextPrayerNotification(prayerTimes: [String: String]) {
 func scheduleLastThirdOfNightNotification(prayerTimes: [String: String]) {
     guard let maghribTime = prayerTimes["Maghrib"],
           let fajrTime = prayerTimes["Fajr"] else {
-        print("Missing Maghrib or Fajr times")
+        
         return
     }
 
@@ -70,7 +70,7 @@ func scheduleLastThirdOfNightNotification(prayerTimes: [String: String]) {
 
     guard let maghribDate = sanitizeAndParseTime(maghribTime, using: formatter),
           let fajrDate = sanitizeAndParseTime(fajrTime, using: formatter)?.addingTimeInterval(24 * 60 * 60) else {
-        print("Invalid Maghrib or Fajr times")
+        
         return
     }
 
@@ -107,7 +107,7 @@ func sanitizeAndParseTime(_ time: String, using formatter: DateFormatter) -> Dat
 func scheduleTenMinutesBeforeMidnightNotification(prayerTimes: [String: String]) {
     guard let maghribTime = prayerTimes["Maghrib"],
           let fajrTime = prayerTimes["Fajr"] else {
-        print("Missing Maghrib or Fajr times")
+        
         return
     }
 
@@ -116,7 +116,7 @@ func scheduleTenMinutesBeforeMidnightNotification(prayerTimes: [String: String])
 
     guard let maghribDate = sanitizeAndParseTime(maghribTime, using: formatter),
           let fajrDate = sanitizeAndParseTime(fajrTime, using: formatter)?.addingTimeInterval(24 * 60 * 60) else {
-        print("Invalid Maghrib or Fajr times")
+       
         return
     }
 
@@ -152,7 +152,7 @@ func scheduleTenMinutesBeforeMidnightNotification(prayerTimes: [String: String])
 
 func scheduleTenMinutesBeforeIshaNotification(prayerTimes: [String: String]) {
     guard let ishaTime = prayerTimes["Isha"] else {
-        print("Missing Isha prayer time")
+        
         return
     }
 
@@ -160,7 +160,7 @@ func scheduleTenMinutesBeforeIshaNotification(prayerTimes: [String: String]) {
     formatter.dateFormat = "HH:mm" // Assuming prayer times are in 24-hour format
 
     guard let ishaDate = sanitizeAndParseTime(ishaTime, using: formatter) else {
-        print("Invalid Isha prayer time")
+        
         return
     }
 
@@ -191,7 +191,7 @@ func scheduleTenMinutesBeforeIshaNotification(prayerTimes: [String: String]) {
 
 func scheduleTenMinutesBeforeSunriseNotification(prayerTimes: [String: String]) {
     guard let sunriseTime = prayerTimes["Sunrise"] else {
-        print("Missing Sunrise time")
+        
         return
     }
 
@@ -230,7 +230,7 @@ func scheduleTenMinutesBeforeSunriseNotification(prayerTimes: [String: String]) 
 
 func scheduleTenMinutesBeforeDhuhrNotification(prayerTimes: [String: String]) {
     guard let dhuhrTime = prayerTimes["Dhuhr"] else {
-        print("Missing Dhuhr prayer time")
+        
         return
     }
 
@@ -238,7 +238,7 @@ func scheduleTenMinutesBeforeDhuhrNotification(prayerTimes: [String: String]) {
     formatter.dateFormat = "HH:mm" // Assuming prayer times are in 24-hour format
 
     guard let dhuhrDate = sanitizeAndParseTime(dhuhrTime, using: formatter) else {
-        print("Invalid Dhuhr prayer time")
+        
         return
     }
 
@@ -269,7 +269,7 @@ func scheduleTenMinutesBeforeDhuhrNotification(prayerTimes: [String: String]) {
 
 func scheduleDhuhrNotification(prayerTimes: [String: String]) {
     guard let dhuhrTime = prayerTimes["Dhuhr"] else {
-        print("Missing Dhuhr prayer time")
+        
         return
     }
 
@@ -305,7 +305,7 @@ func scheduleDhuhrNotification(prayerTimes: [String: String]) {
 
 func scheduleTenMinutesBeforeAsrNotification(prayerTimes: [String: String]) {
     guard let asrTime = prayerTimes["Asr"] else {
-        print("Missing Asr prayer time")
+        
         return
     }
 
@@ -313,7 +313,7 @@ func scheduleTenMinutesBeforeAsrNotification(prayerTimes: [String: String]) {
     formatter.dateFormat = "HH:mm" // Assuming prayer times are in 24-hour format
 
     guard let asrDate = sanitizeAndParseTime(asrTime, using: formatter) else {
-        print("Invalid Asr prayer time")
+        
         return
     }
 
@@ -346,7 +346,7 @@ func scheduleTenMinutesBeforeAsrNotification(prayerTimes: [String: String]) {
 
 func scheduleAsrNotification(prayerTimes: [String: String]) {
     guard let asrTime = prayerTimes["Asr"] else {
-        print("Missing Asr prayer time")
+        
         return
     }
 
@@ -354,7 +354,7 @@ func scheduleAsrNotification(prayerTimes: [String: String]) {
     formatter.dateFormat = "HH:mm" // Assuming prayer times are in 24-hour format
 
     guard let asrDate = sanitizeAndParseTime(asrTime, using: formatter) else {
-        print("Invalid Asr prayer time")
+        
         return
     }
 
@@ -382,7 +382,7 @@ func scheduleAsrNotification(prayerTimes: [String: String]) {
 
 func scheduleMaghribNotification(prayerTimes: [String: String]) {
     guard let maghribTime = prayerTimes["Maghrib"] else {
-        print("Missing Maghrib prayer time")
+        
         return
     }
 
@@ -418,7 +418,7 @@ func scheduleMaghribNotification(prayerTimes: [String: String]) {
 
 func scheduleFortyMinutesBeforeMaghribNotification(prayerTimes: [String: String]) {
     guard let maghribTime = prayerTimes["Maghrib"] else {
-        print("Missing Maghrib prayer time")
+        
         return
     }
 

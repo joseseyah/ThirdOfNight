@@ -117,9 +117,14 @@ struct PrayerHelper {
             "Fajr": PrayerHelper.formatTime(prayerTimesDict["fajr_begins"] ?? "N/A"),
             "Sunrise": PrayerHelper.formatTime(prayerTimesDict["sunrise"] ?? "N/A"),
             "Dhuhr": PrayerHelper.formatTime(prayerTimesDict["zuhr_begins"] ?? "N/A"),
-            "Asr": PrayerHelper.formatTime(prayerTimesDict["asr_mithl_2"] ?? "N/A"),
+            "Asr": PrayerHelper.formatTime(prayerTimesDict["asr_mithl_1"] ?? "N/A"),
             "Maghrib": PrayerHelper.formatTime(prayerTimesDict["maghrib_begins"] ?? "N/A"),
-            "Isha": PrayerHelper.formatTime(prayerTimesDict["isha_begins"] ?? "N/A")
+            "Isha": PrayerHelper.formatTime(prayerTimesDict["isha_begins"] ?? "N/A"),
+            "FajrJ": PrayerHelper.formatTime(prayerTimesDict["fajr_jamah"] ?? "N/A"),
+            "DhuhrJ": PrayerHelper.formatTime(prayerTimesDict["zuhr_jamah"] ?? "N/A"),
+            "AsrJ": PrayerHelper.formatTime(prayerTimesDict["asr_jamah"] ?? "N/A"),
+            "MahgribJ": PrayerHelper.formatTime(prayerTimesDict["maghrib_jamah"] ?? "N/A"),
+            "IshaJ": PrayerHelper.formatTime(prayerTimesDict["isha_jamah"] ?? "N/A"),
         ]
     }
     
@@ -144,4 +149,3 @@ struct PrayerHelper {
         }
     }
 }
-

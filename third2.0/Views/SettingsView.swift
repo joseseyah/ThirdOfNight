@@ -1,4 +1,5 @@
 import SwiftUI
+import FirebaseFirestore
 import FirebaseFunctions
 import MessageUI
 
@@ -11,12 +12,10 @@ struct SettingsView: View {
     @State private var showMailView: Bool = false
     @State private var showMailError: Bool = false
     @AppStorage("useMosqueTimetable") private var useMosqueTimetable: Bool = false
-    @AppStorage("selectedMosque") private var selectedMosque: String = mosqueList.first ?? ""
+    @AppStorage("selectedMosque") private var selectedMosque: String = ""
     @State private var showTick: Bool = false
-    
+    @State private var mosqueList: [String] = [] // Dynamic mosque list
 
-
-    
     @AppStorage("dateFormat") private var dateFormat: String = "Gregorian"
 
     var body: some View {
@@ -45,7 +44,6 @@ struct SettingsView: View {
                                 }
                         }
 
-                        
                         if useMosqueTimetable {
                             settingsSection(title: "Select Mosque Timetable") {
                                 VStack(spacing: 15) {
@@ -55,8 +53,8 @@ struct SettingsView: View {
                                         .padding()
                                         .background(Color("BoxBackgroundColor"))
                                         .cornerRadius(10)
-                                    
-                                    // Use a Picker to display the mosqueList options
+
+                                    // Dynamic Picker for Mosques
                                     Picker("Choose Mosque", selection: $selectedMosque) {
                                         ForEach(mosqueList, id: \.self) { mosque in
                                             Text(mosque).tag(mosque)
@@ -64,18 +62,16 @@ struct SettingsView: View {
                                     }
                                     .pickerStyle(MenuPickerStyle())
                                     .padding()
+                                    .frame(maxWidth: .infinity) 
                                     .background(Color("PageBackgroundColor"))
                                     .cornerRadius(10)
                                     .onChange(of: selectedMosque) { newValue in
                                         saveSelectedMosque()
                                     }
-
-
-
                                 }
                             }
                         } else {
-                            // Current City or Add New City Section
+                            // Add City or Display Current City Section
                             if isAddingNewCity {
                                 settingsSection(title: "Add New City") {
                                     VStack(spacing: 15) {
@@ -140,9 +136,6 @@ struct SettingsView: View {
                             }
                         }
 
-
-
-
                         // Date Format Picker
                         settingsSection(title: "Date Format") {
                             Picker("Date Format", selection: $dateFormat) {
@@ -191,64 +184,52 @@ struct SettingsView: View {
                         }
 
                         Spacer(minLength: 20)
-
                     }
                     .padding()
                 }
             }
+            .onAppear {
+                fetchMosqueList()
+            }
         }
     }
-    
-    private func saveSelectedMosque() {
-        guard !selectedMosque.isEmpty else {
-            print("No mosque selected")
-            return
-        }
 
-        print("Fetching prayer times for mosque: \(selectedMosque)")
-
-        let functions = Functions.functions()
-        functions.httpsCallable("getPrayerTimes").call(["mosque": selectedMosque]) { result, error in
+    // Fetch Mosque List from Firestore
+    private func fetchMosqueList() {
+        let db = Firestore.firestore()
+        db.collection("Mosques").getDocuments { (querySnapshot, error) in
             if let error = error {
-                print("Error fetching prayer times: \(error.localizedDescription)")
+                print("Error fetching mosques: \(error.localizedDescription)")
                 return
             }
 
-            guard let data = result?.data as? [String: Any],
-                  let prayerTimes = data["prayerTimes"] as? [String: String] else {
-                print("Invalid prayer times format or data")
+            guard let documents = querySnapshot?.documents else {
+                print("No mosques found.")
                 return
             }
 
-            viewModel.prayerTimes = prayerTimes
-            print("Prayer times fetched: \(prayerTimes)")
-
-            // Show the tick
-            withAnimation {
-                showTick = true
-            }
-
-            // Hide the tick after 2 seconds
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                withAnimation {
-                    showTick = false
+            // Update mosque list
+            DispatchQueue.main.async {
+                mosqueList = documents.compactMap { $0.documentID }
+                if selectedMosque.isEmpty, let firstMosque = mosqueList.first {
+                    selectedMosque = firstMosque // Default to the first mosque
                 }
             }
         }
-
-        viewModel.selectedMosque = selectedMosque
-        print("Selected mosque saved: \(selectedMosque)")
-  
     }
 
-    // MARK: - Handle Timetable Toggle
-    
+    // Save Selected Mosque
+    private func saveSelectedMosque() {
+        guard !selectedMosque.isEmpty else { return }
+        print("Selected mosque saved: \(selectedMosque)")
+    }
+
+    // Handle Timetable Toggle
     private func handleTimetableToggle() {
         viewModel.isUsingMosqueTimetable = useMosqueTimetable
     }
 
-
-    // MARK: - Save City Logic
+    // Save City Logic
     private func saveCity(city: String, countryName: String) {
         guard let countryCode = countryCodeMapping[countryName] else {
             errorMessage = "Invalid country name. Please try again."
@@ -263,7 +244,7 @@ struct SettingsView: View {
         selectedCountry = ""
     }
 
-    // MARK: - Helper for Settings Section
+    // Helper for Settings Section
     private func settingsSection<Content: View>(title: String, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: 15) {
             Text(title)

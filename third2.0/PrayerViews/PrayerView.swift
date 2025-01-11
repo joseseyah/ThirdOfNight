@@ -23,143 +23,149 @@ struct PrayerView: View {
     @State private var prayerData: [[String: Any]] = []
     
     @AppStorage("dateFormat") private var dateFormat: String = "Gregorian" // Date format setting
+    @AppStorage("selectedMosque") private var selectedMosque: String = ""
 
     var body: some View {
-        ZStack {
-            if isDaytime {
-                DayPrayerView(viewModel: viewModel, isDaytime: $isDaytime, moonScale: $moonScale)
-                    .transition(.opacity)
-            } else {
-                ZStack {
-                    Color("BackgroundColor")
-                        .edgesIgnoringSafeArea(.all)
+            ZStack {
+                if isDaytime {
+                    DayPrayerView(viewModel: viewModel, isDaytime: $isDaytime, moonScale: $moonScale)
+                        .transition(.opacity)
+                } else {
+                    ZStack {
+                        Color("BackgroundColor")
+                            .edgesIgnoringSafeArea(.all)
 
-                    StarrySkyView()
+                        StarrySkyView()
 
-                    VStack(spacing: 12) {
-                        
-                        HStack {
-                            Button(action: {
-                                showDonationOptions.toggle()
-                            }) {
-                                Image(systemName: "heart.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20) // Adjust the size of the heart icon
+                        VStack(spacing: 12) {
+                            HStack {
+                                Button(action: {
+                                    showDonationOptions.toggle()
+                                }) {
+                                    Image(systemName: "heart.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundColor(.white)
+                                        .padding(10)
+                                        .background(Circle().fill(Color(hex: "#FF9D66")))
+                                        .shadow(radius: 5)
+                                }
+                                .padding(.leading, 20)
+                                .padding(.top, 80)
+                                Spacer()
+                            }
+                            .frame(height: 50)
+
+                            Spacer()
+                            ZStack {
+                                DesertView()
+                                    .foregroundColor(Color(hex: "#FDF3E7"))
+
+                                Circle()
+                                    .fill(Color(hex: "#F6923A"))
+                                    .frame(width: 100, height: 100)
+                                    .scaleEffect(moonScale)
+                                    .offset(y: -80)
+                                    .onAppear {
+                                        withAnimation(Animation.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
+                                            moonScale = 1.2
+                                        }
+                                    }
+                                    .onTapGesture {
+                                        withAnimation(.easeInOut) {
+                                            isDaytime.toggle()
+                                        }
+                                    }
+                            }
+                            .frame(height: 300)
+
+                            HStack {
+                                Spacer()
+
+                                VStack {
+                                    if viewModel.isUsingMosqueTimetable {
+                                        Text(viewModel.selectedMosque)
+                                            .font(.title)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                    } else {
+                                        Text(viewModel.selectedCity)
+                                            .font(.largeTitle)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                    }
+
+                                    if dateFormat == "Hijri" {
+                                        Text(hijriDate)
+                                            .font(.headline)
+                                            .foregroundColor(Color(hex: "#F6923A"))
+                                    } else {
+                                        Text(readableDate)
+                                            .font(.headline)
+                                            .foregroundColor(Color(hex: "#F6923A"))
+                                    }
+                                }
+                                Spacer()
+                            }
+                            .padding(.horizontal, 20)
+
+                            Spacer()
+
+                            if prayerTimes.isEmpty {
+                                Text("Loading prayer times...")
                                     .foregroundColor(.white)
-                                    .padding(10) // Inner padding for spacing inside the circle
-                                    .background(Circle().fill(Color(hex: "#FF9D66")))
-                                    .shadow(radius: 5)
+                                    .font(.title)
+                                    .padding()
+                            } else {
+                                if (viewModel.isUsingMosqueTimetable){
+                                    TimeBox(title: "Friday Jummah Prayers", time: prayerTimes["Isha"] ?? "N/A", isDaytime: isDaytime)
+                                    TimeBox(title: "Midnight", time: prayerTimes["Midnight"] ?? "N/A", isDaytime: isDaytime)
+                                    TimeBox(title: "Last Third of Night", time: prayerTimes["Lastthird"] ?? "N/A", isDaytime: isDaytime)
+                                    
+                                }
+                                else{
+                                    TimeBox(title: "Midnight", time: prayerTimes["Midnight"] ?? "N/A", isDaytime: isDaytime)
+                                    TimeBox(title: "Last Third of Night", time: prayerTimes["Lastthird"] ?? "N/A", isDaytime: isDaytime)
+                                    
+                                }
+                                
                             }
-                            .padding(.leading, 20) // Horizontal padding
-                            .padding(.top, 80) // Adjust vertical positioning
-                            Spacer()
-                        }
-                        .frame(height: 50)
-
-
-
-                        Spacer()
-                        ZStack {
-                            DesertView()
-                                .foregroundColor(Color(hex: "#FDF3E7"))
-
-                            Circle()
-                                .fill(Color(hex: "#F6923A"))
-                                .frame(width: 100, height: 100)
-                                .scaleEffect(moonScale)
-                                .offset(y: -80)
-                                .onAppear {
-                                    withAnimation(Animation.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
-                                        moonScale = 1.2
-                                    }
-                                }
-                                .onTapGesture {
-                                    withAnimation(.easeInOut) {
-                                        isDaytime.toggle()
-                                    }
-                                }
-                        }
-                        .frame(height: 300)
-
-                        // Navigation Arrows and City Name
-                        HStack {
-                            
 
                             Spacer()
-
-                            VStack {
-                                // Show mosque name if mosque timetables are enabled
-                                if viewModel.isUsingMosqueTimetable {
-                                    Text(viewModel.selectedMosque)
-                                        .font(.title)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-                                } else {
-                                    Text(viewModel.selectedCity)
-                                        .font(.largeTitle)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-                                }
-
-                                // Date Display - Hijri or Gregorian
-                                if dateFormat == "Hijri" {
-                                    Text(hijriDate)
-                                        .font(.headline)
-                                        .foregroundColor(Color(hex: "#F6923A"))
-                                } else {
-                                    Text(readableDate)
-                                        .font(.headline)
-                                        .foregroundColor(Color(hex: "#F6923A"))
-                                }
-                            }
-                            Spacer()
                         }
-                        .padding(.horizontal, 20)
-
-                        Spacer()
-
-                        if prayerTimes.isEmpty {
-                            Text("Loading prayer times...")
-                                .foregroundColor(.white)
-                                .font(.title)
-                                .padding()
-                        } else {
-                            TimeBox(title: "Isha", time: prayerTimes["Isha"] ?? defaultPrayerTimes["Isha"]!, isDaytime: isDaytime)
-                            TimeBox(title: "Midnight", time: prayerTimes["Midnight"] ?? defaultPrayerTimes["Midnight"]!, isDaytime: isDaytime)
-                            TimeBox(title: "Last Third of Night", time: prayerTimes["Lastthird"] ?? defaultPrayerTimes["Lastthird"]!, isDaytime: isDaytime)
-                        }
-
-                        Spacer()
+                        .padding()
                     }
-                    .padding()
+                    
+                    .sheet(isPresented: $showDonationOptions) {
+                        DonationView(showDonationOptions: $showDonationOptions)
+                    }
                 }
-                
-                .sheet(isPresented: $showDonationOptions) {
-                            DonationView(showDonationOptions: $showDonationOptions)
-                        }
             }
-        }
-        .onAppear {
-            fetchPrayerTimes(city: viewModel.selectedCity)
-            startTimer()
-
-            // Update the date based on the selected format initially
-            updateDisplayedDate()
-
-            // Listen for date format changes
-            NotificationCenter.default.addObserver(forName: .dateFormatChanged, object: nil, queue: .main) { _ in
+            .onAppear {
+                viewModel.selectedMosque = selectedMosque
+                fetchPrayerTimes(city: viewModel.selectedCity)
+                startTimer()
                 updateDisplayedDate()
             }
+            .onChange(of: selectedMosque) { _ in
+                if viewModel.isUsingMosqueTimetable {
+                    fetchPrayerTimes(city: viewModel.selectedCity)
+                }
+            }
+            .onChange(of: viewModel.selectedCity) { _ in
+                if !viewModel.isUsingMosqueTimetable {
+                    fetchPrayerTimes(city: viewModel.selectedCity)
+                }
+            }
+            .onChange(of: dateFormat) { _ in
+                updateDisplayedDate()
+            }
+            .onDisappear {
+                timer?.invalidate()
+            }
         }
-        .onChange(of: dateFormat) { _ in
-            updateDisplayedDate()
-        }
-        .onDisappear {
-            timer?.invalidate()
-            NotificationCenter.default.removeObserver(self, name: .dateFormatChanged, object: nil)
-        }
-    }
+
     
     private func updateDisplayedDate() {
         if dateFormat == "Hijri" {

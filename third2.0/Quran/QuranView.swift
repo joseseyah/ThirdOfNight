@@ -160,41 +160,6 @@ struct QuranView: View {
     }
 }
 
-struct FullScreenPDFView: View {
-    let preloadedPDF: PDFDocument
-    let bookTitle: String
-
-    var body: some View {
-        PDFKitRepresentable(preloadedPDF: preloadedPDF)
-            .edgesIgnoringSafeArea(.all)
-            .navigationBarTitle(bookTitle, displayMode: .inline)
-    }
-}
-
-struct PDFKitRepresentable: UIViewRepresentable {
-    let preloadedPDF: PDFDocument
-
-    func makeUIView(context: Context) -> PDFView {
-        let pdfView = PDFView()
-        pdfView.autoScales = true
-        pdfView.displayMode = .singlePageContinuous
-        pdfView.displayDirection = .horizontal
-        pdfView.usePageViewController(true)
-        pdfView.document = preloadedPDF
-        return pdfView
-    }
-
-    func updateUIView(_ uiView: PDFView, context: Context) {}
-}
-
-struct Book: Identifiable {
-    let id = UUID()
-    let title: String
-    let coverImage: String
-    let pdfFileName: String
-}
-
-
 extension View {
     func placeholder<Content: View>(
         when shouldShow: Bool,

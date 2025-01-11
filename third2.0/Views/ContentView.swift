@@ -2,11 +2,10 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selectedTab = 0
-    @StateObject var viewModel = CityViewModel() // Shared instance of the view model
-    @StateObject var audioPlayerViewModel = AudioPlayerViewModel() // Global audio player state
-    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false // Track onboarding status
-    
-    @State private var isMinimizedViewVisible = true // Track visibility of minimized player view
+    @StateObject var viewModel = CityViewModel()
+    @StateObject var audioPlayerViewModel = AudioPlayerViewModel()
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
+    @State private var isMinimizedViewVisible = true
 
     var body: some View {
         Group {
@@ -17,7 +16,6 @@ struct ContentView: View {
             }
         }
         .onChange(of: audioPlayerViewModel.currentTrackIndex) { _ in
-            // Show minimized view when a new track starts
             if audioPlayerViewModel.currentTrackIndex != nil {
                 isMinimizedViewVisible = true
             }
@@ -26,7 +24,9 @@ struct ContentView: View {
 
     private var mainContent: some View {
         ZStack {
-            // Main TabView
+            // Add a custom background for the TabView
+            Color.white.ignoresSafeArea()
+
             TabView(selection: $selectedTab) {
                 PrayerView(viewModel: viewModel)
                     .tabItem {
@@ -58,7 +58,12 @@ struct ContentView: View {
                     }
                     .tag(4)
             }
-            .accentColor(.orange)
+            .accentColor(.orange) // Highlighted tab color
+            .background(Color("TabBarBackgroundColor").ignoresSafeArea()) // Custom tab bar background color
+            .onAppear {
+                UITabBar.appearance().barTintColor = UIColor(named: "TabBarBackgroundColor") // Adjust tab bar background color
+                UITabBar.appearance().unselectedItemTintColor = UIColor.gray // Darker gray for inactive tabs
+            }
 
             // Minimized Audio Player Overlay
             if let currentIndex = audioPlayerViewModel.currentTrackIndex, audioPlayerViewModel.isMinimizedViewVisible {
@@ -78,7 +83,6 @@ struct ContentView: View {
                 }
                 .padding(.bottom, 48)
             }
-
         }
         .sheet(isPresented: $audioPlayerViewModel.showDetailView) {
             if let currentIndex = audioPlayerViewModel.currentTrackIndex {

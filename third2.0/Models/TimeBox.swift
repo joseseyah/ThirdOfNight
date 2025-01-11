@@ -4,22 +4,25 @@ import SwiftUI
 struct TimeBox: View {
     var title: String
     var time: String
-    var isDaytime: Bool  // Add a property to indicate day or night mode
+    var isDaytime: Bool
 
     var body: some View {
-        VStack {
+        VStack(spacing: 4) { // Reduced spacing between title and time
             Text(title)
-                .font(.headline)
+                .font(.subheadline) // Smaller font size for title
                 .foregroundColor(isDaytime ? .black : .white)
-            
+                .multilineTextAlignment(.center)
+
             Text(time)
-                .font(.system(size: 30, weight: .bold))  // Reduced the font size
+                .font(.title2) // Reduced font size for time
+                .fontWeight(.bold)
                 .foregroundColor(Color(isDaytime ? "DayHighlightColor" : "HighlightColor"))
         }
-        .padding(10)  // Reduced padding
-        .frame(maxWidth: .infinity)
-        .background(Color(isDaytime ? "DayBoxBackgroundColor" : "BoxBackgroundColor").opacity(0.8))
-        .cornerRadius(12)  // Slightly smaller corner radius
-        .shadow(color: Color.black.opacity(0.2), radius: 6, x: 0, y: 4)  // Adjusted shadow
+        .padding(8) // Reduced padding
+        .frame(maxWidth: .infinity, minHeight: 50) // Set consistent height
+        .background(Color(isDaytime ? "DayBoxBackgroundColor" : "BoxBackgroundColor").opacity(0.9))
+        .cornerRadius(10) // Slightly smaller corner radius
+        .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2) // Subtle shadow
     }
 }
+

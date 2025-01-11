@@ -76,17 +76,51 @@ struct DayPrayerView: View {
                         .font(.title)
                         .foregroundColor(.black)
                 } else {
-                    VStack(spacing: 16) {
-                        TimeBox(title: "Fajr", time: prayerTimes["Fajr"] ?? "N/A", isDaytime: isDaytime)
-                        TimeBox(title: "Sunrise", time: prayerTimes["Sunrise"] ?? "N/A", isDaytime: isDaytime)
-                        TimeBox(
-                            title: "Dhuhr",
-                            time: prayerTimes["Dhuhr"] ?? "N/A",
-                            isDaytime: isDaytime
-                        )
-
-                        TimeBox(title: "Asr", time: prayerTimes["Asr"] ?? "N/A", isDaytime: isDaytime)
-                        TimeBox(title: "Maghrib", time: prayerTimes["Maghrib"] ?? "N/A", isDaytime: isDaytime)
+                    if viewModel.isUsingMosqueTimetable && !areAllJamatTimesNil(prayerTimes: prayerTimes){
+                        VStack(spacing: 16) {
+                            // Fajr with Jamat
+                            HStack(spacing: 16) {
+                                TimeBox(title: "Fajr", time: prayerTimes["Fajr"] ?? "N/A", isDaytime: isDaytime)
+                                TimeBox(title: "Fajr Jamat", time: prayerTimes["FajrJ"] ?? "N/A", isDaytime: isDaytime)
+                            }
+                            
+                            // Sunrise (single time box)
+                            TimeBox(title: "Sunrise", time: prayerTimes["Sunrise"] ?? "N/A", isDaytime: isDaytime)
+                            
+                            // Dhuhr with Jamat
+                            HStack(spacing: 16) {
+                                TimeBox(title: "Dhuhr", time: prayerTimes["Dhuhr"] ?? "N/A", isDaytime: isDaytime)
+                                TimeBox(title: "Dhuhr Jamat", time: prayerTimes["DhuhrJ"] ?? "N/A", isDaytime: isDaytime)
+                            }
+                            
+                            // Asr with Jamat
+                            HStack(spacing: 16) {
+                                TimeBox(title: "Asr", time: prayerTimes["Asr"] ?? "N/A", isDaytime: isDaytime)
+                                TimeBox(title: "Asr Jamat", time: prayerTimes["AsrJ"] ?? "N/A", isDaytime: isDaytime)
+                            }
+                            
+                            // Maghrib with Jamat
+                            HStack(spacing: 16) {
+                                TimeBox(title: "Maghrib", time: prayerTimes["Maghrib"] ?? "N/A", isDaytime: isDaytime)
+                                TimeBox(title: "Maghrib Jamat", time: prayerTimes["MahgribJ"] ?? "N/A", isDaytime: isDaytime)
+                            }
+                            
+                            // Isha with Jamat
+                            HStack(spacing: 16) {
+                                TimeBox(title: "Isha", time: prayerTimes["Isha"] ?? "N/A", isDaytime: isDaytime)
+                                TimeBox(title: "Isha Jamat", time: prayerTimes["IshaJ"] ?? "N/A", isDaytime: isDaytime)
+                            }
+                        }
+                    } else {
+                        VStack(spacing: 16) {
+                            TimeBox(title: "Fajr", time: prayerTimes["Fajr"] ?? "N/A", isDaytime: isDaytime)
+                            TimeBox(title: "Sunrise", time: prayerTimes["Sunrise"] ?? "N/A", isDaytime: isDaytime)
+                            TimeBox(title: "Dhuhr", time: prayerTimes["Dhuhr"] ?? "N/A", isDaytime: isDaytime)
+                            TimeBox(title: "Asr", time: prayerTimes["Asr"] ?? "N/A", isDaytime: isDaytime)
+                            TimeBox(title: "Maghrib", time: prayerTimes["Maghrib"] ?? "N/A", isDaytime: isDaytime)
+                            TimeBox(title: "Isha", time: prayerTimes["Isha"] ?? "N/A", isDaytime: isDaytime)
+                        }
+                        
                     }
                 }
 
@@ -95,15 +129,50 @@ struct DayPrayerView: View {
             .padding()
         }
         .onAppear {
-                    fetchPrayerTimes(city: viewModel.selectedCity)
-                    updatePrayerTimesForDay()
-                    updateDisplayedDate()
-                }
-                .onChange(of: dateFormat) { _ in
-                    updateDisplayedDate()
-                }
+            // Initial fetch when the view appears
+            fetchPrayerTimes(city: viewModel.selectedCity)
+            updatePrayerTimesForDay()
+            updateDisplayedDate()
+        }
+        .onChange(of: viewModel.selectedMosque) { newValue in
+            // Refetch prayer times when the selected mosque changes
+            if viewModel.isUsingMosqueTimetable {
+                fetchPrayerTimes(city: viewModel.selectedCity)
+                updatePrayerTimesForDay()
+            }
+        }
+        .onChange(of: viewModel.selectedCity) { newValue in
+            // Refetch prayer times when the selected city changes
+            if !viewModel.isUsingMosqueTimetable {
+                fetchPrayerTimes(city: viewModel.selectedCity)
+                updatePrayerTimesForDay()
+            }
+        }
+        .onChange(of: dateFormat) { _ in
+            // Update displayed date format
+            updateDisplayedDate()
+        }
+
 
     }
+    
+    func areAllJamatTimesNil(prayerTimes: [String: String]) -> Bool {
+        // Keys for Jamat times to check
+        let jamatKeys = ["FajrJ", "DhuhrJ", "AsrJ", "MahgribJ", "IshaJ"]
+        
+        // Check if all values for these keys are "N/A" or empty
+        return jamatKeys.allSatisfy { key in
+            let value = prayerTimes[key]
+            return value == "N/A" || value?.isEmpty == true
+        }
+    }
+
+
+
+
+
+
+
     
     private func updateDisplayedDate() {
         if dateFormat == "Hijri" {

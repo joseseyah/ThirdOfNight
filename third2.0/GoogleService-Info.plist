@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyA4ggCmX5XmKF75MIku4BGgeZWUY6ogWko</string>
+	<key>GCM_SENDER_ID</key>
+	<string>315352803781</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>testing.third2-0</string>
+	<key>PROJECT_ID</key>
+	<string>thirdofnight-cbbdb</string>
+	<key>STORAGE_BUCKET</key>
+	<string>thirdofnight-cbbdb.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:315352803781:ios:b697b21abb7d16373683ac</string>
+</dict>
+</plist>

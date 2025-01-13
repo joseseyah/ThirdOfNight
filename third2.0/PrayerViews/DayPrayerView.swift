@@ -7,9 +7,7 @@ struct DayPrayerView: View {
     @State private var currentDayIndex = Calendar.current.component(.day, from: Date()) - 1
     @State private var dateKeys: [String] = []  // Sorted list of dates for London API
     @State private var readableDate: String = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.string(from: Date())
+        DateParser.getCurrentDateToString()
     }()
     @AppStorage("dateFormat") private var dateFormat: String = "Gregorian"
     @State private var londonPrayerData: [String: Timings] = [:]  // API prayer data

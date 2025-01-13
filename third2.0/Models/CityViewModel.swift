@@ -69,7 +69,7 @@ class CityViewModel: ObservableObject {
 
             do {
                 let decodedResponse = try JSONDecoder().decode(LondonPrayerTimesResponse.self, from: data)
-                let todayDateString = self.currentReadableDate()
+                let todayDateString = DateParser.getCurrentDateToString()
                 let dateKeys = decodedResponse.times.keys.sorted() // Get sorted date keys
 
                 // Extract today's prayer data
@@ -104,12 +104,6 @@ class CityViewModel: ObservableObject {
                 print("Error decoding JSON response: \(error.localizedDescription)")
             }
         }.resume()
-    }
-
-    private func currentReadableDate() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.string(from: Date())
     }
 }
 

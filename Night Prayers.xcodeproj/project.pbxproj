@@ -50,8 +50,6 @@
 		6DBCFC612CB25CC40074796A /* third2_0Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCFC602CB25CC40074796A /* third2_0Tests.swift */; };
 		6DBCFC6B2CB25CC40074796A /* third2_0UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCFC6A2CB25CC40074796A /* third2_0UITests.swift */; };
 		6DBCFC6D2CB25CC40074796A /* third2_0UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCFC6C2CB25CC40074796A /* third2_0UITestsLaunchTests.swift */; };
-		6DC3858A2D24CAFA00FC45D4 /* 67-surah-al-mulk.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6DC385892D24CAFA00FC45D4 /* 67-surah-al-mulk.pdf */; };
-		6DC3858E2D24D34000FC45D4 /* surah-al-mulk_word-to-word-translation.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6DC3858D2D24D34000FC45D4 /* surah-al-mulk_word-to-word-translation.pdf */; };
 		6DCC12FE2D0629BC00E352BD /* MissionText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC12FD2D0629BC00E352BD /* MissionText.swift */; };
 		6DCC13002D0629CF00E352BD /* PrivacyPolicyText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC12FF2D0629CF00E352BD /* PrivacyPolicyText.swift */; };
 		6DCC13022D062FD700E352BD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6DCC13012D062FD700E352BD /* FirebaseAuth */; };
@@ -59,126 +57,11 @@
 		6DCC13062D062FD700E352BD /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 6DCC13052D062FD700E352BD /* FirebaseMessaging */; };
 		6DCC13082D083FAC00E352BD /* countryCodeMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC13072D083FAC00E352BD /* countryCodeMapping.swift */; };
 		6DCC131C2D09853D00E352BD /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC131B2D09853D00E352BD /* NotificationManager.swift */; };
-		6DCC13202D0AD43500E352BD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC131F2D0AD43500E352BD /* GoogleService-Info.plist */; };
 		6DCC13262D0AF36F00E352BD /* QuranView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC13252D0AF36F00E352BD /* QuranView.swift */; };
 		6DCC13292D0AF60B00E352BD /* Surah.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC13282D0AF60B00E352BD /* Surah.swift */; };
 		6DCC132B2D0AF63C00E352BD /* surahs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC132A2D0AF63C00E352BD /* surahs.swift */; };
 		6DCC132D2D0AF70400E352BD /* MinimizedAudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC132C2D0AF70400E352BD /* MinimizedAudioPlayerView.swift */; };
 		6DCC132F2D0AF76C00E352BD /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC132E2D0AF76C00E352BD /* DetailView.swift */; };
-		6DCC135A2D0AFF1E00E352BD /* 017.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13322D0AFF1E00E352BD /* 017.mp3 */; };
-		6DCC135B2D0AFF1E00E352BD /* 031.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13332D0AFF1E00E352BD /* 031.mp3 */; };
-		6DCC135C2D0AFF1E00E352BD /* 034.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13342D0AFF1E00E352BD /* 034.mp3 */; };
-		6DCC135D2D0AFF1E00E352BD /* 029.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13352D0AFF1E00E352BD /* 029.mp3 */; };
-		6DCC135E2D0AFF1E00E352BD /* 039.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13362D0AFF1E00E352BD /* 039.mp3 */; };
-		6DCC135F2D0AFF1E00E352BD /* 035.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13372D0AFF1E00E352BD /* 035.mp3 */; };
-		6DCC13602D0AFF1E00E352BD /* 037.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13382D0AFF1E00E352BD /* 037.mp3 */; };
-		6DCC13612D0AFF1E00E352BD /* 028.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13392D0AFF1E00E352BD /* 028.mp3 */; };
-		6DCC13622D0AFF1E00E352BD /* 032.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC133A2D0AFF1E00E352BD /* 032.mp3 */; };
-		6DCC13632D0AFF1E00E352BD /* 010.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC133B2D0AFF1E00E352BD /* 010.mp3 */; };
-		6DCC13642D0AFF1E00E352BD /* 007.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC133C2D0AFF1E00E352BD /* 007.mp3 */; };
-		6DCC13652D0AFF1E00E352BD /* 040.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC133D2D0AFF1E00E352BD /* 040.mp3 */; };
-		6DCC13662D0AFF1E00E352BD /* 027.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC133E2D0AFF1E00E352BD /* 027.mp3 */; };
-		6DCC13672D0AFF1E00E352BD /* 036.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC133F2D0AFF1E00E352BD /* 036.mp3 */; };
-		6DCC13682D0AFF1E00E352BD /* 002.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13402D0AFF1E00E352BD /* 002.mp3 */; };
-		6DCC13692D0AFF1E00E352BD /* 015.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13412D0AFF1E00E352BD /* 015.mp3 */; };
-		6DCC136A2D0AFF1E00E352BD /* 021.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13422D0AFF1E00E352BD /* 021.mp3 */; };
-		6DCC136B2D0AFF1E00E352BD /* 004.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13432D0AFF1E00E352BD /* 004.mp3 */; };
-		6DCC136C2D0AFF1E00E352BD /* 013.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13442D0AFF1E00E352BD /* 013.mp3 */; };
-		6DCC136D2D0AFF1E00E352BD /* 022.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13452D0AFF1E00E352BD /* 022.mp3 */; };
-		6DCC136E2D0AFF1E00E352BD /* 023.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13462D0AFF1E00E352BD /* 023.mp3 */; };
-		6DCC136F2D0AFF1E00E352BD /* 008.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13472D0AFF1E00E352BD /* 008.mp3 */; };
-		6DCC13702D0AFF1E00E352BD /* 018.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13482D0AFF1E00E352BD /* 018.mp3 */; };
-		6DCC13712D0AFF1E00E352BD /* 020.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13492D0AFF1E00E352BD /* 020.mp3 */; };
-		6DCC13722D0AFF1E00E352BD /* 026.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC134A2D0AFF1E00E352BD /* 026.mp3 */; };
-		6DCC13732D0AFF1E00E352BD /* 024.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC134B2D0AFF1E00E352BD /* 024.mp3 */; };
-		6DCC13742D0AFF1E00E352BD /* 006.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC134C2D0AFF1E00E352BD /* 006.mp3 */; };
-		6DCC13752D0AFF1E00E352BD /* 025.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC134D2D0AFF1E00E352BD /* 025.mp3 */; };
-		6DCC13762D0AFF1E00E352BD /* 011.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC134E2D0AFF1E00E352BD /* 011.mp3 */; };
-		6DCC13772D0AFF1E00E352BD /* 016.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC134F2D0AFF1E00E352BD /* 016.mp3 */; };
-		6DCC13782D0AFF1E00E352BD /* 019.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13502D0AFF1E00E352BD /* 019.mp3 */; };
-		6DCC13792D0AFF1E00E352BD /* 030.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13512D0AFF1E00E352BD /* 030.mp3 */; };
-		6DCC137A2D0AFF1E00E352BD /* 038.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13522D0AFF1E00E352BD /* 038.mp3 */; };
-		6DCC137B2D0AFF1E00E352BD /* 003.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13532D0AFF1E00E352BD /* 003.mp3 */; };
-		6DCC137C2D0AFF1E00E352BD /* 033.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13542D0AFF1E00E352BD /* 033.mp3 */; };
-		6DCC137D2D0AFF1E00E352BD /* 014.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13552D0AFF1E00E352BD /* 014.mp3 */; };
-		6DCC137E2D0AFF1E00E352BD /* 009.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13562D0AFF1E00E352BD /* 009.mp3 */; };
-		6DCC137F2D0AFF1E00E352BD /* 001.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13572D0AFF1E00E352BD /* 001.mp3 */; };
-		6DCC13802D0AFF1E00E352BD /* 012.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13582D0AFF1E00E352BD /* 012.mp3 */; };
-		6DCC13812D0AFF1E00E352BD /* 005.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13592D0AFF1E00E352BD /* 005.mp3 */; };
-		6DCC13962D0AFF9B00E352BD /* 060.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13822D0AFF9B00E352BD /* 060.mp3 */; };
-		6DCC13972D0AFF9B00E352BD /* 048.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13832D0AFF9B00E352BD /* 048.mp3 */; };
-		6DCC13982D0AFF9B00E352BD /* 044.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13842D0AFF9B00E352BD /* 044.mp3 */; };
-		6DCC13992D0AFF9B00E352BD /* 046.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13852D0AFF9B00E352BD /* 046.mp3 */; };
-		6DCC139A2D0AFF9B00E352BD /* 052.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13862D0AFF9B00E352BD /* 052.mp3 */; };
-		6DCC139B2D0AFF9B00E352BD /* 056.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13872D0AFF9B00E352BD /* 056.mp3 */; };
-		6DCC139C2D0AFF9B00E352BD /* 057.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13882D0AFF9B00E352BD /* 057.mp3 */; };
-		6DCC139D2D0AFF9B00E352BD /* 050.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13892D0AFF9B00E352BD /* 050.mp3 */; };
-		6DCC139E2D0AFF9B00E352BD /* 051.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC138A2D0AFF9B00E352BD /* 051.mp3 */; };
-		6DCC139F2D0AFF9B00E352BD /* 047.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC138B2D0AFF9B00E352BD /* 047.mp3 */; };
-		6DCC13A02D0AFF9B00E352BD /* 045.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC138C2D0AFF9B00E352BD /* 045.mp3 */; };
-		6DCC13A12D0AFF9B00E352BD /* 054.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC138D2D0AFF9B00E352BD /* 054.mp3 */; };
-		6DCC13A22D0AFF9B00E352BD /* 055.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC138E2D0AFF9B00E352BD /* 055.mp3 */; };
-		6DCC13A32D0AFF9B00E352BD /* 058.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC138F2D0AFF9B00E352BD /* 058.mp3 */; };
-		6DCC13A42D0AFF9B00E352BD /* 059.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13902D0AFF9B00E352BD /* 059.mp3 */; };
-		6DCC13A52D0AFF9B00E352BD /* 041.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13912D0AFF9B00E352BD /* 041.mp3 */; };
-		6DCC13A62D0AFF9B00E352BD /* 043.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13922D0AFF9B00E352BD /* 043.mp3 */; };
-		6DCC13A72D0AFF9B00E352BD /* 049.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13932D0AFF9B00E352BD /* 049.mp3 */; };
-		6DCC13A82D0AFF9B00E352BD /* 042.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13942D0AFF9B00E352BD /* 042.mp3 */; };
-		6DCC13A92D0AFF9B00E352BD /* 053.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13952D0AFF9B00E352BD /* 053.mp3 */; };
-		6DCC13E02D0B00C600E352BD /* 095.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13AA2D0B00C500E352BD /* 095.mp3 */; };
-		6DCC13E12D0B00C600E352BD /* 087.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13AB2D0B00C500E352BD /* 087.mp3 */; };
-		6DCC13E22D0B00C600E352BD /* 065.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13AC2D0B00C500E352BD /* 065.mp3 */; };
-		6DCC13E32D0B00C600E352BD /* 105.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13AD2D0B00C500E352BD /* 105.mp3 */; };
-		6DCC13E42D0B00C600E352BD /* 110.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13AE2D0B00C500E352BD /* 110.mp3 */; };
-		6DCC13E52D0B00C600E352BD /* 083.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13AF2D0B00C500E352BD /* 083.mp3 */; };
-		6DCC13E62D0B00C600E352BD /* 063.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13B02D0B00C600E352BD /* 063.mp3 */; };
-		6DCC13E72D0B00C600E352BD /* 084.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13B12D0B00C600E352BD /* 084.mp3 */; };
-		6DCC13E82D0B00C600E352BD /* 109.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13B22D0B00C600E352BD /* 109.mp3 */; };
-		6DCC13E92D0B00C600E352BD /* 093.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13B32D0B00C600E352BD /* 093.mp3 */; };
-		6DCC13EA2D0B00C600E352BD /* 080.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13B42D0B00C600E352BD /* 080.mp3 */; };
-		6DCC13EB2D0B00C600E352BD /* 097.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13B52D0B00C600E352BD /* 097.mp3 */; };
-		6DCC13EC2D0B00C600E352BD /* 107.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13B62D0B00C600E352BD /* 107.mp3 */; };
-		6DCC13ED2D0B00C600E352BD /* 100.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13B72D0B00C600E352BD /* 100.mp3 */; };
-		6DCC13EE2D0B00C600E352BD /* 106.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13B82D0B00C600E352BD /* 106.mp3 */; };
-		6DCC13EF2D0B00C600E352BD /* 082.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13B92D0B00C600E352BD /* 082.mp3 */; };
-		6DCC13F02D0B00C600E352BD /* 099.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13BA2D0B00C600E352BD /* 099.mp3 */; };
-		6DCC13F12D0B00C600E352BD /* 103.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13BB2D0B00C600E352BD /* 103.mp3 */; };
-		6DCC13F22D0B00C600E352BD /* 073.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13BC2D0B00C600E352BD /* 073.mp3 */; };
-		6DCC13F32D0B00C600E352BD /* 081.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13BD2D0B00C600E352BD /* 081.mp3 */; };
-		6DCC13F42D0B00C600E352BD /* 089.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13BE2D0B00C600E352BD /* 089.mp3 */; };
-		6DCC13F52D0B00C600E352BD /* 111.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13BF2D0B00C600E352BD /* 111.mp3 */; };
-		6DCC13F62D0B00C600E352BD /* 066.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13C02D0B00C600E352BD /* 066.mp3 */; };
-		6DCC13F72D0B00C600E352BD /* 112.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13C12D0B00C600E352BD /* 112.mp3 */; };
-		6DCC13F82D0B00C600E352BD /* 092.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13C22D0B00C600E352BD /* 092.mp3 */; };
-		6DCC13F92D0B00C600E352BD /* 104.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13C32D0B00C600E352BD /* 104.mp3 */; };
-		6DCC13FA2D0B00C600E352BD /* 086.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13C42D0B00C600E352BD /* 086.mp3 */; };
-		6DCC13FB2D0B00C600E352BD /* 114.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13C52D0B00C600E352BD /* 114.mp3 */; };
-		6DCC13FC2D0B00C600E352BD /* 094.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13C62D0B00C600E352BD /* 094.mp3 */; };
-		6DCC13FD2D0B00C600E352BD /* 072.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13C72D0B00C600E352BD /* 072.mp3 */; };
-		6DCC13FE2D0B00C600E352BD /* 113.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13C82D0B00C600E352BD /* 113.mp3 */; };
-		6DCC13FF2D0B00C600E352BD /* 091.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13C92D0B00C600E352BD /* 091.mp3 */; };
-		6DCC14002D0B00C600E352BD /* 096.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13CA2D0B00C600E352BD /* 096.mp3 */; };
-		6DCC14012D0B00C600E352BD /* 064.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13CB2D0B00C600E352BD /* 064.mp3 */; };
-		6DCC14022D0B00C600E352BD /* 068.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13CC2D0B00C600E352BD /* 068.mp3 */; };
-		6DCC14032D0B00C600E352BD /* 085.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13CD2D0B00C600E352BD /* 085.mp3 */; };
-		6DCC14042D0B00C600E352BD /* 077.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13CE2D0B00C600E352BD /* 077.mp3 */; };
-		6DCC14052D0B00C600E352BD /* 101.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13CF2D0B00C600E352BD /* 101.mp3 */; };
-		6DCC14062D0B00C600E352BD /* 098.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13D02D0B00C600E352BD /* 098.mp3 */; };
-		6DCC14072D0B00C600E352BD /* 069.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13D12D0B00C600E352BD /* 069.mp3 */; };
-		6DCC14082D0B00C600E352BD /* 067.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13D22D0B00C600E352BD /* 067.mp3 */; };
-		6DCC14092D0B00C600E352BD /* 062.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13D32D0B00C600E352BD /* 062.mp3 */; };
-		6DCC140A2D0B00C600E352BD /* 078.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13D42D0B00C600E352BD /* 078.mp3 */; };
-		6DCC140B2D0B00C600E352BD /* 088.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13D52D0B00C600E352BD /* 088.mp3 */; };
-		6DCC140C2D0B00C600E352BD /* 079.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13D62D0B00C600E352BD /* 079.mp3 */; };
-		6DCC140D2D0B00C600E352BD /* 076.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13D72D0B00C600E352BD /* 076.mp3 */; };
-		6DCC140E2D0B00C600E352BD /* 102.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13D82D0B00C600E352BD /* 102.mp3 */; };
-		6DCC140F2D0B00C600E352BD /* 070.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13D92D0B00C600E352BD /* 070.mp3 */; };
-		6DCC14102D0B00C600E352BD /* 075.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13DA2D0B00C600E352BD /* 075.mp3 */; };
-		6DCC14112D0B00C600E352BD /* 061.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13DB2D0B00C600E352BD /* 061.mp3 */; };
-		6DCC14122D0B00C600E352BD /* 090.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13DC2D0B00C600E352BD /* 090.mp3 */; };
-		6DCC14132D0B00C600E352BD /* 108.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13DD2D0B00C600E352BD /* 108.mp3 */; };
-		6DCC14142D0B00C600E352BD /* 071.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13DE2D0B00C600E352BD /* 071.mp3 */; };
-		6DCC14152D0B00C600E352BD /* 074.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6DCC13DF2D0B00C600E352BD /* 074.mp3 */; };
 		6DCC14172D0B180400E352BD /* AudioPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC14162D0B180400E352BD /* AudioPlayerViewModel.swift */; };
 		6DCC141F2D0B9CAC00E352BD /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC141E2D0B9CAC00E352BD /* OnboardingView.swift */; };
 		6DCC14202D10193200E352BD /* PrayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCA2CB2610F0068F84C /* PrayerView.swift */; };
@@ -194,6 +77,11 @@
 		6DE78BCF2CB2615E0068F84C /* SurahMulkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */; };
 		6DE78BD12CB261880068F84C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BD02CB261880068F84C /* SettingsView.swift */; };
 		6DE78BDE2CB28C400068F84C /* CityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE78BDD2CB28C400068F84C /* CityViewModel.swift */; };
+		7186047C2D33F757004EC07C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7186047B2D33F757004EC07C /* GoogleService-Info.plist */; };
+		7186047E2D33F8A0004EC07C /* 67-surah-al-mulk.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 7186047D2D33F8A0004EC07C /* 67-surah-al-mulk.pdf */; };
+		718604802D33F8B2004EC07C /* surah-al-mulk_word-to-word-translation.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 7186047F2D33F8B2004EC07C /* surah-al-mulk_word-to-word-translation.pdf */; };
+		718604832D33FDE2004EC07C /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718604822D33FDE2004EC07C /* Constant.swift */; };
+		718604862D33FE7C004EC07C /* DateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718604852D33FE7C004EC07C /* DateParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -285,133 +173,16 @@
 		6DBCFC662CB25CC40074796A /* Night PrayersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Night PrayersUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DBCFC6A2CB25CC40074796A /* third2_0UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = third2_0UITests.swift; sourceTree = "<group>"; };
 		6DBCFC6C2CB25CC40074796A /* third2_0UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = third2_0UITestsLaunchTests.swift; sourceTree = "<group>"; };
-		6DC385892D24CAFA00FC45D4 /* 67-surah-al-mulk.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "67-surah-al-mulk.pdf"; path = "../../../../../../Downloads/67-surah-al-mulk.pdf"; sourceTree = "<group>"; };
-		6DC3858D2D24D34000FC45D4 /* surah-al-mulk_word-to-word-translation.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "surah-al-mulk_word-to-word-translation.pdf"; path = "../../../../../../Downloads/surah-al-mulk_word-to-word-translation.pdf"; sourceTree = "<group>"; };
 		6DCC12E02CFD10D900E352BD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		6DCC12FD2D0629BC00E352BD /* MissionText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionText.swift; sourceTree = "<group>"; };
 		6DCC12FF2D0629CF00E352BD /* PrivacyPolicyText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyText.swift; sourceTree = "<group>"; };
 		6DCC13072D083FAC00E352BD /* countryCodeMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = countryCodeMapping.swift; sourceTree = "<group>"; };
 		6DCC131B2D09853D00E352BD /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		6DCC131F2D0AD43500E352BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6DCC13252D0AF36F00E352BD /* QuranView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuranView.swift; sourceTree = "<group>"; };
 		6DCC13282D0AF60B00E352BD /* Surah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Surah.swift; sourceTree = "<group>"; };
 		6DCC132A2D0AF63C00E352BD /* surahs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = surahs.swift; sourceTree = "<group>"; };
 		6DCC132C2D0AF70400E352BD /* MinimizedAudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimizedAudioPlayerView.swift; sourceTree = "<group>"; };
 		6DCC132E2D0AF76C00E352BD /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
-		6DCC13322D0AFF1E00E352BD /* 017.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 017.mp3; path = ../../../../../../Downloads/017.mp3; sourceTree = "<group>"; };
-		6DCC13332D0AFF1E00E352BD /* 031.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 031.mp3; path = ../../../../../../Downloads/031.mp3; sourceTree = "<group>"; };
-		6DCC13342D0AFF1E00E352BD /* 034.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 034.mp3; path = ../../../../../../Downloads/034.mp3; sourceTree = "<group>"; };
-		6DCC13352D0AFF1E00E352BD /* 029.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 029.mp3; path = ../../../../../../Downloads/029.mp3; sourceTree = "<group>"; };
-		6DCC13362D0AFF1E00E352BD /* 039.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 039.mp3; path = ../../../../../../Downloads/039.mp3; sourceTree = "<group>"; };
-		6DCC13372D0AFF1E00E352BD /* 035.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 035.mp3; path = ../../../../../../Downloads/035.mp3; sourceTree = "<group>"; };
-		6DCC13382D0AFF1E00E352BD /* 037.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 037.mp3; path = ../../../../../../Downloads/037.mp3; sourceTree = "<group>"; };
-		6DCC13392D0AFF1E00E352BD /* 028.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 028.mp3; path = ../../../../../../Downloads/028.mp3; sourceTree = "<group>"; };
-		6DCC133A2D0AFF1E00E352BD /* 032.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 032.mp3; path = ../../../../../../Downloads/032.mp3; sourceTree = "<group>"; };
-		6DCC133B2D0AFF1E00E352BD /* 010.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 010.mp3; path = ../../../../../../Downloads/010.mp3; sourceTree = "<group>"; };
-		6DCC133C2D0AFF1E00E352BD /* 007.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 007.mp3; path = ../../../../../../Downloads/007.mp3; sourceTree = "<group>"; };
-		6DCC133D2D0AFF1E00E352BD /* 040.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 040.mp3; path = ../../../../../../Downloads/040.mp3; sourceTree = "<group>"; };
-		6DCC133E2D0AFF1E00E352BD /* 027.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 027.mp3; path = ../../../../../../Downloads/027.mp3; sourceTree = "<group>"; };
-		6DCC133F2D0AFF1E00E352BD /* 036.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 036.mp3; path = ../../../../../../Downloads/036.mp3; sourceTree = "<group>"; };
-		6DCC13402D0AFF1E00E352BD /* 002.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 002.mp3; path = ../../../../../../Downloads/002.mp3; sourceTree = "<group>"; };
-		6DCC13412D0AFF1E00E352BD /* 015.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 015.mp3; path = ../../../../../../Downloads/015.mp3; sourceTree = "<group>"; };
-		6DCC13422D0AFF1E00E352BD /* 021.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 021.mp3; path = ../../../../../../Downloads/021.mp3; sourceTree = "<group>"; };
-		6DCC13432D0AFF1E00E352BD /* 004.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 004.mp3; path = ../../../../../../Downloads/004.mp3; sourceTree = "<group>"; };
-		6DCC13442D0AFF1E00E352BD /* 013.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 013.mp3; path = ../../../../../../Downloads/013.mp3; sourceTree = "<group>"; };
-		6DCC13452D0AFF1E00E352BD /* 022.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 022.mp3; path = ../../../../../../Downloads/022.mp3; sourceTree = "<group>"; };
-		6DCC13462D0AFF1E00E352BD /* 023.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 023.mp3; path = ../../../../../../Downloads/023.mp3; sourceTree = "<group>"; };
-		6DCC13472D0AFF1E00E352BD /* 008.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 008.mp3; path = ../../../../../../Downloads/008.mp3; sourceTree = "<group>"; };
-		6DCC13482D0AFF1E00E352BD /* 018.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 018.mp3; path = ../../../../../../Downloads/018.mp3; sourceTree = "<group>"; };
-		6DCC13492D0AFF1E00E352BD /* 020.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 020.mp3; path = ../../../../../../Downloads/020.mp3; sourceTree = "<group>"; };
-		6DCC134A2D0AFF1E00E352BD /* 026.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 026.mp3; path = ../../../../../../Downloads/026.mp3; sourceTree = "<group>"; };
-		6DCC134B2D0AFF1E00E352BD /* 024.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 024.mp3; path = ../../../../../../Downloads/024.mp3; sourceTree = "<group>"; };
-		6DCC134C2D0AFF1E00E352BD /* 006.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 006.mp3; path = ../../../../../../Downloads/006.mp3; sourceTree = "<group>"; };
-		6DCC134D2D0AFF1E00E352BD /* 025.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 025.mp3; path = ../../../../../../Downloads/025.mp3; sourceTree = "<group>"; };
-		6DCC134E2D0AFF1E00E352BD /* 011.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 011.mp3; path = ../../../../../../Downloads/011.mp3; sourceTree = "<group>"; };
-		6DCC134F2D0AFF1E00E352BD /* 016.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 016.mp3; path = ../../../../../../Downloads/016.mp3; sourceTree = "<group>"; };
-		6DCC13502D0AFF1E00E352BD /* 019.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 019.mp3; path = ../../../../../../Downloads/019.mp3; sourceTree = "<group>"; };
-		6DCC13512D0AFF1E00E352BD /* 030.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 030.mp3; path = ../../../../../../Downloads/030.mp3; sourceTree = "<group>"; };
-		6DCC13522D0AFF1E00E352BD /* 038.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 038.mp3; path = ../../../../../../Downloads/038.mp3; sourceTree = "<group>"; };
-		6DCC13532D0AFF1E00E352BD /* 003.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 003.mp3; path = ../../../../../../Downloads/003.mp3; sourceTree = "<group>"; };
-		6DCC13542D0AFF1E00E352BD /* 033.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 033.mp3; path = ../../../../../../Downloads/033.mp3; sourceTree = "<group>"; };
-		6DCC13552D0AFF1E00E352BD /* 014.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 014.mp3; path = ../../../../../../Downloads/014.mp3; sourceTree = "<group>"; };
-		6DCC13562D0AFF1E00E352BD /* 009.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 009.mp3; path = ../../../../../../Downloads/009.mp3; sourceTree = "<group>"; };
-		6DCC13572D0AFF1E00E352BD /* 001.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 001.mp3; path = ../../../../../../Downloads/001.mp3; sourceTree = "<group>"; };
-		6DCC13582D0AFF1E00E352BD /* 012.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 012.mp3; path = ../../../../../../Downloads/012.mp3; sourceTree = "<group>"; };
-		6DCC13592D0AFF1E00E352BD /* 005.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 005.mp3; path = ../../../../../../Downloads/005.mp3; sourceTree = "<group>"; };
-		6DCC13822D0AFF9B00E352BD /* 060.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 060.mp3; path = ../../../../../../Downloads/060.mp3; sourceTree = "<group>"; };
-		6DCC13832D0AFF9B00E352BD /* 048.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 048.mp3; path = ../../../../../../Downloads/048.mp3; sourceTree = "<group>"; };
-		6DCC13842D0AFF9B00E352BD /* 044.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 044.mp3; path = ../../../../../../Downloads/044.mp3; sourceTree = "<group>"; };
-		6DCC13852D0AFF9B00E352BD /* 046.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 046.mp3; path = ../../../../../../Downloads/046.mp3; sourceTree = "<group>"; };
-		6DCC13862D0AFF9B00E352BD /* 052.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 052.mp3; path = ../../../../../../Downloads/052.mp3; sourceTree = "<group>"; };
-		6DCC13872D0AFF9B00E352BD /* 056.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 056.mp3; path = ../../../../../../Downloads/056.mp3; sourceTree = "<group>"; };
-		6DCC13882D0AFF9B00E352BD /* 057.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 057.mp3; path = ../../../../../../Downloads/057.mp3; sourceTree = "<group>"; };
-		6DCC13892D0AFF9B00E352BD /* 050.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 050.mp3; path = ../../../../../../Downloads/050.mp3; sourceTree = "<group>"; };
-		6DCC138A2D0AFF9B00E352BD /* 051.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 051.mp3; path = ../../../../../../Downloads/051.mp3; sourceTree = "<group>"; };
-		6DCC138B2D0AFF9B00E352BD /* 047.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 047.mp3; path = ../../../../../../Downloads/047.mp3; sourceTree = "<group>"; };
-		6DCC138C2D0AFF9B00E352BD /* 045.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 045.mp3; path = ../../../../../../Downloads/045.mp3; sourceTree = "<group>"; };
-		6DCC138D2D0AFF9B00E352BD /* 054.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 054.mp3; path = ../../../../../../Downloads/054.mp3; sourceTree = "<group>"; };
-		6DCC138E2D0AFF9B00E352BD /* 055.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 055.mp3; path = ../../../../../../Downloads/055.mp3; sourceTree = "<group>"; };
-		6DCC138F2D0AFF9B00E352BD /* 058.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 058.mp3; path = ../../../../../../Downloads/058.mp3; sourceTree = "<group>"; };
-		6DCC13902D0AFF9B00E352BD /* 059.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 059.mp3; path = ../../../../../../Downloads/059.mp3; sourceTree = "<group>"; };
-		6DCC13912D0AFF9B00E352BD /* 041.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 041.mp3; path = ../../../../../../Downloads/041.mp3; sourceTree = "<group>"; };
-		6DCC13922D0AFF9B00E352BD /* 043.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 043.mp3; path = ../../../../../../Downloads/043.mp3; sourceTree = "<group>"; };
-		6DCC13932D0AFF9B00E352BD /* 049.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 049.mp3; path = ../../../../../../Downloads/049.mp3; sourceTree = "<group>"; };
-		6DCC13942D0AFF9B00E352BD /* 042.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 042.mp3; path = ../../../../../../Downloads/042.mp3; sourceTree = "<group>"; };
-		6DCC13952D0AFF9B00E352BD /* 053.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 053.mp3; path = ../../../../../../Downloads/053.mp3; sourceTree = "<group>"; };
-		6DCC13AA2D0B00C500E352BD /* 095.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 095.mp3; path = ../../../../../../Downloads/095.mp3; sourceTree = "<group>"; };
-		6DCC13AB2D0B00C500E352BD /* 087.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 087.mp3; path = ../../../../../../Downloads/087.mp3; sourceTree = "<group>"; };
-		6DCC13AC2D0B00C500E352BD /* 065.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 065.mp3; path = ../../../../../../Downloads/065.mp3; sourceTree = "<group>"; };
-		6DCC13AD2D0B00C500E352BD /* 105.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 105.mp3; path = ../../../../../../Downloads/105.mp3; sourceTree = "<group>"; };
-		6DCC13AE2D0B00C500E352BD /* 110.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 110.mp3; path = ../../../../../../Downloads/110.mp3; sourceTree = "<group>"; };
-		6DCC13AF2D0B00C500E352BD /* 083.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 083.mp3; path = ../../../../../../Downloads/083.mp3; sourceTree = "<group>"; };
-		6DCC13B02D0B00C600E352BD /* 063.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 063.mp3; path = ../../../../../../Downloads/063.mp3; sourceTree = "<group>"; };
-		6DCC13B12D0B00C600E352BD /* 084.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 084.mp3; path = ../../../../../../Downloads/084.mp3; sourceTree = "<group>"; };
-		6DCC13B22D0B00C600E352BD /* 109.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 109.mp3; path = ../../../../../../Downloads/109.mp3; sourceTree = "<group>"; };
-		6DCC13B32D0B00C600E352BD /* 093.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 093.mp3; path = ../../../../../../Downloads/093.mp3; sourceTree = "<group>"; };
-		6DCC13B42D0B00C600E352BD /* 080.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 080.mp3; path = ../../../../../../Downloads/080.mp3; sourceTree = "<group>"; };
-		6DCC13B52D0B00C600E352BD /* 097.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 097.mp3; path = ../../../../../../Downloads/097.mp3; sourceTree = "<group>"; };
-		6DCC13B62D0B00C600E352BD /* 107.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 107.mp3; path = ../../../../../../Downloads/107.mp3; sourceTree = "<group>"; };
-		6DCC13B72D0B00C600E352BD /* 100.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 100.mp3; path = ../../../../../../Downloads/100.mp3; sourceTree = "<group>"; };
-		6DCC13B82D0B00C600E352BD /* 106.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 106.mp3; path = ../../../../../../Downloads/106.mp3; sourceTree = "<group>"; };
-		6DCC13B92D0B00C600E352BD /* 082.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 082.mp3; path = ../../../../../../Downloads/082.mp3; sourceTree = "<group>"; };
-		6DCC13BA2D0B00C600E352BD /* 099.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 099.mp3; path = ../../../../../../Downloads/099.mp3; sourceTree = "<group>"; };
-		6DCC13BB2D0B00C600E352BD /* 103.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 103.mp3; path = ../../../../../../Downloads/103.mp3; sourceTree = "<group>"; };
-		6DCC13BC2D0B00C600E352BD /* 073.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 073.mp3; path = ../../../../../../Downloads/073.mp3; sourceTree = "<group>"; };
-		6DCC13BD2D0B00C600E352BD /* 081.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 081.mp3; path = ../../../../../../Downloads/081.mp3; sourceTree = "<group>"; };
-		6DCC13BE2D0B00C600E352BD /* 089.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 089.mp3; path = ../../../../../../Downloads/089.mp3; sourceTree = "<group>"; };
-		6DCC13BF2D0B00C600E352BD /* 111.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 111.mp3; path = ../../../../../../Downloads/111.mp3; sourceTree = "<group>"; };
-		6DCC13C02D0B00C600E352BD /* 066.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 066.mp3; path = ../../../../../../Downloads/066.mp3; sourceTree = "<group>"; };
-		6DCC13C12D0B00C600E352BD /* 112.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 112.mp3; path = ../../../../../../Downloads/112.mp3; sourceTree = "<group>"; };
-		6DCC13C22D0B00C600E352BD /* 092.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 092.mp3; path = ../../../../../../Downloads/092.mp3; sourceTree = "<group>"; };
-		6DCC13C32D0B00C600E352BD /* 104.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 104.mp3; path = ../../../../../../Downloads/104.mp3; sourceTree = "<group>"; };
-		6DCC13C42D0B00C600E352BD /* 086.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 086.mp3; path = ../../../../../../Downloads/086.mp3; sourceTree = "<group>"; };
-		6DCC13C52D0B00C600E352BD /* 114.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 114.mp3; path = ../../../../../../Downloads/114.mp3; sourceTree = "<group>"; };
-		6DCC13C62D0B00C600E352BD /* 094.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 094.mp3; path = ../../../../../../Downloads/094.mp3; sourceTree = "<group>"; };
-		6DCC13C72D0B00C600E352BD /* 072.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 072.mp3; path = ../../../../../../Downloads/072.mp3; sourceTree = "<group>"; };
-		6DCC13C82D0B00C600E352BD /* 113.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 113.mp3; path = ../../../../../../Downloads/113.mp3; sourceTree = "<group>"; };
-		6DCC13C92D0B00C600E352BD /* 091.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 091.mp3; path = ../../../../../../Downloads/091.mp3; sourceTree = "<group>"; };
-		6DCC13CA2D0B00C600E352BD /* 096.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 096.mp3; path = ../../../../../../Downloads/096.mp3; sourceTree = "<group>"; };
-		6DCC13CB2D0B00C600E352BD /* 064.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 064.mp3; path = ../../../../../../Downloads/064.mp3; sourceTree = "<group>"; };
-		6DCC13CC2D0B00C600E352BD /* 068.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 068.mp3; path = ../../../../../../Downloads/068.mp3; sourceTree = "<group>"; };
-		6DCC13CD2D0B00C600E352BD /* 085.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 085.mp3; path = ../../../../../../Downloads/085.mp3; sourceTree = "<group>"; };
-		6DCC13CE2D0B00C600E352BD /* 077.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 077.mp3; path = ../../../../../../Downloads/077.mp3; sourceTree = "<group>"; };
-		6DCC13CF2D0B00C600E352BD /* 101.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 101.mp3; path = ../../../../../../Downloads/101.mp3; sourceTree = "<group>"; };
-		6DCC13D02D0B00C600E352BD /* 098.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 098.mp3; path = ../../../../../../Downloads/098.mp3; sourceTree = "<group>"; };
-		6DCC13D12D0B00C600E352BD /* 069.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 069.mp3; path = ../../../../../../Downloads/069.mp3; sourceTree = "<group>"; };
-		6DCC13D22D0B00C600E352BD /* 067.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 067.mp3; path = ../../../../../../Downloads/067.mp3; sourceTree = "<group>"; };
-		6DCC13D32D0B00C600E352BD /* 062.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 062.mp3; path = ../../../../../../Downloads/062.mp3; sourceTree = "<group>"; };
-		6DCC13D42D0B00C600E352BD /* 078.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 078.mp3; path = ../../../../../../Downloads/078.mp3; sourceTree = "<group>"; };
-		6DCC13D52D0B00C600E352BD /* 088.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 088.mp3; path = ../../../../../../Downloads/088.mp3; sourceTree = "<group>"; };
-		6DCC13D62D0B00C600E352BD /* 079.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 079.mp3; path = ../../../../../../Downloads/079.mp3; sourceTree = "<group>"; };
-		6DCC13D72D0B00C600E352BD /* 076.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 076.mp3; path = ../../../../../../Downloads/076.mp3; sourceTree = "<group>"; };
-		6DCC13D82D0B00C600E352BD /* 102.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 102.mp3; path = ../../../../../../Downloads/102.mp3; sourceTree = "<group>"; };
-		6DCC13D92D0B00C600E352BD /* 070.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 070.mp3; path = ../../../../../../Downloads/070.mp3; sourceTree = "<group>"; };
-		6DCC13DA2D0B00C600E352BD /* 075.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 075.mp3; path = ../../../../../../Downloads/075.mp3; sourceTree = "<group>"; };
-		6DCC13DB2D0B00C600E352BD /* 061.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 061.mp3; path = ../../../../../../Downloads/061.mp3; sourceTree = "<group>"; };
-		6DCC13DC2D0B00C600E352BD /* 090.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 090.mp3; path = ../../../../../../Downloads/090.mp3; sourceTree = "<group>"; };
-		6DCC13DD2D0B00C600E352BD /* 108.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 108.mp3; path = ../../../../../../Downloads/108.mp3; sourceTree = "<group>"; };
-		6DCC13DE2D0B00C600E352BD /* 071.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 071.mp3; path = ../../../../../../Downloads/071.mp3; sourceTree = "<group>"; };
-		6DCC13DF2D0B00C600E352BD /* 074.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 074.mp3; path = ../../../../../../Downloads/074.mp3; sourceTree = "<group>"; };
 		6DCC14162D0B180400E352BD /* AudioPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewModel.swift; sourceTree = "<group>"; };
 		6DCC14182D0B28B200E352BD /* Night-Prayers-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Night-Prayers-Info.plist"; sourceTree = "<group>"; };
 		6DCC141E2D0B9CAC00E352BD /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -428,6 +199,11 @@
 		6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurahMulkView.swift; sourceTree = "<group>"; };
 		6DE78BD02CB261880068F84C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		6DE78BDD2CB28C400068F84C /* CityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewModel.swift; sourceTree = "<group>"; };
+		7186047B2D33F757004EC07C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7186047D2D33F8A0004EC07C /* 67-surah-al-mulk.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "67-surah-al-mulk.pdf"; sourceTree = "<group>"; };
+		7186047F2D33F8B2004EC07C /* surah-al-mulk_word-to-word-translation.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "surah-al-mulk_word-to-word-translation.pdf"; sourceTree = "<group>"; };
+		718604822D33FDE2004EC07C /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		718604852D33FE7C004EC07C /* DateParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -546,20 +322,21 @@
 		6DBCFC4C2CB25CC30074796A /* third2.0 */ = {
 			isa = PBXGroup;
 			children = (
+				718604842D33FE57004EC07C /* Helper */,
 				6DBCFC4D2CB25CC30074796A /* third2_0App.swift */,
 				6D4D628F2D1732DB003D7F11 /* Logic */,
 				6DCC14292D10DEA900E352BD /* Notifications */,
 				6DCC14212D10B4F200E352BD /* Responses */,
 				6DCC14192D0B9B8E00E352BD /* Launch */,
 				6DCC13272D0AF5F500E352BD /* Models */,
-				6DCC13312D0AFD6B00E352BD /* SurahMP3s */,
 				6DCC13242D0AF35A00E352BD /* Quran */,
 				6DCC13222D0AE68500E352BD /* Text */,
 				6DCC13212D0AE61900E352BD /* PrayerViews */,
 				6DCC13232D0AE6BE00E352BD /* Views */,
 				6DBCFC532CB25CC40074796A /* Assets.xcassets */,
+				718604812D33FDBF004EC07C /* Utilities */,
 				6DBCFC552CB25CC40074796A /* Preview Content */,
-				6DCC131F2D0AD43500E352BD /* GoogleService-Info.plist */,
+				7186047B2D33F757004EC07C /* GoogleService-Info.plist */,
 			);
 			path = third2.0;
 			sourceTree = "<group>";
@@ -611,8 +388,8 @@
 		6DCC13222D0AE68500E352BD /* Text */ = {
 			isa = PBXGroup;
 			children = (
-				6DC3858D2D24D34000FC45D4 /* surah-al-mulk_word-to-word-translation.pdf */,
-				6DC385892D24CAFA00FC45D4 /* 67-surah-al-mulk.pdf */,
+				7186047F2D33F8B2004EC07C /* surah-al-mulk_word-to-word-translation.pdf */,
+				7186047D2D33F8A0004EC07C /* 67-surah-al-mulk.pdf */,
 				6DE78BCE2CB2615E0068F84C /* SurahMulkView.swift */,
 				6DCC132A2D0AF63C00E352BD /* surahs.swift */,
 				6DCC12FF2D0629CF00E352BD /* PrivacyPolicyText.swift */,
@@ -666,127 +443,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		6DCC13312D0AFD6B00E352BD /* SurahMP3s */ = {
-			isa = PBXGroup;
-			children = (
-				6DCC13572D0AFF1E00E352BD /* 001.mp3 */,
-				6DCC13402D0AFF1E00E352BD /* 002.mp3 */,
-				6DCC13532D0AFF1E00E352BD /* 003.mp3 */,
-				6DCC13432D0AFF1E00E352BD /* 004.mp3 */,
-				6DCC13592D0AFF1E00E352BD /* 005.mp3 */,
-				6DCC134C2D0AFF1E00E352BD /* 006.mp3 */,
-				6DCC133C2D0AFF1E00E352BD /* 007.mp3 */,
-				6DCC13472D0AFF1E00E352BD /* 008.mp3 */,
-				6DCC13562D0AFF1E00E352BD /* 009.mp3 */,
-				6DCC133B2D0AFF1E00E352BD /* 010.mp3 */,
-				6DCC134E2D0AFF1E00E352BD /* 011.mp3 */,
-				6DCC13582D0AFF1E00E352BD /* 012.mp3 */,
-				6DCC13442D0AFF1E00E352BD /* 013.mp3 */,
-				6DCC13552D0AFF1E00E352BD /* 014.mp3 */,
-				6DCC13412D0AFF1E00E352BD /* 015.mp3 */,
-				6DCC134F2D0AFF1E00E352BD /* 016.mp3 */,
-				6DCC13322D0AFF1E00E352BD /* 017.mp3 */,
-				6DCC13482D0AFF1E00E352BD /* 018.mp3 */,
-				6DCC13502D0AFF1E00E352BD /* 019.mp3 */,
-				6DCC13492D0AFF1E00E352BD /* 020.mp3 */,
-				6DCC13422D0AFF1E00E352BD /* 021.mp3 */,
-				6DCC13452D0AFF1E00E352BD /* 022.mp3 */,
-				6DCC13462D0AFF1E00E352BD /* 023.mp3 */,
-				6DCC134B2D0AFF1E00E352BD /* 024.mp3 */,
-				6DCC134D2D0AFF1E00E352BD /* 025.mp3 */,
-				6DCC134A2D0AFF1E00E352BD /* 026.mp3 */,
-				6DCC133E2D0AFF1E00E352BD /* 027.mp3 */,
-				6DCC13392D0AFF1E00E352BD /* 028.mp3 */,
-				6DCC13352D0AFF1E00E352BD /* 029.mp3 */,
-				6DCC13512D0AFF1E00E352BD /* 030.mp3 */,
-				6DCC13332D0AFF1E00E352BD /* 031.mp3 */,
-				6DCC133A2D0AFF1E00E352BD /* 032.mp3 */,
-				6DCC13542D0AFF1E00E352BD /* 033.mp3 */,
-				6DCC13342D0AFF1E00E352BD /* 034.mp3 */,
-				6DCC13372D0AFF1E00E352BD /* 035.mp3 */,
-				6DCC133F2D0AFF1E00E352BD /* 036.mp3 */,
-				6DCC13382D0AFF1E00E352BD /* 037.mp3 */,
-				6DCC13522D0AFF1E00E352BD /* 038.mp3 */,
-				6DCC13362D0AFF1E00E352BD /* 039.mp3 */,
-				6DCC133D2D0AFF1E00E352BD /* 040.mp3 */,
-				6DCC13912D0AFF9B00E352BD /* 041.mp3 */,
-				6DCC13942D0AFF9B00E352BD /* 042.mp3 */,
-				6DCC13922D0AFF9B00E352BD /* 043.mp3 */,
-				6DCC13842D0AFF9B00E352BD /* 044.mp3 */,
-				6DCC138C2D0AFF9B00E352BD /* 045.mp3 */,
-				6DCC13852D0AFF9B00E352BD /* 046.mp3 */,
-				6DCC138B2D0AFF9B00E352BD /* 047.mp3 */,
-				6DCC13832D0AFF9B00E352BD /* 048.mp3 */,
-				6DCC13932D0AFF9B00E352BD /* 049.mp3 */,
-				6DCC13892D0AFF9B00E352BD /* 050.mp3 */,
-				6DCC138A2D0AFF9B00E352BD /* 051.mp3 */,
-				6DCC13862D0AFF9B00E352BD /* 052.mp3 */,
-				6DCC13952D0AFF9B00E352BD /* 053.mp3 */,
-				6DCC138D2D0AFF9B00E352BD /* 054.mp3 */,
-				6DCC138E2D0AFF9B00E352BD /* 055.mp3 */,
-				6DCC13872D0AFF9B00E352BD /* 056.mp3 */,
-				6DCC13882D0AFF9B00E352BD /* 057.mp3 */,
-				6DCC138F2D0AFF9B00E352BD /* 058.mp3 */,
-				6DCC13902D0AFF9B00E352BD /* 059.mp3 */,
-				6DCC13822D0AFF9B00E352BD /* 060.mp3 */,
-				6DCC13DB2D0B00C600E352BD /* 061.mp3 */,
-				6DCC13D32D0B00C600E352BD /* 062.mp3 */,
-				6DCC13B02D0B00C600E352BD /* 063.mp3 */,
-				6DCC13CB2D0B00C600E352BD /* 064.mp3 */,
-				6DCC13AC2D0B00C500E352BD /* 065.mp3 */,
-				6DCC13C02D0B00C600E352BD /* 066.mp3 */,
-				6DCC13D22D0B00C600E352BD /* 067.mp3 */,
-				6DCC13CC2D0B00C600E352BD /* 068.mp3 */,
-				6DCC13D12D0B00C600E352BD /* 069.mp3 */,
-				6DCC13D92D0B00C600E352BD /* 070.mp3 */,
-				6DCC13DE2D0B00C600E352BD /* 071.mp3 */,
-				6DCC13C72D0B00C600E352BD /* 072.mp3 */,
-				6DCC13BC2D0B00C600E352BD /* 073.mp3 */,
-				6DCC13DF2D0B00C600E352BD /* 074.mp3 */,
-				6DCC13DA2D0B00C600E352BD /* 075.mp3 */,
-				6DCC13D72D0B00C600E352BD /* 076.mp3 */,
-				6DCC13CE2D0B00C600E352BD /* 077.mp3 */,
-				6DCC13D42D0B00C600E352BD /* 078.mp3 */,
-				6DCC13D62D0B00C600E352BD /* 079.mp3 */,
-				6DCC13B42D0B00C600E352BD /* 080.mp3 */,
-				6DCC13BD2D0B00C600E352BD /* 081.mp3 */,
-				6DCC13B92D0B00C600E352BD /* 082.mp3 */,
-				6DCC13AF2D0B00C500E352BD /* 083.mp3 */,
-				6DCC13B12D0B00C600E352BD /* 084.mp3 */,
-				6DCC13CD2D0B00C600E352BD /* 085.mp3 */,
-				6DCC13C42D0B00C600E352BD /* 086.mp3 */,
-				6DCC13AB2D0B00C500E352BD /* 087.mp3 */,
-				6DCC13D52D0B00C600E352BD /* 088.mp3 */,
-				6DCC13BE2D0B00C600E352BD /* 089.mp3 */,
-				6DCC13DC2D0B00C600E352BD /* 090.mp3 */,
-				6DCC13C92D0B00C600E352BD /* 091.mp3 */,
-				6DCC13C22D0B00C600E352BD /* 092.mp3 */,
-				6DCC13B32D0B00C600E352BD /* 093.mp3 */,
-				6DCC13C62D0B00C600E352BD /* 094.mp3 */,
-				6DCC13AA2D0B00C500E352BD /* 095.mp3 */,
-				6DCC13CA2D0B00C600E352BD /* 096.mp3 */,
-				6DCC13B52D0B00C600E352BD /* 097.mp3 */,
-				6DCC13D02D0B00C600E352BD /* 098.mp3 */,
-				6DCC13BA2D0B00C600E352BD /* 099.mp3 */,
-				6DCC13B72D0B00C600E352BD /* 100.mp3 */,
-				6DCC13CF2D0B00C600E352BD /* 101.mp3 */,
-				6DCC13D82D0B00C600E352BD /* 102.mp3 */,
-				6DCC13BB2D0B00C600E352BD /* 103.mp3 */,
-				6DCC13C32D0B00C600E352BD /* 104.mp3 */,
-				6DCC13AD2D0B00C500E352BD /* 105.mp3 */,
-				6DCC13B82D0B00C600E352BD /* 106.mp3 */,
-				6DCC13B62D0B00C600E352BD /* 107.mp3 */,
-				6DCC13DD2D0B00C600E352BD /* 108.mp3 */,
-				6DCC13B22D0B00C600E352BD /* 109.mp3 */,
-				6DCC13AE2D0B00C500E352BD /* 110.mp3 */,
-				6DCC13BF2D0B00C600E352BD /* 111.mp3 */,
-				6DCC13C12D0B00C600E352BD /* 112.mp3 */,
-				6DCC13C82D0B00C600E352BD /* 113.mp3 */,
-				6DCC13C52D0B00C600E352BD /* 114.mp3 */,
-			);
-			path = SurahMP3s;
-			sourceTree = "<group>";
-		};
 		6DCC14192D0B9B8E00E352BD /* Launch */ = {
 			isa = PBXGroup;
 			children = (
@@ -812,6 +468,22 @@
 				6DCC142A2D10DEB900E352BD /* schedule_notifications.swift */,
 			);
 			path = Notifications;
+			sourceTree = "<group>";
+		};
+		718604812D33FDBF004EC07C /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				718604822D33FDE2004EC07C /* Constant.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		718604842D33FE57004EC07C /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				718604852D33FE7C004EC07C /* DateParser.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -990,125 +662,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6DCC13A02D0AFF9B00E352BD /* 045.mp3 in Resources */,
-				6DCC13812D0AFF1E00E352BD /* 005.mp3 in Resources */,
-				6DCC13E12D0B00C600E352BD /* 087.mp3 in Resources */,
-				6DCC137D2D0AFF1E00E352BD /* 014.mp3 in Resources */,
-				6DCC13E32D0B00C600E352BD /* 105.mp3 in Resources */,
-				6DCC13EC2D0B00C600E352BD /* 107.mp3 in Resources */,
-				6DCC14092D0B00C600E352BD /* 062.mp3 in Resources */,
-				6DCC14032D0B00C600E352BD /* 085.mp3 in Resources */,
-				6DCC13A32D0AFF9B00E352BD /* 058.mp3 in Resources */,
-				6DCC137F2D0AFF1E00E352BD /* 001.mp3 in Resources */,
-				6DCC13F82D0B00C600E352BD /* 092.mp3 in Resources */,
-				6DCC14082D0B00C600E352BD /* 067.mp3 in Resources */,
-				6DCC136D2D0AFF1E00E352BD /* 022.mp3 in Resources */,
-				6DCC14132D0B00C600E352BD /* 108.mp3 in Resources */,
-				6DCC13722D0AFF1E00E352BD /* 026.mp3 in Resources */,
-				6DCC14152D0B00C600E352BD /* 074.mp3 in Resources */,
-				6DCC140D2D0B00C600E352BD /* 076.mp3 in Resources */,
-				6DCC136A2D0AFF1E00E352BD /* 021.mp3 in Resources */,
-				6DCC13F22D0B00C600E352BD /* 073.mp3 in Resources */,
-				6DCC13752D0AFF1E00E352BD /* 025.mp3 in Resources */,
-				6DCC13E42D0B00C600E352BD /* 110.mp3 in Resources */,
-				6DCC136C2D0AFF1E00E352BD /* 013.mp3 in Resources */,
-				6DCC137E2D0AFF1E00E352BD /* 009.mp3 in Resources */,
-				6DCC13E22D0B00C600E352BD /* 065.mp3 in Resources */,
-				6DCC13FD2D0B00C600E352BD /* 072.mp3 in Resources */,
-				6DCC13FC2D0B00C600E352BD /* 094.mp3 in Resources */,
-				6DCC13E52D0B00C600E352BD /* 083.mp3 in Resources */,
-				6DCC14022D0B00C600E352BD /* 068.mp3 in Resources */,
-				6DCC13F52D0B00C600E352BD /* 111.mp3 in Resources */,
-				6DCC13972D0AFF9B00E352BD /* 048.mp3 in Resources */,
-				6DCC135C2D0AFF1E00E352BD /* 034.mp3 in Resources */,
-				6DCC13992D0AFF9B00E352BD /* 046.mp3 in Resources */,
-				6DCC139A2D0AFF9B00E352BD /* 052.mp3 in Resources */,
-				6DCC13A82D0AFF9B00E352BD /* 042.mp3 in Resources */,
-				6DCC13FB2D0B00C600E352BD /* 114.mp3 in Resources */,
-				6DC3858A2D24CAFA00FC45D4 /* 67-surah-al-mulk.pdf in Resources */,
-				6DCC14102D0B00C600E352BD /* 075.mp3 in Resources */,
-				6DCC13A42D0AFF9B00E352BD /* 059.mp3 in Resources */,
-				6DCC140E2D0B00C600E352BD /* 102.mp3 in Resources */,
-				6DCC13F02D0B00C600E352BD /* 099.mp3 in Resources */,
-				6DCC14012D0B00C600E352BD /* 064.mp3 in Resources */,
-				6DCC135E2D0AFF1E00E352BD /* 039.mp3 in Resources */,
-				6DCC13A22D0AFF9B00E352BD /* 055.mp3 in Resources */,
-				6DCC13672D0AFF1E00E352BD /* 036.mp3 in Resources */,
-				6DCC13682D0AFF1E00E352BD /* 002.mp3 in Resources */,
-				6DCC13792D0AFF1E00E352BD /* 030.mp3 in Resources */,
-				6DCC14112D0B00C600E352BD /* 061.mp3 in Resources */,
+				718604802D33F8B2004EC07C /* surah-al-mulk_word-to-word-translation.pdf in Resources */,
+				7186047C2D33F757004EC07C /* GoogleService-Info.plist in Resources */,
+				7186047E2D33F8A0004EC07C /* 67-surah-al-mulk.pdf in Resources */,
 				6DBCFC572CB25CC40074796A /* Preview Assets.xcassets in Resources */,
-				6DCC14002D0B00C600E352BD /* 096.mp3 in Resources */,
-				6DCC13742D0AFF1E00E352BD /* 006.mp3 in Resources */,
-				6DCC139E2D0AFF9B00E352BD /* 051.mp3 in Resources */,
-				6DCC13E72D0B00C600E352BD /* 084.mp3 in Resources */,
-				6DCC13A62D0AFF9B00E352BD /* 043.mp3 in Resources */,
-				6DCC137A2D0AFF1E00E352BD /* 038.mp3 in Resources */,
-				6DCC136B2D0AFF1E00E352BD /* 004.mp3 in Resources */,
-				6DCC13F12D0B00C600E352BD /* 103.mp3 in Resources */,
-				6DCC13712D0AFF1E00E352BD /* 020.mp3 in Resources */,
-				6DCC13EE2D0B00C600E352BD /* 106.mp3 in Resources */,
-				6DCC135F2D0AFF1E00E352BD /* 035.mp3 in Resources */,
-				6DCC139C2D0AFF9B00E352BD /* 057.mp3 in Resources */,
-				6DCC13F62D0B00C600E352BD /* 066.mp3 in Resources */,
-				6DCC135A2D0AFF1E00E352BD /* 017.mp3 in Resources */,
-				6DCC13EF2D0B00C600E352BD /* 082.mp3 in Resources */,
 				6DBCFC542CB25CC40074796A /* Assets.xcassets in Resources */,
-				6DCC140C2D0B00C600E352BD /* 079.mp3 in Resources */,
-				6DCC140F2D0B00C600E352BD /* 070.mp3 in Resources */,
-				6DCC13EA2D0B00C600E352BD /* 080.mp3 in Resources */,
-				6DCC13F92D0B00C600E352BD /* 104.mp3 in Resources */,
-				6DCC13ED2D0B00C600E352BD /* 100.mp3 in Resources */,
-				6DCC136F2D0AFF1E00E352BD /* 008.mp3 in Resources */,
-				6DCC13622D0AFF1E00E352BD /* 032.mp3 in Resources */,
-				6DCC14142D0B00C600E352BD /* 071.mp3 in Resources */,
-				6DCC13E62D0B00C600E352BD /* 063.mp3 in Resources */,
-				6DCC13E02D0B00C600E352BD /* 095.mp3 in Resources */,
-				6DCC13772D0AFF1E00E352BD /* 016.mp3 in Resources */,
-				6DCC13802D0AFF1E00E352BD /* 012.mp3 in Resources */,
-				6DCC13702D0AFF1E00E352BD /* 018.mp3 in Resources */,
-				6DCC13E92D0B00C600E352BD /* 093.mp3 in Resources */,
-				6DCC14062D0B00C600E352BD /* 098.mp3 in Resources */,
-				6DCC13692D0AFF1E00E352BD /* 015.mp3 in Resources */,
-				6DCC13982D0AFF9B00E352BD /* 044.mp3 in Resources */,
-				6DCC135B2D0AFF1E00E352BD /* 031.mp3 in Resources */,
-				6DCC13602D0AFF1E00E352BD /* 037.mp3 in Resources */,
-				6DCC13FF2D0B00C600E352BD /* 091.mp3 in Resources */,
-				6DCC13FA2D0B00C600E352BD /* 086.mp3 in Resources */,
-				6DCC139F2D0AFF9B00E352BD /* 047.mp3 in Resources */,
-				6DC3858E2D24D34000FC45D4 /* surah-al-mulk_word-to-word-translation.pdf in Resources */,
-				6DCC13612D0AFF1E00E352BD /* 028.mp3 in Resources */,
-				6DCC139B2D0AFF9B00E352BD /* 056.mp3 in Resources */,
-				6DCC13A92D0AFF9B00E352BD /* 053.mp3 in Resources */,
-				6DCC140B2D0B00C600E352BD /* 088.mp3 in Resources */,
-				6DCC13762D0AFF1E00E352BD /* 011.mp3 in Resources */,
-				6DCC13642D0AFF1E00E352BD /* 007.mp3 in Resources */,
-				6DCC13A72D0AFF9B00E352BD /* 049.mp3 in Resources */,
-				6DCC14042D0B00C600E352BD /* 077.mp3 in Resources */,
-				6DCC14122D0B00C600E352BD /* 090.mp3 in Resources */,
-				6DCC13FE2D0B00C600E352BD /* 113.mp3 in Resources */,
-				6DCC13F42D0B00C600E352BD /* 089.mp3 in Resources */,
-				6DCC139D2D0AFF9B00E352BD /* 050.mp3 in Resources */,
-				6DCC13EB2D0B00C600E352BD /* 097.mp3 in Resources */,
-				6DCC136E2D0AFF1E00E352BD /* 023.mp3 in Resources */,
-				6DCC13F72D0B00C600E352BD /* 112.mp3 in Resources */,
-				6DCC135D2D0AFF1E00E352BD /* 029.mp3 in Resources */,
-				6DCC13A52D0AFF9B00E352BD /* 041.mp3 in Resources */,
-				6DCC13962D0AFF9B00E352BD /* 060.mp3 in Resources */,
-				6DCC13A12D0AFF9B00E352BD /* 054.mp3 in Resources */,
-				6DCC13E82D0B00C600E352BD /* 109.mp3 in Resources */,
-				6DCC13732D0AFF1E00E352BD /* 024.mp3 in Resources */,
-				6DCC13782D0AFF1E00E352BD /* 019.mp3 in Resources */,
-				6DCC13652D0AFF1E00E352BD /* 040.mp3 in Resources */,
-				6DCC137C2D0AFF1E00E352BD /* 033.mp3 in Resources */,
-				6DCC14072D0B00C600E352BD /* 069.mp3 in Resources */,
-				6DCC13F32D0B00C600E352BD /* 081.mp3 in Resources */,
-				6DCC13202D0AD43500E352BD /* GoogleService-Info.plist in Resources */,
-				6DCC13662D0AFF1E00E352BD /* 027.mp3 in Resources */,
-				6DCC137B2D0AFF1E00E352BD /* 003.mp3 in Resources */,
-				6DCC14052D0B00C600E352BD /* 101.mp3 in Resources */,
-				6DCC140A2D0B00C600E352BD /* 078.mp3 in Resources */,
-				6DCC13632D0AFF1E00E352BD /* 010.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1163,6 +721,7 @@
 				6D27C5D52D288F1D00B3230D /* FullScreenPDFView.swift in Sources */,
 				6DD352832D2829260061E3C4 /* PrayerHelper.swift in Sources */,
 				6D4D62862D15C53C003D7F11 /* MailView.swift in Sources */,
+				718604862D33FE7C004EC07C /* DateParser.swift in Sources */,
 				6DCC132B2D0AF63C00E352BD /* surahs.swift in Sources */,
 				6DCC13262D0AF36F00E352BD /* QuranView.swift in Sources */,
 				6DAD848A2CBD09230027BF5A /* DayPrayerView.swift in Sources */,
@@ -1191,6 +750,7 @@
 				6DCC132D2D0AF70400E352BD /* MinimizedAudioPlayerView.swift in Sources */,
 				6DCC141F2D0B9CAC00E352BD /* OnboardingView.swift in Sources */,
 				6DE78BCF2CB2615E0068F84C /* SurahMulkView.swift in Sources */,
+				718604832D33FDE2004EC07C /* Constant.swift in Sources */,
 				6D4D628A2D161DB3003D7F11 /* SettingsButton.swift in Sources */,
 				6DD5AD442D22B644000288B6 /* DonateView.swift in Sources */,
 				6D4D62912D205B87003D7F11 /* defaultPrayerTimes.swift in Sources */,

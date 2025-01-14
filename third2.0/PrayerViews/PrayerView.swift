@@ -10,9 +10,7 @@ struct PrayerView: View {
     @State private var moonScale: CGFloat = 1.0
     @State private var isDaytime = false
     @State private var readableDate: String = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.string(from: Date())
+        DateParser.getCurrentDateToString()
     }()
     
     @State private var showDonationOptions = false
@@ -241,7 +239,7 @@ struct PrayerView: View {
                     self.maxDayIndex = self.prayerData.count
 
                     // Set default to today
-                    self.currentDayIndex = self.prayerData.firstIndex(where: { ($0["date"] as? String) == self.currentReadableDate() }) ?? 0
+                    self.currentDayIndex = self.prayerData.firstIndex(where: { ($0["date"] as? String) == DateParser.getCurrentDateToString() }) ?? 0
                     self.updatePrayerTimesForLondonDay()
                 }
             } catch {
@@ -254,7 +252,7 @@ struct PrayerView: View {
     func fetchMosqueDetails(mosque: String) {
         let db = Firestore.firestore()
         let docRef = db.collection("Mosques").document(mosque)
-
+        
         docRef.getDocument { document, error in
             if let document = document, document.exists {
                 if let data = document.data(),
@@ -263,7 +261,7 @@ struct PrayerView: View {
                         let prayerTimesDict = nestedData[currentDayIndex]
                         let mappedPrayerTimes = PrayerHelper.mapCheadleMasjidKeys(prayerTimesDict)
                         let date = prayerTimesDict["d_date"] ?? ""
-
+                        
                         // Fetch next day's Fajr time
                         fetchNextDayFajrTime(mosque: mosque, nextDayIndex: currentDayIndex + 1) { nextDayFajr in
                             DispatchQueue.main.async {
@@ -306,11 +304,7 @@ struct PrayerView: View {
     }
 
     // MARK: - Helper to Get Current Date
-    func currentReadableDate() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.string(from: Date())
-    }
+
 
     // MARK: - Update Prayer Times for the Day
     func updatePrayerTimesForDay() {
@@ -327,7 +321,7 @@ struct PrayerView: View {
 
             if let date = dayData["date"] as? [String: Any],
                let readable = date["readable"] as? String {
-                self.readableDate = PrayerHelper.convertToYYYYMMDD(from: readable)
+                self.readableDate = DateParser.convertToYYYYMMDD(from: readable)
             } else {
                 // Fallback to the current date if no readable date is provided
                 self.readableDate = PrayerHelper.currentReadableDate()

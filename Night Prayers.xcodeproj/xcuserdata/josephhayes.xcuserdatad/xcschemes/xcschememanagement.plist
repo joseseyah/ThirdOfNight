@@ -7,7 +7,7 @@
 		<key>LeftColumnWidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>8</integer>
+			<integer>3</integer>
 		</dict>
 		<key>Night Prayers 1.xcscheme_^#shared#^_</key>
 		<dict>
@@ -60,7 +60,7 @@
 		<key>RightColumnWidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>9</integer>
+			<integer>2</integer>
 		</dict>
 		<key>third2.0.xcscheme_^#shared#^_</key>
 		<dict>

@@ -7,22 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "626F7D58-AB5F-4CD4-9F81-ACD1AE7F8D76"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "third2.0/PrayerViews/PrayerView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "275"
-            endingLineNumber = "275"
-            landmarkName = "fetchMosqueDetails(mosque:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "AE76D3F1-8AAC-4832-8417-512E47086078"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -82,6 +66,36 @@
             endingLineNumber = "82"
             landmarkName = "fetchPrayerTimesWithCity(city:completion:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "58111E5A-33C2-4741-837D-3ACA12B34B81 - 6e98bc8e1a15840c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Night_Prayers.FirebaseHelper.fetchPrayerTimesWithCity(city: Swift.String, completion: (Swift.Result&lt;Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Night Prayers.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/waqar1/Documents/PrayTime/third2.0/Helper/FirebaseHelper.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "82"
+                  endingLineNumber = "82">
+               </Location>
+               <Location
+                  uuid = "58111E5A-33C2-4741-837D-3ACA12B34B81 - 4d2c73be60b4811e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRDocumentSnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Night_Prayers.FirebaseHelper.fetchPrayerTimesWithCity(city: Swift.String, completion: (Swift.Result&lt;Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Night Prayers.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/waqar1/Documents/PrayTime/third2.0/Helper/FirebaseHelper.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "82"
+                  endingLineNumber = "82">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

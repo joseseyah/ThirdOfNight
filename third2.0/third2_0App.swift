@@ -6,6 +6,8 @@ import BackgroundTasks
 import AVFoundation
 import FirebaseFirestore
 import Network
+
+
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {

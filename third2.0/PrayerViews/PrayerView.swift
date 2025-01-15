@@ -51,9 +51,26 @@ struct PrayerView: View {
                                 }
                                 .padding(.leading, 20)
                                 .padding(.top, 80)
+
                                 Spacer()
+
+                                Button(action: {
+                                    print("Compass button pressed")
+                                }) {
+                                    Image(systemName: "safari.fill") // Ensure this is a valid SF Symbol
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20) // Match size with Heart icon
+                                        .foregroundColor(.white)
+                                        .padding(10)
+                                        .background(Circle().fill(Color(hex: "#FF9D66")))
+                                        .shadow(radius: 5)
+                                }
+                                .padding(.trailing, 20)
+                                .padding(.top, 80)
                             }
                             .frame(height: 50)
+
 
                             Spacer()
                             ZStack {

@@ -8,7 +8,7 @@
 import Network
 import SwiftUI
 
-class NetworkMonitor: ObservableObject {
+class NetworkMonitorSurahs: ObservableObject {
     private var monitor: NWPathMonitor?
     private var queue = DispatchQueue.global()
     @Published var isConnected: Bool = false

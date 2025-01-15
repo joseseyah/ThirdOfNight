@@ -29,6 +29,7 @@
 		6D27C67B2D31377E00B3230D /* RightColumnWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6D27C66A2D31377D00B3230D /* RightColumnWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6D27C6802D31383600B3230D /* PrayerTimeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C67F2D3137ED00B3230D /* PrayerTimeRow.swift */; };
 		6D27C6822D31387200B3230D /* PrayerTimeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C6812D31387200B3230D /* PrayerTimeRow.swift */; };
+		6D33262A2D37D72D00E77E10 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3326292D37D72D00E77E10 /* FirebaseStorage */; };
 		6D4D62862D15C53C003D7F11 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D62852D15C53C003D7F11 /* MailView.swift */; };
 		6D4D62882D15C589003D7F11 /* TextDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D62872D15C589003D7F11 /* TextDetailView.swift */; };
 		6D4D628A2D161DB3003D7F11 /* SettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D62892D161DB3003D7F11 /* SettingsButton.swift */; };
@@ -233,6 +234,7 @@
 				6DAD84822CB7176B0027BF5A /* FirebaseCore in Frameworks */,
 				6DAD84802CB7176B0027BF5A /* FirebaseAnalytics in Frameworks */,
 				6DCC13042D062FD700E352BD /* FirebaseFunctions in Frameworks */,
+				6D33262A2D37D72D00E77E10 /* FirebaseStorage in Frameworks */,
 				6DAD84842CB7176B0027BF5A /* FirebaseFirestore in Frameworks */,
 				6DCC13022D062FD700E352BD /* FirebaseAuth in Frameworks */,
 			);
@@ -546,6 +548,7 @@
 				6DCC13012D062FD700E352BD /* FirebaseAuth */,
 				6DCC13032D062FD700E352BD /* FirebaseFunctions */,
 				6DCC13052D062FD700E352BD /* FirebaseMessaging */,
+				6D3326292D37D72D00E77E10 /* FirebaseStorage */,
 			);
 			productName = third2.0;
 			productReference = 6DBCFC4A2CB25CC30074796A /* Night Prayers.app */;
@@ -1248,6 +1251,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6D3326292D37D72D00E77E10 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6DE78BD62CB2660E0068F84C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		6DAD847F2CB7176B0027BF5A /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6DE78BD62CB2660E0068F84C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

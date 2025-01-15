@@ -7,7 +7,7 @@ import Network
 
 struct QuranView: View {
     @ObservedObject var audioPlayerViewModel: AudioPlayerViewModel // Receive ViewModel
-    @ObservedObject private var networkMonitor = NetworkMonitor()
+    @ObservedObject private var networkMonitor = NetworkMonitorSurahs()
     @State private var searchText = ""
     @State private var selectedMode: Mode = .listen // Default to "Listen" mode
     @State private var selectedBook: Book? = nil // Track selected book

@@ -3,9 +3,11 @@ import SwiftUI
 import AVKit
 import PDFKit
 import FirebaseStorage
+import Network
 
 struct QuranView: View {
     @ObservedObject var audioPlayerViewModel: AudioPlayerViewModel // Receive ViewModel
+    @ObservedObject private var networkMonitor = NetworkMonitor()
     @State private var searchText = ""
     @State private var selectedMode: Mode = .listen // Default to "Listen" mode
     @State private var selectedBook: Book? = nil // Track selected book
@@ -14,6 +16,7 @@ struct QuranView: View {
     @State private var downloadComplete = UserDefaults.standard.bool(forKey: "SurahsDownloaded")
     @State private var downloadProgress = 0.0
     @State private var totalSurahs = Double(surahs.count)
+    @State private var showAlertForDataUsage = false
 
     enum Mode: String, CaseIterable, Identifiable {
         case listen = "Listen"
@@ -29,16 +32,6 @@ struct QuranView: View {
             return surahs.filter { $0.name.lowercased().contains(searchText.lowercased()) }
         }
     }
-
-//    let books: [Book] = [
-//        Book(title: "Quran", coverImage: "big-quran-cover", pdfFileName: "big-quran")
-//    ]
-//
-//    let columns = [
-//        GridItem(.flexible()),
-//        GridItem(.flexible()),
-//        GridItem(.flexible())
-//    ]
 
     var body: some View {
         NavigationView {
@@ -63,7 +56,29 @@ struct QuranView: View {
                 .foregroundColor(.white)
             }
         }
+        .onAppear {
+            checkExistingDownloads()
+        }
     }
+    
+    private func checkExistingDownloads() {
+        let fileManager = FileManager.default
+        let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        // Check if at least one surah file exists
+        let surahExists = surahs.contains { surah -> Bool in
+            let filePath = documentDirectory.appendingPathComponent("\(surah.audioFileName).mp3").path
+            return fileManager.fileExists(atPath: filePath)
+        }
+        
+        // If no files are found, set downloadComplete to false to show the download button
+        if !surahExists {
+            DispatchQueue.main.async {
+                self.downloadComplete = false
+            }
+        }
+    }
+
     
     private var mainContentView: some View {
         VStack {
@@ -85,7 +100,20 @@ struct QuranView: View {
     
     private var downloadAllButton: some View {
         Button("Download All Surahs") {
-            downloadAllSurahs()
+            // Check network status before downloading
+            if networkMonitor.isExpensive {
+                showAlertForDataUsage = true // Show alert if on cellular
+            } else {
+                downloadAllSurahs() // Start download if on Wi-Fi
+            }
+        }
+        .alert(isPresented: $showAlertForDataUsage) {
+            Alert(
+                title: Text("Data Usage Warning"),
+                message: Text("You are currently on a cellular network. Downloading Surahs can consume significant data. Would you like to proceed or wait for a Wi-Fi connection?"),
+                primaryButton: .default(Text("Proceed"), action: downloadAllSurahs),
+                secondaryButton: .cancel(Text("Wait for Wi-Fi"))
+            )
         }
         .padding()
         .background(Color.blue)

@@ -5,5 +5,5 @@
 import Foundation
 class AppConstant{
     static let appDateFormater = "yyyy-MM-dd"
-    static let appReadableDateFormatter = "dd MMMM yyyy"
+    static let appReadableDateFormatter = "dd MMM yyyy"
 }

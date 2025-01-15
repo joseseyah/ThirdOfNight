@@ -167,7 +167,7 @@ struct PrayerView: View {
     
     private func updateDisplayedDate() {
         if dateFormat == "Hijri" {
-            if let hijri = PrayerHelper.convertToHijri(from: readableDate) {
+            if let hijri = DateParser.convertToHijri(from: readableDate) {
                 self.hijriDate = hijri
             }
         } else {
@@ -272,7 +272,7 @@ struct PrayerView: View {
                                     updatedPrayerTimes["Lastthird"] = PrayerHelper.calculateLastThirdOfNight(maghribTime: maghribTime, fajrTime: fajrTime)
                                 }
                                 self.prayerTimes = updatedPrayerTimes
-                                self.readableDate = date
+                                self.readableDate = DateParser.strDateToReadDate(dateString: date) ?? ""
                             }
                         }
                     } else {

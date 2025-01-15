@@ -175,7 +175,7 @@ struct DayPrayerView: View {
     private func updateDisplayedDate() {
         if dateFormat == "Hijri" {
             // Convert the current readableDate (Gregorian) to Hijri
-            if let hijri = PrayerHelper.convertToHijri(from: readableDate) {
+            if let hijri = DateParser.convertToHijri(from: readableDate) {
                 self.hijriDate = hijri
             }
         } else {

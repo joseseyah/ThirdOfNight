@@ -287,18 +287,14 @@ struct PrayerView: View {
 
     // MARK: - Fetch from Firestore
     func fetchPrayerTimesFromFirestore(city: String) {
-        let db = Firestore.firestore()
-        let docRef = db.collection("prayerTimes").document(city)
-
-        docRef.getDocument { document, error in
-            if let document = document, document.exists {
-                if let fetchedPrayerData = document.data()?["prayerTimes"] as? [[String: Any]] {
-                    self.prayerData = fetchedPrayerData
-                    self.maxDayIndex = fetchedPrayerData.count
-                    updatePrayerTimesForDay()
-                }
-            } else {
-                print("Failed to fetch document for city: \(city)")
+        FirebaseHelper.shared.fetchPrayerTimesWithCity(city: city) { result in
+            switch result {
+            case .success(let prayerTimes):
+                self.prayerData = prayerTimes
+                self.maxDayIndex = prayerTimes.count
+                updatePrayerTimesForDay()
+            case .failure(let error):
+                print("Error fetching prayer times: \(error.localizedDescription)")
             }
         }
     }

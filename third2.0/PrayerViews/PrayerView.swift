@@ -14,6 +14,7 @@ struct PrayerView: View {
     }()
     
     @State private var showDonationOptions = false
+    @State private var isQiblaSheetPresented = false
     
     @State private var selectedDonationType: String = "One-Time"
 
@@ -55,7 +56,7 @@ struct PrayerView: View {
                                 Spacer()
 
                                 Button(action: {
-                                    print("Compass button pressed")
+                                    isQiblaSheetPresented.toggle()
                                 }) {
                                     Image(systemName: "safari.fill") // Ensure this is a valid SF Symbol
                                         .resizable()
@@ -65,6 +66,9 @@ struct PrayerView: View {
                                         .padding(10)
                                         .background(Circle().fill(Color(hex: "#FF9D66")))
                                         .shadow(radius: 5)
+                                }
+                                .sheet(isPresented: $isQiblaSheetPresented) {
+                                    QiblaView()
                                 }
                                 .padding(.trailing, 20)
                                 .padding(.top, 80)

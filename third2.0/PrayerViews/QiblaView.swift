@@ -114,43 +114,52 @@ class CompassDirectionManager: NSObject, ObservableObject, CLLocationManagerDele
     }
 
     func requestAuthorizationAndInitManager() {
-        if CLLocationManager.locationServicesEnabled() {
-            switch locationManager.authorizationStatus {
-            case .authorizedWhenInUse, .authorizedAlways:
-                startUpdating()
-            case .notDetermined:
-                locationManager.requestWhenInUseAuthorization()
-            case .restricted, .denied:
-                print("Location access denied. Please enable it in settings.")
-            @unknown default:
-                print("Unknown location authorization status.")
-            }
-        } else {
-            print("Location services are not enabled.")
-        }
-    }
-
-    func startUpdating() {
-        locationManager.startUpdatingLocation()
-        locationManager.startUpdatingHeading()
-    }
-
-    func stopUpdatingLocation() {
-        locationManager.stopUpdatingLocation()
-        locationManager.stopUpdatingHeading()
+        // Request authorization; rely on the delegate callback for further actions
+        locationManager.requestWhenInUseAuthorization()
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:
-            startUpdating()
+            // Start location updates only if services are enabled
+            if CLLocationManager.locationServicesEnabled() {
+                startUpdating()
+            } else {
+                handleLocationServicesDisabled()
+            }
         case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
+            // Wait for the user to make a decision
+            print("Authorization status is not determined.")
         case .restricted, .denied:
-            print("Location access denied. Please enable it in settings.")
+            handleAuthorizationDenied()
         @unknown default:
-            print("Unknown location authorization status.")
+            print("Unknown authorization status.")
         }
+    }
+    
+    private func handleLocationServicesDisabled() {
+        print("Location services are disabled. Prompt user to enable them.")
+        // Optionally show an alert to guide the user
+    }
+
+    private func handleAuthorizationDenied() {
+        print("Location permissions are denied. Prompt user to enable them in settings.")
+        // Optionally show an alert or instructions
+    }
+
+
+
+    func startUpdating() {
+        // Only start updates when properly authorized
+        locationManager.startUpdatingLocation()
+        locationManager.startUpdatingHeading()
+    }
+
+
+
+    func stopUpdatingLocation() {
+        locationManager.stopUpdatingLocation()
+        locationManager.stopUpdatingHeading()
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateHeading heading: CLHeading) {

@@ -62,7 +62,6 @@ struct DayPrayerView: View {
                                                     .foregroundColor(.gray)
                     }
 
-
                     Spacer()
 
                 }
@@ -165,13 +164,6 @@ struct DayPrayerView: View {
         }
     }
 
-
-
-
-
-
-
-    
     private func updateDisplayedDate() {
         if dateFormat == "Hijri" {
             // Convert the current readableDate (Gregorian) to Hijri
@@ -324,5 +316,7 @@ struct DayPrayerView: View {
         scheduleMaghribNotification(prayerTimes: prayerTimes)
         scheduleFortyMinutesBeforeMaghribNotification(prayerTimes: prayerTimes)
         scheduleTenMinutesBeforeAsrNotification(prayerTimes: prayerTimes)
+        scheduleTenMinutesBeforeIshaNotification(prayerTimes: prayerTimes)
+        scheduleSunriseNotification(prayerTimes: prayerTimes)
     }
 }

@@ -7,28 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D09B2C82D3BD75900C69C53 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D27C6382D312F3F00B3230D /* WidgetKit.framework */; };
+		6D09B2C92D3BD75900C69C53 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DCC12E02CFD10D900E352BD /* SwiftUI.framework */; };
+		6D09B2CC2D3BD75900C69C53 /* islamiccurrentdateBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D09B2CB2D3BD75900C69C53 /* islamiccurrentdateBundle.swift */; };
+		6D09B2CE2D3BD75900C69C53 /* islamiccurrentdateLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D09B2CD2D3BD75900C69C53 /* islamiccurrentdateLiveActivity.swift */; };
+		6D09B2D02D3BD75900C69C53 /* islamiccurrentdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D09B2CF2D3BD75900C69C53 /* islamiccurrentdate.swift */; };
+		6D09B2D22D3BD75900C69C53 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D09B2D12D3BD75900C69C53 /* AppIntent.swift */; };
+		6D09B2D42D3BD75B00C69C53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D09B2D32D3BD75B00C69C53 /* Assets.xcassets */; };
+		6D09B2D82D3BD75B00C69C53 /* islamiccurrentdateExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6D09B2C72D3BD75900C69C53 /* islamiccurrentdateExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6D27C5D32D288EF800B3230D /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C5D22D288EF800B3230D /* Book.swift */; };
 		6D27C5D52D288F1D00B3230D /* FullScreenPDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C5D42D288F1D00B3230D /* FullScreenPDFView.swift */; };
 		6D27C5D72D288F3100B3230D /* PDFKitRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C5D62D288F3100B3230D /* PDFKitRepresentable.swift */; };
 		6D27C5DC2D2BDAB800B3230D /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C5DB2D2BDAB800B3230D /* ShareSheet.swift */; };
-		6D27C6522D31376800B3230D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D27C6382D312F3F00B3230D /* WidgetKit.framework */; };
-		6D27C6532D31376800B3230D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DCC12E02CFD10D900E352BD /* SwiftUI.framework */; };
-		6D27C6562D31376800B3230D /* LeftColumnWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C6552D31376800B3230D /* LeftColumnWidgetBundle.swift */; };
-		6D27C6582D31376800B3230D /* LeftColumnWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C6572D31376800B3230D /* LeftColumnWidgetLiveActivity.swift */; };
-		6D27C65A2D31376800B3230D /* LeftColumnWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C6592D31376800B3230D /* LeftColumnWidget.swift */; };
-		6D27C65C2D31376800B3230D /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C65B2D31376800B3230D /* AppIntent.swift */; };
-		6D27C65E2D31376A00B3230D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D27C65D2D31376A00B3230D /* Assets.xcassets */; };
-		6D27C6622D31376A00B3230D /* LeftColumnWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6D27C6512D31376800B3230D /* LeftColumnWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		6D27C66B2D31377D00B3230D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D27C6382D312F3F00B3230D /* WidgetKit.framework */; };
-		6D27C66C2D31377D00B3230D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DCC12E02CFD10D900E352BD /* SwiftUI.framework */; };
-		6D27C66F2D31377D00B3230D /* RightColumnWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C66E2D31377D00B3230D /* RightColumnWidgetBundle.swift */; };
-		6D27C6712D31377D00B3230D /* RightColumnWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C6702D31377D00B3230D /* RightColumnWidgetLiveActivity.swift */; };
-		6D27C6732D31377D00B3230D /* RightColumnWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C6722D31377D00B3230D /* RightColumnWidget.swift */; };
-		6D27C6752D31377D00B3230D /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C6742D31377D00B3230D /* AppIntent.swift */; };
-		6D27C6772D31377E00B3230D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D27C6762D31377E00B3230D /* Assets.xcassets */; };
-		6D27C67B2D31377E00B3230D /* RightColumnWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6D27C66A2D31377D00B3230D /* RightColumnWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		6D27C6802D31383600B3230D /* PrayerTimeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C67F2D3137ED00B3230D /* PrayerTimeRow.swift */; };
-		6D27C6822D31387200B3230D /* PrayerTimeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D27C6812D31387200B3230D /* PrayerTimeRow.swift */; };
 		6D29ED842D3868D800D64ECF /* QiblaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D29ED832D3868D800D64ECF /* QiblaView.swift */; };
 		6D33262A2D37D72D00E77E10 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3326292D37D72D00E77E10 /* FirebaseStorage */; };
 		6D33262C2D37EBAD00E77E10 /* NetworkMonitorSurahs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D33262B2D37EBAD00E77E10 /* NetworkMonitorSurahs.swift */; };
@@ -89,19 +79,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		6D27C6602D31376A00B3230D /* PBXContainerItemProxy */ = {
+		6D09B2D62D3BD75B00C69C53 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6DBCFC422CB25CC30074796A /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 6D27C6502D31376800B3230D;
-			remoteInfo = LeftColumnWidgetExtension;
-		};
-		6D27C6792D31377E00B3230D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6DBCFC422CB25CC30074796A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6D27C6692D31377D00B3230D;
-			remoteInfo = RightColumnWidgetExtension;
+			remoteGlobalIDString = 6D09B2C62D3BD75900C69C53;
+			remoteInfo = islamiccurrentdateExtension;
 		};
 		6DBCFC5D2CB25CC40074796A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -126,8 +109,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				6D27C67B2D31377E00B3230D /* RightColumnWidgetExtension.appex in Embed Foundation Extensions */,
-				6D27C6622D31376A00B3230D /* LeftColumnWidgetExtension.appex in Embed Foundation Extensions */,
+				6D09B2D82D3BD75B00C69C53 /* islamiccurrentdateExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,27 +117,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6D09B2C72D3BD75900C69C53 /* islamiccurrentdateExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = islamiccurrentdateExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D09B2CB2D3BD75900C69C53 /* islamiccurrentdateBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = islamiccurrentdateBundle.swift; sourceTree = "<group>"; };
+		6D09B2CD2D3BD75900C69C53 /* islamiccurrentdateLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = islamiccurrentdateLiveActivity.swift; sourceTree = "<group>"; };
+		6D09B2CF2D3BD75900C69C53 /* islamiccurrentdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = islamiccurrentdate.swift; sourceTree = "<group>"; };
+		6D09B2D12D3BD75900C69C53 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		6D09B2D32D3BD75B00C69C53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6D09B2D52D3BD75B00C69C53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D27C5D22D288EF800B3230D /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		6D27C5D42D288F1D00B3230D /* FullScreenPDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenPDFView.swift; sourceTree = "<group>"; };
 		6D27C5D62D288F3100B3230D /* PDFKitRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitRepresentable.swift; sourceTree = "<group>"; };
 		6D27C5DB2D2BDAB800B3230D /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		6D27C6382D312F3F00B3230D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
-		6D27C6512D31376800B3230D /* LeftColumnWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LeftColumnWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		6D27C6552D31376800B3230D /* LeftColumnWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftColumnWidgetBundle.swift; sourceTree = "<group>"; };
-		6D27C6572D31376800B3230D /* LeftColumnWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftColumnWidgetLiveActivity.swift; sourceTree = "<group>"; };
-		6D27C6592D31376800B3230D /* LeftColumnWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftColumnWidget.swift; sourceTree = "<group>"; };
-		6D27C65B2D31376800B3230D /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
-		6D27C65D2D31376A00B3230D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		6D27C65F2D31376A00B3230D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6D27C66A2D31377D00B3230D /* RightColumnWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RightColumnWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		6D27C66E2D31377D00B3230D /* RightColumnWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightColumnWidgetBundle.swift; sourceTree = "<group>"; };
-		6D27C6702D31377D00B3230D /* RightColumnWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightColumnWidgetLiveActivity.swift; sourceTree = "<group>"; };
-		6D27C6722D31377D00B3230D /* RightColumnWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightColumnWidget.swift; sourceTree = "<group>"; };
-		6D27C6742D31377D00B3230D /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
-		6D27C6762D31377E00B3230D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		6D27C6782D31377E00B3230D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6D27C67F2D3137ED00B3230D /* PrayerTimeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerTimeRow.swift; sourceTree = "<group>"; };
-		6D27C6812D31387200B3230D /* PrayerTimeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerTimeRow.swift; sourceTree = "<group>"; };
 		6D29ED832D3868D800D64ECF /* QiblaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiblaView.swift; sourceTree = "<group>"; };
 		6D33262B2D37EBAD00E77E10 /* NetworkMonitorSurahs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorSurahs.swift; sourceTree = "<group>"; };
 		6D4D62852D15C53C003D7F11 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
@@ -214,21 +187,12 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		6D27C64E2D31376800B3230D /* Frameworks */ = {
+		6D09B2C42D3BD75900C69C53 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D27C6532D31376800B3230D /* SwiftUI.framework in Frameworks */,
-				6D27C6522D31376800B3230D /* WidgetKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6D27C6672D31377D00B3230D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6D27C66C2D31377D00B3230D /* SwiftUI.framework in Frameworks */,
-				6D27C66B2D31377D00B3230D /* WidgetKit.framework in Frameworks */,
+				6D09B2C92D3BD75900C69C53 /* SwiftUI.framework in Frameworks */,
+				6D09B2C82D3BD75900C69C53 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,32 +227,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6D27C6542D31376800B3230D /* LeftColumnWidget */ = {
+		6D09B2CA2D3BD75900C69C53 /* islamiccurrentdate */ = {
 			isa = PBXGroup;
 			children = (
-				6D27C6552D31376800B3230D /* LeftColumnWidgetBundle.swift */,
-				6D27C6572D31376800B3230D /* LeftColumnWidgetLiveActivity.swift */,
-				6D27C6592D31376800B3230D /* LeftColumnWidget.swift */,
-				6D27C6812D31387200B3230D /* PrayerTimeRow.swift */,
-				6D27C65B2D31376800B3230D /* AppIntent.swift */,
-				6D27C65D2D31376A00B3230D /* Assets.xcassets */,
-				6D27C65F2D31376A00B3230D /* Info.plist */,
+				6D09B2CB2D3BD75900C69C53 /* islamiccurrentdateBundle.swift */,
+				6D09B2CD2D3BD75900C69C53 /* islamiccurrentdateLiveActivity.swift */,
+				6D09B2CF2D3BD75900C69C53 /* islamiccurrentdate.swift */,
+				6D09B2D12D3BD75900C69C53 /* AppIntent.swift */,
+				6D09B2D32D3BD75B00C69C53 /* Assets.xcassets */,
+				6D09B2D52D3BD75B00C69C53 /* Info.plist */,
 			);
-			path = LeftColumnWidget;
-			sourceTree = "<group>";
-		};
-		6D27C66D2D31377D00B3230D /* RightColumnWidget */ = {
-			isa = PBXGroup;
-			children = (
-				6D27C67F2D3137ED00B3230D /* PrayerTimeRow.swift */,
-				6D27C66E2D31377D00B3230D /* RightColumnWidgetBundle.swift */,
-				6D27C6702D31377D00B3230D /* RightColumnWidgetLiveActivity.swift */,
-				6D27C6722D31377D00B3230D /* RightColumnWidget.swift */,
-				6D27C6742D31377D00B3230D /* AppIntent.swift */,
-				6D27C6762D31377E00B3230D /* Assets.xcassets */,
-				6D27C6782D31377E00B3230D /* Info.plist */,
-			);
-			path = RightColumnWidget;
+			path = islamiccurrentdate;
 			sourceTree = "<group>";
 		};
 		6D4D628F2D1732DB003D7F11 /* Logic */ = {
@@ -309,8 +258,7 @@
 				6DBCFC4C2CB25CC30074796A /* third2.0 */,
 				6DBCFC5F2CB25CC40074796A /* third2.0Tests */,
 				6DBCFC692CB25CC40074796A /* third2.0UITests */,
-				6D27C6542D31376800B3230D /* LeftColumnWidget */,
-				6D27C66D2D31377D00B3230D /* RightColumnWidget */,
+				6D09B2CA2D3BD75900C69C53 /* islamiccurrentdate */,
 				6DCC12DD2CFD10D900E352BD /* Frameworks */,
 				6DBCFC4B2CB25CC30074796A /* Products */,
 			);
@@ -322,8 +270,7 @@
 				6DBCFC4A2CB25CC30074796A /* Night Prayers.app */,
 				6DBCFC5C2CB25CC40074796A /* Night PrayersTests.xctest */,
 				6DBCFC662CB25CC40074796A /* Night PrayersUITests.xctest */,
-				6D27C6512D31376800B3230D /* LeftColumnWidgetExtension.appex */,
-				6D27C66A2D31377D00B3230D /* RightColumnWidgetExtension.appex */,
+				6D09B2C72D3BD75900C69C53 /* islamiccurrentdateExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -500,38 +447,21 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6D27C6502D31376800B3230D /* LeftColumnWidgetExtension */ = {
+		6D09B2C62D3BD75900C69C53 /* islamiccurrentdateExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6D27C6632D31376A00B3230D /* Build configuration list for PBXNativeTarget "LeftColumnWidgetExtension" */;
+			buildConfigurationList = 6D09B2D92D3BD75B00C69C53 /* Build configuration list for PBXNativeTarget "islamiccurrentdateExtension" */;
 			buildPhases = (
-				6D27C64D2D31376800B3230D /* Sources */,
-				6D27C64E2D31376800B3230D /* Frameworks */,
-				6D27C64F2D31376800B3230D /* Resources */,
+				6D09B2C32D3BD75900C69C53 /* Sources */,
+				6D09B2C42D3BD75900C69C53 /* Frameworks */,
+				6D09B2C52D3BD75900C69C53 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = LeftColumnWidgetExtension;
-			productName = LeftColumnWidgetExtension;
-			productReference = 6D27C6512D31376800B3230D /* LeftColumnWidgetExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
-		6D27C6692D31377D00B3230D /* RightColumnWidgetExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6D27C67C2D31377E00B3230D /* Build configuration list for PBXNativeTarget "RightColumnWidgetExtension" */;
-			buildPhases = (
-				6D27C6662D31377D00B3230D /* Sources */,
-				6D27C6672D31377D00B3230D /* Frameworks */,
-				6D27C6682D31377D00B3230D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = RightColumnWidgetExtension;
-			productName = RightColumnWidgetExtension;
-			productReference = 6D27C66A2D31377D00B3230D /* RightColumnWidgetExtension.appex */;
+			name = islamiccurrentdateExtension;
+			productName = islamiccurrentdateExtension;
+			productReference = 6D09B2C72D3BD75900C69C53 /* islamiccurrentdateExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		6DBCFC492CB25CC30074796A /* Night Prayers */ = {
@@ -546,8 +476,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				6D27C6612D31376A00B3230D /* PBXTargetDependency */,
-				6D27C67A2D31377E00B3230D /* PBXTargetDependency */,
+				6D09B2D72D3BD75B00C69C53 /* PBXTargetDependency */,
 			);
 			name = "Night Prayers";
 			packageProductDependencies = (
@@ -609,10 +538,7 @@
 				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
-					6D27C6502D31376800B3230D = {
-						CreatedOnToolsVersion = 15.3;
-					};
-					6D27C6692D31377D00B3230D = {
+					6D09B2C62D3BD75900C69C53 = {
 						CreatedOnToolsVersion = 15.3;
 					};
 					6DBCFC492CB25CC30074796A = {
@@ -647,26 +573,17 @@
 				6DBCFC492CB25CC30074796A /* Night Prayers */,
 				6DBCFC5B2CB25CC40074796A /* Night PrayersTests */,
 				6DBCFC652CB25CC40074796A /* Night PrayersUITests */,
-				6D27C6502D31376800B3230D /* LeftColumnWidgetExtension */,
-				6D27C6692D31377D00B3230D /* RightColumnWidgetExtension */,
+				6D09B2C62D3BD75900C69C53 /* islamiccurrentdateExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		6D27C64F2D31376800B3230D /* Resources */ = {
+		6D09B2C52D3BD75900C69C53 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D27C65E2D31376A00B3230D /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6D27C6682D31377D00B3230D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6D27C6772D31377E00B3230D /* Assets.xcassets in Resources */,
+				6D09B2D42D3BD75B00C69C53 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,26 +616,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		6D27C64D2D31376800B3230D /* Sources */ = {
+		6D09B2C32D3BD75900C69C53 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D27C6562D31376800B3230D /* LeftColumnWidgetBundle.swift in Sources */,
-				6D27C65C2D31376800B3230D /* AppIntent.swift in Sources */,
-				6D27C65A2D31376800B3230D /* LeftColumnWidget.swift in Sources */,
-				6D27C6582D31376800B3230D /* LeftColumnWidgetLiveActivity.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6D27C6662D31377D00B3230D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6D27C66F2D31377D00B3230D /* RightColumnWidgetBundle.swift in Sources */,
-				6D27C6752D31377D00B3230D /* AppIntent.swift in Sources */,
-				6D27C6712D31377D00B3230D /* RightColumnWidgetLiveActivity.swift in Sources */,
-				6D27C6802D31383600B3230D /* PrayerTimeRow.swift in Sources */,
-				6D27C6732D31377D00B3230D /* RightColumnWidget.swift in Sources */,
+				6D09B2CC2D3BD75900C69C53 /* islamiccurrentdateBundle.swift in Sources */,
+				6D09B2D22D3BD75900C69C53 /* AppIntent.swift in Sources */,
+				6D09B2CE2D3BD75900C69C53 /* islamiccurrentdateLiveActivity.swift in Sources */,
+				6D09B2D02D3BD75900C69C53 /* islamiccurrentdate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -769,7 +674,6 @@
 				6D4D628A2D161DB3003D7F11 /* SettingsButton.swift in Sources */,
 				6DD5AD442D22B644000288B6 /* DonateView.swift in Sources */,
 				6D4D62912D205B87003D7F11 /* defaultPrayerTimes.swift in Sources */,
-				6D27C6822D31387200B3230D /* PrayerTimeRow.swift in Sources */,
 				6DCC13292D0AF60B00E352BD /* Surah.swift in Sources */,
 				6D4D628E2D173181003D7F11 /* mosqueList.swift in Sources */,
 			);
@@ -796,15 +700,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6D27C6612D31376A00B3230D /* PBXTargetDependency */ = {
+		6D09B2D72D3BD75B00C69C53 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6D27C6502D31376800B3230D /* LeftColumnWidgetExtension */;
-			targetProxy = 6D27C6602D31376A00B3230D /* PBXContainerItemProxy */;
-		};
-		6D27C67A2D31377E00B3230D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6D27C6692D31377D00B3230D /* RightColumnWidgetExtension */;
-			targetProxy = 6D27C6792D31377E00B3230D /* PBXContainerItemProxy */;
+			target = 6D09B2C62D3BD75900C69C53 /* islamiccurrentdateExtension */;
+			targetProxy = 6D09B2D62D3BD75B00C69C53 /* PBXContainerItemProxy */;
 		};
 		6DBCFC5E2CB25CC40074796A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -819,7 +718,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		6D27C6642D31376A00B3230D /* Debug */ = {
+		6D09B2DA2D3BD75B00C69C53 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -828,8 +727,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CZPKAZHKAR;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = LeftColumnWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = LeftColumnWidget;
+				INFOPLIST_FILE = islamiccurrentdate/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = islamiccurrentdate;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -837,7 +736,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit.LeftColumnWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit.islamiccurrentdate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -846,7 +745,7 @@
 			};
 			name = Debug;
 		};
-		6D27C6652D31376A00B3230D /* Release */ = {
+		6D09B2DB2D3BD75B00C69C53 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -855,8 +754,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CZPKAZHKAR;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = LeftColumnWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = LeftColumnWidget;
+				INFOPLIST_FILE = islamiccurrentdate/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = islamiccurrentdate;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -864,61 +763,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit.LeftColumnWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		6D27C67D2D31377E00B3230D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CZPKAZHKAR;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RightColumnWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = RightColumnWidget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit.RightColumnWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		6D27C67E2D31377E00B3230D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CZPKAZHKAR;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RightColumnWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = RightColumnWidget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit.RightColumnWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit.islamiccurrentdate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1073,7 +918,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.1;
+				MARKETING_VERSION = 2.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1109,7 +954,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.1;
+				MARKETING_VERSION = 2.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1197,20 +1042,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6D27C6632D31376A00B3230D /* Build configuration list for PBXNativeTarget "LeftColumnWidgetExtension" */ = {
+		6D09B2D92D3BD75B00C69C53 /* Build configuration list for PBXNativeTarget "islamiccurrentdateExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6D27C6642D31376A00B3230D /* Debug */,
-				6D27C6652D31376A00B3230D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6D27C67C2D31377E00B3230D /* Build configuration list for PBXNativeTarget "RightColumnWidgetExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6D27C67D2D31377E00B3230D /* Debug */,
-				6D27C67E2D31377E00B3230D /* Release */,
+				6D09B2DA2D3BD75B00C69C53 /* Debug */,
+				6D09B2DB2D3BD75B00C69C53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

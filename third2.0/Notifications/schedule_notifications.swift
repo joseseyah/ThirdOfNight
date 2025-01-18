@@ -79,7 +79,7 @@ func scheduleLastThirdOfNightNotification(prayerTimes: [String: String]) {
 
     // Schedule notification
     let content = UNMutableNotificationContent()
-    content.title = "Last Third of the Night has begun"
+    content.title = "Last Third of the Night"
     content.body = "This is the Last Third of the Night. A great time for supplication and prayer."
     content.sound = .default
     content.interruptionLevel = .timeSensitive
@@ -148,6 +148,47 @@ func scheduleTenMinutesBeforeMidnightNotification(prayerTimes: [String: String])
         }
     }
 }
+
+func scheduleMidnightNotification(prayerTimes: [String: String]) {
+    guard let maghribTime = prayerTimes["Maghrib"],
+          let fajrTime = prayerTimes["Fajr"] else {
+        return
+    }
+
+    let formatter = DateFormatter()
+    formatter.dateFormat = "HH:mm"
+
+    guard let maghribDate = sanitizeAndParseTime(maghribTime, using: formatter),
+          let fajrDate = sanitizeAndParseTime(fajrTime, using: formatter)?.addingTimeInterval(24 * 60 * 60) else {
+        return
+    }
+
+    // Calculate Midnight Time
+    let totalDuration = fajrDate.timeIntervalSince(maghribDate)
+    let midnightTime = maghribDate.addingTimeInterval(totalDuration / 2)
+
+    // Schedule Notification
+    let content = UNMutableNotificationContent()
+    content.title = "It is Midnight Now"
+    content.body = "Midnight has begun. Relax and Rest for the last third of the night."
+    content.sound = .default
+    content.interruptionLevel = .timeSensitive
+
+    let triggerDate = Calendar.current.dateComponents([.hour, .minute], from: midnightTime)
+    let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
+
+    let identifier = "MidnightNotification"
+    let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+
+    UNUserNotificationCenter.current().add(request) { error in
+        if let error = error {
+            print("Error scheduling Midnight notification: \(error.localizedDescription)")
+        } else {
+            print("Notification for Midnight scheduled at \(midnightTime).")
+        }
+    }
+}
+
 
 
 func scheduleTenMinutesBeforeIshaNotification(prayerTimes: [String: String]) {
@@ -224,6 +265,41 @@ func scheduleTenMinutesBeforeSunriseNotification(prayerTimes: [String: String]) 
             print("Error scheduling 10 Minutes Before Sunrise notification: \(error.localizedDescription)")
         } else {
             print("Notification for 10 minutes before Sunrise scheduled at \(notificationTime).")
+        }
+    }
+}
+
+func scheduleSunriseNotification(prayerTimes: [String: String]) {
+    guard let sunriseTime = prayerTimes["Sunrise"] else {
+        return
+    }
+
+    let formatter = DateFormatter()
+    formatter.dateFormat = "HH:mm" // Assuming prayer times are in 24-hour format
+
+    guard let sunriseDate = sanitizeAndParseTime(sunriseTime, using: formatter) else {
+        print("Invalid Sunrise time")
+        return
+    }
+
+    // Schedule Notification
+    let content = UNMutableNotificationContent()
+    content.title = "Sunrise has begun"
+    content.body = "The sun is currently rising"
+    content.sound = .default
+    content.interruptionLevel = .timeSensitive
+
+    let triggerDate = Calendar.current.dateComponents([.hour, .minute], from: sunriseDate)
+    let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
+
+    let identifier = "SunriseReminder"
+    let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+
+    UNUserNotificationCenter.current().add(request) { error in
+        if let error = error {
+            print("Error scheduling Sunrise notification: \(error.localizedDescription)")
+        } else {
+            print("Notification for Sunrise scheduled at \(sunriseDate).")
         }
     }
 }

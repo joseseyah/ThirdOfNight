@@ -138,7 +138,7 @@ struct PrayerView: View {
                                     .padding()
                             } else {
                                 if (viewModel.isUsingMosqueTimetable){
-                                    TimeBox(title: "Friday Jummah Prayers", time: prayerTimes["Isha"] ?? "N/A", isDaytime: isDaytime)
+//                                    TimeBox(title: "Friday Jummah Prayers", time: prayerTimes["Isha"] ?? "N/A", isDaytime: isDaytime)
                                     TimeBox(title: "Midnight", time: prayerTimes["Midnight"] ?? "N/A", isDaytime: isDaytime)
                                     TimeBox(title: "Last Third of Night", time: prayerTimes["Lastthird"] ?? "N/A", isDaytime: isDaytime)
                                     
@@ -329,7 +329,8 @@ struct PrayerView: View {
             fetchMosqueDetails(mosque: viewModel.selectedMosque)
             scheduleLastThirdOfNightNotification(prayerTimes: self.prayerTimes)
             scheduleTenMinutesBeforeMidnightNotification(prayerTimes: self.prayerTimes)
-            scheduleTenMinutesBeforeIshaNotification(prayerTimes: self.prayerTimes)
+            
+            scheduleMidnightNotification(prayerTimes: self.prayerTimes)
             
         } else{
             guard currentDayIndex < prayerData.count else { return }

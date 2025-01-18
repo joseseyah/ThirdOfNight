@@ -2,82 +2,65 @@ import SwiftUI
 import CoreLocation
 
 struct QiblaView: View {
-    @Environment(\.dismiss) var dismiss
-    @StateObject private var viewModel = CompassDirectionManager()
+    @StateObject private var viewModel = QiblaDistanceManager()
 
     var body: some View {
         ZStack {
-            // Background gradient similar to Apple's design
-            LinearGradient(
-                gradient: Gradient(colors: [Color.green.opacity(0.8), Color.green]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
+            // Background color to match the theme
+            Color("BackgroundColor")
+                .ignoresSafeArea()
 
-            VStack(spacing: 20) {
-                Text("Qibla Direction")
-                    .font(.title)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
-                    .padding(.top, 50)
+            ScrollView {
+                VStack(spacing: 20) {
+                    // Header
+                    Text("Qibla Distance")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("HighlightColor"))
+                        .padding(.top, 40)
 
-                Spacer()
-
-                ZStack {
-                    // Main pointer arrow
-                    Image(systemName: "arrow.up")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 150, height: 200) // Larger arrow
-                        .foregroundColor(.white)
-                        .rotationEffect(.degrees(viewModel.smoothedQiblaRotation))
-
-                    // Pulsating indicator dot
-                    Circle()
-                        .fill(Color.white)
-                        .frame(width: 20, height: 20)
-                        .offset(y: -200)
-                        .opacity(0.7)
-                }
-                .frame(width: 300, height: 300)
-
-                Spacer()
-
-                // Distance and instructions
-                VStack(spacing: 10) {
-                    if let distance = viewModel.distanceToQibla {
-                        Text(String(format: "%.1f miles", distance))
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                    } else {
-                        Text("Calculating...")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
+                    // Distance Display
+                    VStack(spacing: 10) {
+                        if let distance = viewModel.distanceToQibla {
+                            Text(String(format: "%.1f miles to the Qibla", distance))
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                                .foregroundColor(Color("HighlightColor"))
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .fill(Color("BoxBackgroundColor"))
+                                )
+                        } else {
+                            Text("Calculating distance...")
+                                .font(.headline)
+                                .foregroundColor(Color("HighlightColor"))
+                        }
                     }
 
-                    if viewModel.isAlignedWithQibla {
-                        Text("You are aligned with the Qibla direction!")
+                    // Travel Dua Section
+                    VStack(alignment: .leading, spacing: 15) {
+                        Text("Travel Duas")
                             .font(.headline)
-                            .foregroundColor(.white)
+                            .foregroundColor(Color("HighlightColor"))
+
+                        DuaView(title: "Dua for Travelling", arabic: "بِسْمِ اللَّهِ، تَوَكَّلْتُ عَلَى اللَّهِ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ", translation: "I begin with the Name of Allah; I trust in Allah; there is no altering of conditions but by the Power of Allah.")
+
+                        DuaView(title: "Dua When Boarding a Vehicle", arabic: "بِسْمِ اللَّهِ، وَالْحَمْدُ لِلَّهِ، سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ، وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ", translation: "In the name of Allah and all praise is for Allah. How perfect He is, the One Who has placed this (transport) at our service and we ourselves would not have been capable of that, and to our Lord is our final destiny.")
+
+                        DuaView(title: "Dua Upon Arrival", arabic: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ", translation: "I seek refuge in Allah’s perfect words from every evil (that has been created).")
+
+                        DuaView(title: "Talbiyah Dua for Hajj or Umrah", arabic: "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ", translation: "Here I am, O Allah, here I am, here I am. You have no partner, here I am. Verily all praise and blessings are Yours, and all sovereignty. You have no partner.")
+
+                        DuaView(title: "Dua for Return", arabic: "آيِبُونَ تَائِبُونَ عَابِدُونَ سَاجِدُونَ لِرَبِّنَا حَامِدُونَ", translation: "We return, repentant, worshipping, prostrating and praising our Lord.")
+
+                        Text("Don’t forget to make lots of Dua’s during Hajj and Umrah, asking Allah (SWT) for forgiveness. Don’t forget to include your friends, relatives, neighbours as well as the wider Ummah in your Dua during these spiritual journeys.")
+                            .font(.footnote)
+                            .foregroundColor(Color("HighlightColor"))
                             .padding(.top, 10)
                     }
+                    .padding()
                 }
-
-                Spacer()
-
-                // Close button
-                Button(action: {
-                    dismiss()
-                }) {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .padding()
-                }
-                .padding(.bottom, 50)
             }
         }
         .onAppear {
@@ -89,23 +72,40 @@ struct QiblaView: View {
     }
 }
 
-class CompassDirectionManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-    @Published var northRotation: Double = 0.0
-    @Published var qiblaRotation: Double = 0.0
+struct DuaView: View {
+    let title: String
+    let arabic: String
+    let translation: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text(title)
+                .font(.headline)
+                .foregroundColor(Color("HighlightColor"))
+
+            Text(arabic)
+                .font(.body)
+                .foregroundColor(Color("HighlightColor"))
+
+            Text(translation)
+                .font(.footnote)
+                .italic()
+                .foregroundColor(Color("HighlightColor"))
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 15)
+                .fill(Color("BoxBackgroundColor"))
+        )
+    }
+}
+
+class QiblaDistanceManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var distanceToQibla: Double? = nil
-    @Published var isAlignedWithQibla: Bool = false
 
     private let locationManager = CLLocationManager()
-    private var latOfOrigin = 21.4225
-    private var lngOfOrigin = 39.8262
-    private var location: CLLocation?
-
-    private var previousQiblaRotation: Double = 0.0
-    private let smoothingFactor: Double = 0.1 // Adjust this to control the smoothing speed
-
-    var smoothedQiblaRotation: Double {
-        return previousQiblaRotation
-    }
+    private let latOfOrigin = 21.4225 // Latitude of Kaaba
+    private let lngOfOrigin = 39.8262 // Longitude of Kaaba
 
     override init() {
         super.init()
@@ -114,93 +114,24 @@ class CompassDirectionManager: NSObject, ObservableObject, CLLocationManagerDele
     }
 
     func requestAuthorizationAndInitManager() {
-        // Request authorization; rely on the delegate callback for further actions
         locationManager.requestWhenInUseAuthorization()
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        switch manager.authorizationStatus {
-        case .authorizedWhenInUse, .authorizedAlways:
-            // Start location updates only if services are enabled
-            if CLLocationManager.locationServicesEnabled() {
-                startUpdating()
-            } else {
-                handleLocationServicesDisabled()
-            }
-        case .notDetermined:
-            // Wait for the user to make a decision
-            print("Authorization status is not determined.")
-        case .restricted, .denied:
-            handleAuthorizationDenied()
-        @unknown default:
-            print("Unknown authorization status.")
+        if manager.authorizationStatus == .authorizedWhenInUse || manager.authorizationStatus == .authorizedAlways {
+            locationManager.startUpdatingLocation()
+        } else {
+            print("Location permissions are not granted.")
         }
     }
-    
-    private func handleLocationServicesDisabled() {
-        print("Location services are disabled. Prompt user to enable them.")
-        // Optionally show an alert to guide the user
-    }
-
-    private func handleAuthorizationDenied() {
-        print("Location permissions are denied. Prompt user to enable them in settings.")
-        // Optionally show an alert or instructions
-    }
-
-
-
-    func startUpdating() {
-        // Only start updates when properly authorized
-        locationManager.startUpdatingLocation()
-        locationManager.startUpdatingHeading()
-    }
-
-
 
     func stopUpdatingLocation() {
         locationManager.stopUpdatingLocation()
-        locationManager.stopUpdatingHeading()
-    }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateHeading heading: CLHeading) {
-        let north = -1 * heading.magneticHeading
-        let directionOfKabah = calculateQiblaDirection(north: north)
-
-        DispatchQueue.main.async {
-            self.northRotation = north
-            self.previousQiblaRotation += (directionOfKabah - self.previousQiblaRotation) * self.smoothingFactor
-
-            self.isAlignedWithQibla = abs(directionOfKabah.truncatingRemainder(dividingBy: 360)) < 5 // Check if within 5 degrees of alignment
-        }
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let userLocation = locations.last else { return }
-        location = userLocation
-        qiblaRotation = calculateBearing(from: userLocation)
         distanceToQibla = calculateDistance(from: userLocation)
-    }
-
-    private func calculateQiblaDirection(north: Double) -> Double {
-        let qiblaDirection = qiblaRotation + north
-        return qiblaDirection.truncatingRemainder(dividingBy: 360)
-    }
-
-    private func calculateBearing(from location: CLLocation) -> Double {
-        let lat1 = degreesToRadians(location.coordinate.latitude)
-        let lon1 = degreesToRadians(location.coordinate.longitude)
-        let lat2 = degreesToRadians(latOfOrigin)
-        let lon2 = degreesToRadians(lngOfOrigin)
-
-        let deltaLon = lon2 - lon1
-
-        let y = sin(deltaLon) * cos(lat2)
-        let x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(deltaLon)
-        var bearing = atan2(y, x)
-        bearing = radiansToDegrees(bearing)
-        if bearing < 0 { bearing += 360 }
-
-        return bearing
     }
 
     private func calculateDistance(from location: CLLocation) -> Double {
@@ -208,13 +139,5 @@ class CompassDirectionManager: NSObject, ObservableObject, CLLocationManagerDele
         let qiblaLocation = CLLocation(latitude: latOfOrigin, longitude: lngOfOrigin)
         let distanceInMeters = userLocation.distance(from: qiblaLocation)
         return distanceInMeters / 1609.34 // Convert meters to miles
-    }
-
-    private func degreesToRadians(_ degrees: Double) -> Double {
-        return degrees * Double.pi / 180
-    }
-
-    private func radiansToDegrees(_ radians: Double) -> Double {
-        return radians * 180 / Double.pi
     }
 }

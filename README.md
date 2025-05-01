@@ -2,6 +2,8 @@
 
 The **Third of the Night** app is designed to assist users in tracking prayer times, including the specific Midnight and Last Third of the Night times, for selected cities. It features a clean, privacy-focused, ad-free user experience with beautiful night and day themes, along with various functionalities tailored for Muslims around the world.
 
+https://josephhvhayes.com/thirdofnight
+
 ## Features
 
 - **Accurate Prayer Times**: Fetches and displays prayer times for specific cities.

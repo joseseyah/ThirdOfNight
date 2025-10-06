@@ -82,18 +82,7 @@ struct third2_0App: App {
     
     var body: some Scene {
         WindowGroup {
-            if hasSeenOnboarding {
-                ContentView()
-                    .onChange(of: networkMonitor.isConnected) { isConnected in
-                        setupMode(isConnected: isConnected)
-                    }
-                    .environmentObject(audioPlayerViewModel)
-                    .onAppear {
-                        scheduleBackgroundTask()
-                    }
-            } else {
-                OnboardingView()
-            }
+          TrackerView()
         }
     }
     

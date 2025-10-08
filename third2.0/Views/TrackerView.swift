@@ -4,69 +4,83 @@
 //
 //  Created by Joseph Hayes on 06/10/2025.
 //
+
 import Foundation
 import SwiftUI
+import CoreLocation
 
 struct TrackerView: View {
-  @State private var prayers: [PrayerItem] = [
-    .init(name: "Fajr",    time: "05:35"),
-    .init(name: "Dhuhr",   time: "12:53"),
-    .init(name: "Asr",     time: "15:46"),
-    .init(name: "Maghrib", time: "18:29"),
-    .init(name: "Isha",    time: "19:46")
-  ]
+    @StateObject private var loc = MiniLocationManager()
+    @State private var prayers: [PrayerItem] = []
 
-  var body: some View {
-    ZStack {
-      Color.appBg.ignoresSafeArea()
+    private let verticalNudge: CGFloat = -40
 
-      VStack(spacing: 18) {
-        VStack(spacing: 10) {
-          Text("Prayer Times")
-            .font(.system(size: 13, weight: .heavy, design: .rounded))
-            .foregroundColor(.accentYellow)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 6)
-            .background(Capsule().fill(Color.white.opacity(0.06)))
+    var body: some View {
+        ZStack {
+            Color.appBg.ignoresSafeArea()
 
-          Text(dateString("EEEE d MMMM"))
-            .font(.system(size: 26, weight: .bold, design: .rounded))
-            .foregroundColor(.textPrimary)
-        }
-        VStack(spacing: 14) {
-          ForEach(prayers.indices, id: \.self) { i in
-            PrayerRowView(
-              name: prayers[i].name,
-              time: prayers[i].time,
-              isDone: prayers[i].done
-            ) {
-              withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
-                prayers[i].done.toggle()
-                simpleHaptic()
-              }
+            VStack(spacing: 18) {
+                // Header
+                VStack(spacing: 6) {
+                    Text("Today")
+                        .font(.system(size: 13, weight: .heavy, design: .rounded))
+                        .foregroundColor(.accentYellow)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(Capsule().fill(Color.white.opacity(0.06)))
+
+                    Text(dateString("EEEE d MMMM"))
+                        .font(.system(size: 26, weight: .bold, design: .rounded))
+                        .foregroundColor(.textPrimary)
+                }
+
+                // Rows
+                VStack(spacing: 14) {
+                    ForEach(prayers.indices, id: \.self) { i in
+                        PrayerRowView(
+                            name: prayers[i].name,
+                            time: prayers[i].time,
+                            isDone: prayers[i].done
+                        ) {
+                            withAnimation(.spring(response: 0.25, dampingFraction: 0.85)) {
+                                prayers[i].done.toggle()
+                                simpleHaptic()
+                            }
+                        }
+                    }
+                }
+                .padding(.horizontal, 16)
             }
-          }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            .offset(y: verticalNudge)
         }
-        .padding(.horizontal, 16)
+        .onAppear {
+            loc.request()
+            if prayers.isEmpty {
+                let fallback = CLLocationCoordinate2D(latitude: 53.4808, longitude: -2.2426) // Manchester
+                prayers = computePrayerItems(for: fallback, date: Date())
+            }
+        }
+        .onChange(of: loc.coordinate?.latitude) { _ in
+            guard let coord = loc.coordinate else { return }
+            prayers = computePrayerItems(for: coord, date: Date())
+        }
 
-        Spacer(minLength: 0)
-      }
-      .frame(maxWidth: .infinity, maxHeight: .infinity)
+
     }
-  }
+}
 
-  private func dateString(_ format: String) -> String {
+// MARK: - Helpers
+
+private func dateString(_ format: String) -> String {
     let f = DateFormatter()
     f.locale = .current
     f.dateFormat = format
     return f.string(from: Date())
-  }
+}
 
-  private func simpleHaptic() {
+private func simpleHaptic() {
 #if os(iOS)
     UIImpactFeedbackGenerator(style: .light).impactOccurred()
 #endif
-  }
-
-
 }

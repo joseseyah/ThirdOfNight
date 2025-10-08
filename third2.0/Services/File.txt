@@ -1,0 +1,31 @@
+import Foundation
+import CoreLocation
+import Adhan
+
+func computePrayerItems(for coord: CLLocationCoordinate2D, date: Date) -> [PrayerItem] {
+    let coordinates = Coordinates(latitude: coord.latitude, longitude: coord.longitude)
+
+    var params = CalculationMethod.moonsightingCommittee.params
+    params.madhab = .shafi
+    params.highLatitudeRule = .middleOfTheNight
+
+    let cal = Calendar(identifier: .gregorian)
+    let comps = cal.dateComponents([.year, .month, .day], from: date)
+
+    guard let pt = PrayerTimes(coordinates: coordinates, date: comps, calculationParameters: params) else {
+        return []
+    }
+
+    let f = DateFormatter()
+    f.locale = .current
+    f.timeZone = .current
+    f.dateFormat = "HH:mm"
+
+    return [
+        PrayerItem(name: "Fajr",    time: f.string(from: pt.fajr)),
+        PrayerItem(name: "Dhuhr",   time: f.string(from: pt.dhuhr)),
+        PrayerItem(name: "Asr",     time: f.string(from: pt.asr)),
+        PrayerItem(name: "Maghrib", time: f.string(from: pt.maghrib)),
+        PrayerItem(name: "Isha",    time: f.string(from: pt.isha))
+    ]
+}

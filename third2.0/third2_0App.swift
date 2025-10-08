@@ -9,21 +9,6 @@ import Network
 
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        FirebaseHelper.shared.setupFireBase()
-
-        configureAudioSession()
-        // Set up background fetch interval
-        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
-
-        // Register the background task
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.yourapp.updatePrayerTimes", using: nil) { task in
-            self.handleBackgroundTask(task: task as! BGAppRefreshTask)
-        }
-
-        return true
-    }
     private func configureAudioSession() {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
@@ -31,32 +16,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             print("Audio session configured for background playback.")
         } catch {
             print("Failed to set up audio session: \(error.localizedDescription)")
-        }
-    }
-
-    // Handle background fetch for prayer times
-    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        FirebaseHelper.shared.updatePrayerTimes { result in
-            switch result {
-            case .success:
-                completionHandler(.newData)
-            case .failure:
-                completionHandler(.failed)
-            }
-        }
-    }
-
-    // Handle Background Task for updating prayer times
-    private func handleBackgroundTask(task: BGAppRefreshTask) {
-        scheduleBackgroundTask() // Reschedule for the next day
-        
-        FirebaseHelper.shared.updatePrayerTimes{ result in
-            switch result {
-            case .success:
-                task.setTaskCompleted(success: true)
-            case .failure:
-                task.setTaskCompleted(success: false)
-            }
         }
     }
 
@@ -76,13 +35,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct third2_0App: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject var audioPlayerViewModel = AudioPlayerViewModel()
     @StateObject private var networkMonitor = NetworkMonitor()
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
     
     var body: some Scene {
         WindowGroup {
-          TrackerView()
+          HomeView()
         }
     }
     
@@ -90,17 +48,6 @@ struct third2_0App: App {
         if UIApplication.shared.backgroundRefreshStatus == .available {
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             appDelegate?.scheduleBackgroundTask()
-        }
-    }
-    private func setupMode(isConnected: Bool? = nil) {
-        if isConnected ?? false{
-            FirebaseHelper.shared.enableOnlineMode(completion: { error in
-                
-            })
-        }else{
-            FirebaseHelper.shared.enableOfflineMode(completion: { error in
-                
-            })
         }
     }
 }

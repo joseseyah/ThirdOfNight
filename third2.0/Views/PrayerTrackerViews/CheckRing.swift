@@ -10,7 +10,6 @@ struct CompactCheckRing: View {
             Circle()
                 .stroke(Color.stroke, lineWidth: 1.5)
 
-            // animated progress ring
             Circle()
                 .trim(from: 0, to: isOn ? 1 : 0)
                 .stroke(
@@ -29,6 +28,6 @@ struct CompactCheckRing: View {
                     .transition(.scale.combined(with: .opacity))
             }
         }
-        .frame(width: 28, height: 28) // smaller
+        .frame(width: 28, height: 28)
     }
 }

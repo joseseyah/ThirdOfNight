@@ -19,55 +19,85 @@ struct TrackerView: View {
         ZStack {
             Color.appBg.ignoresSafeArea()
 
-            VStack(spacing: 18) {
-                // Header
-                VStack(spacing: 6) {
-                    Text("Today")
-                        .font(.system(size: 13, weight: .heavy, design: .rounded))
-                        .foregroundColor(.accentYellow)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 6)
-                        .background(Capsule().fill(Color.white.opacity(0.06)))
+            if let _ = loc.coordinate, !prayers.isEmpty {
+                // Main content when we have location + computed times
+                VStack(spacing: 18) {
+                    // Header
+                    VStack(spacing: 6) {
+                        LocationHeader(loc: loc)
+                        Text(dateString("EEEE d MMMM"))
+                            .font(.system(size: 26, weight: .bold, design: .rounded))
+                            .foregroundColor(.textPrimary)
+                    }
 
-                    Text(dateString("EEEE d MMMM"))
-                        .font(.system(size: 26, weight: .bold, design: .rounded))
-                        .foregroundColor(.textPrimary)
-                }
-
-                // Rows
-                VStack(spacing: 14) {
-                    ForEach(prayers.indices, id: \.self) { i in
-                        PrayerRowView(
-                            name: prayers[i].name,
-                            time: prayers[i].time,
-                            isDone: prayers[i].done
-                        ) {
-                            withAnimation(.spring(response: 0.25, dampingFraction: 0.85)) {
-                                prayers[i].done.toggle()
-                                simpleHaptic()
+                    // Rows
+                    VStack(spacing: 14) {
+                        ForEach(prayers.indices, id: \.self) { i in
+                            PrayerRowView(
+                                name: prayers[i].name,
+                                time: prayers[i].time,
+                                isDone: prayers[i].done
+                            ) {
+                                withAnimation(.spring(response: 0.25, dampingFraction: 0.85)) {
+                                    prayers[i].done.toggle()
+                                    simpleHaptic()
+                                }
                             }
                         }
                     }
+                    .padding(.horizontal, 16)
                 }
-                .padding(.horizontal, 16)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                .offset(y: verticalNudge)
+            } else {
+                // Empty state when we don't have a coordinate yet (or no times)
+                ContentUnavailableView {
+                    Label("Location Needed", systemImage: "location.slash")
+                } description: {
+                    Text("Enable location access to calculate local prayer times.")
+                } actions: {
+                    HStack(spacing: 12) {
+                        Button("Try Again") { loc.request() }
+                            .buttonStyle(.borderedProminent)
+                            .tint(.accentYellow)
+                            .foregroundStyle(Color.appBg)
+
+                        Button("Open Settings") { openAppSettings() }
+                            .buttonStyle(.bordered)
+                            .tint(.accentYellow)
+                    }
+                }
+                .padding(.horizontal, 20)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-            .offset(y: verticalNudge)
         }
         .onAppear {
             loc.request()
-            if prayers.isEmpty {
-                let fallback = CLLocationCoordinate2D(latitude: 53.4808, longitude: -2.2426) // Manchester
-                prayers = computePrayerItems(for: fallback, date: Date())
+            // If location is already available (e.g., returning to view), compute immediately.
+            if let coord = loc.coordinate {
+                prayers = computePrayerItems(for: coord, date: Date())
             }
         }
-        .onChange(of: loc.coordinate?.latitude) { _ in
+        // Recompute when location changes
+        .onChange(of: CoordKey(lat: loc.coordinate?.latitude, lon: loc.coordinate?.longitude)) { _ in
             guard let coord = loc.coordinate else { return }
             prayers = computePrayerItems(for: coord, date: Date())
         }
 
-
     }
+
+    // MARK: - Helpers
+
+    private func openAppSettings() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
+        }
+    }
+
+    private struct CoordKey: Equatable {
+        let lat: Double?
+        let lon: Double?
+    }
+
 }
 
 // MARK: - Helpers

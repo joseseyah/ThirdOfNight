@@ -21,6 +21,8 @@
 		6D0FB2F02E964DC900AB1127 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB2EF2E964DC600AB1127 /* HomeView.swift */; };
 		6D0FB2FB2E96601300AB1127 /* CardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB2FA2E96601300AB1127 /* CardContainer.swift */; };
 		6D0FB3152E967FF100AB1127 /* ReminderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB3142E967FF100AB1127 /* ReminderItem.swift */; };
+		6D0FB31B2E96884000AB1127 /* PrayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB31A2E96884000AB1127 /* PrayerItem.swift */; };
+		6D0FB31E2E96888000AB1127 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB31D2E96888000AB1127 /* Colors.swift */; };
 		6D29ED842D3868D800D64ECF /* QiblaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D29ED832D3868D800D64ECF /* QiblaView.swift */; };
 		6D33262A2D37D72D00E77E10 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3326292D37D72D00E77E10 /* FirebaseStorage */; };
 		6DAD84802CB7176B0027BF5A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6DAD847F2CB7176B0027BF5A /* FirebaseAnalytics */; };
@@ -91,6 +93,8 @@
 		6D0FB2EF2E964DC600AB1127 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		6D0FB2FA2E96601300AB1127 /* CardContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContainer.swift; sourceTree = "<group>"; };
 		6D0FB3142E967FF100AB1127 /* ReminderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderItem.swift; sourceTree = "<group>"; };
+		6D0FB31A2E96884000AB1127 /* PrayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerItem.swift; sourceTree = "<group>"; };
+		6D0FB31D2E96888000AB1127 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		6D27C6382D312F3F00B3230D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		6D29ED832D3868D800D64ECF /* QiblaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiblaView.swift; sourceTree = "<group>"; };
 		6DBCFC4A2CB25CC30074796A /* Night Prayers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Night Prayers.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,19 +185,21 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		6D0FB3022E967C2700AB1127 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
-			sourceTree = "<group>";
-		};
 		6D0FB3132E967FE000AB1127 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6D0FB31A2E96884000AB1127 /* PrayerItem.swift */,
 				6D0FB3142E967FF100AB1127 /* ReminderItem.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		6D0FB31C2E96886F00AB1127 /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				6D0FB31D2E96888000AB1127 /* Colors.swift */,
+			);
+			path = Color;
 			sourceTree = "<group>";
 		};
 		6DBCFC412CB25CC30074796A = {
@@ -224,8 +230,8 @@
 		6DBCFC4C2CB25CC30074796A /* third2.0 */ = {
 			isa = PBXGroup;
 			children = (
+				6D0FB31C2E96886F00AB1127 /* Color */,
 				6D0FB3132E967FE000AB1127 /* Model */,
-				6D0FB3022E967C2700AB1127 /* New Group */,
 				6D0FB2E12E9644AC00AB1127 /* Services */,
 				6DBCFC4D2CB25CC30074796A /* third2_0App.swift */,
 				6DCC14292D10DEA900E352BD /* Notifications */,
@@ -503,9 +509,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D0FB2F02E964DC900AB1127 /* HomeView.swift in Sources */,
+				6D0FB31E2E96888000AB1127 /* Colors.swift in Sources */,
 				6DCC142B2D10DEB900E352BD /* schedule_notifications.swift in Sources */,
 				6D0FB3152E967FF100AB1127 /* ReminderItem.swift in Sources */,
 				6D29ED842D3868D800D64ECF /* QiblaView.swift in Sources */,
+				6D0FB31B2E96884000AB1127 /* PrayerItem.swift in Sources */,
 				6D0FB2E72E9644E700AB1127 /* PrayerCalculator.swift in Sources */,
 				6DCC131C2D09853D00E352BD /* NotificationManager.swift in Sources */,
 				6D0FB2E32E9644BE00AB1127 /* MiniLocationManager.swift in Sources */,

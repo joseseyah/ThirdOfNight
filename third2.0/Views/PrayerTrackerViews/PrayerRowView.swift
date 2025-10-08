@@ -1,23 +1,5 @@
 import SwiftUI
 
-extension Color {
-    static let appBg        = Color(red: 0.04, green: 0.05, blue: 0.07)
-    static let cardBg       = Color(red: 0.08, green: 0.10, blue: 0.13)
-    static let stroke       = Color.white.opacity(0.12)
-    static let textPrimary  = Color(white: 0.92)
-    static let textSecondary = Color(white: 0.70)
-    static let accentYellow = Color(red: 1.00, green: 0.83, blue: 0.25)
-}
-
-// MARK: - Model
-
-struct PrayerItem: Identifiable {
-    let id = UUID()
-    let name: String
-    let time: String
-    var done: Bool = false
-}
-
 struct PrayerRowView: View {
     let name: String
     let time: String
@@ -26,50 +8,63 @@ struct PrayerRowView: View {
 
     var body: some View {
         Button(action: onTap) {
-            HStack(spacing: 14) {
-                CheckRing(isOn: isDone)
+            HStack(spacing: 12) {
+                CompactCheckRing(isOn: isDone)
 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(name)
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                        .foregroundColor(.textPrimary)
-                }
-
-                Spacer(minLength: 12)
-
-                // Right side time “badge”
-                Text(time)
-                    .font(.system(size: 17, weight: .bold, design: .rounded))
+                Text(name)
+                    .font(.system(size: 17, weight: .semibold, design: .rounded))
                     .foregroundColor(.textPrimary)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
+
+                Spacer(minLength: 8)
+
+                // compact time badge
+                Text(time)
+                    .font(.system(size: 15, weight: .bold, design: .rounded))
+                    .foregroundColor(.textPrimary)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
                     .background(
                         Capsule()
                             .fill(Color.white.opacity(0.05))
-                            .overlay(
-                                Capsule().stroke(Color.stroke, lineWidth: 1)
-                            )
+                            .overlay(Capsule().stroke(Color.stroke, lineWidth: 1))
                     )
             }
-            .padding(.vertical, 16)
-            .padding(.horizontal, 16)
+            .padding(.vertical, 10)   // smaller height
+            .padding(.horizontal, 12)
             .background(
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
                     .fill(
                         LinearGradient(
-                            colors: [Color.cardBg, Color.cardBg.opacity(0.85)],
+                            colors: [Color.cardBg, Color.cardBg.opacity(0.9)],
                             startPoint: .topLeading, endPoint: .bottomTrailing
                         )
                     )
                     .overlay(
-                        RoundedRectangle(cornerRadius: 18, style: .continuous)
-                            .stroke(isDone ? Color.accentYellow.opacity(0.6) : Color.stroke, lineWidth: 1)
+                        // keep that nice outline: yellow when done, thin neutral otherwise
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .stroke(isDone ? Color.accentYellow.opacity(0.65) : Color.stroke, lineWidth: 1)
                     )
             )
-            .shadow(color: .black.opacity(0.35), radius: 12, x: 0, y: 6)
-            .shadow(color: isDone ? Color.accentYellow.opacity(0.25) : .clear, radius: 14, x: 0, y: 6)
-            .contentShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-            .animation(.spring(response: 0.25, dampingFraction: 0.85), value: isDone)
+            .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .animation(.spring(response: 0.22, dampingFraction: 0.9), value: isDone)
         }
+        .buttonStyle(CompactPressStyle())
+    }
+}
+
+// MARK: - Smaller check control with outline animation
+
+
+// MARK: - Subtle press feedback (scale + highlight outline)
+private struct CompactPressStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
+            .overlay(
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .stroke(configuration.isPressed ? Color.accentYellow.opacity(0.35) : .clear, lineWidth: 2)
+            )
+            .opacity(configuration.isPressed ? 0.98 : 1.0)
+            .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
     }
 }

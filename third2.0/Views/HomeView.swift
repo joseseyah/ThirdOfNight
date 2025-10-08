@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    enum Tab { case tracker, browse }
+    enum Tab { case tracker, summary, browse }
     @State private var selected: Tab = .tracker
 
     var body: some View {
@@ -17,6 +17,12 @@ struct HomeView: View {
                     Label("Tracker", systemImage: "moon.fill")
                 }
                 .tag(Tab.tracker)
+
+            SummaryView()
+              .tabItem {
+                Label("Summary", systemImage: "heart.fill")
+              }
+              .tag(Tab.summary)
 
             BrowseView()
                 .tabItem {

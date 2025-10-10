@@ -13,15 +13,27 @@ struct TrackerView: View {
     @StateObject private var loc = MiniLocationManager()
     @State private var prayers: [PrayerItem] = []
 
-    private let verticalNudge: CGFloat = -40
+    private let verticalNudge: CGFloat = 30
 
     var body: some View {
         ZStack {
             Color.appBg.ignoresSafeArea()
+            StarOverlay(count: 14, maxYFraction: 0.28, opacity: 0.18)
+          MoonOverlay(
+              assetName: "moon",
+              size: 88,          // bigger (try 88–100)
+              top: -10,            // same vertical
+              leading: 30,       // push to the right (increase if needed)
+              opacity: 0.24,
+              glowScale: 1.2,    // keep glow tight as it grows
+              glowBlur: 0.15,
+              glowOpacity: 0.3
+          )
+
 
             if let _ = loc.coordinate, !prayers.isEmpty {
                 // Main content when we have location + computed times
-                VStack(spacing: 18) {
+                VStack(spacing: 25) {
                     // Header
                     VStack(spacing: 6) {
                         LocationHeader(loc: loc)
@@ -66,7 +78,6 @@ struct TrackerView: View {
             guard let coord = loc.coordinate else { return }
             prayers = computePrayerItems(for: coord, date: Date())
         }
-
     }
 
     private struct CoordKey: Equatable {

@@ -24,8 +24,8 @@ struct TrackerView: View {
               size: 88,          // bigger (try 88–100)
               top: -10,            // same vertical
               leading: 30,       // push to the right (increase if needed)
-              opacity: 0.24,
-              glowScale: 1.2,    // keep glow tight as it grows
+              opacity: 0.48,
+              glowScale: 0.5,    // keep glow tight as it grows
               glowBlur: 0.15,
               glowOpacity: 0.3
           )

@@ -18,7 +18,7 @@ struct TrackerView: View {
     var body: some View {
         ZStack {
             Color.appBg.ignoresSafeArea()
-            StarOverlay(count: 14, maxYFraction: 0.28, opacity: 0.18)
+            StarOverlay(count: 25, maxYFraction: 0.70, opacity: 0.28)
           MoonOverlay(
               assetName: "moon",
               size: 88,          // bigger (try 88–100)

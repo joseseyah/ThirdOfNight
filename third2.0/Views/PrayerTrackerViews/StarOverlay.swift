@@ -4,7 +4,7 @@ import SwiftUI
 /// Place it behind your content in a ZStack.
 struct StarOverlay: View {
     var count: Int = 50                 // number of stars
-    var maxYFraction: CGFloat = 0.50    // how far down they appear
+    var maxYFraction: CGFloat = 0.70    // how far down they appear
     var opacity: Double = 0.5          // overall brightness
 
     var body: some View {

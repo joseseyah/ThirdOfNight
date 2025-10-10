@@ -1,15 +1,10 @@
-//
-//  RemindersView.swift
-//  Night Prayers
-//
-
 import SwiftUI
 
 struct RemindersView: View {
     let category: BrowseCategory
+    @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
 
-    // Load items once during init so nothing becomes a Binding by accident
     @State private var items: [ReminderItem]
 
     init(category: BrowseCategory) {
@@ -23,41 +18,78 @@ struct RemindersView: View {
 
             ScrollView {
                 VStack(spacing: 16) {
-                    // Gradient header (dark -> warm yellow glow)
-                    GradientHero(
-                        title: category.title,
-                        subtitle: "Curated reminders and talks",
-                        systemImage: category.systemImage
-                    )
+                  GradientHero(
+                                          title: "Fajr Reminders",
+                                          subtitle: "Curated reminders and talks",
+                                          systemImage: "sunrise.fill",
+                                          baseHeight: 260// tweak until the icon clears your Back bar
+                                      )
 
-                    // Reminder rows
-                    VStack(alignment: .leading, spacing: 12) {
-                        ForEach(items) { item in
+                    // Grouped list like Tips
+                    VStack(spacing: 0) {
+                        ForEach(items.indices, id: \.self) { i in
                             Button {
-                                if let url = item.url { openURL(url) }
+                                if let url = items[i].url { openURL(url) }
                             } label: {
                                 ReminderRow(
-                                    title: item.title,
-                                    subtitle: item.subtitle,
+                                    title: items[i].title,
+                                    subtitle: items[i].subtitle,
                                     tint: category.tint
                                 )
+                                .contentShape(Rectangle())
                             }
                             .buttonStyle(.plain)
+
+                            if i < items.count - 1 {
+                                Divider()
+                                    .overlay(Color.stroke)
+                                    .padding(.leading, 76)
+                            }
                         }
                     }
+                    .padding(8)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .fill(Color.cardBg)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                    .stroke(Color.stroke, lineWidth: 1)
+                            )
+                    )
                     .padding(.horizontal, 16)
 
                     Spacer(minLength: 24)
                 }
             }
             .scrollIndicators(.hidden)
+
+            // Custom back button overlay (since we hide the system bar)
+            VStack {
+                HStack {
+                    Button {
+                        dismiss()
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "chevron.left")
+                            Text("Back")
+                        }
+                        .font(.system(size: 17, weight: .semibold, design: .rounded))
+                        .foregroundColor(.accentYellow)
+                    }
+                    Spacer()
+                }
+                .padding(.top, 6)
+                .padding(.horizontal, 16)
+
+                Spacer()
+            }
         }
-        .navigationTitle(category.title)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
     }
 }
 
-// MARK: - Sample data (swap with your real source later)
+// MARK: - Sample data
 private extension RemindersView {
     static func sample(for title: String) -> [ReminderItem] {
         switch title {
@@ -74,7 +106,6 @@ private extension RemindersView {
                     url: URL(string: "https://youtube.com")
                 )
             ]
-
         case "Jummah":
             return [
                 .init(
@@ -83,7 +114,6 @@ private extension RemindersView {
                     url: URL(string: "https://youtube.com")
                 )
             ]
-
         default:
             return [
                 .init(

@@ -51,23 +51,7 @@ struct TrackerView: View {
                 .offset(y: verticalNudge)
             } else {
                 // Empty state when we don't have a coordinate yet (or no times)
-                ContentUnavailableView {
-                    Label("Location Needed", systemImage: "location.slash")
-                } description: {
-                    Text("Enable location access to calculate local prayer times.")
-                } actions: {
-                    HStack(spacing: 12) {
-                        Button("Try Again") { loc.request() }
-                            .buttonStyle(.borderedProminent)
-                            .tint(.accentYellow)
-                            .foregroundStyle(Color.appBg)
-
-                        Button("Open Settings") { openAppSettings() }
-                            .buttonStyle(.bordered)
-                            .tint(.accentYellow)
-                    }
-                }
-                .padding(.horizontal, 20)
+              LocationNotOnView(loc: loc)
             }
         }
         .onAppear {
@@ -83,14 +67,6 @@ struct TrackerView: View {
             prayers = computePrayerItems(for: coord, date: Date())
         }
 
-    }
-
-    // MARK: - Helpers
-
-    private func openAppSettings() {
-        if let url = URL(string: UIApplication.openSettingsURLString) {
-            UIApplication.shared.open(url)
-        }
     }
 
     private struct CoordKey: Equatable {

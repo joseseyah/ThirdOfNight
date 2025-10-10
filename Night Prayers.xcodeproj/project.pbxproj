@@ -119,6 +119,7 @@
 		6D0FB3002E967BB100AB1127 /* BrowseViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = BrowseViews; sourceTree = "<group>"; };
 		6D0FB3012E967BC000AB1127 /* PrayerTrackerViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PrayerTrackerViews; sourceTree = "<group>"; };
 		6D0FB31F2E96D6F900AB1127 /* QiblaViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = QiblaViews; sourceTree = "<group>"; };
+		6D6A644B2E98F8190061FF01 /* EmptyViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EmptyViews; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -273,6 +274,7 @@
 		6DCC13232D0AE6BE00E352BD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6D6A644B2E98F8190061FF01 /* EmptyViews */,
 				6D0FB31F2E96D6F900AB1127 /* QiblaViews */,
 				6D0FB3012E967BC000AB1127 /* PrayerTrackerViews */,
 				6D0FB3002E967BB100AB1127 /* BrowseViews */,
@@ -347,6 +349,7 @@
 				6D0FB3002E967BB100AB1127 /* BrowseViews */,
 				6D0FB3012E967BC000AB1127 /* PrayerTrackerViews */,
 				6D0FB31F2E96D6F900AB1127 /* QiblaViews */,
+				6D6A644B2E98F8190061FF01 /* EmptyViews */,
 			);
 			name = "Night Prayers";
 			packageProductDependencies = (

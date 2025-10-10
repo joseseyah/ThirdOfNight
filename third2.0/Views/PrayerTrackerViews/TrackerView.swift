@@ -21,18 +21,17 @@ struct TrackerView: View {
             StarOverlay(count: 25, maxYFraction: 0.70, opacity: 0.28)
           MoonOverlay(
               assetName: "moon",
-              size: 88,          // bigger (try 88–100)
-              top: -10,            // same vertical
-              leading: 30,       // push to the right (increase if needed)
+              size: 88,
+              top: -10,
+              leading: 30,
               opacity: 0.48,
-              glowScale: 0.5,    // keep glow tight as it grows
+              glowScale: 0.5,
               glowBlur: 0.15,
               glowOpacity: 0.3
           )
 
 
             if let _ = loc.coordinate, !prayers.isEmpty {
-                // Main content when we have location + computed times
                 VStack(spacing: 25) {
                     // Header
                     VStack(spacing: 6) {
@@ -62,13 +61,11 @@ struct TrackerView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 .offset(y: verticalNudge)
             } else {
-                // Empty state when we don't have a coordinate yet (or no times)
               LocationNotOnView(loc: loc)
             }
         }
         .onAppear {
             loc.request()
-            // If location is already available (e.g., returning to view), compute immediately.
             if let coord = loc.coordinate {
                 prayers = computePrayerItems(for: coord, date: Date())
             }

@@ -34,7 +34,7 @@ struct QiblaView: View {
                                 .foregroundColor(Color("HighlightColor"))
                         }
                     }
-                    DuaSectionView()
+//                    DuaSectionView()
                 }
             }
         }

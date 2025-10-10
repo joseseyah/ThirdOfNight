@@ -20,13 +20,13 @@ struct HomeView: View {
 
             QiblaView()
               .tabItem {
-                Label("Qibla", systemImage: "compass.fill")
+                Label("Qibla", systemImage: "mecca")
               }
               .tag(Tab.qibla)
 
             SummaryView()
               .tabItem {
-                Label("Summary", systemImage: "heart.fill")
+                Label("Summary", systemImage: "heart.text.clipboard.fill")
               }
               .tag(Tab.summary)
 

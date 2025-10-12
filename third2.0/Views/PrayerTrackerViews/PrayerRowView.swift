@@ -4,6 +4,7 @@ struct PrayerRowView: View {
     let name: String
     let time: String
     let isDone: Bool
+    let isEnabled: Bool
     let onTap: () -> Void
 
     var body: some View {
@@ -17,7 +18,6 @@ struct PrayerRowView: View {
 
                 Spacer(minLength: 8)
 
-                // compact time badge
                 Text(time)
                     .font(.system(size: 15, weight: .bold, design: .rounded))
                     .foregroundColor(.textPrimary)
@@ -29,7 +29,7 @@ struct PrayerRowView: View {
                             .overlay(Capsule().stroke(Color.stroke, lineWidth: 1))
                     )
             }
-            .padding(.vertical, 10)   // smaller height
+            .padding(.vertical, 10)
             .padding(.horizontal, 12)
             .background(
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
@@ -40,22 +40,18 @@ struct PrayerRowView: View {
                         )
                     )
                     .overlay(
-                        // keep that nice outline: yellow when done, thin neutral otherwise
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
                             .stroke(isDone ? Color.accentYellow.opacity(0.65) : Color.stroke, lineWidth: 1)
                     )
             )
             .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
             .animation(.spring(response: 0.22, dampingFraction: 0.9), value: isDone)
+            .opacity(isEnabled ? 1 : 0.55)
         }
-        .buttonStyle(CompactPressStyle())
+        .buttonStyle(CompactPressStyle()) 
+        .disabled(!isEnabled)
     }
 }
-
-// MARK: - Smaller check control with outline animation
-
-
-// MARK: - Subtle press feedback (scale + highlight outline)
 private struct CompactPressStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label

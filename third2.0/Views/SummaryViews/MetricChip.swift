@@ -3,33 +3,37 @@ import SwiftUI
 struct MetricChip: View {
     let title: String
     let value: String
-    let icon: String
     var subtitle: String? = nil
 
     var body: some View {
         CardContainer(corner: 14) {
-            HStack(alignment: .top, spacing: 10) {
-                Image(systemName: icon)
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(.appBg)
-                    .padding(8)
-                    .background(Circle().fill(Color.accentYellow))
+            VStack(alignment: .leading, spacing: 6) {
+                Text(title)
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundColor(.textSecondary)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(title)
-                        .font(.system(size: 12, weight: .bold, design: .rounded))
+                Text(value)
+                    .font(.system(size: 26, weight: .bold, design: .rounded))
+                    .monospacedDigit()
+                    .foregroundColor(.textPrimary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+
+                if let subtitle {
+                    Text(subtitle)
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
                         .foregroundColor(.textSecondary)
-                    Text(value)
-                        .font(.system(size: 18, weight: .bold, design: .rounded))
-                        .foregroundColor(.textPrimary)
-                    if let subtitle {
-                        Text(subtitle)
-                            .font(.system(size: 12, weight: .semibold, design: .rounded))
-                            .foregroundColor(.textSecondary)
-                    }
+                        .lineLimit(1)
+                } else {
+                    Text(" ").opacity(0)
                 }
+
+                Spacer(minLength: 0)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .padding(.vertical, 8)
         }
-        .frame(width: 180)
     }
 }

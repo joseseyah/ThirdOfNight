@@ -1,50 +1,61 @@
 import SwiftUI
 
 struct SummaryView: View {
-    // demo data
     @State private var weekDone: [Bool] = [false, true, true, false, true, false, false]
     @State private var heatmap: [[Bool]] = PrayerHeatmapCard.sampleMatrix(cols: 28)
+
+    // Layout knobs
+    private let sidePadding: CGFloat = 24    
+    private let gapBelowHeading: CGFloat = 14
+    private let chipSpacing: CGFloat = 16
+    private let chipHeight: CGFloat = 100
 
     var body: some View {
         ZStack {
             Color.appBg.ignoresSafeArea()
+
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    // match Browse top breathing room
                     Spacer().frame(height: 22)
 
-                    // Large title (same as Browse)
                     Text("Summary")
                         .font(.system(size: 34, weight: .bold, design: .rounded))
                         .foregroundColor(.textPrimary)
-                        .padding(.horizontal, 20)
+                        .padding(.horizontal, sidePadding)
+                        .padding(.bottom, gapBelowHeading)
 
-                    // Metric chips (compact) — align with 20pt
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 12) {
-                            MetricChip(title: "Today Completed", value: "3 / 5", icon: "checkmark.circle.fill")
-                            MetricChip(title: "Streak", value: "7 days", icon: "flame.fill", subtitle: "Best 12")
-                            MetricChip(title: "On-time %", value: "68%", icon: "clock.fill")
+                    // Three equal-width chips with generous side padding
+                    GeometryReader { geo in
+                        let columns = 3
+                        let width = (geo.size.width - chipSpacing * CGFloat(columns - 1)) / CGFloat(columns)
+
+                        HStack(spacing: chipSpacing) {
+                            MetricChip(title: "Today Completed", value: "0 / 5")
+                                .frame(width: width, height: chipHeight)
+                            MetricChip(title: "Streak", value: "7 days", subtitle: "Best 12")
+                                .frame(width: width, height: chipHeight)
+                            MetricChip(title: "On-time %", value: "68%")
+                                .frame(width: width, height: chipHeight)
                         }
-                        .padding(.horizontal, 20)
                     }
+                    .frame(height: chipHeight)
+                    .padding(.horizontal, sidePadding)
 
-                    // Section + card (use 20 for header, 16 for card — like Browse)
                     SectionHeader("7 Day Trend")
-                    TrendWeekCard(
-                        weekDone: weekDone,
-                        highlightIndex: Calendar.current.component(.weekday, from: Date()) - 1
-                    )
-                    .padding(.horizontal, 16)
+                        .padding(.horizontal, sidePadding)
+
+                    TrendWeekCard(weekDone: weekDone, highlightIndex: nil)
+                        .padding(.horizontal, sidePadding)
 
                     SectionHeader("Prayer Trends")
+                        .padding(.horizontal, sidePadding)
+
                     PrayerHeatmapCard(matrix: heatmap)
-                        .padding(.horizontal, 16)
+                        .padding(.horizontal, sidePadding)
 
                     Spacer(minLength: 24)
                 }
             }
-            .scrollIndicators(.hidden)
         }
     }
 }

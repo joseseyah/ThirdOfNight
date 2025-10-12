@@ -11,7 +11,7 @@ func scheduleNextPrayerNotification(prayerTimes: [String: String]) {
     guard !prayerTimes.isEmpty else { return }
 
     let formatter = DateFormatter()
-    formatter.dateFormat = "HH:mm" // Assuming prayer times are in 24-hour format
+    formatter.dateFormat = "HH:mm"
 
     let currentTime = Date()
     var nextPrayerTime: Date?
@@ -530,10 +530,3 @@ func scheduleFortyMinutesBeforeMaghribNotification(prayerTimes: [String: String]
         }
     }
 }
-
-
-
-
-
-
-

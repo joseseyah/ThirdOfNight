@@ -1,10 +1,3 @@
-//
-//  TrackerView.swift
-//  Night Prayers
-//
-//  Created by Joseph Hayes on 06/10/2025.
-//
-
 import SwiftUI
 import CoreLocation
 import SwiftData
@@ -12,6 +5,8 @@ import SwiftData
 struct TrackerView: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject private var vm = TrackerViewModel()
+
+    @State private var showAdsSheet = false
 
     private let verticalNudge: CGFloat = 30
     private let sidePadding: CGFloat = 16
@@ -65,12 +60,39 @@ struct TrackerView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 .offset(y: verticalNudge)
             } else {
-                // Fallback when location not available or prayers not loaded
                 LocationNotOnView(loc: vm.locationManager)
             }
         }
+        // Floating circular button (bottom-right)
+        .overlay(alignment: .bottomTrailing) {
+            Button {
+                showAdsSheet = true
+            } label: {
+                Image(systemName: "bag") // “shop” vibe; try "cart" if you prefer
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(.appBg)
+                    .frame(width: 48, height: 48)
+                    .background(Color.accentYellow)
+                    .clipShape(Circle())
+                    .shadow(color: .black.opacity(0.3), radius: 6, x: 0, y: 4)
+                    .overlay(
+                        Circle()
+                            .stroke(Color.stroke, lineWidth: 1)
+                    )
+                    .accessibilityLabel("Support us")
+            }
+            .buttonStyle(.plain)
+            .padding(.trailing, 20)
+            .padding(.bottom, 20)
+        }
+        .sheet(isPresented: $showAdsSheet) {
+            AdsSheetView()
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+                .background(Color.appBg.ignoresSafeArea())
+        }
         .onAppear {
-            vm.configure(context: modelContext)   // wire SwiftData
+            vm.configure(context: modelContext)
             vm.onAppear()
         }
         .onDisappear { vm.onDisappear() }

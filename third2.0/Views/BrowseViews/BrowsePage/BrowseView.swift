@@ -1,14 +1,5 @@
 import SwiftUI
 
-// MARK: - Model
-struct BrowseCategory: Identifiable, Hashable {
-    let id = UUID()
-    let title: String
-    let systemImage: String
-    let tint: Color
-}
-
-// MARK: - View
 struct BrowseView: View {
     private let categories: [BrowseCategory] = [
         .init(title: "Fajr Reminders", systemImage: "sun.and.horizon.fill", tint: .accentYellow),
@@ -32,9 +23,13 @@ struct BrowseView: View {
 
                         // Large title
                         Text("Browse")
-                            .font(.system(size: 34, weight: .bold, design: .rounded))
+                            .font(.system(size: 34, weight: .bold, design: .default))
+                            .fontWidth(.condensed) // iOS 17+
+                            .tracking(-0.2)
                             .foregroundColor(.textPrimary)
                             .padding(.horizontal, 20)
+
+
 
                         // Compact search
                         CompactSearchField(text: $query)

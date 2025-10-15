@@ -1,17 +1,10 @@
-//
-//  Colors.swift
-//  Night Prayers
-//
-//  Created by Joseph Hayes on 08/10/2025.
-//
-import Foundation
 import SwiftUI
 
 extension Color {
-    static let appBg        = Color(red: 0.04, green: 0.05, blue: 0.07)
-    static let cardBg       = Color(red: 0.08, green: 0.10, blue: 0.13)
-    static let stroke       = Color.white.opacity(0.12)
-    static let textPrimary  = Color(white: 0.92)
-    static let textSecondary = Color(white: 0.70)
-    static let accentYellow = Color(red: 1.00, green: 0.83, blue: 0.25)
+    static let appBg         = Color(red: 0.06, green: 0.07, blue: 0.12)  // deep steel blue
+    static let cardBg        = Color(red: 0.18, green: 0.19, blue: 0.26)  // brighter slate card
+    static let stroke        = Color(red: 0.88, green: 0.90, blue: 0.95).opacity(0.14)
+    static let textPrimary   = Color(red: 0.95, green: 0.97, blue: 0.99)  // clean white-blue
+    static let textSecondary = Color(red: 0.76, green: 0.80, blue: 0.88)  // cool mist
+    static let accentYellow  = Color(red: 0.90, green: 0.92, blue: 0.98)  // icy moonbeam
 }

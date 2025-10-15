@@ -11,16 +11,11 @@ struct CategoryGroup<Content: View>: View {
     @ViewBuilder var content: Content
 
     var body: some View {
-        VStack(spacing: 0) {
+        // Stacked cards with comfortable rhythm—matches the modern list look
+        VStack(spacing: 14) {
             content
         }
-        .background(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(Color.cardBg)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .stroke(Color.stroke, lineWidth: 1)
-                )
-        )
+        .padding(.horizontal, 16)
+        .padding(.vertical, 6)
     }
 }

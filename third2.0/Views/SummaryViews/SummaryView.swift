@@ -38,10 +38,13 @@ struct SummaryView: View {
                     Spacer().frame(height: 22)
 
                     Text("Summary")
-                        .font(.system(size: 34, weight: .bold, design: .rounded))
+                        .font(.system(size: 34, weight: .bold, design: .default))
+                        .fontWidth(.condensed) // iOS 17+
+                        .tracking(-0.2)
                         .foregroundColor(.textPrimary)
                         .padding(.horizontal, sidePadding)
                         .padding(.bottom, gapBelowHeading)
+
 
                     // Three equal-width chips with generous side padding
                     GeometryReader { geo in

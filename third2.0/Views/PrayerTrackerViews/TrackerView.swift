@@ -7,6 +7,7 @@ struct TrackerView: View {
     @StateObject private var vm = TrackerViewModel()
 
     @State private var showAdsSheet = false
+    @State private var showLastThirdSheet = false
 
     private let verticalNudge: CGFloat = 30
     private let sidePadding: CGFloat = 16
@@ -31,9 +32,16 @@ struct TrackerView: View {
 
             if let _ = vm.coordinate, !vm.prayers.isEmpty {
                 VStack(spacing: sectionSpacing) {
-                    // Location + date
                     VStack(spacing: headingGap) {
-                        LocationHeader(loc: vm.locationManager)
+                        // Tap to show “Last Third of the Night” sheet
+                        Button {
+                            showLastThirdSheet = true
+                        } label: {
+                            LocationHeader(loc: vm.locationManager)
+                                .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+
                         Text(vm.dateString("EEEE d MMMM"))
                             .font(.system(size: 26, weight: .bold, design: .rounded))
                             .foregroundColor(.textPrimary)
@@ -63,12 +71,13 @@ struct TrackerView: View {
                 LocationNotOnView(loc: vm.locationManager)
             }
         }
-        // Floating circular button (bottom-right)
+
+        // Support (ads) button
         .overlay(alignment: .bottomTrailing) {
             Button {
                 showAdsSheet = true
             } label: {
-                Image(systemName: "bag") // “shop” vibe; try "cart" if you prefer
+                Image(systemName: "bag")
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundColor(.appBg)
                     .frame(width: 48, height: 48)
@@ -85,16 +94,67 @@ struct TrackerView: View {
             .padding(.trailing, 20)
             .padding(.bottom, 20)
         }
+
+        // Ads sheet
         .sheet(isPresented: $showAdsSheet) {
             AdsSheetView()
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
                 .background(Color.appBg.ignoresSafeArea())
         }
+
+        // NEW: Last Third of the Night sheet
+        .sheet(isPresented: $showLastThirdSheet) {
+            LastThirdSheetView(
+                isha: prayerDate("isha"),
+                maghrib: prayerDate("maghrib"),
+                fajr: prayerDate("fajr"),
+                timezone: TimeZone.current
+            )
+            .presentationDetents([.fraction(0.7), .large])
+            .presentationDragIndicator(.visible)
+            .background(Color.appBg.ignoresSafeArea())
+        }
+
         .onAppear {
             vm.configure(context: modelContext)
             vm.onAppear()
         }
         .onDisappear { vm.onDisappear() }
+    }
+}
+
+// MARK: - Helpers (TrackerView)
+
+private extension TrackerView {
+    /// Attempts to pull the raw `Date` for a prayer by name from `vm.prayers`.
+    /// Adjust the property key below if your model uses a different field than `.date`.
+    func prayerDate(_ name: String) -> Date? {
+        let lower = name.lowercased()
+        // Find by name contains to be resilient to “Isha (Adhan)” etc.
+        guard let item = vm.prayers.first(where: { $0.name.lowercased().contains(lower) }) else { return nil }
+
+        // Common property names you might be using; keep first non-nil.
+        // If your Prayer model uses a different key, update this list.
+        let mirror = Mirror(reflecting: item)
+        for key in ["date", "time", "adhanDate", "adhan", "rawDate"] {
+            if let value = mirror.descendant(key) as? Date { return value }
+        }
+
+        let fmt = DateFormatter()
+        fmt.locale = .current
+        fmt.timeZone = .current
+        fmt.dateFormat = "HH:mm"
+        if let text = (mirror.descendant("timeLabel") as? String),
+           let t = fmt.date(from: text) {
+            // Compose with today's date
+            return Calendar.current.date(
+                bySettingHour: Calendar.current.component(.hour, from: t),
+                minute: Calendar.current.component(.minute, from: t),
+                second: 0,
+                of: Date()
+            )
+        }
+        return nil
     }
 }

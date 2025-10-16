@@ -2,31 +2,21 @@ import SwiftUI
 import SwiftData
 
 struct SummaryView: View {
-    // SwiftData
     @Environment(\.modelContext) private var modelContext
-    @Query private var today: [PrayerDay]   // we expect 0 or 1 because dayKey is unique
+    @Query private var today: [PrayerDay]
+    @Query private var allDays: [PrayerDay]
 
-    // UI state (demo data you already had)
-    @State private var weekDone: [Bool] = [false, true, true, false, true, false, false]
     @State private var heatmap: [[Bool]] = PrayerHeatmapCard.sampleMatrix(cols: 28)
 
-    // Layout knobs
     private let sidePadding: CGFloat = 24
     private let gapBelowHeading: CGFloat = 14
     private let chipSpacing: CGFloat = 16
     private let chipHeight: CGFloat = 100
 
-    // Init the @Query with today's key
     init() {
         let key = PrayerDay.key(for: Date())
         _today = Query(filter: #Predicate<PrayerDay> { $0.dayKey == key }, sort: [])
-    }
-
-    // Derived values
-    private var todayCompletedCount: Int {
-        // Count how many prayers are marked true in today's record
-        guard let record = today.first else { return 0 }
-        return record.completed.values.filter { $0 }.count
+        _allDays = Query(sort: [])
     }
 
     var body: some View {
@@ -39,27 +29,32 @@ struct SummaryView: View {
 
                     Text("Summary")
                         .font(.system(size: 34, weight: .bold, design: .default))
-                        .fontWidth(.condensed) // iOS 17+
+                        .fontWidth(.condensed)
                         .tracking(-0.2)
                         .foregroundColor(.textPrimary)
                         .padding(.horizontal, sidePadding)
                         .padding(.bottom, gapBelowHeading)
 
-
-                    // Three equal-width chips with generous side padding
                     GeometryReader { geo in
                         let columns = 3
                         let width = (geo.size.width - chipSpacing * CGFloat(columns - 1)) / CGFloat(columns)
 
+                        let todayCount = SummaryViewModel.todayCompletedCount(today: today)
+                        let (currentStreak, bestStreak) = SummaryViewModel.streaks(allDays: allDays)
+                        let onTime = SummaryViewModel.onTimeDisplay(allDays: allDays)
+
                         HStack(spacing: chipSpacing) {
-                            // LIVE value from SwiftData
-                            MetricChip(title: "Today Completed", value: "\(todayCompletedCount) / 5")
+                            MetricChip(title: "Today Completed", value: "\(todayCount) / 5")
                                 .frame(width: width, height: chipHeight)
 
-                            MetricChip(title: "Streak", value: "7 days", subtitle: "Best 12")
-                                .frame(width: width, height: chipHeight)
+                            MetricChip(
+                                title: "Streak",
+                                value: "\(currentStreak) " + (currentStreak == 1 ? "day" : "days"),
+                                subtitle: "Best \(bestStreak)"
+                            )
+                            .frame(width: width, height: chipHeight)
 
-                            MetricChip(title: "On-time %", value: "68%")
+                            MetricChip(title: "On-time %", value: onTime)
                                 .frame(width: width, height: chipHeight)
                         }
                     }
@@ -69,6 +64,8 @@ struct SummaryView: View {
                     SectionHeader("7 Day Trend")
                         .padding(.horizontal, sidePadding)
 
+                    // LIVE Monday→Sunday completion pulled from SwiftData
+                    let weekDone = SummaryViewModel.weekDoneForCurrentWeek(allDays: allDays)
                     TrendWeekCard(weekDone: weekDone, highlightIndex: nil)
                         .padding(.horizontal, sidePadding)
 

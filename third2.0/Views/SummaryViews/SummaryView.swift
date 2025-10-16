@@ -6,8 +6,6 @@ struct SummaryView: View {
     @Query private var today: [PrayerDay]
     @Query private var allDays: [PrayerDay]
 
-    @State private var heatmap: [[Bool]] = PrayerHeatmapCard.sampleMatrix(cols: 28)
-
     private let sidePadding: CGFloat = 24
     private let gapBelowHeading: CGFloat = 14
     private let chipSpacing: CGFloat = 16
@@ -69,10 +67,10 @@ struct SummaryView: View {
                     TrendWeekCard(weekDone: weekDone, highlightIndex: nil)
                         .padding(.horizontal, sidePadding)
 
-                    SectionHeader("Prayer Trends")
+                    SectionHeader("Monthly Trends")
                         .padding(.horizontal, sidePadding)
 
-                    PrayerHeatmapCard(matrix: heatmap)
+                    PrayerHeatmapCard() 
                         .padding(.horizontal, sidePadding)
 
                     Spacer(minLength: 24)

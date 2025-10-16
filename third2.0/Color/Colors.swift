@@ -1,10 +1,10 @@
 import SwiftUI
 
 extension Color {
-    static let appBg         = Color(red: 0.06, green: 0.07, blue: 0.12)  // deep steel blue
-    static let cardBg        = Color(red: 0.18, green: 0.19, blue: 0.26)  // brighter slate card
-    static let stroke        = Color(red: 0.88, green: 0.90, blue: 0.95).opacity(0.14)
-    static let textPrimary   = Color(red: 0.95, green: 0.97, blue: 0.99)  // clean white-blue
-    static let textSecondary = Color(red: 0.76, green: 0.80, blue: 0.88)  // cool mist
-    static let accentYellow  = Color(red: 0.90, green: 0.92, blue: 0.98)  // icy moonbeam
+    static let appBg         = Color(red: 0.04, green: 0.04, blue: 0.08)   // deeper indigo night
+    static let cardBg        = Color(red: 0.12, green: 0.11, blue: 0.17)   // softer charcoal
+    static let stroke        = Color(red: 1.00, green: 0.96, blue: 0.82).opacity(0.26) // warmer rim, a bit stronger
+    static let textPrimary   = Color(red: 0.99, green: 0.98, blue: 0.94)   // warm moonlight (slight cream)
+    static let textSecondary = Color(red: 0.82, green: 0.85, blue: 0.92)   // cool-lunar balance
+    static let accentYellow  = Color(red: 1.00, green: 0.95, blue: 0.72)   // brighter honey glow
 }

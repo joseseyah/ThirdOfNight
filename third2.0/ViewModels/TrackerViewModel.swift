@@ -26,6 +26,8 @@ final class TrackerViewModel: ObservableObject {
     @Published var prayers: [TrackerPrayer] = []
     @Published var coordinate: CLLocationCoordinate2D?
 
+    @Published var showingHijri: Bool = false
+
     // Pass this to LocationHeader
     let locationManager = MiniLocationManager()
 
@@ -49,14 +51,12 @@ final class TrackerViewModel: ObservableObject {
     func onAppear() {
         locationManager.request()
 
-        // Mirror coordinate → load prayers for today
         locationManager.$coordinate
             .receive(on: DispatchQueue.main)
             .sink { [weak self] coord in
                 guard let self else { return }
                 self.coordinate = coord
                 if let c = coord {
-                    // Ensure we have a SwiftData record for today
                     self.todayRecord = self.fetchOrCreateToday(for: Date())
                     self.loadPrayers(for: c, on: Date())
                 }
@@ -70,9 +70,16 @@ final class TrackerViewModel: ObservableObject {
         ticker?.cancel()
         ticker = nil
         cancellables.removeAll()
+        // Reset session-only toggle when leaving the screen
+        showingHijri = false
     }
 
     // MARK: - Actions
+    func toggleDateCalendar() {
+        showingHijri.toggle()
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+    }
+
     func togglePrayer(at index: Int) {
         guard prayers.indices.contains(index) else { return }
         let now = Date()
@@ -83,33 +90,39 @@ final class TrackerViewModel: ObservableObject {
 
         prayers[index].done.toggle()
 
-        // Persist immediately
         guard let ctx = context else { return }
         let record = todayRecord ?? fetchOrCreateToday(for: Date())
         let key = keyForPrayerName(prayers[index].name)
         record.completed[key] = prayers[index].done
         do { try ctx.save() } catch {
-            // If save fails, revert UI state
             prayers[index].done.toggle()
             print("SwiftData save failed: \(error)")
         }
         todayRecord = record
     }
 
-    // MARK: - Helpers
-    func dateString(_ template: String, date: Date = Date()) -> String {
+    func displayDateString(gregorianTemplate: String = "EEEE d MMMM",
+                           hijriTemplate: String = "d MMMM y",
+                           date: Date = Date()) -> String {
+        let usingHijri = showingHijri
+        let cal: Calendar = usingHijri
+            ? Calendar(identifier: .islamicUmmAlQura)
+            : Calendar(identifier: .gregorian)
+        let template = usingHijri ? hijriTemplate : gregorianTemplate
+
         let f = DateFormatter()
         f.locale = .autoupdatingCurrent
+        f.calendar = cal
         f.setLocalizedDateFormatFromTemplate(template)
         return f.string(from: date)
     }
 
+
+
     // MARK: - Build the row items
     private func loadPrayers(for coord: CLLocationCoordinate2D, on date: Date) {
-        // 1) Display strings (unchanged function)
         let simple = computePrayerItems(for: coord, date: date)  // [name + time]
 
-        // 2) Start dates + windows via Adhan
         let coordinates = Coordinates(latitude: coord.latitude, longitude: coord.longitude)
         var params = CalculationMethod.moonsightingCommittee.params
         params.madhab = .shafi
@@ -134,16 +147,13 @@ final class TrackerViewModel: ObservableObject {
             return
         }
 
-        // 3) Existing 'done' map from SwiftData for today
         let record = todayRecord ?? fetchOrCreateToday(for: date)
-        let completed = record.completed  // [String: Bool], keys normalized
+        let completed = record.completed  // [String: Bool]
 
-        // Ordered names and starts
         let names = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"]
         let starts = [todayPT.fajr, todayPT.dhuhr, todayPT.asr, todayPT.maghrib, todayPT.isha]
         let nextDayFajr = tomorrowPT.fajr
 
-        // 4) Merge to TrackerPrayer
         var merged: [TrackerPrayer] = []
         for i in 0..<names.count {
             let name = names[i]
@@ -158,7 +168,6 @@ final class TrackerViewModel: ObservableObject {
 
         self.prayers = merged
         self.todayRecord = record
-        // Save record if it was newly created
         try? ctx.save()
     }
 
@@ -177,7 +186,6 @@ final class TrackerViewModel: ObservableObject {
     }
 
     private func keyForPrayerName(_ name: String) -> String {
-        // Normalize keys so persistence is stable (e.g., "Fajr" → "FAJR")
         name.uppercased()
     }
 

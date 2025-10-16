@@ -42,9 +42,14 @@ struct TrackerView: View {
                         }
                         .buttonStyle(.plain)
 
-                        Text(vm.dateString("EEEE d MMMM"))
+                        // Tap to toggle Gregorian ↔︎ Hijri display
+                        Text(vm.displayDateString(gregorianTemplate: "EEEE d MMMM",
+                                                  hijriTemplate: "d MMMM"))
                             .font(.system(size: 26, weight: .bold, design: .rounded))
                             .foregroundColor(.textPrimary)
+                            .onTapGesture { vm.toggleDateCalendar() }
+                            .animation(.easeInOut(duration: 0.15), value: vm.showingHijri)
+                            .accessibilityLabel(vm.showingHijri ? "Hijri date" : "Gregorian date")
                     }
 
                     // Prayer rows
@@ -103,7 +108,7 @@ struct TrackerView: View {
                 .background(Color.appBg.ignoresSafeArea())
         }
 
-        // NEW: Last Third of the Night sheet
+        // Last Third of the Night sheet
         .sheet(isPresented: $showLastThirdSheet) {
             LastThirdSheetView(
                 isha: prayerDate("isha"),
@@ -127,15 +132,10 @@ struct TrackerView: View {
 // MARK: - Helpers (TrackerView)
 
 private extension TrackerView {
-    /// Attempts to pull the raw `Date` for a prayer by name from `vm.prayers`.
-    /// Adjust the property key below if your model uses a different field than `.date`.
     func prayerDate(_ name: String) -> Date? {
         let lower = name.lowercased()
-        // Find by name contains to be resilient to “Isha (Adhan)” etc.
         guard let item = vm.prayers.first(where: { $0.name.lowercased().contains(lower) }) else { return nil }
 
-        // Common property names you might be using; keep first non-nil.
-        // If your Prayer model uses a different key, update this list.
         let mirror = Mirror(reflecting: item)
         for key in ["date", "time", "adhanDate", "adhan", "rawDate"] {
             if let value = mirror.descendant(key) as? Date { return value }
@@ -147,7 +147,6 @@ private extension TrackerView {
         fmt.dateFormat = "HH:mm"
         if let text = (mirror.descendant("timeLabel") as? String),
            let t = fmt.date(from: text) {
-            // Compose with today's date
             return Calendar.current.date(
                 bySettingHour: Calendar.current.component(.hour, from: t),
                 minute: Calendar.current.component(.minute, from: t),

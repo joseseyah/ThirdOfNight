@@ -33,6 +33,7 @@
 		6D6A64692E9D3A170061FF01 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 6D6A64682E9D3A170061FF01 /* GoogleMobileAds */; };
 		6D6A646B2E9D3A500061FF01 /* BannerAdController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6A646A2E9D3A500061FF01 /* BannerAdController.swift */; };
 		6D6A64752EA108D60061FF01 /* SummaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6A64742EA108D60061FF01 /* SummaryViewModel.swift */; };
+		6D6A64772EA122F90061FF01 /* PrayerHeatmapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6A64762EA122F90061FF01 /* PrayerHeatmapViewModel.swift */; };
 		6DAD84802CB7176B0027BF5A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6DAD847F2CB7176B0027BF5A /* FirebaseAnalytics */; };
 		6DAD84822CB7176B0027BF5A /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6DAD84812CB7176B0027BF5A /* FirebaseCore */; };
 		6DAD84842CB7176B0027BF5A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6DAD84832CB7176B0027BF5A /* FirebaseFirestore */; };
@@ -112,6 +113,7 @@
 		6D6A645E2E9CDFC90061FF01 /* BrowseCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseCategory.swift; sourceTree = "<group>"; };
 		6D6A646A2E9D3A500061FF01 /* BannerAdController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAdController.swift; sourceTree = "<group>"; };
 		6D6A64742EA108D60061FF01 /* SummaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModel.swift; sourceTree = "<group>"; };
+		6D6A64762EA122F90061FF01 /* PrayerHeatmapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerHeatmapViewModel.swift; sourceTree = "<group>"; };
 		6DBCFC4A2CB25CC30074796A /* Night Prayers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Night Prayers.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DBCFC4D2CB25CC30074796A /* third2_0App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = third2_0App.swift; sourceTree = "<group>"; };
 		6DBCFC532CB25CC40074796A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			children = (
 				6D6A64542E9A4C460061FF01 /* TrackerViewModel.swift */,
 				6D6A64742EA108D60061FF01 /* SummaryViewModel.swift */,
+				6D6A64762EA122F90061FF01 /* PrayerHeatmapViewModel.swift */,
 				6D6A64562E9B95DA0061FF01 /* TrendWeekViewModel.swift */,
 			);
 			path = ViewModels;
@@ -553,6 +556,7 @@
 				6D6A64552E9A4C460061FF01 /* TrackerViewModel.swift in Sources */,
 				6D6A645F2E9CDFC90061FF01 /* BrowseCategory.swift in Sources */,
 				6D6A645D2E9BA0080061FF01 /* PrayerDay.swift in Sources */,
+				6D6A64772EA122F90061FF01 /* PrayerHeatmapViewModel.swift in Sources */,
 				6D6A64572E9B95DA0061FF01 /* TrendWeekViewModel.swift in Sources */,
 				6D0FB2E32E9644BE00AB1127 /* MiniLocationManager.swift in Sources */,
 				6DBCFC4E2CB25CC30074796A /* third2_0App.swift in Sources */,

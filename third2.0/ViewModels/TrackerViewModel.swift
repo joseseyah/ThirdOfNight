@@ -5,45 +5,28 @@ import SwiftUI
 import SwiftData
 import Adhan
 
-// Row model the View uses
-struct TrackerPrayer: Identifiable {
-    let id = UUID()
-    let name: String
-    let timeLabel: String
-    let start: Date
-    let nextStart: Date
-    var done: Bool
-
-    func canMark(at now: Date = Date()) -> Bool {
-        now >= start && now < nextStart
-    }
-}
-
 @MainActor
 final class TrackerViewModel: ObservableObject {
 
     // MARK: - Public state
     @Published var prayers: [TrackerPrayer] = []
     @Published var coordinate: CLLocationCoordinate2D?
-
     @Published var showingHijri: Bool = false
 
-    // Pass this to LocationHeader
+    // 👇 NEW: overlay flag — when true, UI pretends all are done and we never save
+    @Published var freezeOverlay: Bool = false
+
     let locationManager = MiniLocationManager()
 
-    // MARK: - SwiftData
     private var context: ModelContext?
     private var todayRecord: PrayerDay?
 
-    // MARK: - Infra
     private var ticker: AnyCancellable?
     private var cancellables = Set<AnyCancellable>()
     private let tickSeconds: TimeInterval = 30
 
-    // MARK: - Wiring from the View
     func configure(context: ModelContext) {
         self.context = context
-        // Preload today's record so we can hydrate 'done' when prayers arrive
         self.todayRecord = fetchOrCreateToday(for: Date())
     }
 
@@ -70,8 +53,15 @@ final class TrackerViewModel: ObservableObject {
         ticker?.cancel()
         ticker = nil
         cancellables.removeAll()
-        // Reset session-only toggle when leaving the screen
         showingHijri = false
+    }
+
+    // MARK: - Freeze overlay control
+    func setFreezeOverlay(_ enabled: Bool) {
+        freezeOverlay = enabled
+        // We do not mutate SwiftData here. The overlay is UI-only.
+        // Optionally give soft haptic:
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 
     // MARK: - Actions
@@ -82,6 +72,13 @@ final class TrackerViewModel: ObservableObject {
 
     func togglePrayer(at index: Int) {
         guard prayers.indices.contains(index) else { return }
+
+        // When freeze is active, block any marking and never save
+        if freezeOverlay {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            return
+        }
+
         let now = Date()
         guard prayers[index].canMark(at: now) else {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -116,8 +113,6 @@ final class TrackerViewModel: ObservableObject {
         f.setLocalizedDateFormatFromTemplate(template)
         return f.string(from: date)
     }
-
-
 
     // MARK: - Build the row items
     private func loadPrayers(for coord: CLLocationCoordinate2D, on date: Date) {
@@ -168,6 +163,9 @@ final class TrackerViewModel: ObservableObject {
 
         self.prayers = merged
         self.todayRecord = record
+
+        // NOTE: we still allow initial entity creation to persist, but we do not
+        // mark completions here. (No changes needed for freeze.)
         try? ctx.save()
     }
 

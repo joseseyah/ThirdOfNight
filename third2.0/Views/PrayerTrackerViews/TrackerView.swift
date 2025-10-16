@@ -8,6 +8,9 @@ struct TrackerView: View {
 
     @State private var showAdsSheet = false
     @State private var showLastThirdSheet = false
+    @State private var showFreezeSheet = false
+
+    @AppStorage(PrefKeys.freezeOn) private var isFreezeOn: Bool = false
 
     private let verticalNudge: CGFloat = 30
     private let sidePadding: CGFloat = 16
@@ -32,17 +35,27 @@ struct TrackerView: View {
 
             if let _ = vm.coordinate, !vm.prayers.isEmpty {
                 VStack(spacing: sectionSpacing) {
-                    VStack(spacing: headingGap) {
-                        // Tap to show “Last Third of the Night” sheet
-                        Button {
-                            showLastThirdSheet = true
-                        } label: {
-                            LocationHeader(loc: vm.locationManager)
-                                .contentShape(Rectangle())
-                        }
-                        .buttonStyle(.plain)
 
-                        // Tap to toggle Gregorian ↔︎ Hijri display
+                    // MARK: - Header (Centered Location + Right Freeze Button)
+                    VStack(spacing: headingGap) {
+                        ZStack {
+                            LocationHeader(loc: vm.locationManager)
+                                .frame(maxWidth: .infinity)
+                                .contentShape(Rectangle())
+                                .onTapGesture { showLastThirdSheet = true }
+                                .accessibilityAddTraits(.isButton)
+
+                            HStack {
+                                Spacer()
+                                FreezeCircleButton(
+                                    isOn: $isFreezeOn,
+                                    onActivate: { showFreezeSheet = true }
+                                )
+                                .padding(.trailing, 16)
+                            }
+                            .allowsHitTesting(true)
+                        }
+
                         Text(vm.displayDateString(gregorianTemplate: "EEEE d MMMM",
                                                   hijriTemplate: "d MMMM"))
                             .font(.system(size: 26, weight: .bold, design: .rounded))
@@ -52,15 +65,15 @@ struct TrackerView: View {
                             .accessibilityLabel(vm.showingHijri ? "Hijri date" : "Gregorian date")
                     }
 
-                    // Prayer rows
+                    // MARK: - Prayer rows
                     VStack(spacing: rowSpacing) {
                         ForEach(vm.prayers.indices, id: \.self) { i in
                             let item = vm.prayers[i]
                             PrayerRowView(
                                 name: item.name,
                                 time: item.timeLabel,
-                                isDone: item.done,
-                                isEnabled: item.canMark()
+                                isDone: vm.freezeOverlay ? true : item.done,
+                                isEnabled: item.canMark() && !vm.freezeOverlay
                             ) {
                                 withAnimation(.spring(response: 0.25, dampingFraction: 0.85)) {
                                     vm.togglePrayer(at: i)
@@ -77,7 +90,6 @@ struct TrackerView: View {
             }
         }
 
-        // Support (ads) button
         .overlay(alignment: .bottomTrailing) {
             Button {
                 showAdsSheet = true
@@ -121,16 +133,26 @@ struct TrackerView: View {
             .background(Color.appBg.ignoresSafeArea())
         }
 
+        // Freeze info sheet (no buttons; swipe to dismiss)
+        .sheet(isPresented: $showFreezeSheet) {
+            FreezeSheetView(isOn: $isFreezeOn)
+        }
+
         .onAppear {
             vm.configure(context: modelContext)
             vm.onAppear()
+            // apply persisted freeze state on load
+            vm.setFreezeOverlay(isFreezeOn)
         }
         .onDisappear { vm.onDisappear() }
+
+        .onChange(of: isFreezeOn) { newValue in
+            vm.setFreezeOverlay(newValue)
+        }
     }
 }
 
 // MARK: - Helpers (TrackerView)
-
 private extension TrackerView {
     func prayerDate(_ name: String) -> Date? {
         let lower = name.lowercased()

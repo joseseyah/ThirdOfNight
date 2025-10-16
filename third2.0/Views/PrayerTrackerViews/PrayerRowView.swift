@@ -7,13 +7,18 @@ struct PrayerRowView: View {
     let isEnabled: Bool
     let onTap: () -> Void
 
+    private var nameColor: Color { isDone ? .accentYellow : .textPrimary }
+    private var timeTextColor: Color { isDone ? .appBg : .textPrimary }
+    private var timeFill: Color { isDone ? .accentYellow : Color.white.opacity(0.05) }
+    private var timeStroke: Color { isDone ? Color.accentYellow.opacity(0.85) : .stroke }
+    private var cardStroke: Color { isDone ? Color.accentYellow.opacity(0.75) : .stroke }
+
     var body: some View {
         Button(action: onTap) {
             HStack(spacing: 12) {
-                // CHECK RING + GLOW
                 ZStack {
                     CompactCheckRing(isOn: isDone)
-                    // soft halo when done
+
                     if isDone {
                         Circle()
                             .fill(Color.accentYellow.opacity(0.18))
@@ -26,34 +31,35 @@ struct PrayerRowView: View {
 
                 Text(name)
                     .font(.system(size: 17, weight: .semibold, design: .rounded))
-                    .foregroundColor(.textPrimary)
+                    .foregroundColor(nameColor)
+                    .shadow(color: isDone ? Color.accentYellow.opacity(0.25) : .clear,
+                            radius: isDone ? 6 : 0, x: 0, y: 0)
 
                 Spacer(minLength: 8)
 
-                // TIME PILL WITH INNER/OUTER GLOW
                 Text(time)
                     .font(.system(size: 15, weight: .bold, design: .rounded))
-                    .foregroundColor(.textPrimary)
+                    .foregroundColor(timeTextColor)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
                     .background(
                         ZStack {
-                            Capsule()
-                                .fill(Color.white.opacity(0.05))
-                            Capsule()
-                                .stroke(Color.stroke, lineWidth: 1)
+                            Capsule().fill(timeFill)
 
-                            // subtle inner rim
                             Capsule()
-                                .stroke(Color.accentYellow.opacity(0.28), lineWidth: 1.2)
-                                .blur(radius: 1.5)
-                                .opacity(isDone ? 1 : 0)
+                                .stroke(timeStroke, lineWidth: 1.2)
 
-                            // outer bloom when done
                             if isDone {
                                 Capsule()
-                                    .fill(Color.accentYellow.opacity(0.14))
-                                    .blur(radius: 14)
+                                    .stroke(Color.white.opacity(0.35), lineWidth: 0.6)
+                                    .blur(radius: 0.6)
+                                    .opacity(0.65)
+                            }
+
+                            if isDone {
+                                Capsule()
+                                    .fill(Color.accentYellow.opacity(0.22))
+                                    .blur(radius: 16)
                                     .blendMode(.plusLighter)
                             }
                         }
@@ -72,35 +78,29 @@ struct PrayerRowView: View {
                             )
                         )
 
-                    // warm vignette/halo when completed
                     if isDone {
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
                             .fill(
                                 RadialGradient(
-                                    colors: [
-                                        Color.accentYellow.opacity(0.16),
-                                        .clear
-                                    ],
+                                    colors: [Color.accentYellow.opacity(0.18), .clear],
                                     center: .center,
-                                    startRadius: 6, endRadius: 160
+                                    startRadius: 6, endRadius: 180
                                 )
                             )
                             .blendMode(.plusLighter)
                     }
 
-                    // border: accent when done, normal otherwise
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .stroke(isDone ? Color.accentYellow.opacity(0.65) : Color.stroke, lineWidth: 1)
+                        .stroke(cardStroke, lineWidth: 1.1)
                 }
             )
-            // soft drop + light bloom
-            .shadow(color: (isDone ? Color.accentYellow.opacity(0.24) : .clear), radius: 14, x: 0, y: 0)
+            .shadow(color: (isDone ? Color.accentYellow.opacity(0.26) : .clear), radius: 14, x: 0, y: 0)
             .shadow(color: Color.black.opacity(0.35), radius: 10, x: 0, y: 6)
 
             .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
             .animation(.spring(response: 0.22, dampingFraction: 0.9), value: isDone)
             .opacity(isEnabled ? 1 : 0.55)
-            .compositingGroup() // helps blendMode blooms look smooth
+            .compositingGroup()
         }
         .buttonStyle(CompactPressStyle())
         .disabled(!isEnabled)
@@ -111,7 +111,6 @@ private struct CompactPressStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .scaleEffect(configuration.isPressed ? 0.985 : 1.0)
-            // press ring + momentary glow
             .overlay(
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
                     .stroke(Color.accentYellow.opacity(configuration.isPressed ? 0.35 : 0), lineWidth: 2)

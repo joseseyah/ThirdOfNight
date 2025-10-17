@@ -2,14 +2,21 @@
 //  PrayerHeatmapViewModel.swift
 //  Night Prayers
 //
-//  Created by Joseph Hayes on 16/10/2025.
-//
-
 
 import Foundation
 
+struct HeatmapPrepared {
+    /// rows = prayers, cols = days
+    let matrix: [[Bool]]
+    /// "1"..."<daysInMonth>"
+    let dayLabels: [String]
+    /// Whether to insert a visual week gap *after* this column index (0-based).
+    let weekGapAfter: [Bool]
+    /// Number of days in this month
+    let daysInMonth: Int
+}
+
 final class PrayerHeatmapViewModel {
-    // Public constants used by the View
     let prayers = ["FAJR","DHUHR","ASR","MAGHRIB","ISHA"]
 
     // Month & calendar
@@ -34,12 +41,28 @@ final class PrayerHeatmapViewModel {
         calendar.date(byAdding: .day, value: c, to: startOfMonth) ?? startOfMonth
     }
 
-    func isSunday(column c: Int) -> Bool {
-        let d = dateForColumn(c)
-        return calendar.component(.weekday, from: d) == 1 // Sun
+    // MARK: - Public: one-shot data for the view (no logic left in UI)
+    func preparedData(allDays: [PrayerDay]) -> HeatmapPrepared {
+        let matrix = buildMatrix(allDays: allDays)
+        let n = daysInMonth
+
+        let labels = (1...n).map { String($0) }
+        // Insert a week gap AFTER columns 6, 13, 20, 27... (0-based)
+        let gapsAfter = (0..<n).map { idx in
+            let dayNumber = idx + 1
+            return (dayNumber % 7 == 0) && (dayNumber < n)
+        }
+
+        return HeatmapPrepared(
+            matrix: matrix,
+            dayLabels: labels,
+            weekGapAfter: gapsAfter,
+            daysInMonth: n
+        )
     }
 
-    func buildMatrix(allDays: [PrayerDay]) -> [[Bool]] {
+    // MARK: - Internals
+    private func buildMatrix(allDays: [PrayerDay]) -> [[Bool]] {
         let map = Self.mapByKey(allDays)
         let cols = daysInMonth
         var matrix = Array(
@@ -50,8 +73,7 @@ final class PrayerHeatmapViewModel {
         for r in 0..<prayers.count {
             let prayer = prayers[r]
             for c in 0..<cols {
-                let dayDate = dateForColumn(c)
-                let key = PrayerDay.key(for: dayDate)
+                let key = PrayerDay.key(for: dateForColumn(c))
                 if let record = map[key] {
                     matrix[r][c] = Self.value(for: prayer, in: record)
                 }

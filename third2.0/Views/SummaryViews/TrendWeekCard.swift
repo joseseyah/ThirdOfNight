@@ -4,7 +4,6 @@ import SwiftUI
 struct TrendWeekCard: View {
     let weekDone: [Bool]
 
-    // Inject optional override (0 = Mon … 6 = Sun)
     @StateObject private var vm: TrendWeekViewModel
 
     init(weekDone: [Bool], highlightIndex: Int? = nil) {
@@ -21,7 +20,6 @@ struct TrendWeekCard: View {
                             // Background plate
                             Circle().fill(Color.white.opacity(0.06))
 
-                            // Optional fill if that day is done
                             if weekDone.indices.contains(i), weekDone[i] {
                                 Circle().fill(Color.accentYellow.opacity(0.95)).padding(8)
                             }

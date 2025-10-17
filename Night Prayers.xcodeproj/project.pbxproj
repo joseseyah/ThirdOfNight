@@ -144,6 +144,7 @@
 		6D6A644B2E98F8190061FF01 /* EmptyViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EmptyViews; sourceTree = "<group>"; };
 		6D6A64642E9D39D20061FF01 /* AdvertViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AdvertViews; sourceTree = "<group>"; };
 		6D6A647A2EA194F50061FF01 /* ManualViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ManualViews; sourceTree = "<group>"; };
+		6D6A64892EA232190061FF01 /* ShareViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ShareViews; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -318,6 +319,7 @@
 		6DCC13232D0AE6BE00E352BD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6D6A64892EA232190061FF01 /* ShareViews */,
 				6D6A647A2EA194F50061FF01 /* ManualViews */,
 				6D6A64642E9D39D20061FF01 /* AdvertViews */,
 				6D6A644B2E98F8190061FF01 /* EmptyViews */,
@@ -398,6 +400,7 @@
 				6D6A644B2E98F8190061FF01 /* EmptyViews */,
 				6D6A64642E9D39D20061FF01 /* AdvertViews */,
 				6D6A647A2EA194F50061FF01 /* ManualViews */,
+				6D6A64892EA232190061FF01 /* ShareViews */,
 			);
 			name = "Night Prayers";
 			packageProductDependencies = (

@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UIKit
 
 struct SummaryView: View {
     @Environment(\.modelContext) private var modelContext
@@ -7,6 +8,12 @@ struct SummaryView: View {
     @Query private var allDays: [PrayerDay]
 
     @State private var monthPage: Int = 0
+
+    // Preview + Share state
+    @State private var previewImage: UIImage? = nil
+    @State private var showPreview = false
+    @State private var showShareSheet = false
+    @State private var shareItems: [Any] = []   // UIImage / String / URL etc.
 
     private let sidePadding: CGFloat = 24
     private let gapBelowHeading: CGFloat = 14
@@ -18,7 +25,7 @@ struct SummaryView: View {
 
     init() {
         let key = PrayerDay.key(for: Date())
-        _today = Query(filter: #Predicate<PrayerDay> { $0.dayKey == key }, sort: [])
+        _today   = Query(filter: #Predicate<PrayerDay> { $0.dayKey == key }, sort: [])
         _allDays = Query(sort: [])
     }
 
@@ -26,7 +33,6 @@ struct SummaryView: View {
         let cal = Calendar.autoupdatingCurrent
         let todayMonth = cal.date(from: cal.dateComponents([.year, .month], from: Date()))!
 
-        // Earliest month from saved data (or fallback to current)
         let earliest = allDays.map { $0.date }.min() ?? Date()
         var start = cal.date(from: cal.dateComponents([.year, .month], from: earliest)) ?? todayMonth
         if start > todayMonth { start = todayMonth }
@@ -62,6 +68,9 @@ struct SummaryView: View {
                         .padding(.horizontal, sidePadding)
                         .padding(.bottom, gapBelowHeading)
 
+                    // Precompute once so both the chip tap and Trend card use the same data
+                    let weekDone = SummaryViewModel.weekDoneForCurrentWeek(allDays: allDays)
+
                     GeometryReader { geo in
                         let columns = 3
                         let width = (geo.size.width - chipSpacing * CGFloat(columns - 1)) / CGFloat(columns)
@@ -74,12 +83,21 @@ struct SummaryView: View {
                             MetricChip(title: "Today Completed", value: "\(todayCount) / 5")
                                 .frame(width: width, height: chipHeight)
 
+                            // Streak chip → Preview → Apple share sheet
                             MetricChip(
                                 title: "Streak",
                                 value: "\(currentStreak) " + (currentStreak == 1 ? "day" : "days"),
                                 subtitle: "Best \(bestStreak)"
                             )
                             .frame(width: width, height: chipHeight)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                generateShareImageAndPreview(
+                                    currentStreak: currentStreak,
+                                    bestStreak: bestStreak,
+                                    weekDone: weekDone
+                                )
+                            }
 
                             MetricChip(title: "On-time %", value: onTime)
                                 .frame(width: width, height: chipHeight)
@@ -91,8 +109,8 @@ struct SummaryView: View {
                     SectionHeader("7 Day Trend")
                         .padding(.horizontal, sidePadding)
 
-                    let weekDone = SummaryViewModel.weekDoneForCurrentWeek(allDays: allDays)
-                    TrendWeekCard(weekDone: weekDone, highlightIndex: nil)
+                    TrendWeekCard(weekDone: SummaryViewModel.weekDoneForCurrentWeek(allDays: allDays),
+                                  highlightIndex: nil)
                         .padding(.horizontal, sidePadding)
 
                     if !monthList.isEmpty {
@@ -110,7 +128,7 @@ struct SummaryView: View {
                         }
                         .tabViewStyle(.page(indexDisplayMode: .automatic))
                         .indexViewStyle(.page(backgroundDisplayMode: .always))
-                        .frame(height: heatmapHeight + dotsAllowance) // keep dots snug under the card
+                        .frame(height: heatmapHeight + dotsAllowance)
                         .padding(.horizontal, sidePadding)
                         .clipped()
                         .onAppear {
@@ -121,6 +139,53 @@ struct SummaryView: View {
                     Spacer(minLength: 24)
                 }
             }
+        }
+        // 1) Big in-app preview
+        .sheet(isPresented: $showPreview) {
+            if let image = previewImage {
+                StreakSharePreviewSheet(
+                    image: image,
+                    onClose: { showPreview = false },
+                    onShare: {
+                        showPreview = false
+                        shareItems = [image]
+                        showShareSheet = true
+                    }
+                )
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+            }
+        }
+        // 2) Native Apple share sheet
+        .sheet(isPresented: $showShareSheet) {
+            ActivityShareSheet(items: shareItems)
+                .ignoresSafeArea()
+        }
+    }
+}
+
+// MARK: - Share helpers
+private extension SummaryView {
+    func generateShareImageAndPreview(currentStreak: Int, bestStreak: Int, weekDone: [Bool]) {
+        // Duolingo-style card render (hi-res)
+        let card = StreakShareCard(
+            currentStreak: currentStreak,
+            bestStreak: bestStreak,
+            weekDone: weekDone
+        )
+        .frame(width: 1000, height: 1400)
+        .environment(\.colorScheme, .dark)
+
+        let renderer = ImageRenderer(content: card)
+        renderer.scale = UIScreen.main.scale
+
+        if let img = renderer.uiImage {
+            previewImage = img
+            showPreview = true
+        } else {
+            // Fallback: share text if render fails
+            shareItems = ["I’m on a \(currentStreak)-day streak in Night Prayers! Best: \(bestStreak). 🌙"]
+            showShareSheet = true
         }
     }
 }

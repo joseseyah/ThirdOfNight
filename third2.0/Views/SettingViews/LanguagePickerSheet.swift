@@ -12,13 +12,7 @@ struct LanguagePickerSheet: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("appLanguage") private var appLanguage: String = Locale.current.language.languageCode?.identifier ?? "en"
 
-    struct Item: Identifiable {
-        let id = UUID()
-        let code: String
-        let name: String
-    }
-
-    static let supported: [Item] = [
+    static let supported: [Language] = [
         .init(code: "en", name: "English"),
         .init(code: "ar", name: "العربية"),
         .init(code: "ur", name: "اردو"),
@@ -69,5 +63,5 @@ struct LanguagePickerSheet: View {
         }
     }
 
-    private func selection(for item: Item) -> Bool { appLanguage == item.code }
+    private func selection(for item: Language) -> Bool { appLanguage == item.code }
 }

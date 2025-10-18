@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    enum Tab { case tracker, qibla, summary, browse }
+    enum Tab { case tracker, qibla, summary, browse, settings}
     @State private var selected: Tab = .tracker
 
     var body: some View {
@@ -29,16 +29,21 @@ struct HomeView: View {
                 Label("Summary", systemImage: "heart.text.clipboard.fill")
               }
               .tag(Tab.summary)
+          
+             SettingsView()
+              .tabItem {
+                Label("Settings", systemImage: "gear")
+              }
+              .tag(Tab.settings)
 
 
-
-            BrowseView()
-                .tabItem {
-                    Label("Browse", systemImage: "square.grid.2x2")
-                }
-                .tag(Tab.browse)
+//            BrowseView()
+//                .tabItem {
+//                    Label("Browse", systemImage: "square.grid.2x2")
+//                }
+//                .tag(Tab.browse)
         }
-        .tint(.accentYellow) // selected tab color
+        .tint(.accentYellow)
         .background(Color.appBg.ignoresSafeArea())
     }
 }

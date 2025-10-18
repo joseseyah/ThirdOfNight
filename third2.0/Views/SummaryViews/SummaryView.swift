@@ -68,7 +68,6 @@ struct SummaryView: View {
                         .padding(.horizontal, sidePadding)
                         .padding(.bottom, gapBelowHeading)
 
-                    // Precompute once so both the chip tap and Trend card use the same data
                     let weekDone = SummaryViewModel.weekDoneForCurrentWeek(allDays: allDays)
 
                     GeometryReader { geo in

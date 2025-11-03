@@ -24,6 +24,7 @@
 		6D0FB31B2E96884000AB1127 /* PrayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB31A2E96884000AB1127 /* PrayerItem.swift */; };
 		6D0FB31E2E96888000AB1127 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB31D2E96888000AB1127 /* Colors.swift */; };
 		6D0FB3262E96FE0200AB1127 /* QiblaDistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB3252E96FE0200AB1127 /* QiblaDistanceManager.swift */; };
+		6D2A12172EB959DC0049F928 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2A12162EB959DC0049F928 /* AppDelegate.swift */; };
 		6D33262A2D37D72D00E77E10 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3326292D37D72D00E77E10 /* FirebaseStorage */; };
 		6D4BD0B42EA4481E003D8B18 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4BD0B32EA4481E003D8B18 /* Language.swift */; };
 		6D6A64552E9A4C460061FF01 /* TrackerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6A64542E9A4C460061FF01 /* TrackerViewModel.swift */; };
@@ -109,6 +110,7 @@
 		6D0FB31D2E96888000AB1127 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		6D0FB3252E96FE0200AB1127 /* QiblaDistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiblaDistanceManager.swift; sourceTree = "<group>"; };
 		6D27C6382D312F3F00B3230D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		6D2A12162EB959DC0049F928 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D4BD0B32EA4481E003D8B18 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		6D6A64542E9A4C460061FF01 /* TrackerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerViewModel.swift; sourceTree = "<group>"; };
 		6D6A64562E9B95DA0061FF01 /* TrendWeekViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendWeekViewModel.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				6D0FB3132E967FE000AB1127 /* Model */,
 				6D0FB2E12E9644AC00AB1127 /* Services */,
 				6DBCFC4D2CB25CC30074796A /* third2_0App.swift */,
+				6D2A12162EB959DC0049F928 /* AppDelegate.swift */,
 				6DCC14292D10DEA900E352BD /* Notifications */,
 				6DCC14192D0B9B8E00E352BD /* Launch */,
 				6DCC13232D0AE6BE00E352BD /* Views */,
@@ -574,6 +577,7 @@
 				6D0FB31B2E96884000AB1127 /* PrayerItem.swift in Sources */,
 				6D4BD0B42EA4481E003D8B18 /* Language.swift in Sources */,
 				6D0FB2E72E9644E700AB1127 /* PrayerCalculator.swift in Sources */,
+				6D2A12172EB959DC0049F928 /* AppDelegate.swift in Sources */,
 				6DCC131C2D09853D00E352BD /* NotificationManager.swift in Sources */,
 				6D6A64832EA19A960061FF01 /* PrefKeys.swift in Sources */,
 				6D6A64552E9A4C460061FF01 /* TrackerViewModel.swift in Sources */,

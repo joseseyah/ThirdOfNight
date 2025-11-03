@@ -5,7 +5,8 @@
 //  Created by Joseph Hayes on 18/10/2025.
 //
 import SwiftUI
-
+import CoreLocation
+import Adhan
 
 struct NotificationRows: View {
     @State private var permission: UNAuthorizationStatus = .notDetermined
@@ -16,13 +17,17 @@ struct NotificationRows: View {
     @AppStorage("notif_prayer_enabled") private var prayerEnabled = false
 
     private var dailyTimeBinding: Binding<Date> {
-            Binding(
-                get: { Date(timeIntervalSinceReferenceDate: dailyTimeRaw) },
-                set: { newValue in
-                    dailyTimeRaw = newValue.timeIntervalSinceReferenceDate
-                }
-            )
-        }
+        Binding(
+            get: { Date(timeIntervalSinceReferenceDate: dailyTimeRaw) },
+            set: { newValue in
+                dailyTimeRaw = newValue.timeIntervalSinceReferenceDate
+            }
+        )
+    }
+
+    private var currentCoordinate: CLLocationCoordinate2D? {
+        SettingsStore.shared.lastKnownCoordinate
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -41,7 +46,7 @@ struct NotificationRows: View {
                 }
 
           if dailyEnabled {
-                          TimePickerRow(title: "Reminder time", date: dailyTimeBinding) // ⬅️ use binding
+                          TimePickerRow(title: "Reminder time", date: dailyTimeBinding)
                               .transition(.opacity.combined(with: .move(edge: .top)))
                               .padding(.top, 10)
                       }
@@ -51,6 +56,12 @@ struct NotificationRows: View {
             ToggleRow(icon: "sparkles", title: "Prayer-time alerts", isOn: $prayerEnabled)
                 .onChange(of: prayerEnabled) { _, new in
                     if new { requestPermissionIfNeeded() }
+                    NotificationManager.shared.setPrayerAlertsEnabled(
+                        new,
+                        coordinates: currentCoordinate,
+                        method: .muslimWorldLeague,
+                        madhab: .shafi
+                    )
                 }
         }
         .onAppear {
@@ -62,6 +73,8 @@ struct NotificationRows: View {
         guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
         UIApplication.shared.open(url)
     }
+
+
 
     private func requestPermissionIfNeeded() {
         Task {

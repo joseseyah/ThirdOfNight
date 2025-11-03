@@ -25,6 +25,7 @@
 		6D0FB31E2E96888000AB1127 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB31D2E96888000AB1127 /* Colors.swift */; };
 		6D0FB3262E96FE0200AB1127 /* QiblaDistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB3252E96FE0200AB1127 /* QiblaDistanceManager.swift */; };
 		6D2A12172EB959DC0049F928 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2A12162EB959DC0049F928 /* AppDelegate.swift */; };
+		6D2A12192EB95F5E0049F928 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6D2A12182EB95F5E0049F928 /* Localizable.xcstrings */; };
 		6D33262A2D37D72D00E77E10 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3326292D37D72D00E77E10 /* FirebaseStorage */; };
 		6D4BD0B42EA4481E003D8B18 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4BD0B32EA4481E003D8B18 /* Language.swift */; };
 		6D6A64552E9A4C460061FF01 /* TrackerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6A64542E9A4C460061FF01 /* TrackerViewModel.swift */; };
@@ -111,6 +112,7 @@
 		6D0FB3252E96FE0200AB1127 /* QiblaDistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiblaDistanceManager.swift; sourceTree = "<group>"; };
 		6D27C6382D312F3F00B3230D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		6D2A12162EB959DC0049F928 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6D2A12182EB95F5E0049F928 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		6D4BD0B32EA4481E003D8B18 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		6D6A64542E9A4C460061FF01 /* TrackerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerViewModel.swift; sourceTree = "<group>"; };
 		6D6A64562E9B95DA0061FF01 /* TrendWeekViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendWeekViewModel.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				6D0FB3132E967FE000AB1127 /* Model */,
 				6D0FB2E12E9644AC00AB1127 /* Services */,
 				6DBCFC4D2CB25CC30074796A /* third2_0App.swift */,
+				6D2A12182EB95F5E0049F928 /* Localizable.xcstrings */,
 				6D2A12162EB959DC0049F928 /* AppDelegate.swift */,
 				6DCC14292D10DEA900E352BD /* Notifications */,
 				6DCC14192D0B9B8E00E352BD /* Launch */,
@@ -496,6 +499,11 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
+				ar,
+				ms,
+				"fil-PH",
+				ur,
 			);
 			mainGroup = 6DBCFC412CB25CC30074796A;
 			packageReferences = (
@@ -530,6 +538,7 @@
 			files = (
 				7186047C2D33F757004EC07C /* GoogleService-Info.plist in Resources */,
 				6DBCFC572CB25CC40074796A /* Preview Assets.xcassets in Resources */,
+				6D2A12192EB95F5E0049F928 /* Localizable.xcstrings in Resources */,
 				6DBCFC542CB25CC40074796A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -743,6 +752,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -799,6 +809,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

@@ -1,0 +1,789 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    " " : {
+
+    },
+    "**Dhuhr** may be combined with **Asr**." : {
+
+    },
+    "**Maghrib** may be combined with **Isha**." : {
+
+    },
+    "%@ (%@)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ (%2$@)"
+          }
+        }
+      }
+    },
+    "%lld" : {
+
+    },
+    "•" : {
+
+    },
+    "Back" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bumalik"
+          }
+        }
+      }
+    },
+    "Best %lld" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pinakamahusay na "
+          }
+        }
+      }
+    },
+    "Browse" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mag-browse"
+          }
+        }
+      }
+    },
+    "Categories" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mga kategorya"
+          }
+        }
+      }
+    },
+    "Choose Language" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pumili ng wika"
+          }
+        }
+      }
+    },
+    "Close" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Isara"
+          }
+        }
+      }
+    },
+    "Combining allowed" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pinapayagan ang pagsasama"
+          }
+        }
+      }
+    },
+    "Current progress along the night" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kasalukuyang progreso sa buong gabi"
+          }
+        }
+      }
+    },
+    "day streak" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sunod-sunod na araw"
+          }
+        }
+      }
+    },
+    "Dhuhr %@ and Asr %@ can be combined." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Dhuhr %1$@ and Asr %2$@ can be combined."
+          }
+        },
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maaaring pagsamahin ang Dhuhr at Asr "
+          }
+        }
+      }
+    },
+    "Don’t forget to make lots of Dua’s during Hajj and Umrah, asking Allah (SWT) for forgiveness. Don’t forget to include your friends, relatives, neighbours as well as the wider Ummah in your Dua during these spiritual journeys." : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huwag kalimutang magdasal nang marami sa Hajj at Umrah at humingi ng kapatawaran kay Allah (SWT). Isama rin sa iyong mga dua ang iyong mga kaibigan, kamag-anak, kapitbahay, at ang mas malawak na Ummah sa mga espirituwal na paglalakbay na ito."
+          }
+        }
+      }
+    },
+    "Enable location access to calculate local prayer times." : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paganahin ang access sa lokasyon para makalkula ang lokal na oras ng pagdarasal."
+          }
+        }
+      }
+    },
+    "Fajr %@" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fajr"
+          }
+        }
+      }
+    },
+    "Freeze active" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktibo ang freeze"
+          }
+        }
+      }
+    },
+    "Freeze inactive" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hindi aktibo ang freeze"
+          }
+        }
+      }
+    },
+    "Gregorian date" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Petsa sa Gregorian"
+          }
+        }
+      }
+    },
+    "Hijri date" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Petsa sa Hijri"
+          }
+        }
+      }
+    },
+    "Keep going! May Allah accept all of our good deeds 🌙" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tuloy lang! Nawa’y tanggapin ni Allah ang lahat ng ating mabubuting gawa 🌙"
+          }
+        }
+      }
+    },
+    "Keep the moonlight streak going 🌙" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Panatilihin ang iyong moonlight streak 🌙"
+          }
+        }
+      }
+    },
+    "Language" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wika"
+          }
+        }
+      }
+    },
+    "Last Third of the Night" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huling ikatlong bahagi ng gabi"
+          }
+        }
+      }
+    },
+    "Loading videos…" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naglo-load ng mga video…"
+          }
+        }
+      }
+    },
+    "Location Needed" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kailangan ang lokasyon"
+          }
+        }
+      }
+    },
+    "Maghrib %@ and Isha %@ can be combined." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Maghrib %1$@ and Isha %2$@ can be combined."
+          }
+        },
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maaaring pagsamahin ang Maghrib at Isha "
+          }
+        }
+      }
+    },
+    "Menstruation Freeze" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paghinto dahil sa regla"
+          }
+        }
+      }
+    },
+    "Next" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Susunod"
+          }
+        }
+      }
+    },
+    "Night Prayers" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mga panalangin sa gabi"
+          }
+        }
+      }
+    },
+    "Night Progress" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progreso sa gabi"
+          }
+        }
+      }
+    },
+    "Not enough data" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hindi sapat ang datos"
+          }
+        }
+      }
+    },
+    "Now" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ngayon"
+          }
+        }
+      }
+    },
+    "Open Settings" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buksan ang Mga Setting"
+          }
+        }
+      }
+    },
+    "praying on time" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pagdarasal sa tamang oras"
+          }
+        }
+      }
+    },
+    "Progress analytics" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pagsusuri ng progreso"
+          }
+        }
+      }
+    },
+    "Qibla" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qibla"
+          }
+        }
+      }
+    },
+    "Retry" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subukan muli"
+          }
+        }
+      }
+    },
+    "Search" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maghanap"
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tungkol"
+          }
+        }
+      }
+    },
+    "settings.about" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tungkol"
+          }
+        }
+      }
+    },
+    "settings.allownotifications" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payagan ang mga notification"
+          }
+        }
+      }
+    },
+    "settings.language" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wika"
+          }
+        }
+      }
+    },
+    "settings.legal" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batas"
+          }
+        }
+      }
+    },
+    "settings.notifications" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mga notification"
+          }
+        }
+      }
+    },
+    "settings.picklanguage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wika ng app"
+          }
+        }
+      }
+    },
+    "settings.prayernotifications" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mga alerto sa oras ng panalangin"
+          }
+        }
+      }
+    },
+    "settings.privacy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Patakaran sa Privacy"
+          }
+        }
+      }
+    },
+    "settings.tcs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mga Tuntunin at Kundisyon"
+          }
+        }
+      }
+    },
+    "settings.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mga Setting"
+          }
+        }
+      }
+    },
+    "settings.travelmode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode sa paglalakbay"
+          }
+        }
+      }
+    },
+    "settings.traveltoggle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode sa paglalakbay"
+          }
+        }
+      }
+    },
+    "settings.version" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bersyon"
+          }
+        }
+      }
+    },
+    "Share" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ibahagi"
+          }
+        }
+      }
+    },
+    "Share Stats" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ibahagi ang istatistika"
+          }
+        }
+      }
+    },
+    "Share your streak" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ibahagi ang iyong streak"
+          }
+        }
+      }
+    },
+    "Summary" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buod"
+          }
+        }
+      }
+    },
+    "Support us" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suportahan kami"
+          }
+        }
+      }
+    },
+    "Thanks for supporting the app" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salamat sa pagsuporta sa app"
+          }
+        }
+      }
+    },
+    "Third of the Night" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikatlong bahagi ng gabi"
+          }
+        }
+      }
+    },
+    "to the Qibla from your current location" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sa Qibla mula sa iyong kasalukuyang lokasyon"
+          }
+        }
+      }
+    },
+    "Track, reflect, and stay consistent." : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subaybayan, magnilay, at manatiling tuloy-tuloy"
+          }
+        }
+      }
+    },
+    "Tracker" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pagsubaybay"
+          }
+        }
+      }
+    },
+    "Travel Duas" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mga panalangin sa paglalakbay"
+          }
+        }
+      }
+    },
+    "Travel information" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impormasyon sa paglalakbay"
+          }
+        }
+      }
+    },
+    "Travel mode" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode sa paglalakbay"
+          }
+        }
+      }
+    },
+    "Travel Mode" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode sa paglalakbay"
+          }
+        }
+      }
+    },
+    "Travel mode information. Dhuhr with Asr, Maghrib with Isha." : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impormasyon sa mode sa paglalakbay. Dhuhr kasama ang Asr, Maghrib kasama ang Isha."
+          }
+        }
+      }
+    },
+    "Try Again" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subukan muli"
+          }
+        }
+      }
+    },
+    "Use freeze when menstruating to pause prayer tracking so your streaks stay intact. You can turn it off anytime." : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gamitin ang freeze kapag may regla upang i-pause ang pagsubaybay ng pagdarasal para manatiling buo ang iyong streak. Maaari mo itong i-off anumang oras."
+          }
+        }
+      }
+    },
+    "Viewing this ad helps keep Night Prayers free." : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ang panonood ng ad na ito ay tumutulong na panatilihing libre ang Night Prayers."
+          }
+        }
+      }
+    },
+    "Watch" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manood"
+          }
+        }
+      }
+    },
+    "We need Isha or Maghrib and Fajr times for today to calculate the last third." : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kailangan namin ng oras ng Isha o Maghrib at Fajr para sa araw na ito upang makalkula ang huling ikatlo."
+          }
+        }
+      }
+    },
+    "Welcome to the app! Your location is currently set to Manchester, and you'll see prayer times based on this city.\n\nYou can update your location anytime in the settings page to view prayer times for your preferred city or mosque.\n\nTap the button below to start exploring the app and enjoy its features!" : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maligayang pagdating sa app! Ang lokasyon mo ay kasalukuyang nakatakda sa Manchester, at makikita mo ang mga oras ng pagdarasal batay sa lungsod na ito. Maaari mong i-update ang iyong lokasyon anumang oras sa pahina ng Mga Setting upang makita ang mga oras ng pagdarasal para sa paborito mong lungsod o masjid. Pindutin ang button sa ibaba upang simulang galugarin ang app at tamasahin ang mga tampok nito!"
+          }
+        }
+      }
+    },
+    "While travelling, combining prayers is permitted." : {
+      "localizations" : {
+        "fil-PH" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habang naglalakbay, pinapayagan ang pagsasama ng mga pagdarasal."
+          }
+        }
+      }
+    },
+    "Your tracker highlights three groups: **Fajr** (single), **Dhuhr + Asr**, and **Maghrib + Isha** to reflect the allowed combinations." : {
+
+    }
+  },
+  "version" : "1.0"
+}

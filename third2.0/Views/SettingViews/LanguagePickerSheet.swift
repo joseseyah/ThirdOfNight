@@ -16,8 +16,8 @@ struct LanguagePickerSheet: View {
         .init(code: "en", name: "English"),
         .init(code: "ar", name: "العربية"),
         .init(code: "ur", name: "اردو"),
-        .init(code: "tr", name: "Türkçe"),
-        .init(code: "ms", name: "Bahasa Melayu")
+        .init(code: "ms", name: "Bahasa Melayu"),
+        .init(code: "fil", name: "Filipino")
     ]
 
     var body: some View {

@@ -40,16 +40,11 @@ struct NotificationRows: View {
 
             Divider().overlay(Color.stroke)
 
-            ToggleRow(icon: "sun.max", title: "Daily reminder", isOn: $dailyEnabled)
-                .onChange(of: dailyEnabled) { _, new in
-                    if new { requestPermissionIfNeeded() }
-                }
-
-          if dailyEnabled {
-                          TimePickerRow(title: "Reminder time", date: dailyTimeBinding)
-                              .transition(.opacity.combined(with: .move(edge: .top)))
-                              .padding(.top, 10)
-                      }
+            if dailyEnabled {
+                TimePickerRow(title: "Reminder time", date: dailyTimeBinding)
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+                    .padding(.top, 10)
+            }
 
             Divider().overlay(Color.stroke).padding(.top, dailyEnabled ? 10 : 0)
 

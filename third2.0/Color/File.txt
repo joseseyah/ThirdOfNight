@@ -1,0 +1,23 @@
+import SwiftUI
+
+// MARK: - Palette
+
+extension Color {
+    // App surfaces
+    static let appBg         = Color(red: 0.04, green: 0.04, blue: 0.08)       // night indigo
+    static let cardBg        = Color(red: 0.12, green: 0.11, blue: 0.17)       // charcoal
+    static let stroke        = Color(red: 1.00, green: 0.96, blue: 0.82).opacity(0.26)
+
+    // Text
+    static let textPrimary   = Color(red: 0.99, green: 0.98, blue: 0.94)       // warm moonlight
+    static let textSecondary = Color(red: 0.82, green: 0.85, blue: 0.92)       // cool-lunar
+
+    // Accents
+    static let accentYellow  = Color(red: 1.00, green: 0.95, blue: 0.72)       // honey glow
+
+    // Tab bar (NEW)
+    static let tabBg         = Color(red: 0.10, green: 0.10, blue: 0.15)       // slightly lifted from appBg
+    static let tabSelected   = accentYellow
+    static let tabUnselected = Color(red: 0.72, green: 0.76, blue: 0.85)       // brighter for contrast
+    static let tabBorder     = Color.white.opacity(0.08)                        // subtle top hairline
+}

@@ -8,12 +8,10 @@ import Adhan
 @MainActor
 final class TrackerViewModel: ObservableObject {
 
-    // MARK: - Public state
     @Published var prayers: [TrackerPrayer] = []
     @Published var coordinate: CLLocationCoordinate2D?
     @Published var showingHijri: Bool = false
 
-    // 👇 NEW: overlay flag — when true, UI pretends all are done and we never save
     @Published var freezeOverlay: Bool = false
 
     let locationManager = MiniLocationManager()
@@ -30,7 +28,6 @@ final class TrackerViewModel: ObservableObject {
         self.todayRecord = fetchOrCreateToday(for: Date())
     }
 
-    // MARK: - Lifecycle
     func onAppear() {
         locationManager.request()
 
@@ -56,33 +53,30 @@ final class TrackerViewModel: ObservableObject {
         showingHijri = false
     }
 
-    // MARK: - Freeze overlay control
     func setFreezeOverlay(_ enabled: Bool) {
         freezeOverlay = enabled
-        // We do not mutate SwiftData here. The overlay is UI-only.
-        // Optionally give soft haptic:
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 
-    // MARK: - Actions
     func toggleDateCalendar() {
         showingHijri.toggle()
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 
-    func togglePrayer(at index: Int) {
+    func togglePrayer(at index: Int, allowAny: Bool = false) {
         guard prayers.indices.contains(index) else { return }
 
-        // When freeze is active, block any marking and never save
         if freezeOverlay {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             return
         }
 
-        let now = Date()
-        guard prayers[index].canMark(at: now) else {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            return
+        if !allowAny {
+            let now = Date()
+            guard prayers[index].canMark(at: now) else {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                return
+            }
         }
 
         prayers[index].done.toggle()
@@ -97,6 +91,7 @@ final class TrackerViewModel: ObservableObject {
         }
         todayRecord = record
     }
+
 
     func displayDateString(gregorianTemplate: String = "EEEE d MMMM",
                            hijriTemplate: String = "d MMMM y",
@@ -114,9 +109,8 @@ final class TrackerViewModel: ObservableObject {
         return f.string(from: date)
     }
 
-    // MARK: - Build the row items
     private func loadPrayers(for coord: CLLocationCoordinate2D, on date: Date) {
-        let simple = computePrayerItems(for: coord, date: date)  // [name + time]
+        let simple = computePrayerItems(for: coord, date: date)
 
         let coordinates = Coordinates(latitude: coord.latitude, longitude: coord.longitude)
         var params = CalculationMethod.moonsightingCommittee.params
@@ -143,7 +137,7 @@ final class TrackerViewModel: ObservableObject {
         }
 
         let record = todayRecord ?? fetchOrCreateToday(for: date)
-        let completed = record.completed  // [String: Bool]
+        let completed = record.completed
 
         let names = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"]
         let starts = [todayPT.fajr, todayPT.dhuhr, todayPT.asr, todayPT.maghrib, todayPT.isha]
@@ -163,9 +157,6 @@ final class TrackerViewModel: ObservableObject {
 
         self.prayers = merged
         self.todayRecord = record
-
-        // NOTE: we still allow initial entity creation to persist, but we do not
-        // mark completions here. (No changes needed for freeze.)
         try? ctx.save()
     }
 

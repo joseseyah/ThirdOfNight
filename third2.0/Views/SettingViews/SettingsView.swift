@@ -29,6 +29,10 @@ struct SettingsView: View {
                                 LanguageRow()
                                     .onTapGesture { showLanguageSheet = true }
                             }
+                            SectionCard(title: "Travel Mode") {
+                                TravelModeRows()
+                            }
+
 
                             SectionCard(title: "Notifications") {
                                 NotificationRows()

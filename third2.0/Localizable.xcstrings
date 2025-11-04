@@ -69,6 +69,9 @@
         }
       }
     },
+    "Choose a support option below. You’ll see Apple’s secure payment sheet, then your purchase unlocks instantly." : {
+
+    },
     "Choose Language" : {
       "localizations" : {
         "fil-PH" : {
@@ -282,6 +285,9 @@
         }
       }
     },
+    "Manage Subscription" : {
+
+    },
     "Menstruation Freeze" : {
       "localizations" : {
         "fil-PH" : {
@@ -381,6 +387,9 @@
           }
         }
       }
+    },
+    "Restore Purchases" : {
+
     },
     "Retry" : {
       "localizations" : {
@@ -621,6 +630,9 @@
         }
       }
     },
+    "Thanks! You’re an active supporter 🎉" : {
+
+    },
     "Third of the Night" : {
       "localizations" : {
         "fil-PH" : {
@@ -732,6 +744,7 @@
       }
     },
     "Viewing this ad helps keep Night Prayers free." : {
+      "extractionState" : "stale",
       "localizations" : {
         "fil-PH" : {
           "stringUnit" : {

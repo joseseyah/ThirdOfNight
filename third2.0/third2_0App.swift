@@ -7,6 +7,7 @@ import AVFoundation
 import FirebaseFirestore
 import Network
 import GoogleMobileAds
+import StoreKit
 
 private enum AppLanguage {
     static let rtlCodes: Set<String> = ["ar", "ur"]
@@ -22,6 +23,8 @@ struct third2_0App: App {
     @AppStorage("appLanguage")
     private var appLanguage: String = Locale.current.language.languageCode?.identifier ?? "en"
 
+    @StateObject private var store = StoreKitManager.shared
+
     init() {
         MobileAds.shared.start(completionHandler: nil)
     }
@@ -29,6 +32,8 @@ struct third2_0App: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .environmentObject(store)
+                .task { await store.loadProducts() }
                 .environment(\.locale, AppLanguage.locale(for: appLanguage))
                 .environment(\.layoutDirection, AppLanguage.isRTL(appLanguage) ? .rightToLeft : .leftToRight)
                 .task {

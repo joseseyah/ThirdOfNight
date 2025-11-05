@@ -1,12 +1,12 @@
 import SwiftUI
 import CoreLocation
 import Combine
+import UIKit
 
-// MARK: - QiblaView with stationary pointer & rotating face
+// MARK: - QiblaView with stationary pointer & smooth, unwrapped rotating face
 struct QiblaView: View {
     @StateObject private var vm = QiblaCompassViewModel()
 
-    // Assets
     private let compassAssetName = "Compass"
     private let pointerAssetName = "Pointer"
 
@@ -23,7 +23,6 @@ struct QiblaView: View {
                         faceAsset: compassAssetName,
                         pointerAsset: pointerAssetName,
                         size: 300,
-                        // FACE rotates; pointer is fixed
                         faceRotationDegrees: vm.faceRotationDegrees,
                         pointerTint: .accentYellow,
                         pointerScale: 0.25
@@ -75,6 +74,19 @@ struct QiblaView: View {
                         }
                     }
 
+                    if vm.isAligned {
+                        Text("You are facing Makkah")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(.appBg)
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 16)
+                            .background(Capsule().fill(Color.accentYellow))
+                            .overlay(Capsule().stroke(Color.stroke, lineWidth: 1))
+                            .padding(.top, 4)
+                            .transition(.opacity.combined(with: .scale))
+                            .animation(.spring(response: 0.25, dampingFraction: 0.9), value: vm.isAligned)
+                    }
+
                     Spacer(minLength: geo.size.height * 0.12)
                 }
                 .frame(width: geo.size.width, height: geo.size.height)
@@ -103,7 +115,7 @@ private struct CompassWidget: View {
                 .scaledToFit()
                 .frame(width: size, height: size)
                 .rotationEffect(.degrees(faceRotationDegrees))
-                .animation(.spring(response: 0.25, dampingFraction: 0.85), value: faceRotationDegrees)
+                .animation(.interactiveSpring(response: 0.18, dampingFraction: 0.88), value: faceRotationDegrees)
 
             // Pointer stays still (no rotation)
             Image(pointerAsset)
@@ -118,17 +130,33 @@ private struct CompassWidget: View {
     }
 }
 
-// MARK: - ViewModel (Location + Heading -> face rotation)
+// MARK: - ViewModel (Location + Heading -> smooth, unwrapped face rotation + haptics)
 final class QiblaCompassViewModel: NSObject, ObservableObject {
     // Output
-    @Published var faceRotationDegrees: Double = 0        // rotate the face, not the pointer
+    @Published var faceRotationDegrees: Double = 0        // continuous, unwrapped degrees
     @Published var statusText: String = "Calibrating compass…"
     @Published var distanceMiles: Double? = nil
+    @Published var isAligned: Bool = false
 
     // Internals
     private let manager = CLLocationManager()
     private var lastLocation: CLLocation? = nil
     private var lastHeadingTrue: CLLocationDirection? = nil
+
+    // Angle state for unwrapping (avoid flips at 180°/−180°)
+    private var accumulatedFaceRotation: Double = 0       // continuous angle we publish
+    private var lastTargetModulo: Double? = nil           // last target in [0, 360)
+
+    // Haptics
+    private let impactLight = UIImpactFeedbackGenerator(style: .light)
+    private let notify = UINotificationFeedbackGenerator()
+    private var didAnnounceAligned = false
+    private var lastTickTime: Date = .distantPast
+
+    // Tunables
+    private let alignTolerance: CLLocationDegrees = 5       // ± degrees to show "facing Makkah"
+    private let tickStep: CLLocationDegrees = 12            // degrees between light tick feedback
+    private let tickCooldown: TimeInterval = 0.08           // debounce ticks
 
     private let kaaba = CLLocation(latitude: 21.422487, longitude: 39.826206)
 
@@ -140,12 +168,19 @@ final class QiblaCompassViewModel: NSObject, ObservableObject {
     }
 
     func start() {
+        impactLight.prepare()
+        notify.prepare()
+
         if CLLocationManager.authorizationStatus() == .notDetermined {
             manager.requestWhenInUseAuthorization()
         } else {
             manager.startUpdatingLocation()
             if CLLocationManager.headingAvailable() {
                 manager.startUpdatingHeading()
+            } else {
+                DispatchQueue.main.async {
+                    self.statusText = "Compass not available on this device"
+                }
             }
         }
     }
@@ -155,6 +190,7 @@ final class QiblaCompassViewModel: NSObject, ObservableObject {
         manager.stopUpdatingLocation()
     }
 
+    // MARK: - Core updates
     private func updateOutputs() {
         guard
             let loc = lastLocation,
@@ -166,12 +202,98 @@ final class QiblaCompassViewModel: NSObject, ObservableObject {
 
         // Distance (miles)
         let meters = loc.distance(from: kaaba)
-        distanceMiles = meters / 1609.344
+        let miles = meters / 1609.344
 
-        let rotation = normalizeDegrees(heading - bearing)
-        faceRotationDegrees = rotation
+        // Target rotation for the FACE so the Mecca mark sits under the fixed pointer.
+        // Earlier code used normalize to ±180 which causes flips.
+        // Here we compute the target in [0, 360) then UNWRAP to a continuous angle.
+        // sign: rotate the face by (heading - bearing)
+        let target = mod360(heading - bearing) // [0, 360)
 
-        statusText = "Rotate to align the mark with the pointer"
+        // Unwrap to the shortest path from the previous target
+        let unwrapped = nextUnwrappedAngle(currentAccumulated: accumulatedFaceRotation,
+                                           previousTargetModulo: lastTargetModulo,
+                                           newTargetModulo: target)
+
+        accumulatedFaceRotation = unwrapped
+        lastTargetModulo = target
+
+        // Publish
+        DispatchQueue.main.async {
+            self.distanceMiles = miles
+            self.faceRotationDegrees = self.accumulatedFaceRotation
+            self.statusText = "Rotate to align the mark with the pointer"
+        }
+
+        // Alignment check (use the *wrapped* instantaneous error around 0)
+        let wrappedError = shortestDeltaDegrees(from: 0, to: wrappedTo180(accumulatedFaceRotation))
+        let nowAligned = abs(wrappedError) <= alignTolerance
+        if nowAligned != isAligned {
+            DispatchQueue.main.async { self.isAligned = nowAligned }
+        }
+
+        // HAPTICS
+        if nowAligned && !didAnnounceAligned {
+            notify.notificationOccurred(.success)
+            didAnnounceAligned = true
+            UIAccessibility.post(notification: .announcement, argument: "Facing Makkah")
+        } else if !nowAligned && didAnnounceAligned {
+            didAnnounceAligned = false
+        }
+
+        // Light ticks while rotating every ~tickStep°, debounced
+        let t = Date()
+        if t.timeIntervalSince(lastTickTime) >= tickCooldown {
+            // Compare movement since the *last* published angle using modulo distance
+            // We simply trigger ticks on substantial changes of target modulo.
+            if let prev = lastTargetModulo {
+                let moved = abs(shortestDeltaDegrees(from: prev, to: target))
+                if moved >= tickStep {
+                    impactLight.impactOccurred()
+                    impactLight.prepare()
+                    lastTickTime = t
+                }
+            } else {
+                lastTickTime = t
+            }
+        }
+    }
+
+    // MARK: - Angle helpers
+    /// Normalize any angle to [0, 360)
+    private func mod360(_ d: Double) -> Double {
+        let m = d.truncatingRemainder(dividingBy: 360)
+        return m < 0 ? (m + 360) : m
+    }
+
+    /// Wrap any angle to [-180, 180)
+    private func wrappedTo180(_ d: Double) -> Double {
+        var x = d.truncatingRemainder(dividingBy: 360)
+        if x >= 180 { x -= 360 }
+        if x < -180 { x += 360 }
+        return x
+    }
+
+    /// Minimal signed delta from `from` to `to` in degrees in [-180, 180)
+    private func shortestDeltaDegrees(from: Double, to: Double) -> Double {
+        var d = (to - from).truncatingRemainder(dividingBy: 360)
+        if d >= 180 { d -= 360 }
+        if d < -180 { d += 360 }
+        return d
+    }
+
+    /// Given the previous accumulated angle and a new target in [0, 360),
+    /// produce a continuous, unwrapped next angle by adding the shortest delta.
+    private func nextUnwrappedAngle(currentAccumulated: Double,
+                                    previousTargetModulo: Double?,
+                                    newTargetModulo: Double) -> Double {
+        // If we don't have a previous target, align accumulated to the first target without animation jump.
+        guard let prev = previousTargetModulo else {
+            return newTargetModulo
+        }
+        // Compute how much we should move relative to the *previous* modulo target.
+        let delta = shortestDeltaDegrees(from: prev, to: newTargetModulo)
+        return currentAccumulated + delta
     }
 
     private func bearingTrue(from a: CLLocationCoordinate2D, to b: CLLocationCoordinate2D) -> CLLocationDegrees {
@@ -182,14 +304,8 @@ final class QiblaCompassViewModel: NSObject, ObservableObject {
         let y = sin(λ2 - λ1) * cos(φ2)
         let x = cos(φ1) * sin(φ2) - sin(φ1) * cos(φ2) * cos(λ2 - λ1)
         let θ = atan2(y, x) * 180 / .pi
-        return normalizeDegrees(θ)
-    }
-
-    private func normalizeDegrees(_ d: CLLocationDegrees) -> CLLocationDegrees {
-        var v = d.truncatingRemainder(dividingBy: 360)
-        if v < -180 { v += 360 }
-        if v >  180 { v -= 360 }
-        return v
+        // Return in [0, 360)
+        return mod360(θ)
     }
 }
 
@@ -198,15 +314,19 @@ extension QiblaCompassViewModel: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:
-            statusText = "Calibrating compass…"
+            DispatchQueue.main.async { self.statusText = "Calibrating compass…" }
             manager.startUpdatingLocation()
             if CLLocationManager.headingAvailable() {
                 manager.startUpdatingHeading()
             } else {
-                statusText = "Compass not available on this device"
+                DispatchQueue.main.async {
+                    self.statusText = "Compass not available on this device"
+                }
             }
         case .denied, .restricted:
-            statusText = "Enable Location & Motion access in Settings"
+            DispatchQueue.main.async {
+                self.statusText = "Enable Location & Motion access in Settings"
+            }
         case .notDetermined:
             manager.requestWhenInUseAuthorization()
         @unknown default:
@@ -222,18 +342,19 @@ extension QiblaCompassViewModel: CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        statusText = "Location error: \(error.localizedDescription)"
+        DispatchQueue.main.async {
+            self.statusText = "Location error: \(error.localizedDescription)"
+        }
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         // Prefer TRUE heading when available
-        let h = newHeading.trueHeading >= 0 ? newHeading.trueHeading : newHeading.magneticHeading
+        let h = (newHeading.trueHeading >= 0) ? newHeading.trueHeading : newHeading.magneticHeading
         lastHeadingTrue = h
         updateOutputs()
     }
 
     func locationManagerShouldDisplayHeadingCalibration(_ manager: CLLocationManager) -> Bool {
-        // Let iOS show calibration if needed
         true
     }
 }

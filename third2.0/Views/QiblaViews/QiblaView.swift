@@ -75,7 +75,7 @@ struct QiblaView: View {
                     }
 
                     if vm.isAligned {
-                        Text("You are facing Makkah")
+                        Text("You're facing Makkah")
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundColor(.appBg)
                             .padding(.vertical, 10)

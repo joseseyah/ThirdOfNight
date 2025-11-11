@@ -93,6 +93,15 @@ struct TrackerView: View {
             .padding(.bottom, 20)
         }
 
+        .overlay(alignment: .topTrailing) {
+            let schedule = CurrentPrayerBadge.makeStandardSchedule { prayerDate($0) }
+            CurrentPrayerBadge(schedule: schedule, outerPadding: .init())
+                .safeAreaPadding([.top, .trailing], 18)
+        }
+
+
+
+
         .sheet(isPresented: $showAdsSheet) {
             AdsSheetView()
                 .presentationDetents([.medium, .large])
@@ -187,7 +196,6 @@ struct TrackerView: View {
         guard let idx = vm.prayers.firstIndex(where: { $0.name.localizedCaseInsensitiveContains(key) }) else { return nil }
         let p = vm.prayers[idx]
 
-        // In Travel Mode: enable tapping unless frozen. Otherwise keep original rule.
         let isEnabled = travelModeEnabled ? !vm.freezeOverlay : (p.canMark() && !vm.freezeOverlay)
         let isDone    = vm.freezeOverlay ? true : p.done
 

@@ -23,6 +23,16 @@
         }
       }
     },
+    "%@ until %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ until %2$@"
+          }
+        }
+      }
+    },
     "%lld" : {
 
     },
@@ -794,7 +804,7 @@
         }
       }
     },
-    "You are facing Makkah" : {
+    "You're facing Makkah" : {
 
     },
     "Your tracker highlights three groups: **Fajr** (single), **Dhuhr + Asr**, and **Maghrib + Isha** to reflect the allowed combinations." : {

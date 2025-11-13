@@ -101,13 +101,10 @@ final class NotificationManager {
         content.title = "\(name) time"
         content.body  = "It’s time for \(name)."
         content.sound = .default
-        content.interruptionLevel = .timeSensitive // nicer behavior on iOS 15+
-
-        // Identifier pattern helps selective removal if needed
+        content.interruptionLevel = .timeSensitive
         let id = "prayer.\(name.lowercased()).\(isoDay(when))"
 
-        var triggerComps = Calendar.current.dateComponents(in: tz, from: when)
-        // Only the parts needed for a calendar trigger
+        let triggerComps = Calendar.current.dateComponents(in: tz, from: when)
         let cmps = DateComponents(
             calendar: Calendar.current,
             timeZone: tz,

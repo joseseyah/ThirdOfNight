@@ -16,7 +16,7 @@ public struct CurrentPrayerStatus {
 
 public struct CurrentPrayerBadge: View {
     public let schedule: [PrayerPoint]
-    public var outerPadding: EdgeInsets   // ← NEW
+    public var outerPadding: EdgeInsets
 
     public init(
         schedule: [PrayerPoint],

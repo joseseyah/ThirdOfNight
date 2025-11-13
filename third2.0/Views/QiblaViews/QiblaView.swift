@@ -167,23 +167,37 @@ final class QiblaCompassViewModel: NSObject, ObservableObject {
         manager.headingFilter = 1
     }
 
-    func start() {
-        impactLight.prepare()
-        notify.prepare()
+  func start() {
+      impactLight.prepare()
+      notify.prepare()
 
-        if CLLocationManager.authorizationStatus() == .notDetermined {
-            manager.requestWhenInUseAuthorization()
-        } else {
-            manager.startUpdatingLocation()
-            if CLLocationManager.headingAvailable() {
-                manager.startUpdatingHeading()
-            } else {
-                DispatchQueue.main.async {
-                    self.statusText = "Compass not available on this device"
-                }
-            }
-        }
-    }
+      let status = manager.authorizationStatus
+
+      switch status {
+      case .notDetermined:
+          manager.requestWhenInUseAuthorization()
+
+      case .authorizedWhenInUse, .authorizedAlways:
+          manager.startUpdatingLocation()
+
+          if CLLocationManager.headingAvailable() {
+              manager.startUpdatingHeading()
+          } else {
+              DispatchQueue.main.async {
+                  self.statusText = "Compass not available on this device"
+              }
+          }
+
+      case .restricted, .denied:
+          DispatchQueue.main.async {
+              self.statusText = "Location access is needed for the compass"
+          }
+
+      @unknown default:
+          break
+      }
+  }
+
 
     func stop() {
         manager.stopUpdatingHeading()

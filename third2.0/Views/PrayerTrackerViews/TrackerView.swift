@@ -135,7 +135,11 @@ struct TrackerView: View {
             vm.setFreezeOverlay(isFreezeOn)
         }
         .onDisappear { vm.onDisappear() }
-        .onChange(of: isFreezeOn) { vm.setFreezeOverlay($0) }
+
+        .onChange(of: isFreezeOn) { _, newValue in
+            vm.setFreezeOverlay(newValue)
+        }
+
     }
 
     private var header: some View {

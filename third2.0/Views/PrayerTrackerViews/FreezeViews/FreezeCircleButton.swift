@@ -20,15 +20,15 @@ struct FreezeCircleButton: View {
         } label: {
             ZStack {
                 Circle()
-                    .fill(isOn ? Color.accentYellow : Color.white.opacity(0.06))
+                    .fill(isOn ? Color.accentPurple : Color.accentPurple.opacity(0.2))
 
                 Image(systemName: "snowflake")
                     .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(isOn ? .appBg : .textPrimary)
+                    .foregroundColor(isOn ? .buttonText : .accentPurple)
 
                 if isOn {
                     Circle()
-                        .fill(Color.accentYellow.opacity(0.18))
+                        .fill(Color.accentPurple.opacity(0.3))
                         .frame(width: 42, height: 42)
                         .blur(radius: 18)
                         .blendMode(.plusLighter)
@@ -37,10 +37,10 @@ struct FreezeCircleButton: View {
             }
             .frame(width: 38, height: 38)
             .overlay(
-                Circle().stroke(isOn ? Color.accentYellow.opacity(0.65) : Color.stroke, lineWidth: 1)
+                Circle().stroke(isOn ? Color.accentPurple.opacity(0.8) : Color.accentPurple.opacity(0.5), lineWidth: 1.5)
             )
-            .shadow(color: isOn ? Color.accentYellow.opacity(0.24) : .clear, radius: 14, x: 0, y: 0)
-            .shadow(color: Color.black.opacity(0.35), radius: 10, x: 0, y: 6)
+            .shadow(color: isOn ? Color.accentPurple.opacity(0.4) : Color.accentPurple.opacity(0.2), radius: 12, x: 0, y: 4)
+            .shadow(color: Color.black.opacity(0.2), radius: 6, x: 0, y: 3)
             .contentShape(Circle())
         }
         .buttonStyle(CirclePressStyle())

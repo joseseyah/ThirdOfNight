@@ -13,7 +13,11 @@ func computePrayerItems(for coord: CLLocationCoordinate2D, date: Date) -> [Praye
     let coordinates = Coordinates(latitude: coord.latitude, longitude: coord.longitude)
 
     var params = CalculationMethod.moonsightingCommittee.params
-    params.madhab = .shafi
+    // Get madhab preference from UserDefaults (for widget compatibility)
+    let appGroupID = "group.testing.thirdgit"
+    let defaults = UserDefaults(suiteName: appGroupID) ?? UserDefaults.standard
+    let savedMadhab = defaults.string(forKey: "asr.madhab") ?? "shafi"
+    params.madhab = savedMadhab == "hanafi" ? .hanafi : .shafi
     params.highLatitudeRule = .middleOfTheNight
 
     let cal = Calendar(identifier: .gregorian)

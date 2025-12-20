@@ -47,7 +47,7 @@ struct ShareStreakView: View {
                             .font(.system(size: 16, weight: .semibold, design: .rounded))
                             .padding(.horizontal, 16)
                             .padding(.vertical, 12)
-                            .background(RoundedRectangle(cornerRadius: 14).fill(Color.accentYellow.opacity(0.2)))
+                            .background(RoundedRectangle(cornerRadius: 14).fill(Color.accentMoon.opacity(0.2)))
                     }
                 }
                 .foregroundColor(.textPrimary)
@@ -103,7 +103,7 @@ private struct ShareCard: View {
                 HStack {
                     Image(systemName: "moon.stars.fill")
                         .imageScale(.large)
-                        .foregroundColor(.accentYellow)
+                        .foregroundColor(.accentMoon)
                     Text("Night Prayers")
                         .font(.system(size: 24, weight: .bold, design: .rounded))
                     Spacer()
@@ -125,7 +125,7 @@ private struct ShareCard: View {
                 // Best streak badge
                 HStack(spacing: 8) {
                     Image(systemName: "flame.fill")
-                        .foregroundColor(.accentYellow)
+                        .foregroundColor(.accentMoon)
                     Text("Best \(payload.bestStreak)")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
                         .foregroundColor(.textPrimary)
@@ -177,11 +177,11 @@ private struct WeekDots: View {
                     ZStack {
                         Circle().fill(Color.white.opacity(0.10))
                         if weekDone.indices.contains(i), weekDone[i] {
-                            Circle().fill(Color.accentYellow.opacity(0.9))
+                            Circle().fill(Color.accentMoon.opacity(0.9))
                                 .padding(8)
                         }
                         if i == today {
-                            Circle().stroke(Color.accentYellow.opacity(0.8), lineWidth: 2)
+                            Circle().stroke(Color.accentMoon.opacity(0.8), lineWidth: 2)
                         }
                     }
                     .frame(width: 56, height: 56)

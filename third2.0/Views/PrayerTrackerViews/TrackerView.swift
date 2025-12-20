@@ -1,6 +1,7 @@
 import SwiftUI
 import CoreLocation
 import SwiftData
+import WatchConnectivity
 
 struct TrackerView: View {
     @Environment(\.modelContext) private var modelContext
@@ -10,9 +11,11 @@ struct TrackerView: View {
     @State private var showLastThirdSheet = false
     @State private var showFreezeSheet = false
     @State private var showTravelInfoSheet = false
+    @State private var showTasbihCounter = false
 
     @AppStorage(PrefKeys.freezeOn) private var isFreezeOn: Bool = false
     @AppStorage("travel_mode_enabled") private var travelModeEnabled: Bool = false
+    @AppStorage("watch_enabled") private var watchEnabled: Bool = false
 
     private let verticalNudge: CGFloat = 30
     private let sidePadding: CGFloat = 16
@@ -57,7 +60,7 @@ struct TrackerView: View {
                                         name: item.name,
                                         time: item.timeLabel,
                                         isDone: vm.freezeOverlay ? true : item.done,
-                                        isEnabled: item.canMark() && !vm.freezeOverlay
+                                        isEnabled: !watchEnabled && item.canMark() && !vm.freezeOverlay
                                     ) {
                                         withAnimation(.spring(response: 0.25, dampingFraction: 0.85)) {
                                             vm.togglePrayer(at: i)
@@ -78,15 +81,20 @@ struct TrackerView: View {
 
         .overlay(alignment: .bottomTrailing) {
             Button { showAdsSheet = true } label: {
-                Image(systemName: "bag")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(.appBg)
-                    .frame(width: 48, height: 48)
-                    .background(Color.accentYellow)
-                    .clipShape(Circle())
-                    .shadow(color: .black.opacity(0.3), radius: 6, x: 0, y: 4)
-                    .overlay(Circle().stroke(Color.stroke, lineWidth: 1))
-                    .accessibilityLabel("Support us")
+                HStack(spacing: 6) {
+                    Image(systemName: "gift.fill")
+                        .font(.system(size: 14, weight: .semibold))
+                    Text("Support us")
+                        .font(.system(size: 14, weight: .semibold))
+                }
+                .foregroundColor(.buttonText)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 10)
+                .background(Color.accentPurple) // Purple button accent
+                .clipShape(Capsule())
+                .shadow(color: .black.opacity(0.3), radius: 6, x: 0, y: 4)
+                .overlay(Capsule().stroke(Color.stroke, lineWidth: 1))
+                .accessibilityLabel("Support us")
             }
             .buttonStyle(.plain)
             .padding(.trailing, 20)
@@ -104,7 +112,7 @@ struct TrackerView: View {
 
         .sheet(isPresented: $showAdsSheet) {
             AdsSheetView()
-                .presentationDetents([.medium, .large])
+                .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
                 .background(Color.appBg.ignoresSafeArea())
         }
@@ -128,13 +136,31 @@ struct TrackerView: View {
                 .presentationDragIndicator(.visible)
                 .background(Color.appBg.ignoresSafeArea())
         }
+        .fullScreenCover(isPresented: $showTasbihCounter) {
+            TasbihCounterView()
+        }
 
         .onAppear {
             vm.configure(context: modelContext)
             vm.onAppear()
+            // Sync freeze status: AppStorage is source of truth, update today's record to match
             vm.setFreezeOverlay(isFreezeOn)
+            
+            // Set up Watch connectivity callback
+            WatchConnectivityManager.shared.onPrayerDetected = { [weak vm] prayerName in
+                guard let vm = vm else { return }
+                // Handle prayer detection from Watch
+                if let completedPrayer = vm.handleWatchPrayerDetection() {
+                    // Send confirmation back to Watch
+                    WatchConnectivityManager.shared.sendPrayerCompletionConfirmation(prayerName: completedPrayer)
+                }
+            }
         }
-        .onDisappear { vm.onDisappear() }
+        .onDisappear { 
+            vm.onDisappear()
+            // Clear callback when view disappears
+            WatchConnectivityManager.shared.onPrayerDetected = nil
+        }
 
         .onChange(of: isFreezeOn) { _, newValue in
             vm.setFreezeOverlay(newValue)
@@ -152,6 +178,11 @@ struct TrackerView: View {
                     .accessibilityAddTraits(.isButton)
 
                 HStack {
+                    TasbihCircleButton {
+                        showTasbihCounter = true
+                    }
+                    .padding(.leading, 16)
+                    
                     Spacer()
 
                     if travelModeEnabled {
@@ -160,12 +191,12 @@ struct TrackerView: View {
                         } label: {
                             Image(systemName: "info.circle")
                                 .font(.system(size: 18, weight: .semibold))
-                                .foregroundColor(.appBg)
+                                .foregroundColor(.buttonText)
                                 .frame(width: 36, height: 36)
-                                .background(Color.accentYellow)
+                                .background(Color.accentPurple)
                                 .clipShape(Circle())
-                                .shadow(color: .black.opacity(0.25), radius: 6, x: 0, y: 4)
-                                .overlay(Circle().stroke(Color.stroke, lineWidth: 1))
+                                .shadow(color: Color.accentPurple.opacity(0.4), radius: 8, x: 0, y: 4)
+                                .overlay(Circle().stroke(Color.accentPurple.opacity(0.6), lineWidth: 1.5))
                                 .accessibilityLabel("Travel information")
                         }
                         .buttonStyle(.plain)
@@ -183,7 +214,7 @@ struct TrackerView: View {
             Text(vm.displayDateString(gregorianTemplate: "EEEE d MMMM",
                                       hijriTemplate: "d MMMM"))
                 .font(.system(size: 26, weight: .bold, design: .rounded))
-                .foregroundColor(.textPrimary)
+                .foregroundColor(.textPrimaryLight)
                 .onTapGesture { vm.toggleDateCalendar() }
                 .animation(.easeInOut(duration: 0.15), value: vm.showingHijri)
                 .accessibilityLabel(vm.showingHijri ? "Hijri date" : "Gregorian date")
@@ -200,7 +231,7 @@ struct TrackerView: View {
         guard let idx = vm.prayers.firstIndex(where: { $0.name.localizedCaseInsensitiveContains(key) }) else { return nil }
         let p = vm.prayers[idx]
 
-        let isEnabled = travelModeEnabled ? !vm.freezeOverlay : (p.canMark() && !vm.freezeOverlay)
+        let isEnabled = !watchEnabled && (travelModeEnabled ? !vm.freezeOverlay : (p.canMark() && !vm.freezeOverlay))
         let isDone    = vm.freezeOverlay ? true : p.done
 
         return TravelRowItem(

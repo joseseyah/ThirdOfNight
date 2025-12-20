@@ -15,7 +15,7 @@ final class StoreKitManager: ObservableObject {
 
     enum IDs {
         static let oneOff = "support_oneoff_599"
-        static let monthly = "support_monthly_199"
+        static let monthly = "support_monthly_299"
     }
 
     @Published var oneOff: Product?

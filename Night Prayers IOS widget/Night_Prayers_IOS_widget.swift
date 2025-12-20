@@ -43,10 +43,14 @@ struct Night_Prayers_IOS_widgetEntryView : View {
     var body: some View {
         VStack {
             Text("Time:")
+                .foregroundColor(.textPrimaryLight)
             Text(entry.date, style: .time)
+                .foregroundColor(.accentPurple)
 
             Text("Favorite Emoji:")
+                .foregroundColor(.textPrimaryLight)
             Text(entry.configuration.favoriteEmoji)
+                .foregroundColor(.accentPurple)
         }
     }
 }
@@ -57,7 +61,7 @@ struct Night_Prayers_IOS_widget: Widget {
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
             Night_Prayers_IOS_widgetEntryView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
+                .containerBackground(Color.appBg, for: .widget)
         }
     }
 }

@@ -24,7 +24,7 @@ struct QiblaView: View {
                         pointerAsset: pointerAssetName,
                         size: 300,
                         faceRotationDegrees: vm.faceRotationDegrees,
-                        pointerTint: .accentYellow,
+                        pointerTint: .accentMoon,
                         pointerScale: 0.25
                     )
                     .frame(maxWidth: .infinity)
@@ -34,9 +34,9 @@ struct QiblaView: View {
                             VStack(spacing: 6) {
                                 Text(String(format: "%.1f miles", distance))
                                     .font(.system(size: 24, weight: .bold, design: .rounded))
-                                    .foregroundColor(.accentYellow)
+                                    .foregroundColor(.accentMoon)
 
-                                Text("to the Qibla from your current location")
+                                Text(String(localized: "to the Qibla from your current location"))
                                     .font(.system(size: 14, weight: .medium))
                                     .foregroundColor(.textSecondary)
                                     .multilineTextAlignment(.center)
@@ -75,12 +75,12 @@ struct QiblaView: View {
                     }
 
                     if vm.isAligned {
-                        Text("You're facing Makkah")
+                        Text(String(localized: "You're facing Makkah"))
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundColor(.appBg)
                             .padding(.vertical, 10)
                             .padding(.horizontal, 16)
-                            .background(Capsule().fill(Color.accentYellow))
+                            .background(Capsule().fill(Color.accentMoon))
                             .overlay(Capsule().stroke(Color.stroke, lineWidth: 1))
                             .padding(.top, 4)
                             .transition(.opacity.combined(with: .scale))
@@ -104,7 +104,7 @@ private struct CompassWidget: View {
     let pointerAsset: String
     let size: CGFloat
     let faceRotationDegrees: Double
-    var pointerTint: Color = .accentYellow
+    var pointerTint: Color = .accentMoon
     var pointerScale: CGFloat = 0.44
 
     var body: some View {

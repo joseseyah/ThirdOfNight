@@ -84,7 +84,7 @@ private struct WatchPill: View {
         .foregroundColor(.black)
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
-        .background(Capsule(style: .continuous).fill(Color.accentYellow))
+        .background(Capsule(style: .continuous).fill(Color.accentMoon))
     }
 }
 

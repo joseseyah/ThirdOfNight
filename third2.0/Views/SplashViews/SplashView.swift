@@ -16,10 +16,12 @@ struct SplashView: View {
         ZStack {
             Color.appBg.ignoresSafeArea()
             Image("moon")
+                .renderingMode(.template)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 160, height: 160)
-                .shadow(color: .accentYellow.opacity(0.25), radius: 18, x: 0, y: 0)
+                .foregroundColor(.accentPurple)
+                .shadow(color: .accentPurple.opacity(0.35), radius: 18, x: 0, y: 0)
                 .scaleEffect(scale)
                 .opacity(opacity)
                 .onAppear {

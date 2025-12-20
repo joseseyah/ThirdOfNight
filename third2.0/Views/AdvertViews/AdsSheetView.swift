@@ -4,11 +4,14 @@ import GoogleMobileAds
 
 struct AdsSheetView: View {
     @StateObject private var store = StoreKitManager.shared
+    @StateObject private var authManager = AuthenticationManager.shared
     @State private var selectedID: String?          // for gold highlight
     @State private var isPurchasing = false
-
-    private let columns = [GridItem(.flexible(), spacing: 12),
-                           GridItem(.flexible(), spacing: 12)]
+    
+    // Get user email from authentication manager
+    private var userEmail: String? {
+        authManager.user?.email
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -20,57 +23,48 @@ struct AdsSheetView: View {
                 .padding(.bottom, 12)
 
             ScrollView(showsIndicators: false) {
-                VStack(alignment: .center, spacing: 18) {
-                    // Title
-                    Text("Thanks for supporting the app")
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                        .foregroundColor(.textPrimary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 24)
+                VStack(alignment: .center, spacing: 24) {
+                    // Header - Moon Icon Only
+                    Image("moon")
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 80, height: 80)
+                        .foregroundColor(.accentMoon)
+                        .shadow(color: .accentMoon.opacity(0.25), radius: 12, x: 0, y: 0)
+                        .padding(.top, 8)
+                        .padding(.bottom, 8)
 
-                    // Subtitle
-                    Text("Choose a support option below. You’ll see Apple’s secure payment sheet, then your purchase unlocks instantly.")
-                        .font(.system(size: 14, weight: .regular, design: .rounded))
-                        .foregroundColor(.textSecondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 24)
+                    // Monthly Plan (Top - Highlighted)
+                    MonthlyPlanCard(
+                        id: StoreKitManager.IDs.monthly,
+                        priceText: store.monthly?.displayPrice ?? "£2.99",
+                        isSelected: selectedID == StoreKitManager.IDs.monthly
+                    ) {
+                        guard let p = store.monthly, !isPurchasing else { return }
+                        selectAndBuy(id: p.id) { Task { await store.buy(p) } }
+                    }
+                    .padding(.horizontal, 16)
 
-                    // Cards
-                    LazyVGrid(columns: columns, alignment: .center, spacing: 12) {
-                        SupportOptionCard(
-                            id: StoreKitManager.IDs.oneOff,
-                            title: "One-Off Tip",
-                            priceText: store.oneOff?.displayPrice ?? "£5.99",
-                            badge: "One-time",
-                            blurb: "Pay once to support Night Prayers.",
-                            isSelected: selectedID == StoreKitManager.IDs.oneOff
-                        ) {
-                            guard let p = store.oneOff, !isPurchasing else { return }
-                            selectAndBuy(id: p.id) { Task { await store.buy(p) } }
-                        }
-
-                        SupportOptionCard(
-                            id: StoreKitManager.IDs.monthly,
-                            title: "Monthly",
-                            priceText: store.monthly?.displayPrice ?? "£1.99",
-                            badge: "Subscription",
-                            blurb: "Auto-renewing monthly support.",
-                            isSelected: selectedID == StoreKitManager.IDs.monthly
-                        ) {
-                            guard let p = store.monthly, !isPurchasing else { return }
-                            selectAndBuy(id: p.id) { Task { await store.buy(p) } }
-                        }
+                    // One-Off Plan (Bottom)
+                    OneOffPlanCard(
+                        id: StoreKitManager.IDs.oneOff,
+                        priceText: store.oneOff?.displayPrice ?? "£5.99",
+                        isSelected: selectedID == StoreKitManager.IDs.oneOff
+                    ) {
+                        guard let p = store.oneOff, !isPurchasing else { return }
+                        selectAndBuy(id: p.id) { Task { await store.buy(p) } }
                     }
                     .padding(.horizontal, 16)
 
                     if store.isActiveSubscriber {
-                        Text("Thanks! You’re an active supporter 🎉")
+                        Text("Thanks! You're an active supporter 🎉")
                             .font(.system(size: 13, weight: .semibold, design: .rounded))
-                            .foregroundColor(.textSecondary)
-                            .padding(.top, 2)
+                            .foregroundColor(.accentMoon)
+                            .padding(.top, 4)
                     }
 
-                    // Manage / Restore row (wraps nicely on small widths)
+                    // Manage / Restore row
                     HStack(spacing: 18) {
                         Button("Restore Purchases") { Task { await store.restore() } }
                         Button("Manage Subscription") { store.openManageSubscriptions() }
@@ -81,8 +75,20 @@ struct AdsSheetView: View {
                     .minimumScaleFactor(0.8)
                     .padding(.horizontal, 16)
 
+                    // Rokt Offers Section
+                    //needs approval from Rokt first
+//                    VStack(alignment: .leading, spacing: 8) {
+//                        Text("Special Offers")
+//                            .font(.system(size: 16, weight: .semibold, design: .rounded))
+//                            .foregroundColor(.textPrimary)
+//                            .padding(.horizontal, 16)
+//                        
+//                        RoktOffersContainer(userEmail: userEmail)
+//                    }
+//                    .padding(.top, 8)
+                    
                     // Banner
-                    BannerAdController(adUnitID: "ca-app-pub-3940256099942544/2934735716")
+                    BannerAdController(adUnitID: "ca-app-pub-2760408664614132/9643788748")
                         .frame(height: 60)
                         .padding(.horizontal, 16)
                         .padding(.top, 8)
@@ -120,93 +126,234 @@ struct AdsSheetView: View {
     }
 }
 
-// MARK: - Card
+// MARK: - Monthly Plan Card (Top - Highlighted)
 
-private struct SupportOptionCard: View {
+private struct MonthlyPlanCard: View {
     let id: String
-    let title: String
     let priceText: String
-    let badge: String
-    let blurb: String
     let isSelected: Bool
     let action: () -> Void
+    
+    private let benefits = [
+        "Support Third of the Night to grow",
+        "Help others access prayer times",
+        "Portion donated to charity",
+        "Auto-renewing monthly support"
+    ]
 
     var body: some View {
         Button(action: action) {
-            VStack(alignment: .leading, spacing: 10) {
-                // Badge
-                Text(badge)
-                    .font(.system(size: 11, weight: .semibold, design: .rounded))
-                    .padding(.vertical, 4)
-                    .padding(.horizontal, 8)
-                    .background(Color.stroke.opacity(0.25))
-                    .clipShape(Capsule())
-                    .foregroundColor(.textSecondary)
-
-                // Title
-                Text(title)
-                    .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    .foregroundColor(.textPrimary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-
+            VStack(alignment: .leading, spacing: 16) {
+                // Header with badge
+                HStack {
+                    Text("Monthly")
+                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .foregroundColor(.textPrimary)
+                    
+                    Spacer()
+                    
+                    // PREFERRED badge
+                    Text("PREFERRED")
+                        .font(.system(size: 10, weight: .bold, design: .rounded))
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 8)
+                        .background(Color.accentGold)
+                        .foregroundColor(.appBg)
+                        .clipShape(Capsule())
+                        .shadow(color: Color.accentGold.opacity(0.4), radius: 4, x: 0, y: 2)
+                }
+                
                 // Price
                 Text(priceText)
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .font(.system(size: 32, weight: .bold, design: .rounded))
                     .foregroundColor(.textPrimary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-
-                // Blurb
-                Text(blurb)
-                    .font(.system(size: 12, weight: .regular, design: .rounded))
+                
+                // Benefits list
+                VStack(alignment: .leading, spacing: 10) {
+                    ForEach(benefits, id: \.self) { benefit in
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundColor(.accentGold)
+                                .padding(.top, 2)
+                            
+                            Text(benefit)
+                                .font(.system(size: 14, weight: .regular, design: .rounded))
+                                .foregroundColor(.textPrimary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                }
+                
+                // Subscribe button
+                HStack {
+                    Spacer()
+                    Text("Subscribe to Monthly")
+                        .font(.system(size: 16, weight: .semibold, design: .rounded))
+                        .foregroundColor(.appBg)
+                    Spacer()
+                }
+                .padding(.vertical, 14)
+                .background(
+                    LinearGradient(
+                        colors: [Color.accentGold, Color.accentGold.opacity(0.9)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                .shadow(color: Color.accentGold.opacity(0.3), radius: 6, x: 0, y: 3)
+                .padding(.top, 4)
+                
+                // Legal text
+                Text("By subscribing, you agree to Third of the Night's Terms of Use. Your App Store Apple ID will be charged \(priceText) per month. Automatically renews until cancelled.")
+                    .font(.system(size: 11, weight: .regular, design: .rounded))
                     .foregroundColor(.textSecondary)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
+                    .lineSpacing(2)
             }
-            .padding(16)
-            .frame(maxWidth: .infinity, minHeight: 140, alignment: .topLeading)
+            .padding(20)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .background(cardBackground)
             .overlay(cardBorder)
-            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-            .shadow(color: isSelected ? Color.accentYellow.opacity(0.45) : .clear,
-                    radius: isSelected ? 18 : 0, x: 0, y: 0)
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .shadow(color: isSelected ? Color.accentGold.opacity(0.4) : Color.black.opacity(0.2),
+                    radius: isSelected ? 16 : 8, x: 0, y: 4)
             .animation(.easeInOut(duration: 0.2), value: isSelected)
         }
         .buttonStyle(.plain)
-        .contentShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 
     private var cardBorder: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .stroke(Color.stroke, lineWidth: 1)
-
-            if isSelected {
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(
-                        LinearGradient(colors: [Color.accentYellow.opacity(0.95),
-                                                Color.accentYellow.opacity(0.55)],
-                                       startPoint: .topLeading, endPoint: .bottomTrailing),
-                        lineWidth: 2
-                    )
-            }
-        }
+        RoundedRectangle(cornerRadius: 16, style: .continuous)
+            .stroke(
+                LinearGradient(
+                    colors: [Color.accentGold.opacity(0.8), Color.accentGold.opacity(0.5)],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                ),
+                lineWidth: 2.5
+            )
     }
-
-
 
     private var cardBackground: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .fill(Color.cardBg)
-
-            if isSelected {
-                // subtle inner gold rim
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(Color.accentYellow.opacity(0.25), lineWidth: 8)
-                    .blur(radius: 10)
-            }
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [Color.cardBg, Color.cardBg.opacity(0.95)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [Color.accentGold.opacity(0.12), Color.accentGold.opacity(0.06)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
         }
+    }
+}
+
+// MARK: - One-Off Plan Card (Bottom)
+
+private struct OneOffPlanCard: View {
+    let id: String
+    let priceText: String
+    let isSelected: Bool
+    let action: () -> Void
+    
+    private let benefits = [
+        "Support Third of the Night to grow",
+        "Help others access prayer times",
+        "Portion donated to charity",
+        "One-time payment"
+    ]
+
+    var body: some View {
+        Button(action: action) {
+            VStack(alignment: .leading, spacing: 16) {
+                // Header with badge
+                HStack {
+                    Text("One-Off Tip")
+                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .foregroundColor(.textPrimary)
+                    
+                    Spacer()
+                    
+                    // One-time badge
+                    Text("ONE-TIME")
+                        .font(.system(size: 10, weight: .bold, design: .rounded))
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 8)
+                        .background(Color.stroke.opacity(0.3))
+                        .foregroundColor(.textSecondary)
+                        .clipShape(Capsule())
+                }
+                
+                // Price
+                Text(priceText)
+                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    .foregroundColor(.textPrimary)
+                
+                // Benefits list
+                VStack(alignment: .leading, spacing: 10) {
+                    ForEach(benefits, id: \.self) { benefit in
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundColor(.textSecondary)
+                                .padding(.top, 2)
+                            
+                            Text(benefit)
+                                .font(.system(size: 14, weight: .regular, design: .rounded))
+                                .foregroundColor(.textPrimary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                }
+                
+                // Subscribe button
+                HStack {
+                    Spacer()
+                    Text("Make One-Time Payment")
+                        .font(.system(size: 16, weight: .semibold, design: .rounded))
+                        .foregroundColor(.buttonText)
+                    Spacer()
+                }
+                .padding(.vertical, 14)
+                .background(Color.accentPurple)
+                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                .shadow(color: .black.opacity(0.3), radius: 6, x: 0, y: 4)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .stroke(Color.stroke, lineWidth: 1)
+                )
+                .padding(.top, 4)
+                
+                // Legal text
+                Text("By making a payment, you agree to Third of the Night's Terms of Use. Your App Store Apple ID will be charged \(priceText) once.")
+                    .font(.system(size: 11, weight: .regular, design: .rounded))
+                    .foregroundColor(.textSecondary)
+                    .lineSpacing(2)
+            }
+            .padding(20)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(Color.cardBg)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .stroke(Color.stroke.opacity(0.3), lineWidth: 1)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .shadow(color: Color.black.opacity(0.15), radius: 6, x: 0, y: 2)
+        }
+        .buttonStyle(.plain)
+        .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 }

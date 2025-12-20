@@ -36,7 +36,7 @@ struct LeftColumnWidgetEntryView: View {
             PrayerTimeRow(name: "Asr", time: "13:53")
         }
         .padding()
-        .containerBackground(.fill.tertiary, for: .widget)
+        .containerBackground(Color.appBg, for: .widget)
     }
 }
 
@@ -61,11 +61,11 @@ struct PrayerTimeRow: View {
         HStack {
             Text(name)
                 .font(.caption2)
-                .foregroundColor(.primary)
+                .foregroundColor(.textPrimaryLight)
             Spacer()
             Text(time)
                 .font(.caption2)
-                .foregroundColor(.primary)
+                .foregroundColor(.accentPurple)
         }
     }
 }

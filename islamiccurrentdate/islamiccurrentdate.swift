@@ -58,30 +58,30 @@ struct IslamicCurrentDateEntryView: View {
     var body: some View {
         ZStack {
             // Background Colour
-            Color("BackgroundColor")
+            Color.appBg
                 .ignoresSafeArea()
 
             VStack(spacing: -8) { // Minimal negative spacing for tight alignment
                 // Month sits just above the Day
                 Text(entry.month)
                     .font(.system(size: 22, weight: .semibold))
-                    .foregroundColor(Color("DayHighlightColor"))
+                    .foregroundColor(.accentPurple)
                     .padding(.bottom, 2) // Slight padding to adjust positioning
 
                 // Big Day Number
                 Text(entry.day)
                     .font(.system(size: 90, weight: .bold))
-                    .foregroundColor(Color("HighlightColor"))
+                    .foregroundColor(.accentPurple)
 
                 // Year sits at the bottom
                 Text(entry.year)
                     .font(.system(size: 18, weight: .medium))
-                    .foregroundColor(Color("DayBoxBackgroundColor"))
+                    .foregroundColor(.cardBg)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity) // Ensure widget fills available space
-        .background(Color("BackgroundColor")) // Match container background
-        .containerBackground(Color("BackgroundColor"), for: .widget)
+        .background(Color.appBg) // Match container background
+        .containerBackground(Color.appBg, for: .widget)
     }
 }
 

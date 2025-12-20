@@ -31,7 +31,7 @@ struct NotificationRows: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            Row(icon: "bell.badge", title: "Allow notifications", trailing: {
+            Row(icon: "bell.badge", title: String(localized: "Allow notifications"), trailing: {
                 PermissionBadge(status: permission)
             })
             .contentShape(Rectangle())
@@ -41,14 +41,14 @@ struct NotificationRows: View {
             Divider().overlay(Color.stroke)
 
             if dailyEnabled {
-                TimePickerRow(title: "Reminder time", date: dailyTimeBinding)
+                TimePickerRow(title: String(localized: "Reminder time"), date: dailyTimeBinding)
                     .transition(.opacity.combined(with: .move(edge: .top)))
                     .padding(.top, 10)
             }
 
             Divider().overlay(Color.stroke).padding(.top, dailyEnabled ? 10 : 0)
 
-            ToggleRow(icon: "sparkles", title: "Prayer-time alerts", isOn: $prayerEnabled)
+            ToggleRow(icon: "sparkles", title: String(localized: "Prayer-time alerts"), isOn: $prayerEnabled)
                 .onChange(of: prayerEnabled) { _, new in
                     if new { requestPermissionIfNeeded() }
                     NotificationManager.shared.setPrayerAlertsEnabled(

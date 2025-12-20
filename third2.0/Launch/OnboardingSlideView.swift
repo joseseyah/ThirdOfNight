@@ -19,7 +19,7 @@ struct OnboardingSlideView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(height: 150)
-                .foregroundColor(.blue)
+                .foregroundColor(.accentPurple)
             
             Text(title)
                 .font(.title)

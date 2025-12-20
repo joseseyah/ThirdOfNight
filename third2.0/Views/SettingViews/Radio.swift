@@ -12,7 +12,7 @@ struct Radio: View {
         ZStack {
             Circle().stroke(Color.stroke, lineWidth: 1).frame(width: 22, height: 22)
             if isSelected {
-                Circle().fill(Color.accentYellow).frame(width: 10, height: 10)
+                Circle().fill(Color.accentMoon).frame(width: 10, height: 10)
             }
         }
     }

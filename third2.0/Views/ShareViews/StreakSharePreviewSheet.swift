@@ -40,7 +40,7 @@ struct StreakSharePreviewSheet: View {
                         Label("Share", systemImage: "square.and.arrow.up")
                             .font(.system(size: 16, weight: .semibold, design: .rounded))
                             .padding(.horizontal, 16).padding(.vertical, 12)
-                            .background(RoundedRectangle(cornerRadius: 14).fill(Color.accentYellow.opacity(0.20)))
+                            .background(RoundedRectangle(cornerRadius: 14).fill(Color.accentMoon.opacity(0.20)))
                     }
                 }
                 .foregroundColor(.textPrimary)

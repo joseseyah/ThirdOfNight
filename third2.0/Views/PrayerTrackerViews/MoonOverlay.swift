@@ -22,7 +22,7 @@ struct MoonOverlay: View {
             ZStack {
                 // Small, controlled glow (no banding)
                 Circle()
-                    .fill(Color.accentYellow.opacity(opacity * glowOpacity))
+                    .fill(Color.accentMoon.opacity(opacity * glowOpacity))
                     .frame(width: size * glowScale * 2, height: size * glowScale * 2)
                     .blur(radius: size * glowBlur)
                     .position(x: x, y: y)
@@ -34,7 +34,7 @@ struct MoonOverlay: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: size, height: size)
-                    .foregroundStyle(Color.accentYellow)
+                    .foregroundStyle(Color.accentMoon)
                     .opacity(opacity)
                     .position(x: x, y: y)
             }

@@ -7,9 +7,11 @@
 
 
 import SwiftUI
+import SwiftData
 
 struct RootView: View {
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.modelContext) private var modelContext
 
     // Language / layout
     @AppStorage("appLanguage")
@@ -17,33 +19,54 @@ struct RootView: View {
 
     // StoreKit manager provided by App
     @EnvironmentObject private var store: StoreKitManager
+    
+    // Authentication
+    @StateObject private var authManager = AuthenticationManager.shared
 
     @State private var isReady = false
     @State private var didStartBootstrap = false
+    @State private var hasSyncedOnAuth = false
 
     var body: some View {
         Group {
             if isReady {
-                HomeView()
-                    .environment(\.locale, Locale(identifier: appLanguage))
-                    .environment(\.layoutDirection, ["ar","ur"].contains(appLanguage) ? .rightToLeft : .leftToRight)
-                    .background(Color.appBg.ignoresSafeArea())
-                    .onChange(of: appLanguage) { _, _ in
-                        // Re-arm notifications if language changes
-                        guard UserDefaults.standard.bool(forKey: "notif_prayer_enabled") else { return }
-                        NotificationManager.shared.setPrayerAlertsEnabled(
-                            false,
-                            coordinates: SettingsStore.shared.lastKnownCoordinate,
-                            method: .muslimWorldLeague,
-                            madhab: .shafi
-                        )
-                        NotificationManager.shared.setPrayerAlertsEnabled(
-                            true,
-                            coordinates: SettingsStore.shared.lastKnownCoordinate,
-                            method: .muslimWorldLeague,
-                            madhab: .shafi
-                        )
-                    }
+                if authManager.isAuthenticated {
+                    HomeView()
+                        .environment(\.locale, Locale(identifier: appLanguage == "fil" ? "fil-PH" : appLanguage))
+                        .environment(\.layoutDirection, ["ar","ur"].contains(appLanguage) ? .rightToLeft : .leftToRight)
+                        .background(Color.appBg.ignoresSafeArea())
+                        .onChange(of: appLanguage) { _, _ in
+                            // Re-arm notifications if language changes
+                            guard UserDefaults.standard.bool(forKey: "notif_prayer_enabled") else { return }
+                            NotificationManager.shared.setPrayerAlertsEnabled(
+                                false,
+                                coordinates: SettingsStore.shared.lastKnownCoordinate,
+                                method: .muslimWorldLeague,
+                                madhab: PrefKeys.getAsrMadhab()
+                            )
+                            NotificationManager.shared.setPrayerAlertsEnabled(
+                                true,
+                                coordinates: SettingsStore.shared.lastKnownCoordinate,
+                                method: .muslimWorldLeague,
+                                madhab: PrefKeys.getAsrMadhab()
+                            )
+                        }
+                        .task {
+                            // Sync all local prayer data to Firestore when user becomes authenticated
+                            if !hasSyncedOnAuth {
+                                hasSyncedOnAuth = true
+                                await PrayerDataSyncHelper.shared.syncAllLocalDataIfNeeded(modelContext: modelContext)
+                            }
+                        }
+                        .onChange(of: authManager.isAuthenticated) { oldValue, newValue in
+                            // Reset sync flag when user logs out, so it syncs again on next login
+                            if !newValue {
+                                hasSyncedOnAuth = false
+                            }
+                        }
+                } else {
+                    LandingView()
+                }
             } else {
                 SplashView()
                     .task {
@@ -59,7 +82,7 @@ struct RootView: View {
                 NotificationManager.shared.bootstrapOnLaunch(
                     coordinates: SettingsStore.shared.lastKnownCoordinate,
                     method: .muslimWorldLeague,
-                    madhab: .shafi
+                    madhab: PrefKeys.getAsrMadhab()
                 )
             }
         }
@@ -76,7 +99,7 @@ struct RootView: View {
                 true,
                 coordinates: SettingsStore.shared.lastKnownCoordinate,
                 method: .muslimWorldLeague,
-                madhab: .shafi
+                madhab: PrefKeys.getAsrMadhab()
             )
         }
 

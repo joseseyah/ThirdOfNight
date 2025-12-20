@@ -56,6 +56,7 @@ struct PrayerTimesWidgetEntryView: View {
             }
         }
         .padding()
+        .containerBackground(Color.appBg, for: .widget)
     }
 }
 
@@ -67,11 +68,11 @@ struct PrayerTimeRow: View {
         HStack {
             Text(name)
                 .font(.caption2)
-                .foregroundColor(.primary)
+                .foregroundColor(.textPrimaryLight)
             Spacer()
             Text(time)
                 .font(.caption2)
-                .foregroundColor(.primary)
+                .foregroundColor(.accentPurple)
         }
     }
 }
@@ -85,7 +86,6 @@ struct PrayerTimesWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             PrayerTimesWidgetEntryView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget) // Set the background for Lock Screen
         }
         .configurationDisplayName("Prayer Times")
         .description("Displays today's prayer times.")

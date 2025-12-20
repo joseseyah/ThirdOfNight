@@ -15,7 +15,7 @@ struct ToggleRow: View {
         Row(icon: icon, title: title, trailing: {
             Toggle("", isOn: $isOn)
                 .labelsHidden()
-                .tint(.accentYellow)
+                .tint(.accentPurple)
         })
     }
 }

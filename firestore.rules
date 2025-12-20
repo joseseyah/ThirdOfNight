@@ -1,0 +1,40 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user owns the resource
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Users collection - users can only read/write their own document
+    match /users/{userId} {
+      // Allow users to read/write their own user document
+      allow read, write: if isOwner(userId);
+      
+      // Prayers subcollection - users can only read/write their own prayers
+      match /prayers/{dayKey} {
+        // Allow users to read/write their own prayer data
+        allow read, write: if isOwner(userId);
+      }
+      
+      // Missed Fasts subcollection - users can only read/write their own missed fasts
+      match /missed_fasts/{fastId} {
+        // Allow users to read/write their own missed fast data
+        allow read, write: if isOwner(userId);
+      }
+    }
+    
+    // Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+

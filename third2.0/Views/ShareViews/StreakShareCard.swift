@@ -36,7 +36,7 @@ public struct StreakShareCard: View {
                 HStack {
                     Image(systemName: "moon.stars.fill")
                         .imageScale(.large)
-                        .foregroundColor(.accentYellow)
+                        .foregroundColor(.accentMoon)
                     Text("Third of the Night")
                         .font(.system(size: 28, weight: .bold, design: .rounded))
                         .foregroundColor(.textPrimary)
@@ -54,7 +54,7 @@ public struct StreakShareCard: View {
                 .padding(.top, 6)
 
                 HStack(spacing: 8) {
-                    Image(systemName: "flame.fill").foregroundColor(.accentYellow)
+                    Image(systemName: "flame.fill").foregroundColor(.accentMoon)
                     Text("Best \(bestStreak)")
                         .font(.system(size: 20, weight: .semibold, design: .rounded))
                         .foregroundColor(.textPrimary)
@@ -71,10 +71,10 @@ public struct StreakShareCard: View {
                             ZStack {
                                 Circle().fill(Color.white.opacity(0.12))
                                 if weekDone.indices.contains(i), weekDone[i] {
-                                    Circle().fill(Color.accentYellow.opacity(0.95)).padding(10)
+                                    Circle().fill(Color.accentMoon.opacity(0.95)).padding(10)
                                 }
                                 if i == today {
-                                    Circle().stroke(Color.accentYellow.opacity(0.85), lineWidth: 3)
+                                    Circle().stroke(Color.accentMoon.opacity(0.85), lineWidth: 3)
                                 }
                             }
                             .frame(width: 72, height: 72)

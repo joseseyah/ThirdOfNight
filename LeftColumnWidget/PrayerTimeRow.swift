@@ -8,11 +8,11 @@ struct PrayerTimeRow: View {
         HStack {
             Text(name)
                 .font(.caption2)
-                .foregroundColor(.primary)
+                .foregroundColor(.textPrimaryLight)
             Spacer()
             Text(time)
                 .font(.caption2)
-                .foregroundColor(.primary)
+                .foregroundColor(.accentPurple)
         }
     }
 }

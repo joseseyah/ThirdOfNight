@@ -35,7 +35,7 @@ struct RightColumnWidgetEntryView: View {
             PrayerTimeRow(name: "Last Third", time: "02:00")
         }
         .padding()
-        .containerBackground(.fill.tertiary, for: .widget)
+        .containerBackground(Color.appBg, for: .widget)
     }
 }
 

@@ -13,7 +13,7 @@ func computePrayerItems(for coord: CLLocationCoordinate2D, date: Date) -> [Praye
     let coordinates = Coordinates(latitude: coord.latitude, longitude: coord.longitude)
 
     var params = CalculationMethod.moonsightingCommittee.params
-    params.madhab = .shafi
+    params.madhab = PrefKeys.getAsrMadhab()
     params.highLatitudeRule = .middleOfTheNight
 
     let cal = Calendar(identifier: .gregorian)

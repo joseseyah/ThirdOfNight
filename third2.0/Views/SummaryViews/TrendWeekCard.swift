@@ -21,19 +21,19 @@ struct TrendWeekCard: View {
                             Circle().fill(Color.white.opacity(0.06))
 
                             if weekDone.indices.contains(i), weekDone[i] {
-                                Circle().fill(Color.accentYellow.opacity(0.95)).padding(8)
+                                Circle().fill(Color.accentPurple.opacity(0.95)).padding(8)
                             }
 
                             // Rim for "today"
                             if i == vm.todayIndex {
-                                Circle().stroke(Color.accentYellow.opacity(0.9), lineWidth: 2)
+                                Circle().stroke(Color.accentPurple.opacity(0.9), lineWidth: 2)
                             }
                         }
                         .frame(width: 38, height: 38)
 
                         Text(vm.labels[i])
                             .font(.system(size: 12, weight: .semibold, design: .rounded))
-                            .foregroundColor(i == vm.todayIndex ? .textPrimary : .textSecondary)
+                            .foregroundColor(i == vm.todayIndex ? .accentPurple : .textPrimary)
                     }
                     .frame(maxWidth: .infinity)
                 }

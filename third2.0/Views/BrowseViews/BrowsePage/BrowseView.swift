@@ -2,12 +2,12 @@ import SwiftUI
 
 struct BrowseView: View {
     private let categories: [BrowseCategory] = [
-        .init(title: "Fajr Reminders", systemImage: "sun.and.horizon.fill", tint: .accentYellow),
-        .init(title: "Jummah",         systemImage: "mappin.and.ellipse",   tint: .accentYellow.opacity(0.9)),
-        .init(title: "Quran Series",   systemImage: "book.closed.fill",      tint: .accentYellow.opacity(0.9)),
-        .init(title: "Dhikr & Duas",   systemImage: "hands.sparkles.fill",   tint: .accentYellow.opacity(0.9)),
-        .init(title: "Charity",        systemImage: "heart.fill",            tint: .accentYellow.opacity(0.95)),
-        .init(title: "Learning",       systemImage: "graduationcap.fill",    tint: .accentYellow.opacity(0.9))
+        .init(title: "Fajr Reminders", systemImage: "sun.and.horizon.fill", tint: .accentPurple),
+        .init(title: "Jummah",         systemImage: "mappin.and.ellipse",   tint: .accentPurple.opacity(0.9)),
+        .init(title: "Quran Series",   systemImage: "book.closed.fill",      tint: .accentPurple.opacity(0.9)),
+        .init(title: "Dhikr & Duas",   systemImage: "hands.sparkles.fill",   tint: .accentPurple.opacity(0.9)),
+        .init(title: "Charity",        systemImage: "heart.fill",            tint: .accentPurple.opacity(0.95)),
+        .init(title: "Learning",       systemImage: "graduationcap.fill",    tint: .accentPurple.opacity(0.9))
     ]
 
     @State private var query = ""
@@ -26,7 +26,7 @@ struct BrowseView: View {
                             .font(.system(size: 34, weight: .bold, design: .default))
                             .fontWidth(.condensed) // iOS 17+
                             .tracking(-0.2)
-                            .foregroundColor(.textPrimary)
+                            .foregroundColor(.textPrimaryLight)
                             .padding(.horizontal, 20)
 
 
@@ -38,7 +38,7 @@ struct BrowseView: View {
                         // Section header like iOS Health
                         Text("Categories")
                             .font(.system(size: 22, weight: .bold, design: .rounded))
-                            .foregroundColor(.textSecondary)
+                            .foregroundColor(.textSecondaryLight)
                             .padding(.top, 4)
                             .padding(.horizontal, 20)
 

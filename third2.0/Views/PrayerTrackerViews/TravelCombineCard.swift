@@ -39,18 +39,19 @@ public struct TravelCombineCard: View {
             HStack(spacing: 8) {
                 Image(systemName: "airplane.departure")
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(.appBg)
+                    .foregroundColor(.buttonText)
                     .frame(width: 24, height: 24)
-                    .background(Color.accentYellow)
+                    .background(Color.accentPurple)
                     .clipShape(Circle())
+                    .shadow(color: Color.accentPurple.opacity(0.3), radius: 4, x: 0, y: 2)
 
-                Text("Travel mode")
+                Text(String(localized: "Travel mode"))
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                     .foregroundColor(.textPrimary)
 
                 Spacer(minLength: 8)
 
-                Text("Combining allowed")
+                Text(String(localized: "Combining allowed"))
                     .font(.system(size: 13, weight: .medium, design: .rounded))
                     .foregroundColor(.textSecondary)
             }
@@ -89,13 +90,26 @@ public struct TravelCombineCard: View {
         .padding(.vertical, 14)
         .padding(.horizontal, sidePadding)
         .background(
-            RoundedRectangle(cornerRadius: 18)
-                .fill(Color.white.opacity(0.06))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 18)
-                        .stroke(Color.stroke, lineWidth: 1)
-                )
-                .shadow(color: .black.opacity(0.25), radius: 10, x: 0, y: 8)
+            ZStack {
+                RoundedRectangle(cornerRadius: 18)
+                    .fill(Color.cardBg)
+                RoundedRectangle(cornerRadius: 18)
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color.accentPurple.opacity(0.12),
+                                Color.accentPurple.opacity(0.06)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+            }
+            .overlay(
+                RoundedRectangle(cornerRadius: 18)
+                    .stroke(Color.accentPurple.opacity(0.3), lineWidth: 1.5)
+            )
+            .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 8)
         )
         .accessibilityElement(children: .contain)
     }

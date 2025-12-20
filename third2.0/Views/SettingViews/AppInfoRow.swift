@@ -15,10 +15,10 @@ struct AppInfoRow: View {
     }
 
     var body: some View {
-        Row(icon: "info.circle", title: "Version", trailing: {
-            Text("\(version) (\(build))")
-                .foregroundStyle(Color.textSecondary)
-                .font(.system(size: 15, weight: .medium, design: .rounded))
-        })
+        Text("Version \(version) (\(build))")
+            .font(.system(size: 12, weight: .regular, design: .rounded))
+            .foregroundColor(.textSecondaryLight.opacity(0.7))
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.top, 8)
     }
 }

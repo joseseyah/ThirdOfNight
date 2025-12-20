@@ -25,7 +25,7 @@ struct PermissionBadge: View {
             .padding(.horizontal, 10)
             .background(
                 Capsule()
-                    .fill(status == .authorized ? Color.accentYellow.opacity(0.18)
+                    .fill(status == .authorized ? Color.accentMoon.opacity(0.18)
                                                 : Color.white.opacity(0.06))
             )
             .overlay(

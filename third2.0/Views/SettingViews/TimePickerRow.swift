@@ -14,10 +14,10 @@ struct TimePickerRow: View {
         HStack(spacing: 12) {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.white.opacity(0.06))
+                    .fill(Color.accentPurple.opacity(0.15))
                     .frame(width: 60, height: 34)
                 Image(systemName: "clock")
-                    .foregroundStyle(Color.accentYellow)
+                    .foregroundStyle(Color.accentPurple)
             }
 
             VStack(alignment: .leading, spacing: 2) {
@@ -33,7 +33,7 @@ struct TimePickerRow: View {
 
             DatePicker("", selection: $date, displayedComponents: .hourAndMinute)
                 .labelsHidden()
-                .tint(.accentYellow)
+                .tint(.accentPurple)
         }
         .padding(.vertical, 8)
     }

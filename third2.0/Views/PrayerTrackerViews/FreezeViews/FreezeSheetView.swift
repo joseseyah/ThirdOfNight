@@ -6,7 +6,7 @@ struct FreezeSheetView: View {
     var body: some View {
         VStack(spacing: 16) {
             Capsule()
-                .fill(Color.stroke)
+                .fill(Color.accentPurple.opacity(0.4))
                 .frame(width: 44, height: 5)
                 .padding(.top, 8)
 
@@ -19,32 +19,64 @@ struct FreezeSheetView: View {
 
             ZStack {
                 Circle()
-                    .fill(Color.white.opacity(0.04))
+                    .fill(
+                        LinearGradient(
+                            colors: [Color.accentPurple.opacity(0.25), Color.accentPurple.opacity(0.15)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
                 Circle()
-                    .stroke(Color.stroke, lineWidth: 1.2)
+                    .stroke(Color.accentPurple.opacity(0.6), lineWidth: 2)
                 Circle()
-                    .stroke(Color.accentYellow.opacity(0.55), lineWidth: 3)
-                    .blur(radius: 0.5)
+                    .stroke(Color.accentPurple.opacity(0.8), lineWidth: 3)
+                    .blur(radius: 2)
                     .padding(8)
 
                 Image(systemName: "snowflake")
                     .font(.system(size: 42, weight: .semibold))
-                    .foregroundColor(.accentYellow)
-                    .shadow(color: Color.accentYellow.opacity(0.28), radius: 10)
+                    .foregroundColor(.accentPurple)
+                    .shadow(color: Color.accentPurple.opacity(0.5), radius: 14, x: 0, y: 4)
             }
             .frame(width: 120, height: 120)
             .padding(.top, 6)
+            .overlay(
+                Circle()
+                    .stroke(Color.accentPurple.opacity(0.3), lineWidth: 1)
+            )
 
             Text("Use freeze when menstruating to pause prayer tracking so your streaks stay intact. You can turn it off anytime.")
                 .font(.system(size: 16, weight: .regular, design: .rounded))
-                .foregroundColor(.textSecondary)
+                .foregroundColor(.textPrimary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 22)
 
             Spacer(minLength: 12)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .background(Color.cardBg.ignoresSafeArea())
+        .background(
+            ZStack {
+                Color.cardBg
+                LinearGradient(
+                    colors: [Color.accentPurple.opacity(0.08), Color.clear],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            }
+            .ignoresSafeArea()
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 0)
+                .stroke(
+                    LinearGradient(
+                        colors: [Color.accentPurple.opacity(0.3), Color.accentPurple.opacity(0.1)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    ),
+                    lineWidth: 1
+                )
+                .ignoresSafeArea(edges: .top)
+        )
         .presentationDetents([.fraction(0.55), .large])
         .presentationDragIndicator(.hidden)
     }

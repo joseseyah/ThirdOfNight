@@ -52,7 +52,7 @@ struct RemindersView: View {
                                 Text("Back")
                             }
                             .font(.system(size: 17, weight: .semibold, design: .default))
-                            .foregroundColor(.accentYellow)
+                            .foregroundColor(.accentMoon)
                         }
 
                         Spacer()

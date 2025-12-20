@@ -52,16 +52,16 @@ struct IslamicDateEntryView: View {
     var body: some View {
         VStack(spacing: 10) {
             HStack(spacing: 10) {
-                SquareView(color: Color("DayBoxBackgroundColor"), text: "Islamic")
-                SquareView(color: Color("DayHighlightColor"), text: "Date")
+                SquareView(color: Color.cardBg, text: "Islamic")
+                SquareView(color: Color.accentPurple, text: "Date")
             }
             HStack(spacing: 10) {
-                SquareView(color: Color("HighlightColor"), text: entry.islamicDate)
-                SquareView(color: Color("DayPageBackgroundColor"), text: "1446")
+                SquareView(color: Color.accentPurple, text: entry.islamicDate)
+                SquareView(color: Color.appBg, text: "1446")
             }
         }
         .padding()
-        .background(Color("BackgroundColor"))
+        .background(Color.appBg)
     }
 }
 
@@ -76,7 +76,7 @@ struct SquareView: View {
                 .cornerRadius(10)
             Text(text)
                 .font(.headline)
-                .foregroundColor(.white)
+                .foregroundColor(.textPrimaryLight)
         }
         .frame(width: 70, height: 70)
     }

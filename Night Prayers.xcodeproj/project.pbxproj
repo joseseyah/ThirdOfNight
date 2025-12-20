@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6D09B2C82D3BD75900C69C53 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D27C6382D312F3F00B3230D /* WidgetKit.framework */; };
-		6D09B2C92D3BD75900C69C53 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DCC12E02CFD10D900E352BD /* SwiftUI.framework */; };
-		6D09B2D82D3BD75B00C69C53 /* islamiccurrentdateExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6D09B2C72D3BD75900C69C53 /* islamiccurrentdateExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6D0FB2DC2E96412900AB1127 /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 6D0FB2DB2E96412900AB1127 /* Adhan */; };
 		6D0FB2E32E9644BE00AB1127 /* MiniLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB2E22E9644BE00AB1127 /* MiniLocationManager.swift */; };
 		6D0FB2E72E9644E700AB1127 /* PrayerCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB2E62E9644E100AB1127 /* PrayerCalculator.swift */; };
+		6D0FB2E82E9644E800AB1128 /* PrayerTimesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB2E92E9644E900AB1129 /* PrayerTimesCache.swift */; };
 		6D0FB2F02E964DC900AB1127 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB2EF2E964DC600AB1127 /* HomeView.swift */; };
 		6D0FB2FB2E96601300AB1127 /* CardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB2FA2E96601300AB1127 /* CardContainer.swift */; };
 		6D0FB3152E967FF100AB1127 /* ReminderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FB3142E967FF100AB1127 /* ReminderItem.swift */; };
@@ -52,16 +50,38 @@
 		6DCC142B2D10DEB900E352BD /* schedule_notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCC142A2D10DEB900E352BD /* schedule_notifications.swift */; };
 		7186047C2D33F757004EC07C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7186047B2D33F757004EC07C /* GoogleService-Info.plist */; };
 		718604832D33FDE2004EC07C /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718604822D33FDE2004EC07C /* Constant.swift */; };
+		EB9D22262EF0C54C00A56028 /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB9D22252EF0C54C00A56028 /* WatchConnectivity.framework */; };
+		EB9D22282EF0C55B00A56028 /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB9D22272EF0C55B00A56028 /* CoreML.framework */; };
+		EB9D222A2EF0C56600A56028 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB9D22292EF0C56600A56028 /* UserNotifications.framework */; };
+		EB9D22382EF0CE7D00A56028 /* WatchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB9D22372EF0CE7D00A56028 /* WatchKit.framework */; };
+		EB9D23DD2EF0D4BA00A56028 /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9D23DB2EF0D4BA00A56028 /* WatchConnectivityManager.swift */; };
+		EB9D23DE2EF0D4BA00A56028 /* PrayerDetectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9D23DA2EF0D4BA00A56028 /* PrayerDetectionService.swift */; };
+		EB9D24EE2EF14FB700A56028 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9D24ED2EF14FB700A56028 /* AuthenticationManager.swift */; };
+		EB9D24F52EF14FE300A56028 /* LandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9D24F02EF14FE300A56028 /* LandingView.swift */; };
+		EB9D24F72EF14FE300A56028 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9D24EF2EF14FE300A56028 /* ForgotPasswordView.swift */; };
+		EB9D24FA2EF150E800A56028 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = EB9D24F92EF150E800A56028 /* GoogleSignIn */; };
+		EB9D24FC2EF150E800A56028 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EB9D24FB2EF150E800A56028 /* GoogleSignInSwift */; };
+		EB9D24FE2EF1548400A56028 /* LoginContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9D24FD2EF1548400A56028 /* LoginContentView.swift */; };
+		EB9D25002EF1548A00A56028 /* SignupContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9D24FF2EF1548A00A56028 /* SignupContentView.swift */; };
+		EB9D25022EF154EA00A56028 /* AuthContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9D25012EF154EA00A56028 /* AuthContainerView.swift */; };
+		EB9D258B2EF1839E00A56028 /* PrayerSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9D258A2EF1839E00A56028 /* PrayerSyncService.swift */; };
+		EB9D258D2EF183A300A56028 /* PrayerDataSyncHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9D258C2EF183A300A56028 /* PrayerDataSyncHelper.swift */; };
+		EB9D25922EF191D500A56028 /* Rokt-Widget in Frameworks */ = {isa = PBXBuildFile; productRef = EB9D25912EF191D500A56028 /* Rokt-Widget */; };
+		EB9D26212EF29C5B00A56028 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D27C6382D312F3F00B3230D /* WidgetKit.framework */; };
+		EB9D26222EF29C5B00A56028 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DCC12E02CFD10D900E352BD /* SwiftUI.framework */; };
+		EB9D26332EF29C5D00A56028 /* prayertimesExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EB9D26202EF29C5B00A56028 /* prayertimesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EB9D27672EF29E5900A56028 /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 6D0FB2DB2E96412900AB1127 /* Adhan */; };
+		EB9D2A772EF2F31600A56028 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D27C6382D312F3F00B3230D /* WidgetKit.framework */; };
+		EB9D2A782EF2F31600A56028 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DCC12E02CFD10D900E352BD /* SwiftUI.framework */; };
+		EB9D2A892EF2F31700A56028 /* LastThirdTimerWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EB9D2A762EF2F31600A56028 /* LastThirdTimerWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EB9D2C002EF2F50300A56028 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		EB9D2C012EF2F50300A56028 /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 6D0FB2DB2E96412900AB1127 /* Adhan */; };
+		EB9D2CB92EF2FE4200A56028 /* OnboardingFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9D2CB82EF2FE4200A56028 /* OnboardingFlowView.swift */; };
+		EB9D31E92EF599F800A56028 /* MissedFastSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9D31E82EF599F800A56028 /* MissedFastSyncService.swift */; };
+		EB9D31EB2EF59A3E00A56028 /* MissedFast.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9D31EA2EF59A3E00A56028 /* MissedFast.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		6D09B2D62D3BD75B00C69C53 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6DBCFC422CB25CC30074796A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6D09B2C62D3BD75900C69C53;
-			remoteInfo = islamiccurrentdateExtension;
-		};
 		6DBCFC5D2CB25CC40074796A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6DBCFC422CB25CC30074796A /* Project object */;
@@ -76,6 +96,20 @@
 			remoteGlobalIDString = 6DBCFC492CB25CC30074796A;
 			remoteInfo = third2.0;
 		};
+		EB9D26312EF29C5D00A56028 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6DBCFC422CB25CC30074796A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EB9D261F2EF29C5B00A56028;
+			remoteInfo = prayertimesExtension;
+		};
+		EB9D2A872EF2F31700A56028 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6DBCFC422CB25CC30074796A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EB9D2A752EF2F31600A56028;
+			remoteInfo = LastThirdTimerWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -85,7 +119,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				6D09B2D82D3BD75B00C69C53 /* islamiccurrentdateExtension.appex in Embed Foundation Extensions */,
+				EB9D2A892EF2F31700A56028 /* LastThirdTimerWidgetExtension.appex in Embed Foundation Extensions */,
+				EB9D26332EF29C5D00A56028 /* prayertimesExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -93,9 +128,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6D09B2C72D3BD75900C69C53 /* islamiccurrentdateExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = islamiccurrentdateExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D0FB2E22E9644BE00AB1127 /* MiniLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniLocationManager.swift; sourceTree = "<group>"; };
 		6D0FB2E62E9644E100AB1127 /* PrayerCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerCalculator.swift; sourceTree = "<group>"; };
+		6D0FB2E92E9644E900AB1129 /* PrayerTimesCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerTimesCache.swift; sourceTree = "<group>"; };
 		6D0FB2EF2E964DC600AB1127 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		6D0FB2FA2E96601300AB1127 /* CardContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContainer.swift; sourceTree = "<group>"; };
 		6D0FB3142E967FF100AB1127 /* ReminderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderItem.swift; sourceTree = "<group>"; };
@@ -135,30 +170,77 @@
 		6DCC142A2D10DEB900E352BD /* schedule_notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = schedule_notifications.swift; sourceTree = "<group>"; };
 		7186047B2D33F757004EC07C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		718604822D33FDE2004EC07C /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		EB9D22162EF0C47500A56028 /* Third of the Night Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Third of the Night Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB9D22252EF0C54C00A56028 /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS26.0.sdk/System/Library/Frameworks/WatchConnectivity.framework; sourceTree = DEVELOPER_DIR; };
+		EB9D22272EF0C55B00A56028 /* CoreML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreML.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS26.0.sdk/System/Library/Frameworks/CoreML.framework; sourceTree = DEVELOPER_DIR; };
+		EB9D22292EF0C56600A56028 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS26.0.sdk/System/Library/Frameworks/UserNotifications.framework; sourceTree = DEVELOPER_DIR; };
+		EB9D22372EF0CE7D00A56028 /* WatchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS26.0.sdk/System/Library/Frameworks/WatchKit.framework; sourceTree = DEVELOPER_DIR; };
+		EB9D23DA2EF0D4BA00A56028 /* PrayerDetectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerDetectionService.swift; sourceTree = "<group>"; };
+		EB9D23DB2EF0D4BA00A56028 /* WatchConnectivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityManager.swift; sourceTree = "<group>"; };
+		EB9D24ED2EF14FB700A56028 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		EB9D24EF2EF14FE300A56028 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		EB9D24F02EF14FE300A56028 /* LandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingView.swift; sourceTree = "<group>"; };
+		EB9D24FD2EF1548400A56028 /* LoginContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginContentView.swift; sourceTree = "<group>"; };
+		EB9D24FF2EF1548A00A56028 /* SignupContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupContentView.swift; sourceTree = "<group>"; };
+		EB9D25012EF154EA00A56028 /* AuthContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthContainerView.swift; sourceTree = "<group>"; };
+		EB9D258A2EF1839E00A56028 /* PrayerSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerSyncService.swift; sourceTree = "<group>"; };
+		EB9D258C2EF183A300A56028 /* PrayerDataSyncHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerDataSyncHelper.swift; sourceTree = "<group>"; };
+		EB9D26202EF29C5B00A56028 /* prayertimesExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = prayertimesExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB9D2A762EF2F31600A56028 /* LastThirdTimerWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LastThirdTimerWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB9D2A902EF2F49100A56028 /* LastThirdTimerWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LastThirdTimerWidgetExtension.entitlements; sourceTree = "<group>"; };
+		EB9D2CB82EF2FE4200A56028 /* OnboardingFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowView.swift; sourceTree = "<group>"; };
+		EB9D31E82EF599F800A56028 /* MissedFastSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissedFastSyncService.swift; sourceTree = "<group>"; };
+		EB9D31EA2EF59A3E00A56028 /* MissedFast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissedFast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		EB9D22352EF0CD8E00A56028 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Managers/WatchConnectivityManagerWatch.swift,
+				Models/PrayerDetectionModel.swift,
+			);
+			target = 6DBCFC492CB25CC30074796A /* Night Prayers */;
+		};
+		EB9D223A2EF0D0E300A56028 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				TrackerView.swift,
+			);
+			target = EB9D22152EF0C47500A56028 /* Third of the Night Watch App */;
+		};
+		EB9D26372EF29C5D00A56028 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = EB9D261F2EF29C5B00A56028 /* prayertimesExtension */;
+		};
+		EB9D2A8D2EF2F31700A56028 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = EB9D2A752EF2F31600A56028 /* LastThirdTimerWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		6D0FB2F32E965FC500AB1127 /* SummaryViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SummaryViews; sourceTree = "<group>"; };
 		6D0FB3002E967BB100AB1127 /* BrowseViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = BrowseViews; sourceTree = "<group>"; };
-		6D0FB3012E967BC000AB1127 /* PrayerTrackerViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PrayerTrackerViews; sourceTree = "<group>"; };
+		6D0FB3012E967BC000AB1127 /* PrayerTrackerViews */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EB9D223A2EF0D0E300A56028 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = PrayerTrackerViews; sourceTree = "<group>"; };
 		6D0FB31F2E96D6F900AB1127 /* QiblaViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = QiblaViews; sourceTree = "<group>"; };
 		6D5BFBD22EBB7464005CC5C2 /* SplashViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SplashViews; sourceTree = "<group>"; };
 		6D6A644B2E98F8190061FF01 /* EmptyViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EmptyViews; sourceTree = "<group>"; };
 		6D6A64642E9D39D20061FF01 /* AdvertViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AdvertViews; sourceTree = "<group>"; };
 		6D6A64892EA232190061FF01 /* ShareViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ShareViews; sourceTree = "<group>"; };
 		6D6A64902EA23E8B0061FF01 /* SettingViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SettingViews; sourceTree = "<group>"; };
+		EB9D22172EF0C47500A56028 /* Third of the Night Watch App */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EB9D22352EF0CD8E00A56028 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "Third of the Night Watch App"; sourceTree = "<group>"; };
+		EB9D26232EF29C5B00A56028 /* prayertimes */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EB9D26372EF29C5D00A56028 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = prayertimes; sourceTree = "<group>"; };
+		EB9D2A792EF2F31600A56028 /* LastThirdTimerWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EB9D2A8D2EF2F31700A56028 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = LastThirdTimerWidget; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		6D09B2C42D3BD75900C69C53 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6D09B2C92D3BD75900C69C53 /* SwiftUI.framework in Frameworks */,
-				6D09B2C82D3BD75900C69C53 /* WidgetKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6DBCFC472CB25CC30074796A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -168,10 +250,13 @@
 				6DAD84822CB7176B0027BF5A /* FirebaseCore in Frameworks */,
 				6D6A64692E9D3A170061FF01 /* GoogleMobileAds in Frameworks */,
 				6DAD84802CB7176B0027BF5A /* FirebaseAnalytics in Frameworks */,
+				EB9D24FA2EF150E800A56028 /* GoogleSignIn in Frameworks */,
 				6DCC13042D062FD700E352BD /* FirebaseFunctions in Frameworks */,
 				6D33262A2D37D72D00E77E10 /* FirebaseStorage in Frameworks */,
+				EB9D25922EF191D500A56028 /* Rokt-Widget in Frameworks */,
 				6DAD84842CB7176B0027BF5A /* FirebaseFirestore in Frameworks */,
 				6DCC13022D062FD700E352BD /* FirebaseAuth in Frameworks */,
+				EB9D24FC2EF150E800A56028 /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,17 +274,55 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EB9D22132EF0C47500A56028 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB9D22382EF0CE7D00A56028 /* WatchKit.framework in Frameworks */,
+				EB9D222A2EF0C56600A56028 /* UserNotifications.framework in Frameworks */,
+				EB9D22282EF0C55B00A56028 /* CoreML.framework in Frameworks */,
+				EB9D22262EF0C54C00A56028 /* WatchConnectivity.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB9D261D2EF29C5B00A56028 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB9D27672EF29E5900A56028 /* Adhan in Frameworks */,
+				EB9D26222EF29C5B00A56028 /* SwiftUI.framework in Frameworks */,
+				EB9D26212EF29C5B00A56028 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB9D2A732EF2F31600A56028 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB9D2C002EF2F50300A56028 /* (null) in Frameworks */,
+				EB9D2C012EF2F50300A56028 /* Adhan in Frameworks */,
+				EB9D2A782EF2F31600A56028 /* SwiftUI.framework in Frameworks */,
+				EB9D2A772EF2F31600A56028 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		6D0FB2E12E9644AC00AB1127 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				EB9D24ED2EF14FB700A56028 /* AuthenticationManager.swift */,
+				EB9D258C2EF183A300A56028 /* PrayerDataSyncHelper.swift */,
+				EB9D31E82EF599F800A56028 /* MissedFastSyncService.swift */,
+				EB9D258A2EF1839E00A56028 /* PrayerSyncService.swift */,
 				6D6A64822EA19A960061FF01 /* PrefKeys.swift */,
 				6D6A646A2E9D3A500061FF01 /* BannerAdController.swift */,
 				6D0FB3252E96FE0200AB1127 /* QiblaDistanceManager.swift */,
 				6D0FB2E62E9644E100AB1127 /* PrayerCalculator.swift */,
+				6D0FB2E92E9644E900AB1129 /* PrayerTimesCache.swift */,
 				6D0FB2E22E9644BE00AB1127 /* MiniLocationManager.swift */,
+				EB9D23DC2EF0D4BA00A56028 /* Watch */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -211,6 +334,7 @@
 				6D5BFBE22EC2A560005CC5C2 /* PrayerDisplay.swift */,
 				6D4BD0B32EA4481E003D8B18 /* Language.swift */,
 				6D6A64842EA19DB80061FF01 /* TrackerPrayer.swift */,
+				EB9D31EA2EF59A3E00A56028 /* MissedFast.swift */,
 				6D6A645E2E9CDFC90061FF01 /* BrowseCategory.swift */,
 				6D6A645C2E9BA0080061FF01 /* PrayerDay.swift */,
 				6D6A645A2E9B9BF60061FF01 /* ChipData.swift */,
@@ -242,10 +366,14 @@
 		6DBCFC412CB25CC30074796A = {
 			isa = PBXGroup;
 			children = (
+				EB9D2A902EF2F49100A56028 /* LastThirdTimerWidgetExtension.entitlements */,
 				6DCC14282D10D9CC00E352BD /* Night Prayers.entitlements */,
 				6DCC14182D0B28B200E352BD /* Night-Prayers-Info.plist */,
 				6DBCFC4C2CB25CC30074796A /* third2.0 */,
 				6DBCFC5F2CB25CC40074796A /* third2.0Tests */,
+				EB9D22172EF0C47500A56028 /* Third of the Night Watch App */,
+				EB9D26232EF29C5B00A56028 /* prayertimes */,
+				EB9D2A792EF2F31600A56028 /* LastThirdTimerWidget */,
 				6DCC12DD2CFD10D900E352BD /* Frameworks */,
 				6DBCFC4B2CB25CC30074796A /* Products */,
 			);
@@ -257,7 +385,9 @@
 				6DBCFC4A2CB25CC30074796A /* Night Prayers.app */,
 				6DBCFC5C2CB25CC40074796A /* Night PrayersTests.xctest */,
 				6DBCFC662CB25CC40074796A /* Night PrayersUITests.xctest */,
-				6D09B2C72D3BD75900C69C53 /* islamiccurrentdateExtension.appex */,
+				EB9D22162EF0C47500A56028 /* Third of the Night Watch App.app */,
+				EB9D26202EF29C5B00A56028 /* prayertimesExtension.appex */,
+				EB9D2A762EF2F31600A56028 /* LastThirdTimerWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -303,6 +433,10 @@
 		6DCC12DD2CFD10D900E352BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EB9D22372EF0CE7D00A56028 /* WatchKit.framework */,
+				EB9D22292EF0C56600A56028 /* UserNotifications.framework */,
+				EB9D22272EF0C55B00A56028 /* CoreML.framework */,
+				EB9D22252EF0C54C00A56028 /* WatchConnectivity.framework */,
 				6DCC12E02CFD10D900E352BD /* SwiftUI.framework */,
 				6D27C6382D312F3F00B3230D /* WidgetKit.framework */,
 			);
@@ -312,6 +446,7 @@
 		6DCC13232D0AE6BE00E352BD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EB9D24F32EF14FE300A56028 /* AuthViews */,
 				6D5BFBD22EBB7464005CC5C2 /* SplashViews */,
 				6D6A64902EA23E8B0061FF01 /* SettingViews */,
 				6D6A64892EA232190061FF01 /* ShareViews */,
@@ -353,26 +488,31 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		EB9D23DC2EF0D4BA00A56028 /* Watch */ = {
+			isa = PBXGroup;
+			children = (
+				EB9D23DA2EF0D4BA00A56028 /* PrayerDetectionService.swift */,
+				EB9D23DB2EF0D4BA00A56028 /* WatchConnectivityManager.swift */,
+			);
+			path = Watch;
+			sourceTree = "<group>";
+		};
+		EB9D24F32EF14FE300A56028 /* AuthViews */ = {
+			isa = PBXGroup;
+			children = (
+				EB9D24FD2EF1548400A56028 /* LoginContentView.swift */,
+				EB9D2CB82EF2FE4200A56028 /* OnboardingFlowView.swift */,
+				EB9D25012EF154EA00A56028 /* AuthContainerView.swift */,
+				EB9D24EF2EF14FE300A56028 /* ForgotPasswordView.swift */,
+				EB9D24F02EF14FE300A56028 /* LandingView.swift */,
+				EB9D24FF2EF1548A00A56028 /* SignupContentView.swift */,
+			);
+			path = AuthViews;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6D09B2C62D3BD75900C69C53 /* islamiccurrentdateExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6D09B2D92D3BD75B00C69C53 /* Build configuration list for PBXNativeTarget "islamiccurrentdateExtension" */;
-			buildPhases = (
-				6D09B2C32D3BD75900C69C53 /* Sources */,
-				6D09B2C42D3BD75900C69C53 /* Frameworks */,
-				6D09B2C52D3BD75900C69C53 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = islamiccurrentdateExtension;
-			productName = islamiccurrentdateExtension;
-			productReference = 6D09B2C72D3BD75900C69C53 /* islamiccurrentdateExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		6DBCFC492CB25CC30074796A /* Night Prayers */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6DBCFC702CB25CC40074796A /* Build configuration list for PBXNativeTarget "Night Prayers" */;
@@ -385,7 +525,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				6D09B2D72D3BD75B00C69C53 /* PBXTargetDependency */,
+				EB9D26322EF29C5D00A56028 /* PBXTargetDependency */,
+				EB9D2A882EF2F31700A56028 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				6D0FB2F32E965FC500AB1127 /* SummaryViews */,
@@ -409,6 +550,9 @@
 				6D3326292D37D72D00E77E10 /* FirebaseStorage */,
 				6D0FB2DB2E96412900AB1127 /* Adhan */,
 				6D6A64682E9D3A170061FF01 /* GoogleMobileAds */,
+				EB9D24F92EF150E800A56028 /* GoogleSignIn */,
+				EB9D24FB2EF150E800A56028 /* GoogleSignInSwift */,
+				EB9D25912EF191D500A56028 /* Rokt-Widget */,
 			);
 			productName = third2.0;
 			productReference = 6DBCFC4A2CB25CC30074796A /* Night Prayers.app */;
@@ -450,6 +594,74 @@
 			productReference = 6DBCFC662CB25CC40074796A /* Night PrayersUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		EB9D22152EF0C47500A56028 /* Third of the Night Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EB9D221E2EF0C47700A56028 /* Build configuration list for PBXNativeTarget "Third of the Night Watch App" */;
+			buildPhases = (
+				EB9D22122EF0C47500A56028 /* Sources */,
+				EB9D22132EF0C47500A56028 /* Frameworks */,
+				EB9D22142EF0C47500A56028 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				EB9D22172EF0C47500A56028 /* Third of the Night Watch App */,
+			);
+			name = "Third of the Night Watch App";
+			packageProductDependencies = (
+			);
+			productName = "Third of the Night Watch App";
+			productReference = EB9D22162EF0C47500A56028 /* Third of the Night Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EB9D261F2EF29C5B00A56028 /* prayertimesExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EB9D26362EF29C5D00A56028 /* Build configuration list for PBXNativeTarget "prayertimesExtension" */;
+			buildPhases = (
+				EB9D261C2EF29C5B00A56028 /* Sources */,
+				EB9D261D2EF29C5B00A56028 /* Frameworks */,
+				EB9D261E2EF29C5B00A56028 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				EB9D26232EF29C5B00A56028 /* prayertimes */,
+			);
+			name = prayertimesExtension;
+			packageProductDependencies = (
+				6D0FB2DB2E96412900AB1127 /* Adhan */,
+			);
+			productName = prayertimesExtension;
+			productReference = EB9D26202EF29C5B00A56028 /* prayertimesExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		EB9D2A752EF2F31600A56028 /* LastThirdTimerWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EB9D2A8A2EF2F31700A56028 /* Build configuration list for PBXNativeTarget "LastThirdTimerWidgetExtension" */;
+			buildPhases = (
+				EB9D2A722EF2F31600A56028 /* Sources */,
+				EB9D2A732EF2F31600A56028 /* Frameworks */,
+				EB9D2A742EF2F31600A56028 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				EB9D2A792EF2F31600A56028 /* LastThirdTimerWidget */,
+			);
+			name = LastThirdTimerWidgetExtension;
+			packageProductDependencies = (
+				6D0FB2DB2E96412900AB1127 /* Adhan */,
+			);
+			productName = LastThirdTimerWidgetExtension;
+			productReference = EB9D2A762EF2F31600A56028 /* LastThirdTimerWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -457,12 +669,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1620;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
-					6D09B2C62D3BD75900C69C53 = {
-						CreatedOnToolsVersion = 15.3;
-					};
 					6DBCFC492CB25CC30074796A = {
 						CreatedOnToolsVersion = 15.3;
 					};
@@ -473,6 +682,15 @@
 					6DBCFC652CB25CC40074796A = {
 						CreatedOnToolsVersion = 15.3;
 						TestTargetID = 6DBCFC492CB25CC30074796A;
+					};
+					EB9D22152EF0C47500A56028 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+					EB9D261F2EF29C5B00A56028 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+					EB9D2A752EF2F31600A56028 = {
+						CreatedOnToolsVersion = 26.0;
 					};
 				};
 			};
@@ -494,6 +712,8 @@
 				6DE78BD62CB2660E0068F84C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				6D0FB2DA2E96412900AB1127 /* XCRemoteSwiftPackageReference "adhan-swift" */,
 				6D6A64672E9D3A170061FF01 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				EB9D24F82EF150E800A56028 /* XCRemoteSwiftPackageReference "google-googlesignin-ios" */,
+				EB9D25902EF191D500A56028 /* XCRemoteSwiftPackageReference "rokt-rokt-sdk-ios" */,
 			);
 			productRefGroup = 6DBCFC4B2CB25CC30074796A /* Products */;
 			projectDirPath = "";
@@ -502,19 +722,14 @@
 				6DBCFC492CB25CC30074796A /* Night Prayers */,
 				6DBCFC5B2CB25CC40074796A /* Night PrayersTests */,
 				6DBCFC652CB25CC40074796A /* Night PrayersUITests */,
-				6D09B2C62D3BD75900C69C53 /* islamiccurrentdateExtension */,
+				EB9D22152EF0C47500A56028 /* Third of the Night Watch App */,
+				EB9D261F2EF29C5B00A56028 /* prayertimesExtension */,
+				EB9D2A752EF2F31600A56028 /* LastThirdTimerWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		6D09B2C52D3BD75900C69C53 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6DBCFC482CB25CC30074796A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -540,16 +755,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		6D09B2C32D3BD75900C69C53 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
+		EB9D22142EF0C47500A56028 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EB9D261E2EF29C5B00A56028 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB9D2A742EF2F31600A56028 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
 		6DBCFC462CB25CC30074796A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -566,22 +795,36 @@
 				6D5BFBE12EC2A518005CC5C2 /* TravelRowItem.swift in Sources */,
 				6D4BD0B42EA4481E003D8B18 /* Language.swift in Sources */,
 				6D5BFBD62EBB74A4005CC5C2 /* RootView.swift in Sources */,
+				EB9D2CB92EF2FE4200A56028 /* OnboardingFlowView.swift in Sources */,
 				6D0FB2E72E9644E700AB1127 /* PrayerCalculator.swift in Sources */,
+				6D0FB2E82E9644E800AB1128 /* PrayerTimesCache.swift in Sources */,
 				6D2A12172EB959DC0049F928 /* AppDelegate.swift in Sources */,
 				6DCC131C2D09853D00E352BD /* NotificationManager.swift in Sources */,
+				EB9D31EB2EF59A3E00A56028 /* MissedFast.swift in Sources */,
 				6D6A64832EA19A960061FF01 /* PrefKeys.swift in Sources */,
 				6D6A64552E9A4C460061FF01 /* TrackerViewModel.swift in Sources */,
 				6D6A645F2E9CDFC90061FF01 /* BrowseCategory.swift in Sources */,
 				6D6A645D2E9BA0080061FF01 /* PrayerDay.swift in Sources */,
+				EB9D24FE2EF1548400A56028 /* LoginContentView.swift in Sources */,
 				6D6A64772EA122F90061FF01 /* PrayerHeatmapViewModel.swift in Sources */,
 				6D6A64572E9B95DA0061FF01 /* TrendWeekViewModel.swift in Sources */,
 				6D0FB2E32E9644BE00AB1127 /* MiniLocationManager.swift in Sources */,
+				EB9D258B2EF1839E00A56028 /* PrayerSyncService.swift in Sources */,
+				EB9D24F52EF14FE300A56028 /* LandingView.swift in Sources */,
+				EB9D24F72EF14FE300A56028 /* ForgotPasswordView.swift in Sources */,
 				6DBCFC4E2CB25CC30074796A /* third2_0App.swift in Sources */,
 				6DCC141F2D0B9CAC00E352BD /* OnboardingView.swift in Sources */,
+				EB9D258D2EF183A300A56028 /* PrayerDataSyncHelper.swift in Sources */,
 				6D6A645B2E9B9BF60061FF01 /* ChipData.swift in Sources */,
+				EB9D31E92EF599F800A56028 /* MissedFastSyncService.swift in Sources */,
+				EB9D24EE2EF14FB700A56028 /* AuthenticationManager.swift in Sources */,
 				718604832D33FDE2004EC07C /* Constant.swift in Sources */,
 				6D0FB2FB2E96601300AB1127 /* CardContainer.swift in Sources */,
 				6D5BFBE32EC2A561005CC5C2 /* PrayerDisplay.swift in Sources */,
+				EB9D25022EF154EA00A56028 /* AuthContainerView.swift in Sources */,
+				EB9D25002EF1548A00A56028 /* SignupContentView.swift in Sources */,
+				EB9D23DD2EF0D4BA00A56028 /* WatchConnectivityManager.swift in Sources */,
+				EB9D23DE2EF0D4BA00A56028 /* PrayerDetectionService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,14 +843,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EB9D22122EF0C47500A56028 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB9D261C2EF29C5B00A56028 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB9D2A722EF2F31600A56028 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6D09B2D72D3BD75B00C69C53 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6D09B2C62D3BD75900C69C53 /* islamiccurrentdateExtension */;
-			targetProxy = 6D09B2D62D3BD75B00C69C53 /* PBXContainerItemProxy */;
-		};
 		6DBCFC5E2CB25CC40074796A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6DBCFC492CB25CC30074796A /* Night Prayers */;
@@ -618,63 +877,19 @@
 			target = 6DBCFC492CB25CC30074796A /* Night Prayers */;
 			targetProxy = 6DBCFC672CB25CC40074796A /* PBXContainerItemProxy */;
 		};
+		EB9D26322EF29C5D00A56028 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EB9D261F2EF29C5B00A56028 /* prayertimesExtension */;
+			targetProxy = EB9D26312EF29C5D00A56028 /* PBXContainerItemProxy */;
+		};
+		EB9D2A882EF2F31700A56028 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EB9D2A752EF2F31600A56028 /* LastThirdTimerWidgetExtension */;
+			targetProxy = EB9D2A872EF2F31700A56028 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		6D09B2DA2D3BD75B00C69C53 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CZPKAZHKAR;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = islamiccurrentdate/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = islamiccurrentdate;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit.islamiccurrentdate;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		6D09B2DB2D3BD75B00C69C53 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CZPKAZHKAR;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = islamiccurrentdate/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = islamiccurrentdate;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit.islamiccurrentdate;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		6DBCFC6E2CB25CC40074796A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -711,6 +926,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = CZPKAZHKAR;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -734,6 +950,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -776,6 +993,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = CZPKAZHKAR;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -792,6 +1010,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
@@ -807,7 +1026,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"third2.0/Preview Content\"";
-				DEVELOPMENT_TEAM = CZPKAZHKAR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Night-Prayers-Info.plist";
@@ -842,7 +1060,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"third2.0/Preview Content\"";
-				DEVELOPMENT_TEAM = CZPKAZHKAR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Night-Prayers-Info.plist";
@@ -874,7 +1091,6 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CZPKAZHKAR;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MARKETING_VERSION = 1.0;
@@ -893,7 +1109,6 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CZPKAZHKAR;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MARKETING_VERSION = 1.0;
@@ -911,7 +1126,6 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CZPKAZHKAR;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "testing.third2-0UITests";
@@ -928,7 +1142,6 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CZPKAZHKAR;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "testing.third2-0UITests";
@@ -940,18 +1153,199 @@
 			};
 			name = Release;
 		};
+		EB9D221F2EF0C47700A56028 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CZPKAZHKAR;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Third of the Night";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = .watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Debug;
+		};
+		EB9D22202EF0C47700A56028 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CZPKAZHKAR;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Third of the Night";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = .watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Release;
+		};
+		EB9D26342EF29C5D00A56028 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = prayertimes/prayertimes.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = prayertimes/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = prayertimes;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit.prayertimes;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EB9D26352EF29C5D00A56028 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = prayertimes/prayertimes.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = prayertimes/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = prayertimes;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit.prayertimes;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EB9D2A8B2EF2F31700A56028 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = LastThirdTimerWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LastThirdTimerWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LastThirdTimerWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit.LastThirdTimerWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EB9D2A8C2EF2F31700A56028 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = LastThirdTimerWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LastThirdTimerWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LastThirdTimerWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = testing.thirdgit.LastThirdTimerWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6D09B2D92D3BD75B00C69C53 /* Build configuration list for PBXNativeTarget "islamiccurrentdateExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6D09B2DA2D3BD75B00C69C53 /* Debug */,
-				6D09B2DB2D3BD75B00C69C53 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		6DBCFC452CB25CC30074796A /* Build configuration list for PBXProject "Night Prayers" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -988,6 +1382,33 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		EB9D221E2EF0C47700A56028 /* Build configuration list for PBXNativeTarget "Third of the Night Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EB9D221F2EF0C47700A56028 /* Debug */,
+				EB9D22202EF0C47700A56028 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EB9D26362EF29C5D00A56028 /* Build configuration list for PBXNativeTarget "prayertimesExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EB9D26342EF29C5D00A56028 /* Debug */,
+				EB9D26352EF29C5D00A56028 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EB9D2A8A2EF2F31700A56028 /* Build configuration list for PBXNativeTarget "LastThirdTimerWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EB9D2A8B2EF2F31700A56028 /* Debug */,
+				EB9D2A8C2EF2F31700A56028 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -1013,6 +1434,22 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 11.3.0;
+			};
+		};
+		EB9D24F82EF150E800A56028 /* XCRemoteSwiftPackageReference "google-googlesignin-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "jet-external.google-googlesignin-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+		EB9D25902EF191D500A56028 /* XCRemoteSwiftPackageReference "rokt-rokt-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "jet-external.rokt-rokt-sdk-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.14.4;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1062,6 +1499,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6DE78BD62CB2660E0068F84C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		EB9D24F92EF150E800A56028 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB9D24F82EF150E800A56028 /* XCRemoteSwiftPackageReference "google-googlesignin-ios" */;
+			productName = GoogleSignIn;
+		};
+		EB9D24FB2EF150E800A56028 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB9D24F82EF150E800A56028 /* XCRemoteSwiftPackageReference "google-googlesignin-ios" */;
+			productName = GoogleSignInSwift;
+		};
+		EB9D25912EF191D500A56028 /* Rokt-Widget */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB9D25902EF191D500A56028 /* XCRemoteSwiftPackageReference "rokt-rokt-sdk-ios" */;
+			productName = "Rokt-Widget";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

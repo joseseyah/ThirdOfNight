@@ -6,9 +6,9 @@ struct HomeView: View {
     @State private var selected: Tab = .tracker
 
     init() {
-        let bg = UIColor(Color.appBg)
-        let unselected = UIColor(Color.textSecondary.opacity(0.85))
-        let selected = UIColor(Color.accentYellow)
+        let bg = UIColor(Color.tabBg) // Use tabBg for better contrast
+        let unselected = UIColor(Color.tabUnselected) // White for clear contrast on blue
+        let selected = UIColor(Color.tabSelected) // Purple accent
 
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -38,22 +38,22 @@ struct HomeView: View {
     var body: some View {
         TabView(selection: $selected) {
             TrackerView()
-                .tabItem { Label("Tracker", systemImage: "moon.fill") }
+                .tabItem { Label(String(localized: "Tracker"), systemImage: "moon.fill") }
                 .tag(Tab.tracker)
 
             QiblaView()
-                .tabItem { Label("Qibla", systemImage: "mecca") }
+                .tabItem { Label(String(localized: "Qibla"), systemImage: "mecca") }
                 .tag(Tab.qibla)
 
             SummaryView()
-                .tabItem { Label("Summary", systemImage: "heart.text.clipboard.fill") }
+                .tabItem { Label(String(localized: "Summary"), systemImage: "heart.text.clipboard.fill") }
                 .tag(Tab.summary)
 
             SettingsView()
-                .tabItem { Label("Settings", systemImage: "gear") }
+                .tabItem { Label(String(localized: "Settings"), systemImage: "gear") }
                 .tag(Tab.settings)
         }
-        .tint(.accentYellow)
+        .tint(.accentPurple)
         .background(Color.appBg.ignoresSafeArea())
     }
 }

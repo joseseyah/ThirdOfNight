@@ -32,15 +32,16 @@ public struct CurrentPrayerBadge: View {
                 Text(s.currentLabel)
                     .font(.system(size: 40, weight: .heavy))
                     .fontWidth(.condensed)
-                    .foregroundColor(.textPrimary)
+                    .foregroundColor(.textPrimaryLight)
 
                 Text("\(Self.hhmm(fromMinutes: s.minutesUntilNext)) until \(s.nextName)")
                     .font(.system(size: 16, weight: .semibold, design: .rounded))
-                    .foregroundColor(.textSecondary)
+                    .foregroundColor(.buttonText)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
-                    .background(Color.cardBg.opacity(0.65))
+                    .background(Color.accentPurple)
                     .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .shadow(color: .black.opacity(0.3), radius: 6, x: 0, y: 4)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12, style: .continuous)
                             .stroke(Color.stroke, lineWidth: 1)
@@ -48,13 +49,13 @@ public struct CurrentPrayerBadge: View {
             }
             .overlay(alignment: .topTrailing) {
                 Circle()
-                    .strokeBorder(Color.stroke, lineWidth: 4)
+                    .strokeBorder(Color.accentPurple.opacity(0.4), lineWidth: 4)
                     .frame(width: 12, height: 12)
                     .overlay(
                         Circle()
                             .trim(from: 0, to: CGFloat(min(max(s.progress, 0), 1)))
                             .rotation(Angle(degrees: -90))
-                            .stroke(Color.accentYellow, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                            .stroke(Color.accentPurple, style: StrokeStyle(lineWidth: 4, lineCap: .round))
                     )
                     .offset(x: 8, y: -8)
             }

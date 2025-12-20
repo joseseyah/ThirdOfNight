@@ -15,11 +15,11 @@ struct Row<Trailing: View>: View {
         HStack(spacing: 12) {
             ZStack {
                 Circle()
-                    .fill(Color.white.opacity(0.06))
+                    .fill(Color.accentPurple.opacity(0.15))
                     .frame(width: 34, height: 34)
                 Image(systemName: icon)
                     .font(.system(size: 15, weight: .semibold))
-                    .foregroundStyle(Color.accentYellow)
+                    .foregroundStyle(Color.accentPurple)
             }
 
             Text(title)

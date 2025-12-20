@@ -14,12 +14,12 @@ struct LocationNotOnView: View {
             HStack(spacing: 12) {
                 Button("Try Again") { loc.request() }
                     .buttonStyle(.borderedProminent)
-                    .tint(.accentYellow)
+                    .tint(.accentMoon)
                     .foregroundStyle(Color.appBg)
 
                 Button("Open Settings") { openAppSettings() }
                     .buttonStyle(.bordered)
-                    .tint(.accentYellow)
+                    .tint(.accentMoon)
             }
         }
         .padding(.horizontal, 20)

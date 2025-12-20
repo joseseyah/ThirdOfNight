@@ -8,6 +8,8 @@
 
 import UIKit
 import BackgroundTasks
+import FirebaseCore
+import Rokt_Widget
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
@@ -20,8 +22,13 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         NotificationManager.shared.bootstrapOnLaunch(
             coordinates: SettingsStore.shared.lastKnownCoordinate,
             method: .muslimWorldLeague,
-            madhab: .shafi
+            madhab: PrefKeys.getAsrMadhab()
         )
+        FirebaseApp.configure()
+        
+//        // Initialize Rokt SDK
+//        // Replace "your_rokt_account_id" with your actual Rokt Account ID
+//        Rokt.initWith(roktTagId: "your_rokt_account_id")
 
         return true
     }
@@ -30,7 +37,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         NotificationManager.shared.bootstrapOnLaunch(
             coordinates: SettingsStore.shared.lastKnownCoordinate,
             method: .muslimWorldLeague,
-            madhab: .shafi
+            madhab: PrefKeys.getAsrMadhab()
         )
     }
 }

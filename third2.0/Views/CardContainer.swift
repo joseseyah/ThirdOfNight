@@ -16,7 +16,7 @@ struct CardContainer<Content: View>: View {
                             .stroke(Color.stroke, lineWidth: 1)
                     )
             )
-            .shadow(color: .black.opacity(0.12), radius: 8, x: 0, y: 5)
+            .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 5)
     }
 }
 
@@ -25,8 +25,10 @@ struct SectionHeader: View {
     init(_ t: String) { title = t }
     var body: some View {
         Text(title)
-            .font(.system(size: 18, weight: .bold, design: .rounded))
-            .foregroundColor(.textSecondary)
-            .padding(.top, 2)
+            .font(.system(size: 15, weight: .semibold, design: .rounded))
+            .foregroundColor(.textSecondaryLight)
+            .textCase(.uppercase)
+            .tracking(0.5)
+            .padding(.top, 4)
     }
 }

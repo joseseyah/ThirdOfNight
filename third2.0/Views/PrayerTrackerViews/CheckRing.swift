@@ -13,8 +13,8 @@ struct CompactCheckRing: View {
             Circle()
                 .trim(from: 0, to: isOn ? 1 : 0)
                 .stroke(
-                    Color.accentYellow,
-                    style: StrokeStyle(lineWidth: 3, lineCap: .round)
+                    Color.accentPurple,
+                    style: StrokeStyle(lineWidth: 3.5, lineCap: .round)
                 )
                 .rotationEffect(.degrees(-90))
                 .animation(.easeInOut(duration: 0.18), value: isOn)
@@ -22,9 +22,9 @@ struct CompactCheckRing: View {
             if isOn {
                 Image(systemName: "checkmark")
                     .font(.system(size: 11, weight: .black))
-                    .foregroundColor(.appBg)
+                    .foregroundColor(.buttonText)
                     .padding(5)
-                    .background(Circle().fill(Color.accentYellow))
+                    .background(Circle().fill(Color.accentPurple))
                     .transition(.scale.combined(with: .opacity))
             }
         }

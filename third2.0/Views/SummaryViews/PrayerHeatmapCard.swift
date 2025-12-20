@@ -30,7 +30,7 @@ struct PrayerHeatmapCard: View {
                     ForEach(0..<vm.prayers.count, id: \.self) { r in
                         Text(vm.prayers[r])
                             .font(.system(size: 11, weight: .semibold, design: .rounded))
-                            .foregroundColor(.textSecondary)
+                            .foregroundColor(.textPrimary)
                             .frame(width: labelWidth, height: cellSize, alignment: .leading)
                     }
                 }
@@ -45,7 +45,7 @@ struct PrayerHeatmapCard: View {
                                 Text(data.dayLabels[c])
                                     .font(.system(size: 9, weight: .semibold, design: .rounded))
                                     .monospacedDigit()
-                                    .foregroundColor(.textSecondary.opacity(0.85))
+                                    .foregroundColor(.textPrimary.opacity(0.85))
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.5)
                                     .frame(width: cellSize, height: cellSize, alignment: .center)
@@ -64,12 +64,12 @@ struct PrayerHeatmapCard: View {
                                     let isOn = data.matrix[r][c]
 
                                     RoundedRectangle(cornerRadius: 3, style: .continuous)
-                                        .fill(isOn ? Color.accentYellow : Color.white.opacity(0.10))
+                                        .fill(isOn ? Color.accentPurple : Color.white.opacity(0.10))
                                         .frame(width: cellSize, height: cellSize)
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 3, style: .continuous)
                                                 .stroke(
-                                                    isOn ? Color.accentYellow.opacity(0.55) : Color.stroke,
+                                                    isOn ? Color.accentPurple.opacity(0.6) : Color.stroke,
                                                     lineWidth: isOn ? 0.5 : 0.8
                                                 )
                                         )

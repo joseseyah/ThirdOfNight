@@ -7,11 +7,11 @@ struct PrayerRowView: View {
     let isEnabled: Bool
     let onTap: () -> Void
 
-    private var nameColor: Color { isDone ? .accentYellow : .textPrimary }
-    private var timeTextColor: Color { isDone ? .appBg : .textPrimary }
-    private var timeFill: Color { isDone ? .accentYellow : Color.white.opacity(0.05) }
-    private var timeStroke: Color { isDone ? Color.accentYellow.opacity(0.85) : .stroke }
-    private var cardStroke: Color { isDone ? Color.accentYellow.opacity(0.75) : .stroke }
+    private var nameColor: Color { isDone ? .accentPurpleDark : .textPrimary }
+    private var timeTextColor: Color { isDone ? .buttonText : .textPrimary }
+    private var timeFill: Color { isDone ? .accentPurple : Color.white.opacity(0.05) }
+    private var timeStroke: Color { isDone ? Color.accentPurple.opacity(0.9) : .stroke }
+    private var cardStroke: Color { isDone ? Color.accentPurple.opacity(0.8) : .stroke }
 
     var body: some View {
         Button(action: onTap) {
@@ -21,7 +21,7 @@ struct PrayerRowView: View {
 
                     if isDone {
                         Circle()
-                            .fill(Color.accentYellow.opacity(0.18))
+                            .fill(Color.accentPurple.opacity(0.25))
                             .frame(width: 42, height: 42)
                             .blur(radius: 18)
                             .blendMode(.plusLighter)
@@ -30,10 +30,10 @@ struct PrayerRowView: View {
                 }
 
                 Text(name)
-                    .font(.system(size: 17, weight: .semibold, design: .rounded))
+                    .font(.system(size: 17, weight: isDone ? .bold : .semibold, design: .rounded))
                     .foregroundColor(nameColor)
-                    .shadow(color: isDone ? Color.accentYellow.opacity(0.25) : .clear,
-                            radius: isDone ? 6 : 0, x: 0, y: 0)
+                    .shadow(color: isDone ? Color.accentPurpleDark.opacity(0.4) : .clear,
+                            radius: isDone ? 10 : 0, x: 0, y: 2)
 
                 Spacer(minLength: 8)
 
@@ -58,7 +58,7 @@ struct PrayerRowView: View {
 
                             if isDone {
                                 Capsule()
-                                    .fill(Color.accentYellow.opacity(0.22))
+                                    .fill(Color.accentPurple.opacity(0.3))
                                     .blur(radius: 16)
                                     .blendMode(.plusLighter)
                             }
@@ -82,7 +82,7 @@ struct PrayerRowView: View {
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
                             .fill(
                                 RadialGradient(
-                                    colors: [Color.accentYellow.opacity(0.18), .clear],
+                                    colors: [Color.accentPurple.opacity(0.25), .clear],
                                     center: .center,
                                     startRadius: 6, endRadius: 180
                                 )
@@ -94,12 +94,12 @@ struct PrayerRowView: View {
                         .stroke(cardStroke, lineWidth: 1.1)
                 }
             )
-            .shadow(color: (isDone ? Color.accentYellow.opacity(0.26) : .clear), radius: 14, x: 0, y: 0)
+            .shadow(color: (isDone ? Color.accentPurple.opacity(0.35) : .clear), radius: 16, x: 0, y: 0)
             .shadow(color: Color.black.opacity(0.35), radius: 10, x: 0, y: 6)
 
             .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
             .animation(.spring(response: 0.22, dampingFraction: 0.9), value: isDone)
-            .opacity(isEnabled ? 1 : 0.55)
+            .opacity(isDone ? 1 : (isEnabled ? 1 : 0.55))
             .compositingGroup()
         }
         .buttonStyle(CompactPressStyle())
@@ -113,9 +113,9 @@ private struct CompactPressStyle: ButtonStyle {
             .scaleEffect(configuration.isPressed ? 0.985 : 1.0)
             .overlay(
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .stroke(Color.accentYellow.opacity(configuration.isPressed ? 0.35 : 0), lineWidth: 2)
+                    .stroke(Color.accentPurple.opacity(configuration.isPressed ? 0.5 : 0), lineWidth: 2)
             )
-            .shadow(color: Color.accentYellow.opacity(configuration.isPressed ? 0.22 : 0), radius: 14)
+            .shadow(color: Color.accentPurple.opacity(configuration.isPressed ? 0.3 : 0), radius: 14)
             .opacity(configuration.isPressed ? 0.98 : 1.0)
             .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
     }

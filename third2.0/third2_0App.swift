@@ -25,6 +25,6 @@ struct third2_0App: App {
                 .environmentObject(store)
                 .background(Color.appBg.ignoresSafeArea())
         }
-        .modelContainer(for: [PrayerDay.self])
+        .modelContainer(for: [PrayerDay.self, MissedFast.self], isAutosaveEnabled: true)
     }
 }

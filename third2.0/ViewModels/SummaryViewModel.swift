@@ -19,7 +19,10 @@ final class SummaryViewModel {
         var done = 0
         var decided = 0
 
-        for day in allDays {
+        // Exclude frozen days from statistics
+        let nonFrozenDays = allDays.filter { !$0.isFrozen }
+
+        for day in nonFrozenDays {
             let trues = day.completed.values.filter { $0 }.count
             let falses = day.completed.values.filter { !$0 }.count
 
@@ -38,7 +41,9 @@ final class SummaryViewModel {
 
     static func streaks(allDays: [PrayerDay]) -> (current: Int, best: Int) {
         let calendar = Calendar.current
-        let sorted = daysSortedByDate(allDays: allDays)
+        // Exclude frozen days from streak calculations
+        let nonFrozenDays = allDays.filter { !$0.isFrozen }
+        let sorted = daysSortedByDate(allDays: nonFrozenDays)
         guard !sorted.isEmpty else { return (0, 0) }
 
         // Map to (date, isPerfect)
@@ -119,9 +124,11 @@ final class SummaryViewModel {
     }
 
     static func weekDoneForCurrentWeek(allDays: [PrayerDay],
-                                           calendar: Calendar = .autoupdatingCurrent) -> [Bool] {
+calendar: Calendar = .autoupdatingCurrent) -> [Bool] {
+            // Exclude frozen days from weekly statistics
+            let nonFrozenDays = allDays.filter { !$0.isFrozen }
             var map: [String: Int] = [:]
-            for d in allDays {
+            for d in nonFrozenDays {
                 map[d.dayKey] = d.completed.values.filter { $0 }.count
             }
 

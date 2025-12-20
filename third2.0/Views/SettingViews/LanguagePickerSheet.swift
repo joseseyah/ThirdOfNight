@@ -17,7 +17,7 @@ struct LanguagePickerSheet: View {
         .init(code: "ar", name: "العربية"),
         .init(code: "ur", name: "اردو"),
         .init(code: "ms", name: "Bahasa Melayu"),
-        .init(code: "fil", name: "Filipino")
+        .init(code: "fil", name: "Filipino")  // Note: stored as "fil" but mapped to "fil-PH" for locale
     ]
 
     var body: some View {
@@ -29,7 +29,7 @@ struct LanguagePickerSheet: View {
                     .frame(width: 44, height: 5)
                     .padding(.top, 6)
 
-                Text("Choose Language")
+                Text(String(localized: "Choose Language"))
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                     .foregroundStyle(Color.textPrimary)
                     .padding(.bottom, 6)

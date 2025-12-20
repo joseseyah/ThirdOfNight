@@ -145,12 +145,12 @@ struct AnimatedAppIconView: View {
             Text(title)
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .foregroundColor(.white)
+                .foregroundColor(.textPrimaryLight)
 
             Text(description)
                 .font(.body)
                 .multilineTextAlignment(.center)
-                .foregroundColor(.white.opacity(0.8))
+                .foregroundColor(.textSecondaryLight)
                 .padding(.horizontal, 40)
 
             Spacer()
@@ -160,11 +160,11 @@ struct AnimatedAppIconView: View {
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, maxHeight: 50)
                     .background(LinearGradient(
-                        gradient: Gradient(colors: [Color("HighlightColor"), Color("BoxBackgroundColor")]),
+                        gradient: Gradient(colors: [Color.accentPurple, Color.accentPurpleDark]),
                         startPoint: .leading,
                         endPoint: .trailing
                     ))
-                    .foregroundColor(.white)
+                    .foregroundColor(.buttonText)
                     .cornerRadius(15)
                     .padding(.horizontal, 40)
             }
@@ -173,7 +173,7 @@ struct AnimatedAppIconView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
-            Color("BackgroundColor") // Matches the app icon's background
+            Color.appBg // Matches the app icon's background
         )
         .ignoresSafeArea()
     }
@@ -195,12 +195,12 @@ struct LastOnboardingSlide: View {
                 .resizable()
                 .scaledToFit()
                 .frame(height: 150)
-                .foregroundColor(Color("HighlightColor"))
+                .foregroundColor(.accentPurple)
 
             Text(title)
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .foregroundColor(.white)
+                .foregroundColor(.textPrimaryLight)
                 .multilineTextAlignment(.center)
 
             Text("""
@@ -211,7 +211,7 @@ struct LastOnboardingSlide: View {
                 Tap the button below to start exploring the app and enjoy its features!
                 """)
                 .font(.body)
-                .foregroundColor(.white.opacity(0.9))
+                .foregroundColor(.textSecondaryLight)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 40)
 
@@ -220,11 +220,11 @@ struct LastOnboardingSlide: View {
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, maxHeight: 50)
                     .background(LinearGradient(
-                        gradient: Gradient(colors: [Color("HighlightColor"), Color("BoxBackgroundColor")]),
+                        gradient: Gradient(colors: [Color.accentPurple, Color.accentPurpleDark]),
                         startPoint: .leading,
                         endPoint: .trailing
                     ))
-                    .foregroundColor(.white)
+                    .foregroundColor(.buttonText)
                     .cornerRadius(15)
                     .padding(.horizontal, 40)
             }
@@ -233,11 +233,7 @@ struct LastOnboardingSlide: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
-            LinearGradient(
-                gradient: Gradient(colors: [Color("PageBackgroundColor"), Color("BackgroundColor")]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
+            Color.appBg
         )
         .ignoresSafeArea()
     }
